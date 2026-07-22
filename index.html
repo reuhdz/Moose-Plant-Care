@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#2d6a4f" />
+  <meta name="description" content="Cowboy Bebop Green House — personal plant care guide + 2026 watering calendar" />
+  <title>Cowboy Bebop Green House</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-inner">
+      <h1>🌿 Cowboy Bebop Green House</h1>
+      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark / light theme">
+        <span class="theme-icon">🌙</span>
+      </button>
+    </div>
+  </header>
+
+  <nav class="main-tabs" role="tablist" aria-label="Main sections">
+    <button class="tab-btn active" role="tab" aria-selected="true" data-tab="calendar">
+      <span class="tab-icon">📅</span> Watering Calendar
+    </button>
+    <button class="tab-btn" role="tab" aria-selected="false" data-tab="todos">
+      <span class="tab-icon">✅</span> Todos
+    </button>
+    <button class="tab-btn" role="tab" aria-selected="false" data-tab="care">
+      <span class="tab-icon">📖</span> Care Guide
+    </button>
+    <button class="tab-btn" role="tab" aria-selected="false" data-tab="chat">
+      <span class="tab-icon">🤖</span> Ask Claude
+    </button>
+    <button class="tab-btn" role="tab" aria-selected="false" data-tab="soil">
+      <span class="tab-icon">🪴</span> Soil Mix
+    </button>
+    <button class="tab-btn" role="tab" aria-selected="false" data-tab="placement">
+      <span class="tab-icon">📍</span> Placement
+    </button>
+    <button class="tab-btn" role="tab" aria-selected="false" data-tab="log">
+      <span class="tab-icon">💧</span> Log &amp; Data
+    </button>
+  </nav>
+
+  <main>
+    <!-- =================== CARE GUIDE TAB =================== -->
+    <section id="tab-care" class="tab-panel" role="tabpanel">
+      <div class="plant-selector">
+        <label for="primary-select">Plant:</label>
+        <select id="primary-select" aria-label="Select plant"></select>
+
+        <div class="sub-select-wrap" id="sub-select-wrap" hidden>
+          <label for="sub-select" id="sub-select-label">Variant:</label>
+          <select id="sub-select" aria-label="Select variant"></select>
+        </div>
+      </div>
+
+      <article id="plant-detail" class="plant-detail" aria-live="polite">
+        <!-- Populated by JS -->
+      </article>
+    </section>
+
+    <!-- =================== CALENDAR TAB =================== -->
+    <section id="tab-calendar" class="tab-panel active" role="tabpanel">
+      <div class="calendar-controls">
+        <div class="cal-control-row">
+          <label for="calendar-plant">Plant:</label>
+          <select id="calendar-plant" aria-label="Select plant for calendar">
+            <option value="ALL">All My Plants</option>
+          </select>
+          <button type="button" id="calendar-plant-clear" class="cal-control-clear" hidden aria-label="Show all plants">✕</button>
+        </div>
+
+        <div class="cal-control-row">
+          <label for="calendar-month">Month:</label>
+          <select id="calendar-month" aria-label="Select month">
+            <option value="0">January 2026</option>
+            <option value="1">February 2026</option>
+            <option value="2">March 2026</option>
+            <option value="3">April 2026</option>
+            <option value="4">May 2026</option>
+            <option value="5">June 2026</option>
+            <option value="6">July 2026</option>
+            <option value="7">August 2026</option>
+            <option value="8">September 2026</option>
+            <option value="9">October 2026</option>
+            <option value="10">November 2026</option>
+            <option value="11">December 2026</option>
+          </select>
+        </div>
+
+        <div class="cal-control-row">
+          <label for="calendar-date-filter">Logged on:</label>
+          <input type="date" id="calendar-date-filter" aria-label="Filter watering tiles to a specific log date" />
+          <button type="button" id="calendar-date-filter-clear" class="cal-control-clear" hidden aria-label="Clear date filter">✕</button>
+        </div>
+      </div>
+
+      <section class="next-water-summary" id="next-water-summary" aria-live="polite">
+        <!-- Populated by JS — shows "next watering" per plant -->
+      </section>
+
+      <div class="calendar-wrap">
+        <div id="calendar-grid" class="calendar-grid"></div>
+        <div id="cal-pill-popover" class="cal-pill-popover" role="tooltip" hidden>
+          <button type="button" class="cal-pill-popover-close" aria-label="Close">✕</button>
+          <div class="cal-pill-popover-body"></div>
+        </div>
+      </div>
+
+      <div class="legend">
+        <span><span class="dot dot-due"></span> Due / Overdue</span>
+        <span><span class="dot dot-soon"></span> Due Soon (≤3d)</span>
+        <span><span class="dot dot-scheduled"></span> Scheduled</span>
+        <span><span class="dot dot-actual"></span> Logged Watering</span>
+        <span><span class="dot dot-today"></span> Today</span>
+        <span class="legend-hint muted">· Tap any pill for the full plant name</span>
+      </div>
+    </section>
+
+    <!-- =================== TODOS TAB =================== -->
+    <section id="tab-todos" class="tab-panel" role="tabpanel">
+      <div class="todos-intro">
+        <h2>✅ Plant Todos</h2>
+        <p class="muted">
+          Track per-plant tasks (repot, fertilize, prune, propagate, pest check, …) and
+          general gardening reminders. Todos are saved on this device and included in
+          the Export JSON backup.
+        </p>
+      </div>
+
+      <form id="todo-add-form" class="todo-add-form" autocomplete="off">
+        <div class="todo-add-grid">
+          <div class="form-row">
+            <label for="todo-plant">Plant</label>
+            <select id="todo-plant" aria-label="Plant for this todo"></select>
+          </div>
+          <div class="form-row">
+            <label for="todo-category">Category</label>
+            <select id="todo-category" aria-label="Todo category"></select>
+          </div>
+          <div class="form-row todo-add-title-row">
+            <label for="todo-title">Title *</label>
+            <input type="text" id="todo-title" required placeholder='e.g. Repot into 14" pot' />
+          </div>
+          <div class="form-row">
+            <label for="todo-due">Due date</label>
+            <input type="date" id="todo-due" />
+          </div>
+          <div class="form-row todo-add-notes-row">
+            <label for="todo-notes">Notes</label>
+            <input type="text" id="todo-notes" placeholder="Optional — soil mix, technique, reminders" />
+          </div>
+        </div>
+        <div class="todo-add-actions">
+          <button type="submit" class="primary-btn">➕ Add Todo</button>
+          <button type="button" id="todo-reset" class="secondary-btn">Reset form</button>
+        </div>
+      </form>
+
+      <div class="todo-filter-bar">
+        <div class="form-row">
+          <label for="todo-filter-plant">Filter plant</label>
+          <select id="todo-filter-plant" aria-label="Filter todos by plant"></select>
+        </div>
+        <div class="form-row">
+          <label for="todo-filter-category">Filter category</label>
+          <select id="todo-filter-category" aria-label="Filter todos by category"></select>
+        </div>
+        <div class="todo-status-toggle" role="tablist" aria-label="Status filter">
+          <button type="button" class="todo-status-btn active" data-status="open" role="tab" aria-selected="true">Open</button>
+          <button type="button" class="todo-status-btn" data-status="completed" role="tab" aria-selected="false">Completed</button>
+          <button type="button" class="todo-status-btn" data-status="all" role="tab" aria-selected="false">All</button>
+        </div>
+      </div>
+
+      <div id="todos-summary" class="todos-summary muted small"></div>
+      <div id="todos-list" class="todos-list"></div>
+
+      <div class="todos-actions">
+        <button type="button" id="todo-clear-completed" class="secondary-btn">🧹 Clear completed</button>
+      </div>
+    </section>
+
+    <!-- =================== ASK CLAUDE TAB =================== -->
+    <section id="tab-chat" class="tab-panel" role="tabpanel">
+      <div class="chat-intro">
+        <h2>🤖 Ask Claude</h2>
+        <p class="muted">
+          Chat with Claude (Anthropic's AI) about your plants. Your API key is
+          stored only on this device — see Settings below. Each plant's stats
+          are sent as context so Claude can answer about <em>your</em>
+          collection, not just generic advice.
+        </p>
+      </div>
+
+      <div class="chat-setup-card" id="chat-setup-card" hidden>
+        <h3>🔑 Set up your Anthropic API key</h3>
+        <p class="muted small">
+          You'll need a key from
+          <a href="https://console.anthropic.com" target="_blank" rel="noopener">console.anthropic.com</a>
+          (free signup, pay-as-you-go billing — typical chat is well under $0.01 per turn).
+        </p>
+        <div class="form-row">
+          <label for="chat-api-key">API key</label>
+          <input type="password" id="chat-api-key" placeholder="sk-ant-..." autocomplete="off" spellcheck="false" />
+        </div>
+        <label class="chat-danger-ack">
+          <input type="checkbox" id="chat-danger-ack" />
+          <span>I understand the key is stored on this device only and I'm using my own personal API key (BYOK).</span>
+        </label>
+        <div class="chat-setup-actions">
+          <button type="button" id="chat-save-key" class="primary-btn">💾 Save key</button>
+          <button type="button" id="chat-test-key" class="secondary-btn">🧪 Test connection</button>
+          <button type="button" id="chat-clear-key" class="danger-btn" hidden>🗑 Forget key</button>
+        </div>
+        <div id="chat-setup-status" class="chat-setup-status muted small"></div>
+      </div>
+
+      <div class="chat-controls" id="chat-controls">
+        <div class="form-row">
+          <label for="chat-model">Model</label>
+          <select id="chat-model" aria-label="Claude model"></select>
+        </div>
+        <div class="form-row">
+          <label for="chat-plant-context">Plant context</label>
+          <select id="chat-plant-context" aria-label="Plant context for Claude"></select>
+        </div>
+        <button type="button" id="chat-settings-toggle" class="secondary-btn small-btn">⚙️ Settings</button>
+      </div>
+
+      <div id="chat-messages" class="chat-messages" aria-live="polite"></div>
+
+      <form id="chat-form" class="chat-form" autocomplete="off">
+        <div class="chat-attachment-preview" id="chat-attachment-preview" hidden>
+          <img id="chat-attachment-img" alt="Attached image" />
+          <button type="button" id="chat-attachment-remove" class="chat-attachment-remove" aria-label="Remove attachment">✕</button>
+        </div>
+        <div class="chat-input-row">
+          <textarea id="chat-input" placeholder="Ask about your plants... (Enter to send, Shift+Enter for newline)" rows="2"></textarea>
+          <div class="chat-input-actions">
+            <label class="chat-photo-btn secondary-btn" title="Attach a photo for visual diagnosis">
+              📷
+              <input type="file" id="chat-photo" accept="image/*" capture="environment" hidden />
+            </label>
+            <button type="submit" class="primary-btn" id="chat-send-btn">Send</button>
+          </div>
+        </div>
+      </form>
+
+      <div class="chat-footer">
+        <button type="button" id="chat-save-conversation-btn" class="secondary-btn small-btn" hidden>💾 Save whole conversation to plant notes</button>
+        <button type="button" id="chat-clear-btn" class="secondary-btn small-btn">🗑 Clear conversation</button>
+        <span class="muted small" id="chat-cost-total"></span>
+      </div>
+    </section>
+
+    <!-- =================== Save-as-note modal (chat) =================== -->
+    <div id="chat-save-modal" class="modal-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="chat-save-modal-title">
+      <div class="modal-card">
+        <header class="modal-header">
+          <h3 id="chat-save-modal-title">💾 Save to plant notes</h3>
+          <button type="button" id="chat-save-close" class="modal-close" aria-label="Close">✕</button>
+        </header>
+        <div class="modal-body">
+          <div class="form-row">
+            <label for="chat-save-plant">Plant</label>
+            <select id="chat-save-plant" aria-label="Plant to save note under"></select>
+          </div>
+          <div class="form-row">
+            <label for="chat-save-title-input">Title</label>
+            <input type="text" id="chat-save-title-input" maxlength="120" placeholder="Short label (auto-filled from your question)" />
+          </div>
+          <div class="chat-save-preview" id="chat-save-preview"></div>
+          <p class="muted small chat-save-helper">
+            Saved notes live in the Care Guide under <strong>📝 Notes from past chats</strong> for the selected plant.
+          </p>
+        </div>
+        <footer class="modal-footer">
+          <button type="button" id="chat-save-cancel" class="secondary-btn">Cancel</button>
+          <button type="button" id="chat-save-confirm" class="primary-btn">💾 Save note</button>
+        </footer>
+      </div>
+    </div>
+
+    <!-- =================== SOIL MIX TAB =================== -->
+    <section id="tab-soil" class="tab-panel" role="tabpanel">
+      <div class="soil-intro">
+        <h2>🪴 Current Soil Mix</h2>
+        <p class="muted">
+          Each card shows the soil mix you currently have your plant in (or
+          <em>pending</em> if not set yet) plus a research-based recommendation.
+          Update a plant's soil from the <strong>Log &amp; Data → Plant Profile</strong> form.
+        </p>
+      </div>
+      <div id="soil-cards" class="soil-cards"></div>
+    </section>
+
+    <!-- =================== PLACEMENT TAB =================== -->
+    <section id="tab-placement" class="tab-panel" role="tabpanel">
+      <div class="placement-intro">
+        <h2>📍 Plant Placement Guide</h2>
+        <p class="muted">
+          Where to put each plant in your specific home, based on the room
+          conditions you've described. Each plant has an
+          <strong>Ideal</strong> spot (will thrive) and an <strong>OK</strong> spot
+          (will survive and look fine, just not at peak). Switch between the
+          <em>Rooms</em> view (zones first, plants per zone) and the
+          <em>Plants</em> view (plants first, zones per plant).
+        </p>
+        <div class="placement-controls">
+          <div class="placement-toggle" role="tablist">
+            <button class="placement-view-btn active" data-view="rooms" role="tab" aria-selected="true">🏠 By Room</button>
+            <button class="placement-view-btn" data-view="plants" role="tab" aria-selected="false">🌿 By Plant</button>
+          </div>
+          <div class="placement-filter-wrap">
+            <label for="placement-filter" class="placement-filter-label" id="placement-filter-label">Jump to:</label>
+            <select id="placement-filter" class="placement-filter" aria-labelledby="placement-filter-label">
+              <option value="all">All rooms</option>
+            </select>
+            <button type="button" id="placement-filter-clear" class="placement-filter-clear" hidden aria-label="Clear filter">✕</button>
+          </div>
+        </div>
+      </div>
+      <div id="placement-rooms" class="placement-section"></div>
+      <div id="placement-plants" class="placement-section" hidden></div>
+      <section id="placement-sources" class="placement-sources"></section>
+    </section>
+
+    <!-- =================== LOG & DATA TAB =================== -->
+    <section id="tab-log" class="tab-panel" role="tabpanel">
+      <h2>💧 Log a Watering</h2>
+      <form id="water-log-form" class="log-form">
+        <div class="form-row">
+          <label for="log-plant">Plant</label>
+          <select id="log-plant" required></select>
+        </div>
+        <div class="form-row">
+          <label for="log-date">Date</label>
+          <input type="date" id="log-date" required />
+        </div>
+        <div class="form-row">
+          <label for="log-note">Note (optional)</label>
+          <input type="text" id="log-note" placeholder="e.g. soaked deeply, used filtered water" />
+        </div>
+        <button type="submit" class="primary-btn">💧 Log Watering</button>
+      </form>
+
+      <h2>🌱 Plant Profile (Add / Update)</h2>
+      <form id="profile-form" class="log-form">
+        <div class="form-row">
+          <label for="profile-mode">Mode</label>
+          <select id="profile-mode">
+            <option value="new">➕ Add new plant</option>
+            <option value="edit">✏️ Edit existing plant</option>
+          </select>
+        </div>
+
+        <div class="form-row" id="profile-edit-row" hidden>
+          <label for="profile-existing">Plant</label>
+          <select id="profile-existing"></select>
+        </div>
+
+        <div class="form-row" id="profile-name-row">
+          <label for="profile-name">Name *</label>
+          <input type="text" id="profile-name" placeholder="e.g. Pilea Peperomioides" />
+        </div>
+
+        <div class="form-row" id="profile-sci-row">
+          <label for="profile-scientific">Scientific</label>
+          <input type="text" id="profile-scientific" placeholder="e.g. Pilea peperomioides" />
+        </div>
+
+        <div class="form-row" id="profile-cat-row">
+          <label for="profile-category">Category</label>
+          <select id="profile-category"></select>
+        </div>
+
+        <div class="form-row">
+          <label for="profile-pot">Pot size</label>
+          <input type="text" id="profile-pot" placeholder='e.g. 6"' />
+        </div>
+
+        <div class="form-row">
+          <label for="profile-soil">Current soil mix</label>
+          <select id="profile-soil"></select>
+        </div>
+
+        <div class="form-row">
+          <label for="profile-condition">Condition</label>
+          <select id="profile-condition"></select>
+        </div>
+
+        <div class="form-row">
+          <label for="profile-last-watered">Last watered</label>
+          <input type="date" id="profile-last-watered" />
+        </div>
+
+        <div class="form-row" id="profile-watering-info-row">
+          <label>Watering schedule</label>
+          <div class="profile-watering-info">
+            <div id="profile-watering-info-text" class="muted small">
+              Watering intervals come from research-backed care guides (Missouri Botanical Garden, RHS,
+              The Sill, Costa Farms, etc.) — not from this form. New custom plants get sensible
+              category-based defaults until they're promoted to a researched built-in entry.
+            </div>
+            <div id="profile-watering-info-values" class="watering-info-pills" hidden></div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label for="profile-comments">Comments</label>
+          <input type="text" id="profile-comments" placeholder="anything you want to remember about this plant" />
+        </div>
+
+        <div class="form-row">
+          <label for="profile-image">Photo</label>
+          <div class="photo-input-wrap">
+            <label class="secondary-btn file-label">
+              📷 Choose / Take Photo
+              <input type="file" id="profile-image" accept="image/*" capture="environment" hidden />
+            </label>
+            <button type="button" id="profile-image-save-to-folder" class="secondary-btn" hidden>💾 Save photo to folder</button>
+            <button type="button" id="profile-image-remove" class="danger-btn" hidden>🗑 Remove Photo</button>
+            <div id="profile-image-preview" class="photo-preview" hidden></div>
+            <p class="muted small">
+              Photos are resized to ~800px. They're saved in this browser <em>and</em> you can
+              click "Save photo to folder" to download <code>&lt;id&gt;.jpg</code> — drop that file into
+              <code>data/images/</code> to make it portable across devices.
+            </p>
+          </div>
+        </div>
+
+        <div class="profile-actions">
+          <button type="submit" class="primary-btn">💾 Save Plant</button>
+          <button type="button" id="profile-delete" class="danger-btn" hidden>🗑 Delete Plant</button>
+        </div>
+        <p class="muted small">New plants show "Coming soon" for tip sections until you fill them in (edit <code>js/plants-data.js</code> for full tips and sources).</p>
+      </form>
+
+      <h2>📋 Recent Waterings</h2>
+      <div id="recent-log" class="recent-log"></div>
+
+      <h2>📦 Import / Export</h2>
+      <p class="muted">
+        Your watering log and custom plants are stored on this device. Use Export to back them up or move to another device.
+        You can also load the included <code>data/watering-log.json</code> template.
+      </p>
+      <div class="io-buttons">
+        <button id="export-json" class="secondary-btn">⬇️ Export JSON</button>
+        <label class="secondary-btn file-label">
+          ⬆️ Import JSON
+          <input type="file" id="import-json" accept="application/json,.json" hidden />
+        </label>
+        <button id="load-template" class="secondary-btn">📄 Load Template File</button>
+        <button id="clear-log" class="danger-btn">🗑 Clear All Logs</button>
+      </div>
+
+      <h2>ℹ️ About</h2>
+      <p class="muted">
+        This is a fully offline static website — your data never leaves your device.
+        Bookmark this page on your phone for quick access, or "Add to Home Screen" from your browser.
+      </p>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <small>🌱 See you, space cowboy … 🐱‍🚀</small>
+  </footer>
+
+  <script src="js/plants-data.js"></script>
+  <script src="js/watering.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

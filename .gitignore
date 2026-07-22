@@ -1,0 +1,18 @@
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+Desktop.ini
+*~
+.vscode/
+.idea/
+
+# Node (only used by the optional local tooling — never needed for Pages)
+node_modules/
+npm-debug.log*
+
+# Personal exported data — do NOT publish your own watering history / photos.
+# The repo ships only the empty template at data/watering-log.json.
+data/exported_data/
+data/images/*
+!data/images/README.md
+!data/images/.gitkeep

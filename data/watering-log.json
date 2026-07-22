@@ -1,0 +1,42 @@
+[
+  {
+    "plantId": "prayer_plant",
+    "date": "2026-01-05",
+    "note": "First watering of 2026 — used filtered water"
+  },
+  {
+    "plantId": "monstera",
+    "date": "2026-01-04",
+    "note": "Soaked thoroughly until water ran out"
+  },
+  {
+    "plantId": "ginseng_ficus",
+    "date": "2026-01-06",
+    "note": "Soaked from below for 10 minutes"
+  },
+  {
+    "plantId": "snake_plant",
+    "date": "2026-01-02",
+    "note": "Soil was bone dry"
+  },
+  {
+    "plantId": "aloe_vera",
+    "date": "2026-01-03",
+    "note": "Deep soak; let drain fully"
+  },
+  {
+    "plantId": "mondo_grass",
+    "date": "2026-01-05",
+    "note": ""
+  },
+  {
+    "plantId": "firestick",
+    "date": "2025-12-20",
+    "note": "Last winter watering — wait until stems wrinkle"
+  },
+  {
+    "plantId": "kalanchoe",
+    "date": "2026-01-04",
+    "note": "Just blooms finishing"
+  }
+]
