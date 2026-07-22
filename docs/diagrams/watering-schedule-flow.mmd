@@ -1,0 +1,20 @@
+flowchart TD
+    Start([nextWatering called]) --> LoadPlant[Resolve plant from PLANTS or custom merge]
+    LoadPlant --> ReadSnooze[Read SnoozeStore for plantId]
+    ReadSnooze --> HasLog{Logged watering exists?}
+    HasLog -- No --> NoLogBase[Base next date = today]
+    HasLog -- Yes --> CalcInterval[intervalForDate from last log month season]
+    CalcInterval --> AddInterval[nextDate = lastDate + interval]
+    NoLogBase --> ApplySnooze{Snooze active?}
+    AddInterval --> ApplySnooze
+    ApplySnooze -- Yes --> ShiftDate[Add snooze days; if overdue snap to today + snooze]
+    ApplySnooze -- No --> Status[Compute status: overdue / due / soon / scheduled]
+    ShiftDate --> Status
+    Status --> End([Return nx object for UI tiles])
+
+    classDef decision fill:#E8F0FE,stroke:#1A73E8,color:#0B3D91;
+    classDef process fill:#FEF7E0,stroke:#F9AB00,color:#9C5400;
+    classDef io fill:#E6F4EA,stroke:#137333,color:#0D652D;
+    class HasLog,ApplySnooze decision;
+    class LoadPlant,ReadSnooze,CalcInterval,AddInterval,NoLogBase,ShiftDate,Status process;
+    class Start,End io;

@@ -1,0 +1,46 @@
+name: Deploy to GitHub Pages
+
+# Optional automated deploy. This is ONE of two ways to publish (see README).
+# It publishes the whole repo (a static site — no build step) on every push
+# to the default branch. If you prefer, you can skip this file entirely and
+# instead use Settings > Pages > "Deploy from a branch" > main > / (root).
+
+on:
+  push:
+    branches: [main]
+  # Allow manual runs from the Actions tab
+  workflow_dispatch:
+
+# Permissions the GitHub Pages deploy needs
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only one concurrent deploy; don't cancel an in-progress production deploy
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # The site is static and lives at the repo root (index.html is here).
+          path: "."
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

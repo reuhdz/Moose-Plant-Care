@@ -1,0 +1,18 @@
+sequenceDiagram
+    autonumber
+    participant Browser
+    participant app.js
+    participant watering.js
+    participant plants-data.js
+    participant localStorage
+
+    Browser->>app.js: Load scripts (plants-data → watering → app)
+    app.js->>app.js: loadTheme()
+    app.js->>app.js: migrateCustomToBuiltins()
+    app.js->>localStorage: Read custom plants, overlays, images, log, snoozes
+    app.js->>plants-data.js: Match custom displayName to built-in PLANTS
+    app.js->>localStorage: Migrate overlays, images, log ids; remove custom
+    app.js->>app.js: populate*Select() for all tabs
+    app.js->>watering.js: nextWatering / buildSchedule for calendar
+    app.js->>app.js: renderCalendar, renderSoilTab, renderPlacementTab, renderTodosTab, renderChatTab
+    app.js-->>Browser: Interactive UI ready

@@ -1,0 +1,48 @@
+flowchart LR
+    subgraph Client["Browser"]
+        HTML[index.html]
+        CSS[css/styles.css]
+        UI[app.js]
+    end
+
+    subgraph DataLayer["Static data + engine"]
+        PD[plants-data.js]
+        ENG[watering.js]
+    end
+
+    subgraph Persistence["localStorage"]
+        WL[(WaterLog)]
+        SNZ[(SnoozeStore)]
+        PS[(PlantStore)]
+        IMG[(ImageStore)]
+        TD[(TodoStore)]
+        CN[(CareNotesStore)]
+        CL[(ClaudeSettings + ChatHistory)]
+    end
+
+    subgraph External["Optional network"]
+        API[Anthropic Messages API]
+    end
+
+    subgraph Build["Node build tools"]
+        SF[build-single-html.js]
+        PG[build-pages.js]
+    end
+
+    HTML --> UI
+    CSS --> HTML
+    PD --> ENG
+    PD --> UI
+    ENG --> UI
+    UI --> WL & SNZ & PS & IMG & TD & CN & CL
+    UI -. BYOK chat .-> API
+    PD & ENG & UI --> SF
+    SF --> PG
+
+    classDef io fill:#E6F4EA,stroke:#137333,color:#0D652D;
+    classDef process fill:#FEF7E0,stroke:#F9AB00,color:#9C5400;
+    classDef external fill:#FCE8E6,stroke:#D93025,color:#8C1D18;
+    class HTML,CSS,PD io;
+    class UI,ENG,SF,PG process;
+    class API external;
+    class WL,SNZ,PS,IMG,TD,CN,CL io;
