@@ -1,4 +1,4 @@
-# Cowboy Bebop Green House — developer guide
+# Moose's Plant Care — developer guide
 
 *plant-care / developer-guide-structure-and-features*
 
@@ -8,7 +8,7 @@
 |---|---|
 | Audience | Developers / maintainers (including AI coding agents) |
 | Scope | Architecture, **core logic & algorithms**, data model, features, build/deploy |
-| Last updated | 2026-07-22 (algorithms pass) |
+| Last updated | 2026-07-23 (rebrand, placement expansion, quick-log) |
 | Owner | Personal POC — `Personal_POC/Plant_Care` |
 | Companion doc | [`project-requirements-and-handoff.md`](./project-requirements-and-handoff.md) — inventory, edit recipes, session logs |
 
@@ -18,11 +18,11 @@ This guide explains **how the app is structured, how non-trivial client-side alg
 
 ## 1. What this app is
 
-**Cowboy Bebop Green House** is a fully offline-capable **static** personal plant-care web app:
+**Moose's Plant Care** is a fully offline-capable **static** personal plant-care web app:
 
 - Pure **HTML + CSS + vanilla JavaScript** — no framework, no transpilation, no backend required to run.
-- Tracks **36 owned plants** with research-backed care data, watering schedules, placement, soil tracking, todos, and optional BYOK Claude chat.
-- Dual-themed UI: light green palette and dark Cowboy Bebop–inspired palette.
+- Tracks **37 owned plants** with research-backed care data, watering schedules, placement, soil tracking, todos, and optional BYOK Claude chat.
+- Dual-themed UI: light green/leaf palette (unchanged) and a dark **"cozy den"** palette — warm brown backgrounds, golden-retriever amber primary (`#e0a94f`), soft leaf-green accent (`#8fce8f`), teal scheduled accent (`#5bc8b8`). Header/title/meta use 🐶 favicon; app renamed from "Cowboy Bebop Green House" to **Moose's Plant Care** (Moose is the owner's dog).
 - Runs on desktop or phone via folder open, local HTTP server, single-file build, or GitHub Pages deploy copy.
 
 **Source of truth:** `c:\Users\szfy8z\Personal_POC\Plant_Care\`
@@ -53,6 +53,7 @@ flowchart LR
         IMG[(ImageStore)]
         TD[(TodoStore)]
         CN[(CareNotesStore)]
+        RP[(RoomPlanStore)]
         CL[(ClaudeSettings + ChatHistory)]
     end
 
@@ -70,7 +71,7 @@ flowchart LR
     PD --> ENG
     PD --> UI
     ENG --> UI
-    UI --> WL & SNZ & PS & IMG & TD & CN & CL
+    UI --> WL & SNZ & PS & IMG & TD & CN & RP & CL
     UI -. BYOK chat .-> API
     PD & ENG & UI --> SF
     SF --> PG
@@ -81,7 +82,7 @@ flowchart LR
     class HTML,CSS,PD io;
     class UI,ENG,SF,PG process;
     class API external;
-    class WL,SNZ,PS,IMG,TD,CN,CL io;
+    class WL,SNZ,PS,IMG,TD,CN,RP,CL io;
 ```
 
 ### Layer responsibilities
@@ -90,8 +91,8 @@ flowchart LR
 |---|---|---|
 | Shell | `index.html` | Tab nav, seven tab panels, form markup, script load order |
 | Presentation | `css/styles.css` | Mobile-first layout, light/dark themes via `[data-theme]`, component styles |
-| Domain data | `js/plants-data.js` | `PLANTS`, `SOIL_TYPES`, placement maps, static config arrays |
-| Schedule engine | `js/watering.js` | Seasonal intervals, `nextWatering`, `buildSchedule`, all `*Store` persistence except images/theme |
+| Domain data | `js/plants-data.js` | `PLANTS`, `SOIL_TYPES`, `HOME_WINDOWS` / `HOME_EXPOSURES` / `PLANT_LIGHT_REF`, legacy `PLANT_PLACEMENT`, static config arrays |
+| Schedule engine | `js/watering.js` | Seasonal intervals, `nextWatering`, `buildSchedule`, `RoomPlanStore`, all `*Store` persistence except images/theme |
 | UI orchestration | `js/app.js` | Tab switching, every `render*()` function, Claude module, import/export, gestures |
 | Build | `tools/*.js` | Single-file bundle + GitHub Pages sync (Node only; not required at runtime) |
 
@@ -109,7 +110,7 @@ flowchart LR
 
 ## 3. Core logic & algorithms
 
-This section documents the **non-trivial algorithms that run in the browser** on every visit to the GitHub Pages site. Build-time tooling is covered in **§3.9** only.
+This section documents the **non-trivial algorithms that run in the browser** on every visit to the GitHub Pages site. Build-time tooling is covered in **§3.10** only.
 
 ### 3.1 Three-tier seasonal watering (`nextWatering`) — `js/watering.js`
 
@@ -210,6 +211,17 @@ meta.sort((a, b) => {
 
 Negative `daysUntil` = overdue; zero = due today; positive = future. **No extra re-queue logic** — snooze increases `daysUntil`; logging resets the cycle from the new last date; both flow through `nextWatering()` and the sort repositions the tile on the next render.
 
+**Quick-log "💧 Just watered"** — `handleWaterNowClick` on `#next-water-summary` and `#plant-detail` (stable parents, same pattern as snooze):
+
+```
+btn = e.target.closest(".water-now-btn")
+guard: WaterLog already has entry for (plantId, today) → flash "already logged", return
+WaterLog.add({ plantId, date: today })  → SnoozeStore.clear implicit via WaterLog.add
+renderCalendar() + renderRecentLog() + refreshPlantWateringSectionIfVisible(id)
+```
+
+Each reminder tile from `renderWaterTileHtml()` includes the button. Double-logging the same plant on the same day is blocked.
+
 ### 3.4 Custom-plant → built-in merge — `migrateCustomToBuiltins()` + `PlantStore` — `app.js`
 
 **Merge view** — always use `PlantStore.allPlants()`, never raw `PLANTS`:
@@ -252,6 +264,8 @@ renderPlantDetail(plantId); switch to care tab; scrollIntoView(detailEl)
 
 **Why three paths:** variant plants are not top-level primary options — they live under group headers to keep the main dropdown short. Calendar tile links (`.tile-name-link`, delegated on `#next-water-summary`) must resolve the same UX as manually picking from both dropdowns.
 
+**Plant-name → Care Guide links everywhere** — `plantCareLinkHtml(pid, text)` returns a `<button class="plant-care-link" data-care-plant-id="…">` when the plant exists in `PlantStore.allPlants()`. A single document-wide delegated `click` handler on `.plant-care-link` calls `openCareGuideForPlant(pid)`. Used in: placement reference table, placement focus card heading, recent watering log, soil cards, todo chips (calendar tiles already use `.tile-name-link` with the same destination).
+
 ### 3.6 Soil recommendation engine — `evaluateSoil()` — `app.js`
 
 Input: merged plant with `currentSoilMix` and `idealSoil[]` (keys into `SOIL_TYPES`).
@@ -268,20 +282,60 @@ else                               → mismatch
 
 The dual-constraint rule prevents false positives (e.g. standard potting “acceptable” for mini orchid because both share medium drainage with sphagnum).
 
-### 3.7 Placement engine — `PLANT_PLACEMENT` + `buildPlacementByZone()` — `app.js`
+### 3.7 Window-based placement engine — `HOME_WINDOWS` + `renderPlacementTab()` — `app.js`
 
-**Static data** (`plants-data.js`): each owned plant has `{ ideal: zoneId[], ok: zoneId[], avoid: zoneId[], rationale }` against eight `PLACEMENT_ZONES` entries (light profile, humidity, cautions).
+The Placement tab was rebuilt around **eight real home windows** (two floors). Legacy `PLACEMENT_ZONES` / `PLANT_PLACEMENT` remain in `plants-data.js` for Claude chat context only; the tab UI reads `HOME_*` structures.
 
-**By Room view** — `buildPlacementByZone()` inverts the map:
+**Static data** (`plants-data.js`):
+
+| Object | Purpose |
+|---|---|
+| `HOME_EXPOSURES` | Compass-direction sun primer — rendered as "☀️ What each exposure delivers at ~30°N" tiles (`renderPlacementPrimer`) |
+| `HOME_WINDOWS` | Eight window/room cards — see shape below |
+| `HOME_PLACEMENT_NOTES` | Special callouts (humidifier guidance, vaulted living room, ZZ repot, rot-risk succulents, etc.) |
+| `PLANT_LIGHT_REF` | Per-plant light/humidity/best-window reference table; `hum: true` marks humidity-lovers (💧 in UI) |
+
+**`HOME_WINDOWS` entry shape:**
 
 ```
-for each zoneId: { ideal: [], ok: [] }
-for each (plantId, rec) in PLANT_PLACEMENT:
-  rec.ideal.forEach(z => byZone[z].ideal.push(plantId))
-  rec.ok.forEach(z    => byZone[z].ok.push(plantId))
+{
+  id, floor, name, bearing, tier, label,          // label = "2F · Room 2" floor + room type
+  light, humidity,
+  humidifier: { rec: "use"|"skip"|"optional"|"not-needed", note },
+  thrive: [ plantId | { id, note?, back?: true } ],
+  solid:  [ plantId | { id, note?, back?: true } ],
+  avoid: "prose string",
+  keepOut: [ plantId, ... ]                         // structured keep-out list (red highlight)
+}
 ```
 
-Render zone cards with sorted plant name chips. **By Plant view** — iterate `ownedIds`; render ideal/ok zone chips + avoid tags + rationale paragraph. Filter dropdown scopes the active view; filters persist per view in `placementFilterByView`.
+**Set-back model:** `back: true` on a thrive/solid entry marks plants best placed **4–7 ft back** from the glass (softer indirect zone). Chips show an asterisk; focus card adds "↩ set back 4–7 ft" tag; legend explains the convention.
+
+**Humidifier guidance:** A single small portable unit only humidifies a ~2–4 ft pocket. Best home: enclosed **2F Room 2** (`humidifier.rec: "use"`). The **1F living room** is a vaulted double-height space open to 2F — mist dissipates; cards mark `skip`. Window cards show 💧/🚫 humidifier badges; humidity-lovers tagged 💧 in reference table + focus card.
+
+**Dual filters** (mutually exclusive):
+
+| Filter | State var | Behavior |
+|---|---|---|
+| 🌿 Focus on a plant | `placementFocusId` | Highlights plant across window cards + reference table; shows focus card with sorted verdicts |
+| 🪟 Focus on a room | `placementRoomId` | Hides all window cards except the selected room |
+
+Selecting one clears the other (`setPlacementFocus` / room-filter change).
+
+**Four-state window highlighting** when focusing a plant (`applyPlacement`):
+
+```
+inThrive → win-thrive (green)
+inSolid  → win-solid (blue)
+in keepOut → win-avoid (red, "⛔ keep out")
+else     → win-dim
+```
+
+Focus card verdict list uses the same four states, sorted: Thrive → Solid → Keep out → Not listed.
+
+**Room planner** — see **§3.9** (`RoomPlanStore`, `#placement-roomplan`).
+
+Rendering pipeline in `renderPlacementTab()`: primer → window cards → room plan → notes → reference table → sources → populate filters → `applyPlacement()`.
 
 ### 3.8 Claude chat client — `app.js` (+ stores in `watering.js`)
 
@@ -317,7 +371,33 @@ API payload: { type: "image", source: { type: "base64", media_type, data } }
 
 **BYOK security model:** Key lives only in `localStorage` on the user’s device. The “dangerous” header flags shipping a **shared** key in a public bundle — safe here because each user supplies their own key; file is personal static HTML. Not exported in JSON backup.
 
-### 3.9 Build-time artifact production — `tools/` *(not shipped in runtime JS)*
+### 3.9 Room planner — `RoomPlanStore` — `js/watering.js`
+
+Users create custom rooms and assign owned plants for physical-space planning. Rendered by `renderRoomPlan()` into `#placement-roomplan` (called from `renderPlacementTab()`).
+
+**Storage key:** `plant_care_room_plan_v1`
+
+```
+Shape: {
+  rooms:       [ { id, name, note, createdAt } ],
+  assignments: { [plantId]: roomId }   // a plant lives in at most ONE planned room
+}
+```
+
+**API:** `addRoom`, `updateRoom`, `removeRoom`, `assign`, `unassign`, `plantsIn`, `roomFor`, `replaceAll`, `clearAll`.
+
+**UI** (`renderRoomPlan` in `app.js`; handlers on `#placement-roomplan`):
+
+| Path | Control | Behavior |
+|---|---|---|
+| Create room | `#rp-create-form` — preset `#rp-room-preset` (`.rp-preset-select`) + `#rp-name` + optional `#rp-note` | Preset options = `HOME_WINDOWS` labels (e.g. "1F · Bathroom") minus rooms already in the plan, plus "＋ Create a new room…" (`__custom__`). Choosing a preset prefills `#rp-name` (user can tweak); choosing custom clears the name field. Submit → `RoomPlanStore.addRoom(name, note)`. |
+| Room → plant | Each room card's `.rp-add-select` (`data-rp-add-room`) | "+ Add a plant…" lists unassigned plants → `assign(pid, roomId)` |
+
+**🪴 Left to place** is a read-only chip list (Care Guide links via `plantCareLinkHtml` only — no per-plant room picker). Progress line tracks placed vs unassigned. Remove (✕) and delete-room (🗑) handlers unchanged. A plant still lives in at most one planned room. Included in JSON export/import as `roomPlan` key.
+
+**CSS:** `.rp-preset-select` (plus existing `.rp-add-select`, `.rp-chip-list`, `.rp-unassigned`, `.rp-unassigned-head`, etc.).
+
+### 3.10 Build-time artifact production — `tools/` *(not shipped in runtime JS)*
 
 **`build-single-html.js`:**
 
@@ -326,12 +406,12 @@ API payload: { type: "image", source: { type: "base64", media_type, data } }
 3. Replace three `<script src="js/...">` tags with one `<script>` block (order preserved: plants-data → watering → app)
 4. Escape `</script>` in JS source
 5. Sanity-check no relative asset refs remain
-6. Write `dist/Cowboy-Bebop-Green-House.html`
+6. Write `dist/Mooses-Plant-Care.html`
 
 **`build-pages.js`:**
 
 1. Copy runtime files from `Plant_Care/` → sibling `plant-care-site/` per `COPIES` table
-2. Single-file build lands at `offline/Cowboy-Bebop-Green-House.html`
+2. Single-file build lands at `offline/Mooses-Plant-Care.html`
 3. Does **not** touch `.github/`, `.nojekyll`, deploy README, or git history
 
 ---
@@ -365,7 +445,7 @@ Plant_Care/
 │   ├── watering-log.json               # Empty starter template
 │   ├── images/                         # Optional portable JPG photos per plantId
 │   └── exported_data/                  # User JSON exports (git-ignored in deploy)
-├── dist/Cowboy-Bebop-Green-House.html  # Single-file mobile build
+├── dist/Mooses-Plant-Care.html  # Single-file mobile build
 ├── docs/
 │   ├── project-requirements-and-handoff.md
 │   ├── developer-guide-structure-and-features.md   # this file
@@ -433,7 +513,7 @@ Every owned plant is a key in the `PLANTS` object. Required and common fields:
 | `currentSoilMix` | string | User-facing default; overridden by overlay |
 | `soilNotes` | string? | Shown on Soil Mix tab |
 | `comments` | string? | Free-text owner notes |
-| `repotSigns` | string[] | Universal collapsible “signs it's time to repot” (all 36 plants) |
+| `repotSigns` | string[] | Universal collapsible “signs it's time to repot” (all 37 plants) |
 | `repotSuggestion` | object? | Nursery-pot plants only — urgency, target pot/soil, technique |
 | `isPropagation` | boolean? | Water-rooting mode |
 | `cuttingsCount` | number? | Cuttings in container (propagation or multi-cutting pots) |
@@ -458,13 +538,17 @@ Status logic: see **§3.6** (`evaluateSoil`).
 
 ### 7.3 Placement model
 
-| Object | Location | Shape |
+| Object | Location | Shape / role |
 |---|---|---|
-| `PLACEMENT_ZONES` | `plants-data.js` | 8 home micro-zones with light/humidity profiles |
-| `PLANT_PLACEMENT` | `plants-data.js` | Per plant: `ideal[]`, `ok[]`, `avoid[]`, `rationale` |
-| `PLACEMENT_SOURCES` | `plants-data.js` | 9 cited horticultural sources |
+| `HOME_EXPOSURES` | `plants-data.js` | Compass sun primer (SE/NE/SW/NW at ~30°N) |
+| `HOME_WINDOWS` | `plants-data.js` | Eight real windows — light/humidity profile, humidifier rec, thrive/solid/keepOut lists |
+| `HOME_PLACEMENT_NOTES` | `plants-data.js` | Callout cards (`tone`, `title`, `body`) |
+| `PLANT_LIGHT_REF` | `plants-data.js` | Per-plant light/humidity/best-window; optional `hum: true` |
+| `PLACEMENT_ZONES` | `plants-data.js` | Legacy eight micro-zones — **Claude chat context only** |
+| `PLANT_PLACEMENT` | `plants-data.js` | Legacy per-plant ideal/ok/avoid — **Claude chat context only** |
+| `PLACEMENT_SOURCES` | `plants-data.js` | Cited horticultural sources (rendered at tab bottom) |
 
-Rendering logic: see **§3.7**.
+Rendering logic: see **§3.7** and **§3.9** (room planner).
 
 ### 7.4 localStorage stores
 
@@ -480,6 +564,7 @@ Rendering logic: see **§3.7**.
 | Claude settings | `plant_care_anthropic_settings_v1` | `watering.js` → `ClaudeSettings` | **No** (device-local BYOK) |
 | Chat history | `plant_care_chat_history_v1` | `watering.js` → `ChatHistory` | **No** |
 | Care notes | `plant_care_care_notes_v1` | `watering.js` → `CareNotesStore` | Yes |
+| Room plan | `plant_care_room_plan_v1` | `watering.js` → `RoomPlanStore` | Yes |
 
 **Overlay fields** on built-ins: `condition`, `comments`, `potSize`, `currentSoilMix`, photo (via `ImageStore`). Tips, intervals, and sources are **not** overlay-editable — edit `plants-data.js`.
 
@@ -496,7 +581,7 @@ Export payload (Log & Data tab):
 ```js
 {
   waterLog, customPlants, overlays, images,
-  snoozes, todos, careNotes, exportedAt
+  snoozes, todos, careNotes, roomPlan, exportedAt
 }
 ```
 
@@ -544,13 +629,14 @@ Single helper in `app.js` renders the 💧 next-watering card for:
 - Calendar tab — `renderNextSummary()` — urgency sort per **§3.3**
 - Care Guide — `renderPlantWateringSection()` with `{ includeName: false }`
 
-Each tile includes status badge, last/next dates, snooze shift line, snooze buttons, and `.tile-name-link` → **§3.5**.
+Each tile includes status badge, last/next dates, snooze shift line, snooze buttons, **💧 Just watered** quick-log button (`.water-now-btn`), and `.tile-name-link` → **§3.5**.
 
 ### 9.3 Cross-tab navigation helpers
 
 | Function | Behavior |
 |---|---|
 | `openCareGuideForPlant(plantId)` | Three-way selector resolution — **§3.5** |
+| `plantCareLinkHtml(pid, text)` | Inline tappable plant name → Care Guide — **§3.5** |
 | `openChatForPlant(plantId)` | Pre-selects plant context in Claude tab; focuses input |
 | `openTodosForPlant(plantId)` | Sets todo filter; switches to Todos tab |
 
@@ -583,13 +669,13 @@ Renders in order:
 
 | Tab | Key behavior | Primary code |
 |---|---|---|
-| **📅 Calendar** | Urgency sort §3.3; snooze §3.2; `nextWatering` §3.1 | `renderCalendar`, `renderNextSummary` |
-| **✅ Todos** | 10 categories; filter/sort by urgency | `TodoStore`, `renderTodosTab` |
-| **📖 Care Guide** | Variant selectors §3.5; inline water tile; repot cards | `renderPlantDetail` |
+| **📅 Calendar** | Urgency sort §3.3; snooze §3.2; quick-log §3.3; `nextWatering` §3.1 | `renderCalendar`, `renderNextSummary`, `handleWaterNowClick` |
+| **✅ Todos** | 10 categories; filter/sort by urgency; plant chips link via `plantCareLinkHtml` | `TodoStore`, `renderTodosTab` |
+| **📖 Care Guide** | Variant selectors §3.5; inline water tile + Just watered; repot cards | `renderPlantDetail` |
 | **🤖 Ask Claude** | System prompt, SSE, cost §3.8 | `sendChatMessage`, `buildClaudeSystemPrompt` |
-| **🪴 Soil Mix** | Status engine §3.6 | `evaluateSoil`, `renderSoilTab` |
-| **📍 Placement** | Zone inversion §3.7 | `buildPlacementByZone`, `renderPlacementTab` |
-| **💧 Log & Data** | Profile CRUD; merge §3.4; JSON import/export | `PlantStore`, export handler |
+| **🪴 Soil Mix** | Status engine §3.6; plant names link to Care Guide | `evaluateSoil`, `renderSoilTab` |
+| **📍 Placement** | Window cards §3.7; dual filters; room planner §3.9 | `renderPlacementTab`, `RoomPlanStore` |
+| **💧 Log & Data** | Profile CRUD; merge §3.4; JSON import/export incl. `roomPlan` | `PlantStore`, export handler |
 
 ---
 
@@ -598,13 +684,15 @@ Renders in order:
 - Toggle: `#theme-toggle` in header.
 - Storage: `localStorage.plant_care_theme`.
 - Implementation: CSS variables under `[data-theme="light"]` (default) and `[data-theme="dark"]` on `<html>`.
+- **Light** — green/leaf palette (unchanged).
+- **Dark — "cozy den" (Moose)** — warm brown/near-black backgrounds; `--primary: #e0a94f` (golden-retriever amber), `--accent: #8fce8f` (soft leaf green), `--scheduled: #5bc8b8` (teal). Replaces the former Cowboy Bebop navy/hot-pink/yellow/cyan palette.
 - Third theme: add another `[data-theme="xxx"]` block in `css/styles.css`.
 
 ---
 
 ## 12. Build and deploy
 
-Full build algorithms: **§3.9**.
+Full build algorithms: **§3.10**.
 
 ### Single-file build (mobile)
 
@@ -613,7 +701,7 @@ cd Plant_Care
 node tools/build-single-html.js
 ```
 
-Output: `dist/Cowboy-Bebop-Green-House.html` — inlines CSS + all three JS files into one HTML document. Escapes `</script>` in source. No relative asset paths.
+Output: `dist/Mooses-Plant-Care.html` — inlines CSS + all three JS files into one HTML document. Escapes `</script>` in source. No relative asset paths.
 
 **Caveats:** no `data/watering-log.json` template load; no folder photo fallback; localStorage still holds user data.
 
@@ -624,7 +712,7 @@ node tools/build-single-html.js   # refresh single-file first
 node tools/build-pages.js         # copy runtime files to plant-care-site/
 ```
 
-Copies: `index.html`, `css/`, `js/`, `data/watering-log.json`, `data/images/README.md`, single-file → `offline/Cowboy-Bebop-Green-House.html`.
+Copies: `index.html`, `css/`, `js/`, `data/watering-log.json`, `data/images/README.md`, single-file → `offline/Mooses-Plant-Care.html`.
 
 Does **not** overwrite deploy scaffolding (`.github/workflows/deploy.yml`, `.nojekyll`, `README.md`, `SYNC.md`).
 
@@ -659,7 +747,8 @@ git add . && git commit -m "Update site" && git push
 | New tab | `index.html` nav + panel, `app.js` tab switch + render |
 | New soil type | `SOIL_TYPES`, then plant `idealSoil[]` entries |
 | New todo category | `TODO_CATEGORIES` |
-| New placement zone | `PLACEMENT_ZONES`, then all `PLANT_PLACEMENT` entries |
+| New placement window | `HOME_WINDOWS` entry + update `PLANT_LIGHT_REF`; optionally `keepOut` / thrive/solid lists |
+| New custom room type | User-facing via Room planner UI; no code change unless default seed data needed |
 | Recalibrate climate | `SEASONAL_CONFIG` in `watering.js` |
 
 ---
@@ -677,8 +766,9 @@ git add . && git commit -m "Update site" && git push
 
 ## Sources consulted
 
-- `c:\Users\szfy8z\Personal_POC\Plant_Care\js\watering.js` (L45–276, 318–337) — `SEASONAL_CONFIG`, `nextWatering`, `SnoozeStore`, `buildSchedule`
-- `c:\Users\szfy8z\Personal_POC\Plant_Care\js\app.js` (L60–83, 115–131, 812–837, 1560–1617, 1700–1771, 2589–2651, 2688–3147, 3336–3536) — merge, soil, placement, chat, snooze, urgency sort, navigation
-- `c:\Users\szfy8z\Personal_POC\Plant_Care\js\plants-data.js` (L2574–2578) — `CLAUDE_MODELS` pricing
-- `c:\Users\szfy8z\Personal_POC\Plant_Care\tools\build-single-html.js`, `build-pages.js` — §3.9
+- `c:\Users\szfy8z\Personal_POC\Plant_Care\js\watering.js` — `SEASONAL_CONFIG`, `nextWatering`, `SnoozeStore`, `RoomPlanStore`, `buildSchedule`
+- `c:\Users\szfy8z\Personal_POC\Plant_Care\js\app.js` — merge, soil, placement (`renderPlacementTab`, `plantCareLinkHtml`, `handleWaterNowClick`), chat, snooze, urgency sort, navigation
+- `c:\Users\szfy8z\Personal_POC\Plant_Care\js\plants-data.js` — `HOME_WINDOWS`, `HOME_EXPOSURES`, `PLANT_LIGHT_REF`, `CLAUDE_MODELS`
+- `c:\Users\szfy8z\Personal_POC\Plant_Care\css\styles.css` — cozy den dark-theme tokens
+- `c:\Users\szfy8z\Personal_POC\Plant_Care\tools\build-single-html.js`, `build-pages.js` — §3.10
 - `c:\Users\szfy8z\Personal_POC\Plant_Care\docs\project-requirements-and-handoff.md` — validated behavior cross-check

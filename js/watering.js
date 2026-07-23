@@ -17,6 +17,7 @@ const TODO_KEY           = "plant_care_todos_v1";
 const CLAUDE_SETTINGS_KEY= "plant_care_anthropic_settings_v1";
 const CLAUDE_HISTORY_KEY = "plant_care_chat_history_v1";
 const CARE_NOTES_KEY     = "plant_care_care_notes_v1";
+const ROOM_PLAN_KEY      = "plant_care_room_plan_v1";
 
 /*
  * Seasonal config — calibrated for INDOOR plants in AUSTIN, TX, kept at a
@@ -612,6 +613,97 @@ const CareNotesStore = {
       cleaned[plantId] = list.map(sanitizeCareNote).filter(n => n.messages.length > 0);
     });
     this.save(cleaned);
+  }
+};
+
+/* ----------- Room placement planner storage (localStorage) -----------
+ *
+ * Lets the user create their own rooms and drop owned plants into them so
+ * they can plan around real windowsill / shelf space. A plant lives in at
+ * most ONE planned room at a time, so `assignments` maps plantId -> roomId.
+ *
+ * Shape:
+ * {
+ *   rooms:       [ { id, name, note, createdAt } ],
+ *   assignments: { [plantId]: roomId }
+ * }
+ */
+const RoomPlanStore = {
+  all() {
+    try {
+      const o = JSON.parse(localStorage.getItem(ROOM_PLAN_KEY) || "{}");
+      return {
+        rooms: Array.isArray(o.rooms) ? o.rooms : [],
+        assignments: (o.assignments && typeof o.assignments === "object") ? o.assignments : {}
+      };
+    } catch { return { rooms: [], assignments: {} }; }
+  },
+  save(o) {
+    localStorage.setItem(ROOM_PLAN_KEY, JSON.stringify({
+      rooms: Array.isArray(o.rooms) ? o.rooms : [],
+      assignments: (o.assignments && typeof o.assignments === "object") ? o.assignments : {}
+    }));
+  },
+  addRoom(name, note) {
+    const o = this.all();
+    const room = {
+      id: cryptoId(),
+      name: String(name || "").slice(0, 80).trim() || "Untitled room",
+      note: String(note || "").slice(0, 200).trim(),
+      createdAt: Dates.iso(Dates.today())
+    };
+    o.rooms.push(room);
+    this.save(o);
+    return room;
+  },
+  updateRoom(id, patch) {
+    const o = this.all();
+    const room = o.rooms.find(r => r.id === id);
+    if (!room) return;
+    if (typeof patch.name === "string") room.name = patch.name.slice(0, 80).trim() || room.name;
+    if (typeof patch.note === "string") room.note = patch.note.slice(0, 200).trim();
+    this.save(o);
+  },
+  removeRoom(id) {
+    const o = this.all();
+    o.rooms = o.rooms.filter(r => r.id !== id);
+    Object.keys(o.assignments).forEach(pid => { if (o.assignments[pid] === id) delete o.assignments[pid]; });
+    this.save(o);
+  },
+  assign(plantId, roomId) {
+    if (!plantId) return;
+    const o = this.all();
+    if (roomId) o.assignments[plantId] = roomId;
+    else delete o.assignments[plantId];
+    this.save(o);
+  },
+  unassign(plantId) { this.assign(plantId, null); },
+  plantsIn(roomId) {
+    const o = this.all();
+    return Object.keys(o.assignments).filter(pid => o.assignments[pid] === roomId);
+  },
+  roomFor(plantId) {
+    return this.all().assignments[plantId] || null;
+  },
+  clearAll() { localStorage.removeItem(ROOM_PLAN_KEY); },
+  replaceAll(data) {
+    if (!data || typeof data !== "object") { this.clearAll(); return; }
+    const rooms = Array.isArray(data.rooms) ? data.rooms
+      .filter(r => r && r.id)
+      .map(r => ({
+        id: String(r.id),
+        name: String(r.name || "Untitled room").slice(0, 80),
+        note: String(r.note || "").slice(0, 200),
+        createdAt: r.createdAt || Dates.iso(Dates.today())
+      })) : [];
+    const validIds = new Set(rooms.map(r => r.id));
+    const assignments = {};
+    if (data.assignments && typeof data.assignments === "object") {
+      Object.entries(data.assignments).forEach(([pid, rid]) => {
+        if (validIds.has(rid)) assignments[pid] = rid;
+      });
+    }
+    this.save({ rooms, assignments });
   }
 };
 

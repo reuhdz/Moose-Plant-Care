@@ -4,15 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#2d6a4f" />
-  <meta name="description" content="Cowboy Bebop Green House — personal plant care guide + 2026 watering calendar" />
-  <title>Cowboy Bebop Green House</title>
+  <meta name="description" content="Moose's Plant Care — personal plant care guide + 2026 watering calendar" />
+  <title>Moose's Plant Care</title>
   <link rel="stylesheet" href="css/styles.css" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐶</text></svg>" />
 </head>
 <body>
   <header class="app-header">
     <div class="header-inner">
-      <h1>🌿 Cowboy Bebop Green House</h1>
+      <h1>🐶 Moose's Plant Care</h1>
       <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark / light theme">
         <span class="theme-icon">🌙</span>
       </button>
@@ -302,29 +302,36 @@
       <div class="placement-intro">
         <h2>📍 Plant Placement Guide</h2>
         <p class="muted">
-          Where to put each plant in your specific home, based on the room
-          conditions you've described. Each plant has an
-          <strong>Ideal</strong> spot (will thrive) and an <strong>OK</strong> spot
-          (will survive and look fine, just not at peak). Switch between the
-          <em>Rooms</em> view (zones first, plants per zone) and the
-          <em>Plants</em> view (plants first, zones per plant).
+          Where each plant should live in your actual home — 8 windows across
+          2 floors in Pflugerville, TX (~30.4°N), matched by light + humidity.
+          Each window lists what will <strong>thrive</strong>, what's
+          <strong>also solid</strong>, and what to <strong>keep out</strong>.
+          Use <em>Focus on a plant</em> to see exactly where one plant should go,
+          or <em>Focus on a room</em> to narrow the view to a single window.
         </p>
         <div class="placement-controls">
-          <div class="placement-toggle" role="tablist">
-            <button class="placement-view-btn active" data-view="rooms" role="tab" aria-selected="true">🏠 By Room</button>
-            <button class="placement-view-btn" data-view="plants" role="tab" aria-selected="false">🌿 By Plant</button>
+          <div class="placement-filter-wrap">
+            <label for="placement-filter" class="placement-filter-label" id="placement-filter-label">🌿 Focus on a plant:</label>
+            <select id="placement-filter" class="placement-filter" aria-labelledby="placement-filter-label">
+              <option value="all">All plants</option>
+            </select>
+            <button type="button" id="placement-filter-clear" class="placement-filter-clear" hidden aria-label="Clear focus">✕ Clear</button>
           </div>
           <div class="placement-filter-wrap">
-            <label for="placement-filter" class="placement-filter-label" id="placement-filter-label">Jump to:</label>
-            <select id="placement-filter" class="placement-filter" aria-labelledby="placement-filter-label">
+            <label for="placement-room-filter" class="placement-filter-label" id="placement-room-filter-label">🪟 Focus on a room:</label>
+            <select id="placement-room-filter" class="placement-filter" aria-labelledby="placement-room-filter-label">
               <option value="all">All rooms</option>
             </select>
-            <button type="button" id="placement-filter-clear" class="placement-filter-clear" hidden aria-label="Clear filter">✕</button>
+            <button type="button" id="placement-room-clear" class="placement-filter-clear" hidden aria-label="Clear room filter">✕ Clear</button>
           </div>
         </div>
       </div>
-      <div id="placement-rooms" class="placement-section"></div>
-      <div id="placement-plants" class="placement-section" hidden></div>
+      <div id="placement-focus" class="placement-focus" hidden></div>
+      <div id="placement-primer" class="placement-primer"></div>
+      <div id="placement-windows" class="placement-windows"></div>
+      <section id="placement-roomplan" class="placement-roomplan"></section>
+      <section id="placement-notes" class="placement-notes"></section>
+      <section id="placement-reference" class="placement-reference"></section>
       <section id="placement-sources" class="placement-sources"></section>
     </section>
 
@@ -466,7 +473,7 @@
   </main>
 
   <footer class="app-footer">
-    <small>🌱 See you, space cowboy … 🐱‍🚀</small>
+    <small>🐾 Made with love for Moose — good boy 🌿</small>
   </footer>
 
   <script src="js/plants-data.js"></script>

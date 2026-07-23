@@ -138,8 +138,8 @@
   function applyTheme(t) {
     document.documentElement.setAttribute("data-theme", t);
     themeBtn.querySelector(".theme-icon").textContent = t === "dark" ? "☀️" : "🌙";
-    themeBtn.setAttribute("aria-label", t === "dark" ? "Switch to light theme" : "Switch to dark (Cowboy Bebop) theme");
-    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", t === "dark" ? "#0a0b14" : "#2d6a4f");
+    themeBtn.setAttribute("aria-label", t === "dark" ? "Switch to light theme" : "Switch to dark (cozy den) theme");
+    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", t === "dark" ? "#14110d" : "#2d6a4f");
   }
   function loadTheme() {
     const saved = localStorage.getItem(THEME_KEY);
@@ -778,6 +778,12 @@
     const nextTxt = `Next: ${Dates.formatPretty(nx.nextDate)}`;
     const snoozeTxt = nx.snooze ? ` · 🕗 snoozed +${nx.snooze}d` : "";
 
+    const waterNowBtn = `
+      <div class="water-now-row">
+        <button type="button" class="water-now-btn" data-id="${escapeAttr(pid)}" title="Log a watering for ${escapeAttr(plant.displayName)} today">💧 Just watered</button>
+      </div>
+    `;
+
     const snoozeButtons = `
       <div class="snooze-row">
         <span class="snooze-label">Snooze:</span>
@@ -804,6 +810,7 @@
           ${mainLeft}
           <div><strong>${statusLabel}</strong></div>
         </div>
+        ${waterNowBtn}
         ${snoozeButtons}
       </div>
     `;
@@ -1027,7 +1034,7 @@
       const plantName = all[e.plantId]?.displayName || e.plantId;
       return `
         <div class="log-item">
-          <div class="log-name">${escapeHtml(plantName)}</div>
+          <div class="log-name">${plantCareLinkHtml(e.plantId, plantName)}</div>
           <div class="log-date">${Dates.formatPretty(e._date)}</div>
           <button class="log-remove" data-id="${escapeAttr(e.id)}" title="Remove">✕</button>
           ${e.note ? `<div class="log-note">"${escapeHtml(e.note)}"</div>` : ""}
@@ -1447,6 +1454,7 @@
       snoozes: SnoozeStore.all(),
       todos: TodoStore.all(),
       careNotes: CareNotesStore.all(),
+      roomPlan: RoomPlanStore.all(),
       exportedAt: new Date().toISOString()
     };
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
@@ -1476,12 +1484,14 @@
           if (parsed.snoozes && typeof parsed.snoozes === "object") SnoozeStore.save(parsed.snoozes);
           if (parsed.todos !== undefined) TodoStore.replaceAll(parsed.todos);
           if (parsed.careNotes !== undefined) CareNotesStore.replaceAll(parsed.careNotes);
+          if (parsed.roomPlan !== undefined) RoomPlanStore.replaceAll(parsed.roomPlan);
         } else {
           throw new Error("Unrecognized JSON shape.");
         }
         refreshAllDropdowns();
         renderRecentLog();
         renderTodosTab();
+        renderPlacementTab();
         /* If the Care Guide is currently rendering a plant, refresh its notes
          * strip so any imported saved notes show up immediately. */
         const visiblePlant = detailEl?.querySelector(".plant-notes-section");
@@ -1633,7 +1643,7 @@
         <article class="soil-card" data-plant-id="${escapeAttr(p.id)}">
           <div class="soil-card-head">
             <div>
-              <div class="soil-card-name">${escapeHtml(p.displayName)}</div>
+              <div class="soil-card-name">${plantCareLinkHtml(p.id, p.displayName)}</div>
               ${pot ? `<div class="soil-card-pot">${escapeHtml(pot)} pot</div>` : ""}
             </div>
             <span class="soil-status status-${ev.status}">${escapeHtml(ev.statusLabel)}</span>
@@ -1682,161 +1692,210 @@
   /* ============================================================
    * Placement tab
    * ============================================================ */
-  const placementRoomsEl       = document.getElementById("placement-rooms");
-  const placementPlantsEl      = document.getElementById("placement-plants");
-  const placementSourcesEl     = document.getElementById("placement-sources");
-  const placementViewBtns      = document.querySelectorAll(".placement-view-btn");
-  const placementFilterEl      = document.getElementById("placement-filter");
-  const placementFilterLabelEl = document.getElementById("placement-filter-label");
-  const placementFilterClearEl = document.getElementById("placement-filter-clear");
+  const placementFocusEl        = document.getElementById("placement-focus");
+  const placementPrimerEl       = document.getElementById("placement-primer");
+  const placementWindowsEl      = document.getElementById("placement-windows");
+  const placementNotesEl        = document.getElementById("placement-notes");
+  const placementReferenceEl    = document.getElementById("placement-reference");
+  const placementSourcesEl      = document.getElementById("placement-sources");
+  const placementFilterEl       = document.getElementById("placement-filter");
+  const placementFilterLabelEl  = document.getElementById("placement-filter-label");
+  const placementFilterClearEl  = document.getElementById("placement-filter-clear");
+  const placementRoomFilterEl   = document.getElementById("placement-room-filter");
+  const placementRoomClearEl    = document.getElementById("placement-room-clear");
+  const placementRoomPlanEl     = document.getElementById("placement-roomplan");
 
-  /* "rooms" or "plants". Mirrors the active view button. */
-  let placementCurrentView = "rooms";
-  /* Per-view persisted filter selection so switching views remembers each. */
-  const placementFilterByView = { rooms: "all", plants: "all" };
+  /* Currently focused plant id ("all" = none) and room id ("all" = none).
+   * The two are mutually exclusive — setting one clears the other. */
+  let placementFocusId = "all";
+  let placementRoomId = "all";
 
-  /* Build a reverse index: zoneId → { ideal: [plantId, ...], ok: [plantId, ...] }
-   * for the "By Room" view. */
-  function buildPlacementByZone() {
-    const byZone = {};
-    Object.keys(PLACEMENT_ZONES).forEach(zid => {
-      byZone[zid] = { ideal: [], ok: [] };
-    });
-    Object.entries(PLANT_PLACEMENT).forEach(([pid, rec]) => {
-      (rec.ideal || []).forEach(zid => {
-        if (byZone[zid]) byZone[zid].ideal.push(pid);
-      });
-      (rec.ok || []).forEach(zid => {
-        if (byZone[zid]) byZone[zid].ok.push(pid);
-      });
-    });
-    return byZone;
-  }
+  const placementPlantName = (pid) => (PlantStore.allPlants()[pid]?.displayName || pid);
+  const normWinEntry = (e) => (typeof e === "string" ? { id: e, note: "", back: false } : { id: e.id, note: e.note || "", back: !!e.back });
 
   function renderPlacementTab() {
-    if (!placementRoomsEl || !placementPlantsEl) return;
-    renderPlacementByRooms();
-    renderPlacementByPlants();
+    if (!placementWindowsEl) return;
+    renderPlacementPrimer();
+    renderPlacementWindows();
+    renderRoomPlan();
+    renderPlacementNotes();
+    renderPlacementReference();
     renderPlacementSources();
-    populatePlacementFilter(placementCurrentView);
+    populatePlacementFilter();
+    populatePlacementRoomFilter();
+    applyPlacement();
   }
 
-  function renderPlacementByRooms() {
-    const all = PlantStore.allPlants();
-    const byZone = buildPlacementByZone();
-    const zoneIds = Object.keys(PLACEMENT_ZONES);
+  /* Sun-exposure primer — what each compass direction delivers at ~30°N. */
+  function renderPlacementPrimer() {
+    if (!placementPrimerEl) return;
+    placementPrimerEl.innerHTML = `
+      <h3 class="placement-primer-head">☀️ What each exposure delivers at ~30°N</h3>
+      <div class="placement-exposure-grid">
+        ${HOME_EXPOSURES.map(x => `
+          <div class="placement-exposure-card">
+            <div class="pex-dir">${escapeHtml(x.dir)} <span class="pex-range">${escapeHtml(x.range)}</span></div>
+            <div class="pex-sun">${escapeHtml(x.sun)}</div>
+            <div class="pex-best">${escapeHtml(x.bestFor)}</div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  }
 
-    placementRoomsEl.innerHTML = zoneIds.map(zid => {
-      const z = PLACEMENT_ZONES[zid];
-      const idealNames = sortByDisplayName(byZone[zid].ideal, all)
-        .map(pid => all[pid]?.displayName || pid);
-      const okNames = sortByDisplayName(byZone[zid].ok, all)
-        .map(pid => all[pid]?.displayName || pid);
+  /* A single plant chip inside a window card. Clickable → focuses that plant.
+   * A `back:true` entry gets an asterisk meaning "best set back ~4–7 ft from
+   * the window" (the softer, indirect-light zone away from the direct beam). */
+  function placementChip(entry, cls) {
+    const { id, note, back } = normWinEntry(entry);
+    const name = placementPlantName(id);
+    const starHtml = back ? `<span class="chip-star" title="Best placed ~4–7 ft back from the window — softer, indirect light">*</span>` : "";
+    const noteHtml = note ? ` <span class="chip-note">(${escapeHtml(note)})</span>` : "";
+    const backCls = back ? " chip-back" : "";
+    return `<li class="placement-chip ${cls}${backCls}" data-plant-id="${escapeAttr(id)}"><button type="button" class="placement-chip-btn" data-plant-id="${escapeAttr(id)}" title="Focus on ${escapeAttr(name)}">${escapeHtml(name)}${starHtml}${noteHtml}</button></li>`;
+  }
 
-      const idealChips = idealNames.length
-        ? idealNames.map(n => `<li class="chip chip-ideal">${escapeHtml(n)}</li>`).join("")
-        : `<li class="chip-empty">No plants in your collection are ideal here.</li>`;
-      const okChips = okNames.length
-        ? okNames.map(n => `<li class="chip chip-ok">${escapeHtml(n)}</li>`).join("")
-        : `<li class="chip-empty">—</li>`;
+  /* Humidifier badge for a window (only for the actionable "use" / "skip" cases). */
+  function humidifierBadge(w) {
+    const h = w.humidifier;
+    if (!h) return "";
+    if (h.rec === "use")  return `<span class="pwin-hum pwin-hum-use" title="${escapeAttr(h.note || "")}">💧 Humidifier here</span>`;
+    if (h.rec === "skip") return `<span class="pwin-hum pwin-hum-skip" title="${escapeAttr(h.note || "")}">🚫 No humidifier</span>`;
+    return "";
+  }
 
+  /* Window cards — one grid, labelled by floor + room type, each showing what
+   * that room's light + humidity has to offer. */
+  function renderPlacementWindows() {
+    if (!placementWindowsEl) return;
+    const cards = HOME_WINDOWS.map(w => {
+      const thriveChips = w.thrive.length ? w.thrive.map(e => placementChip(e, "chip-thrive")).join("") : `<li class="chip-empty">—</li>`;
+      const solidChips  = w.solid.length  ? w.solid.map(e => placementChip(e, "chip-solid")).join("")  : `<li class="chip-empty">—</li>`;
+      const label = w.label || `${w.floor} · ${w.name}`;
+      const profile = (w.light || w.humidity) ? `
+            <div class="pwin-profile">
+              ${w.tier ? `<p class="pwin-tierline"><strong>☀️ ${escapeHtml(w.tier)}</strong></p>` : ""}
+              ${w.light ? `<p><strong>Light.</strong> ${escapeHtml(w.light)}</p>` : ""}
+              ${w.humidity ? `<p><strong>Humidity.</strong> ${escapeHtml(w.humidity)}</p>` : ""}
+            </div>` : "";
       return `
-        <article class="placement-zone-card" data-zone-id="${escapeAttr(zid)}">
-          <header class="placement-zone-head">
-            <div class="placement-zone-title">
-              <span class="placement-zone-icon">${z.icon}</span>
-              <span>${escapeHtml(z.displayName)}</span>
-            </div>
-            <div class="placement-zone-light">${escapeHtml(z.lightProfile)}</div>
+        <article class="placement-window-card" data-window-id="${escapeAttr(w.id)}">
+          <header class="pwin-head">
+            <span class="pwin-name">${escapeHtml(label)}</span>
+            ${humidifierBadge(w)}
           </header>
-          <p class="placement-zone-desc">${escapeHtml(z.description)}</p>
-          <div class="placement-zone-meta">
-            <div><strong>💧 Humidity:</strong> ${escapeHtml(z.humidity)}</div>
-            <div><strong>🎯 Best for:</strong> ${escapeHtml(z.bestFor)}</div>
-            ${z.cautions ? `<div class="placement-zone-caution"><strong>${escapeHtml(z.cautions)}</strong></div>` : ""}
+          ${profile}
+          <div class="pwin-group">
+            <h4 class="pwin-h pwin-h-thrive">Thrive here</h4>
+            <ul class="placement-chip-list">${thriveChips}</ul>
           </div>
-          <div class="placement-zone-plants">
-            <div class="placement-zone-plants-section">
-              <h4>✅ Ideal here</h4>
-              <ul class="placement-chip-list">${idealChips}</ul>
-            </div>
-            <div class="placement-zone-plants-section">
-              <h4>👍 Also OK</h4>
-              <ul class="placement-chip-list">${okChips}</ul>
-            </div>
+          <div class="pwin-group">
+            <h4 class="pwin-h pwin-h-solid">Also solid</h4>
+            <ul class="placement-chip-list">${solidChips}</ul>
           </div>
+          <p class="pwin-avoid"><strong>Keep out.</strong> ${escapeHtml(w.avoid)}</p>
         </article>
       `;
     }).join("");
+    const legend = `<p class="placement-back-key"><span class="chip-star">*</span> = thrives/solid in this room, but <strong>set back ~4–7 ft from the window</strong> (the softer, bright-indirect zone off the direct beam). Unmarked plants want the brightest spot right at the glass.</p>`;
+    placementWindowsEl.innerHTML = `${legend}<div class="placement-window-grid">${cards}</div>`;
   }
 
-  function renderPlacementByPlants() {
+  /* Special-case callouts. */
+  function renderPlacementNotes() {
+    if (!placementNotesEl) return;
+    placementNotesEl.innerHTML = `
+      <h3 class="placement-notes-head">⚠️ Tricky placements — read these first</h3>
+      <div class="placement-notes-grid">
+        ${HOME_PLACEMENT_NOTES.map(n => `
+          <div class="placement-note placement-note-${escapeAttr(n.tone)}">
+            <div class="pnote-title">${escapeHtml(n.title)}</div>
+            <div class="pnote-body">${escapeHtml(n.body)}</div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  }
+
+  /* Full per-plant reference table (light + humidity + best windows). */
+  function renderPlacementReference() {
+    if (!placementReferenceEl) return;
     const all = PlantStore.allPlants();
     const ownedIds = sortByDisplayName(PlantStore.ownedIds(), all);
-
-    placementPlantsEl.innerHTML = ownedIds.map(pid => {
-      const plant = all[pid];
-      if (!plant) return "";
-      const rec = PLANT_PLACEMENT[pid];
-
-      const zoneCard = (zid, badge) => {
-        const z = PLACEMENT_ZONES[zid];
-        if (!z) return "";
-        return `
-          <li class="placement-zone-chip ${badge}">
-            <span class="zone-icon">${z.icon}</span>
-            <span class="zone-name">${escapeHtml(z.displayName)}</span>
-            <span class="zone-light muted">${escapeHtml(z.lightProfile)}</span>
-          </li>
-        `;
-      };
-
-      if (!rec) {
-        return `
-          <article class="placement-plant-card" data-plant-id="${escapeAttr(pid)}">
-            <header class="placement-plant-head">
-              <h3>${escapeHtml(plant.displayName)}</h3>
-            </header>
-            <p class="muted">No placement guidance has been researched for this plant yet.</p>
-          </article>
-        `;
+    const rows = ownedIds.map(pid => {
+      const p = all[pid]; if (!p) return "";
+      const r = PLANT_LIGHT_REF[pid];
+      const nameLink = plantCareLinkHtml(pid, p.displayName);
+      if (!r) {
+        return `<tr data-plant-id="${escapeAttr(pid)}"><td>${nameLink}</td><td class="muted">—</td><td class="muted">—</td><td class="muted">No guidance yet</td></tr>`;
       }
-
-      const ideal = (rec.ideal || []).map(z => zoneCard(z, "ideal")).join("");
-      const ok    = (rec.ok    || []).map(z => zoneCard(z, "ok"   )).join("");
-      const avoid = (rec.avoid || []).map(zid => {
-        const z = PLACEMENT_ZONES[zid];
-        return z ? `<span class="avoid-tag">${z.icon} ${escapeHtml(z.displayName)}</span>` : "";
-      }).join("");
-
-      return `
-        <article class="placement-plant-card" data-plant-id="${escapeAttr(pid)}">
-          <header class="placement-plant-head">
-            <h3>${escapeHtml(plant.displayName)}</h3>
-            ${plant.potSize ? `<span class="placement-plant-pot">${escapeHtml(plant.potSize)}</span>` : ""}
-          </header>
-          ${ideal ? `
-            <div class="placement-section-block">
-              <h4>✅ Ideal placement</h4>
-              <ul class="placement-zone-list">${ideal}</ul>
-            </div>` : ""}
-          ${ok ? `
-            <div class="placement-section-block">
-              <h4>👍 Also OK</h4>
-              <ul class="placement-zone-list">${ok}</ul>
-            </div>` : ""}
-          ${avoid ? `
-            <div class="placement-section-block">
-              <h4>⛔ Avoid</h4>
-              <div class="placement-avoid-list">${avoid}</div>
-            </div>` : ""}
-          ${rec.rationale ? `
-            <div class="placement-rationale">
-              <strong>Why:</strong> ${escapeHtml(rec.rationale)}
-            </div>` : ""}
-        </article>
-      `;
+      const dot = r.flag ? `<span class="ref-dot ref-dot-${escapeAttr(r.flag)}" title="${escapeAttr(r.flag)}"></span>` : "";
+      const humMark = r.hum ? ` <span class="ref-hum" title="Benefits from the humidifier">💧</span>` : "";
+      return `<tr data-plant-id="${escapeAttr(pid)}"><td>${dot}${nameLink}${humMark}</td><td>${escapeHtml(r.light)}</td><td>${escapeHtml(r.humidity)}</td><td>${escapeHtml(r.best)}</td></tr>`;
     }).join("");
+    placementReferenceEl.innerHTML = `
+      <h3 class="placement-ref-head">🌿 Full plant reference (${ownedIds.length})</h3>
+      <div class="placement-ref-scroll">
+        <table class="placement-ref-table">
+          <thead><tr><th>Plant</th><th>Light need</th><th>Humidity</th><th>Best window(s)</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+      <p class="placement-ref-key muted">Dot key: <span class="ref-dot ref-dot-info"></span> humidity/light caveat · <span class="ref-dot ref-dot-warning"></span> repot first · <span class="ref-dot ref-dot-danger"></span> strict rule (never a bathroom). <span class="ref-hum">💧</span> = benefits from the humidifier.</p>
+    `;
+  }
+
+  /* "Focus on a plant" summary card — light/humidity needs + per-window verdict. */
+  function renderPlacementFocus() {
+    if (!placementFocusEl) return;
+    const pid = placementFocusId;
+    if (pid === "all") { placementFocusEl.hidden = true; placementFocusEl.innerHTML = ""; return; }
+    const all = PlantStore.allPlants();
+    const p = all[pid];
+    if (!p) { placementFocusEl.hidden = true; placementFocusEl.innerHTML = ""; return; }
+    const r = PLANT_LIGHT_REF[pid];
+
+    const verdicts = HOME_WINDOWS.map(w => {
+      const t = w.thrive.map(normWinEntry).find(e => e.id === pid);
+      const s = w.solid.map(normWinEntry).find(e => e.id === pid);
+      const avoid = (w.keepOut || []).includes(pid);
+      const hit = t || s || {};
+      const verdict = t ? "thrive" : (s ? "solid" : (avoid ? "avoid" : "none"));
+      const rank = { thrive: 0, solid: 1, avoid: 2, none: 3 }[verdict];
+      return { w, verdict, note: hit.note || "", back: !!hit.back, rank };
+    }).sort((a, b) => a.rank - b.rank);
+
+    const label = { thrive: "Thrive", solid: "Solid", avoid: "Keep out", none: "Not listed" };
+    const meta = r ? `
+      <div class="pfocus-meta">
+        <div><strong>Light:</strong> ${escapeHtml(r.light)}</div>
+        <div><strong>Humidity:</strong> ${escapeHtml(r.humidity)}</div>
+        <div><strong>Best:</strong> ${escapeHtml(r.best)}</div>
+      </div>` : "";
+    const humHint = (r && r.hum) ? `
+      <div class="pfocus-hum">💧 Benefits from the humidifier — put the humidifier in the enclosed <strong>2F Room 2</strong> (the vaulted 1F living room is too open to hold humidity) and huddle this plant within 2–3 ft of it.</div>` : "";
+
+    placementFocusEl.hidden = false;
+    placementFocusEl.innerHTML = `
+      <article class="placement-focus-card">
+        <header class="pfocus-head">
+          <h3>Where should ${plantCareLinkHtml(pid, p.displayName)} go?</h3>
+          <button type="button" class="placement-focus-close" aria-label="Clear focus">✕</button>
+        </header>
+        ${meta}
+        ${humHint}
+        <ul class="pfocus-verdicts">
+          ${verdicts.map(v => `
+            <li class="pfv pfv-${v.verdict}">
+              <span class="pfv-badge">${label[v.verdict]}</span>
+              <span class="pfv-win">${escapeHtml(v.w.label || v.w.name)}</span>
+              ${v.back ? `<span class="pfv-back" title="Set back ~4–7 ft from the window">↩ set back 4–7 ft</span>` : ""}
+              ${v.note ? `<span class="pfv-note">${escapeHtml(v.note)}</span>` : ""}
+            </li>
+          `).join("")}
+        </ul>
+      </article>
+    `;
   }
 
   function renderPlacementSources() {
@@ -1855,84 +1914,272 @@
     `;
   }
 
-  /* Populate the filter dropdown with options matching the active view.
-   * Rooms view → list zones; Plants view → list owned plants. */
-  function populatePlacementFilter(view) {
+  /* Populate the "Focus on a plant" dropdown with all owned plants. */
+  function populatePlacementFilter() {
     if (!placementFilterEl) return;
     const all = PlantStore.allPlants();
-    const collator = new Intl.Collator(undefined, { sensitivity: "base", numeric: true });
-    let html = "";
-
-    if (view === "rooms") {
-      placementFilterLabelEl && (placementFilterLabelEl.textContent = "Jump to room:");
-      html += `<option value="all">All rooms (${Object.keys(PLACEMENT_ZONES).length})</option>`;
-      const zoneEntries = Object.entries(PLACEMENT_ZONES)
-        .map(([zid, z]) => ({ zid, name: z.displayName, icon: z.icon || "" }))
-        .sort((a, b) => collator.compare(a.name, b.name));
-      zoneEntries.forEach(({ zid, name, icon }) => {
-        html += `<option value="${escapeAttr(zid)}">${icon} ${escapeHtml(name)}</option>`;
-      });
-    } else {
-      placementFilterLabelEl && (placementFilterLabelEl.textContent = "Jump to plant:");
-      const ownedIds = sortByDisplayName(PlantStore.ownedIds(), all);
-      html += `<option value="all">All plants (${ownedIds.length})</option>`;
-      ownedIds.forEach(pid => {
-        const p = all[pid];
-        if (!p) return;
-        html += `<option value="${escapeAttr(pid)}">${escapeHtml(p.displayName)}</option>`;
-      });
-    }
+    const ownedIds = sortByDisplayName(PlantStore.ownedIds(), all);
+    let html = `<option value="all">All plants (${ownedIds.length})</option>`;
+    ownedIds.forEach(pid => {
+      const p = all[pid];
+      if (!p) return;
+      html += `<option value="${escapeAttr(pid)}">${escapeHtml(p.displayName)}</option>`;
+    });
     placementFilterEl.innerHTML = html;
-    placementFilterEl.value = placementFilterByView[view] || "all";
-    applyPlacementFilter();
+    if (!ownedIds.includes(placementFocusId)) placementFocusId = "all";
+    placementFilterEl.value = placementFocusId;
   }
 
-  /* Show/hide cards based on the current dropdown value. */
-  function applyPlacementFilter() {
-    if (!placementFilterEl) return;
-    const view = placementCurrentView;
-    const value = placementFilterEl.value || "all";
-    placementFilterByView[view] = value;
-
-    const container = view === "rooms" ? placementRoomsEl : placementPlantsEl;
-    const cards = container.querySelectorAll(view === "rooms" ? ".placement-zone-card" : ".placement-plant-card");
-    const attr  = view === "rooms" ? "zoneId" : "plantId";
-
-    cards.forEach(card => {
-      const match = value === "all" || card.dataset[attr] === value;
-      card.hidden = !match;
+  /* Populate the "Focus on a room" dropdown from the window definitions. */
+  function populatePlacementRoomFilter() {
+    if (!placementRoomFilterEl) return;
+    let html = `<option value="all">All rooms (${HOME_WINDOWS.length})</option>`;
+    HOME_WINDOWS.forEach(w => {
+      const label = w.label || `${w.floor} · ${w.name}`;
+      html += `<option value="${escapeAttr(w.id)}">${escapeHtml(label)}</option>`;
     });
+    placementRoomFilterEl.innerHTML = html;
+    if (!HOME_WINDOWS.some(w => w.id === placementRoomId)) placementRoomId = "all";
+    placementRoomFilterEl.value = placementRoomId;
+  }
 
-    if (placementFilterClearEl) {
-      placementFilterClearEl.hidden = value === "all";
+  /* Apply both the plant focus and the room filter. The two are mutually
+   * exclusive: a room filter shows only that room's card; a plant focus
+   * highlights the plant across all cards + the reference table. */
+  function applyPlacement() {
+    const pid = placementFocusId;
+    const rid = placementRoomId;
+    renderPlacementFocus();
+
+    if (placementWindowsEl) {
+      placementWindowsEl.querySelectorAll(".placement-window-card").forEach(card => {
+        card.classList.remove("win-thrive", "win-solid", "win-avoid", "win-dim");
+        card.querySelectorAll(".placement-chip").forEach(ch => ch.classList.remove("chip-focus"));
+        // Room filter: hide non-matching cards entirely.
+        card.hidden = rid !== "all" && card.dataset.windowId !== rid;
+        if (pid === "all") return;
+        const w = HOME_WINDOWS.find(x => x.id === card.dataset.windowId);
+        if (!w) return;
+        const inThrive = w.thrive.map(normWinEntry).some(e => e.id === pid);
+        const inSolid  = w.solid.map(normWinEntry).some(e => e.id === pid);
+        const inAvoid  = (w.keepOut || []).includes(pid);
+        card.classList.add(inThrive ? "win-thrive" : inSolid ? "win-solid" : inAvoid ? "win-avoid" : "win-dim");
+        card.querySelectorAll(".placement-chip").forEach(ch => {
+          if (ch.dataset.plantId === pid) ch.classList.add("chip-focus");
+        });
+      });
+    }
+
+    if (placementReferenceEl) {
+      placementReferenceEl.querySelectorAll("tbody tr").forEach(tr => {
+        tr.classList.remove("row-focus", "row-dim");
+        if (pid === "all") return;
+        tr.classList.add(tr.dataset.plantId === pid ? "row-focus" : "row-dim");
+      });
+    }
+
+    if (placementFilterClearEl) placementFilterClearEl.hidden = pid === "all";
+    if (placementRoomClearEl)   placementRoomClearEl.hidden   = rid === "all";
+    if (placementFilterEl && placementFilterEl.value !== pid) placementFilterEl.value = pid;
+    if (placementRoomFilterEl && placementRoomFilterEl.value !== rid) placementRoomFilterEl.value = rid;
+  }
+
+  function setPlacementFocus(pid) {
+    placementFocusId = pid || "all";
+    if (placementFocusId !== "all") placementRoomId = "all"; // mutually exclusive
+    applyPlacement();
+    if (placementFocusId !== "all" && placementFocusEl) {
+      placementFocusEl.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }
 
-  /* View toggle: Rooms ↔ Plants */
-  placementViewBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const view = btn.dataset.view;
-      placementCurrentView = view;
-      placementViewBtns.forEach(b => {
-        const active = b === btn;
-        b.classList.toggle("active", active);
-        b.setAttribute("aria-selected", active ? "true" : "false");
-      });
-      placementRoomsEl.hidden  = view !== "rooms";
-      placementPlantsEl.hidden = view !== "plants";
-      populatePlacementFilter(view);
-    });
-  });
+  function setPlacementRoom(rid) {
+    placementRoomId = rid || "all";
+    if (placementRoomId !== "all") placementFocusId = "all"; // mutually exclusive
+    applyPlacement();
+    if (placementRoomId !== "all" && placementWindowsEl) {
+      const card = placementWindowsEl.querySelector(`.placement-window-card[data-window-id="${cssEscape(placementRoomId)}"]`);
+      if (card) card.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
 
   if (placementFilterEl) {
-    placementFilterEl.addEventListener("change", applyPlacementFilter);
+    placementFilterEl.addEventListener("change", () => setPlacementFocus(placementFilterEl.value));
   }
   if (placementFilterClearEl) {
     placementFilterClearEl.addEventListener("click", () => {
-      if (!placementFilterEl) return;
-      placementFilterEl.value = "all";
-      applyPlacementFilter();
-      placementFilterEl.focus();
+      setPlacementFocus("all");
+      if (placementFilterEl) placementFilterEl.focus();
+    });
+  }
+  if (placementRoomFilterEl) {
+    placementRoomFilterEl.addEventListener("change", () => setPlacementRoom(placementRoomFilterEl.value));
+  }
+  if (placementRoomClearEl) {
+    placementRoomClearEl.addEventListener("click", () => {
+      setPlacementRoom("all");
+      if (placementRoomFilterEl) placementRoomFilterEl.focus();
+    });
+  }
+  /* Click a plant chip in any window card → focus that plant. */
+  if (placementWindowsEl) {
+    placementWindowsEl.addEventListener("click", (e) => {
+      const btn = e.target.closest(".placement-chip-btn");
+      if (btn && btn.dataset.plantId) setPlacementFocus(btn.dataset.plantId);
+    });
+  }
+  /* Click a reference-table row → focus that plant (unless the click was on the
+   * plant-name Care-Guide link, which navigates instead). */
+  if (placementReferenceEl) {
+    placementReferenceEl.addEventListener("click", (e) => {
+      if (e.target.closest(".plant-care-link")) return;
+      const tr = e.target.closest("tbody tr");
+      if (tr && tr.dataset.plantId) setPlacementFocus(tr.dataset.plantId);
+    });
+  }
+  /* Focus card ✕ closes the focus. */
+  if (placementFocusEl) {
+    placementFocusEl.addEventListener("click", (e) => {
+      if (e.target.closest(".placement-focus-close")) setPlacementFocus("all");
+    });
+  }
+
+  /* ------------------------------------------------------------------
+   * "Create a room" planner — build your own rooms, drop owned plants
+   * into them, and watch the "left to place" list shrink so you can
+   * plan around real windowsill / shelf space.
+   * ------------------------------------------------------------------ */
+  function renderRoomPlan() {
+    if (!placementRoomPlanEl) return;
+    const all = PlantStore.allPlants();
+    const ownedIds = sortByDisplayName(PlantStore.ownedIds(), all);
+    const plan = RoomPlanStore.all();
+    const roomExists = (rid) => plan.rooms.some(r => r.id === rid);
+    const unassignedIds = ownedIds.filter(pid => !plan.assignments[pid] || !roomExists(plan.assignments[pid]));
+    const assignedCount = ownedIds.length - unassignedIds.length;
+
+    /* Preset dropdown = the real home rooms (from HOME_WINDOWS), minus any the
+     * user has already added, so they can one-click create a plan room named
+     * after a known room. "＋ Create a new room…" is appended for custom names. */
+    const existingRoomNames = new Set(plan.rooms.map(r => r.name));
+    const presetOpts = (typeof HOME_WINDOWS !== "undefined" ? HOME_WINDOWS : [])
+      .map(w => w.label || `${w.floor} · ${w.name}`)
+      .filter(label => !existingRoomNames.has(label))
+      .map(label => `<option value="${escapeAttr(label)}">${escapeHtml(label)}</option>`)
+      .join("");
+
+    const roomCards = plan.rooms.map(room => {
+      const pids = ownedIds.filter(pid => plan.assignments[pid] === room.id);
+      const chips = pids.length
+        ? pids.map(pid => `<li class="rp-chip">${plantCareLinkHtml(pid, all[pid].displayName)}<button type="button" class="rp-remove" data-rp-unassign="${escapeAttr(pid)}" title="Remove from ${escapeAttr(room.name)}" aria-label="Remove">✕</button></li>`).join("")
+        : `<li class="rp-empty">No plants yet — add some below.</li>`;
+      const addOptions = unassignedIds.map(pid => `<option value="${escapeAttr(pid)}">${escapeHtml(all[pid].displayName)}</option>`).join("");
+      return `
+        <article class="rp-room" data-room-id="${escapeAttr(room.id)}">
+          <header class="rp-room-head">
+            <div class="rp-room-title">
+              <span class="rp-room-name">${escapeHtml(room.name)}</span>
+              <span class="rp-room-count">${pids.length} plant${pids.length === 1 ? "" : "s"}</span>
+            </div>
+            <button type="button" class="rp-room-delete" data-rp-delete-room="${escapeAttr(room.id)}" title="Delete room" aria-label="Delete room">🗑</button>
+          </header>
+          ${room.note ? `<p class="rp-room-note">${escapeHtml(room.note)}</p>` : ""}
+          <ul class="rp-chip-list">${chips}</ul>
+          <div class="rp-add-row">
+            <select class="rp-add-select" data-rp-add-room="${escapeAttr(room.id)}" ${unassignedIds.length ? "" : "disabled"}>
+              <option value="">${unassignedIds.length ? "+ Add a plant…" : "All plants placed"}</option>
+              ${addOptions}
+            </select>
+          </div>
+        </article>
+      `;
+    }).join("");
+
+    const unassignedChips = unassignedIds.length
+      ? unassignedIds.map(pid => `<li class="rp-chip rp-chip-unassigned">${plantCareLinkHtml(pid, all[pid].displayName)}</li>`).join("")
+      : `<li class="rp-empty">🎉 Every plant is placed in a room.</li>`;
+
+    placementRoomPlanEl.innerHTML = `
+      <h3 class="placement-roomplan-head">🗺️ Plan your rooms</h3>
+      <p class="rp-intro muted">Create rooms that match your real windowsills & shelves, drop plants into them, and watch the "left to place" list shrink so you can plan around available space.</p>
+      <form id="rp-create-form" class="rp-create">
+        <select id="rp-room-preset" class="rp-input rp-preset-select" aria-label="Choose one of your existing rooms or create a new one">
+          <option value="">Choose an existing room…</option>
+          ${presetOpts}
+          <option value="__custom__">＋ Create a new room…</option>
+        </select>
+        <input type="text" id="rp-name" class="rp-input" placeholder="Room / spot name" maxlength="80" />
+        <input type="text" id="rp-note" class="rp-input rp-input-note" placeholder="Space note (optional, e.g. fits 4 small pots)" maxlength="200" />
+        <button type="submit" class="rp-create-btn">+ Create room</button>
+      </form>
+      <div class="rp-progress">${assignedCount} of ${ownedIds.length} plants placed · <strong>${unassignedIds.length} left</strong></div>
+      <div class="rp-rooms-grid">${roomCards || `<p class="rp-empty rp-empty-rooms">No rooms yet — create your first one above.</p>`}</div>
+      <div class="rp-unassigned">
+        <h4 class="rp-unassigned-head">🪴 Left to place (${unassignedIds.length})</h4>
+        <ul class="rp-chip-list">${unassignedChips}</ul>
+      </div>
+    `;
+  }
+
+  if (placementRoomPlanEl) {
+    /* Create a room. */
+    placementRoomPlanEl.addEventListener("submit", (e) => {
+      const form = e.target.closest("#rp-create-form");
+      if (!form) return;
+      e.preventDefault();
+      const nameEl = document.getElementById("rp-name");
+      const noteEl = document.getElementById("rp-note");
+      const name = (nameEl?.value || "").trim();
+      if (!name) { nameEl?.focus(); return; }
+      const room = RoomPlanStore.addRoom(name, noteEl?.value || "");
+      flash(`Room created: ${room.name}`);
+      renderRoomPlan();
+      document.getElementById("rp-name")?.focus();
+    });
+    placementRoomPlanEl.addEventListener("change", (e) => {
+      const all = PlantStore.allPlants();
+
+      /* Create-form preset picker: choosing a known home room prefills the name
+       * input; "＋ Create a new room…" clears it for a custom name. */
+      const preset = e.target.closest("#rp-room-preset");
+      if (preset) {
+        const nameEl = document.getElementById("rp-name");
+        if (!nameEl) return;
+        if (preset.value === "__custom__") { nameEl.value = ""; nameEl.focus(); }
+        else if (preset.value) { nameEl.value = preset.value; nameEl.focus(); }
+        return;
+      }
+
+      /* Room card's "+ Add a plant…" picks a plant for that room. */
+      const addSel = e.target.closest(".rp-add-select");
+      if (addSel && addSel.dataset.rpAddRoom) {
+        const pid = addSel.value;
+        if (!pid) return;
+        RoomPlanStore.assign(pid, addSel.dataset.rpAddRoom);
+        flash(`Added ${all[pid]?.displayName || pid} to the room`);
+        renderRoomPlan();
+      }
+    });
+    /* Remove a plant from a room, or delete a room. */
+    placementRoomPlanEl.addEventListener("click", (e) => {
+      const rm = e.target.closest("[data-rp-unassign]");
+      if (rm) {
+        RoomPlanStore.unassign(rm.getAttribute("data-rp-unassign"));
+        renderRoomPlan();
+        return;
+      }
+      const del = e.target.closest("[data-rp-delete-room]");
+      if (del) {
+        const rid = del.getAttribute("data-rp-delete-room");
+        const room = RoomPlanStore.all().rooms.find(r => r.id === rid);
+        const n = RoomPlanStore.plantsIn(rid).length;
+        const msg = n ? `Delete "${room?.name || "room"}"? Its ${n} plant${n === 1 ? "" : "s"} will move back to "Left to place".` : `Delete "${room?.name || "room"}"?`;
+        if (confirm(msg)) {
+          RoomPlanStore.removeRoom(rid);
+          flash("Room deleted");
+          renderRoomPlan();
+        }
+      }
     });
   }
 
@@ -2033,7 +2280,7 @@
     const cat = TODO_CATEGORY_MAP[t.category] || TODO_CATEGORY_MAP.other;
     const plant = t.plantId ? all[t.plantId] : null;
     const plantChip = plant
-      ? `<span class="todo-chip todo-chip-plant" title="${escapeAttr(plant.displayName)}">🌿 ${escapeHtml(plant.displayName)}</span>`
+      ? `<span class="todo-chip todo-chip-plant">🌿 ${plantCareLinkHtml(t.plantId, plant.displayName)}</span>`
       : `<span class="todo-chip todo-chip-plant" title="General — not plant-specific">🏠 General</span>`;
 
     const due = todoDueMeta(t);
@@ -2436,6 +2683,24 @@
     const pid = link.getAttribute("data-care-plant-id");
     if (pid) openCareGuideForPlant(pid);
   }
+
+  /* Reusable inline "plant name" that links to that plant's Care Guide.
+   * Use anywhere a plant is mentioned as text so the name is always tappable. */
+  function plantCareLinkHtml(pid, text) {
+    const label = text || (PlantStore.allPlants()[pid]?.displayName) || pid || "";
+    if (!pid || !PlantStore.allPlants()[pid]) return escapeHtml(label);
+    return `<button type="button" class="plant-care-link" data-care-plant-id="${escapeAttr(pid)}" title="Open ${escapeAttr(label)} care guide">${escapeHtml(label)}</button>`;
+  }
+
+  /* One document-wide delegated handler so every .plant-care-link anywhere in
+   * the app jumps to the Care Guide, regardless of which view rendered it. */
+  document.addEventListener("click", (e) => {
+    const link = e.target.closest(".plant-care-link");
+    if (!link) return;
+    e.preventDefault();
+    const pid = link.getAttribute("data-care-plant-id");
+    if (pid) openCareGuideForPlant(pid);
+  });
 
   /* "Ask Claude" link on the Care Guide jumps to the Chat tab with the plant
    * pre-selected as context, so the next question is already focused. */
@@ -3538,6 +3803,33 @@ Other plants in collection (for cross-reference): ${ownedIds.filter(id => id !==
   /* Tile plant-name → Care Guide navigation (calendar tiles live in nextSummary).
    * The name-link is not a .snooze-btn, so the snooze handlers ignore it. */
   if (nextSummary) nextSummary.addEventListener("click", handleTileNameClick);
+
+  /* "💧 Just watered" button on a reminder tile: log a watering for today, which
+   * clears any snooze and bumps the plant down the queue. Wired on both stable
+   * parents (calendar summary + Care Guide detail tile). */
+  function handleWaterNowClick(e) {
+    const btn = e.target.closest(".water-now-btn");
+    if (!btn) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const id = btn.dataset.id;
+    if (!id) return;
+    const all = PlantStore.allPlants();
+    const name = all[id]?.displayName || id;
+    const today = Dates.iso(Dates.today());
+    const already = WaterLog.all().some(en => en.plantId === id && en.date === today);
+    if (already) {
+      flash(`${name} already logged as watered today 💧`);
+      return;
+    }
+    WaterLog.add({ plantId: id, date: today, note: "" });
+    flash(`Logged: watered ${name} today 💧`);
+    renderCalendar();
+    renderRecentLog();
+    refreshPlantWateringSectionIfVisible(id);
+  }
+  if (nextSummary) nextSummary.addEventListener("click", handleWaterNowClick);
+  if (detailEl)    detailEl.addEventListener("click", handleWaterNowClick);
 
   function init() {
     loadTheme();

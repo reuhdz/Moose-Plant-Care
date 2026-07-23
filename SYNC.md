@@ -24,7 +24,7 @@ node tools/build-pages.js         # copy runtime files into ../plant-care-site
 | `js/app.js`                              | `js/app.js`                              |
 | `data/watering-log.json`                 | `data/watering-log.json`                 |
 | `data/images/README.md`                  | `data/images/README.md`                  |
-| `dist/Cowboy-Bebop-Green-House.html`     | `offline/Cowboy-Bebop-Green-House.html`  |
+| `dist/Mooses-Plant-Care.html`            | `offline/Mooses-Plant-Care.html`         |
 
 It **never** overwrites the Pages-only files that live only here:
 `README.md`, `.nojekyll`, `.gitignore`, `.github/workflows/deploy.yml`, this
