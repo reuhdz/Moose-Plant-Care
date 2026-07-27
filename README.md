@@ -1,4 +1,4 @@
-# 🌿 Cowboy Bebop Green House — Plant Care Hub
+# 🐶 Moose's Plant Care
 
 A fully **offline-capable, static** plant-care website that runs anywhere — laptop, phone, or tablet. Tracks watering schedules, per-plant care guides, soil mixes, placement recommendations, todos, and an optional in-app Claude chat (bring your own API key).
 
@@ -23,7 +23,7 @@ This folder is **ready to publish to GitHub Pages** — it's plain HTML/CSS/JS w
 │   ├── watering-log.json      # empty starter template (your real data lives in your browser)
 │   └── images/                # (kept empty in the repo — your photos stay local)
 ├── offline/
-│   └── Cowboy-Bebop-Green-House.html   # single-file build you can save straight to a phone
+│   └── Mooses-Plant-Care.html          # single-file build you can save straight to a phone
 ├── .nojekyll                  # tells Pages to serve files as-is (no Jekyll processing)
 ├── .gitignore                 # keeps your personal exports/photos out of the repo
 └── .github/workflows/deploy.yml   # OPTIONAL auto-deploy workflow (see Method B)
@@ -106,7 +106,7 @@ npx serve .
 php -S localhost:8000
 ```
 
-Or, for the phone, just open `offline/Cowboy-Bebop-Green-House.html` directly —
+Or, for the phone, just open `offline/Mooses-Plant-Care.html` directly —
 it's a single self-contained file with everything inlined.
 
 ---

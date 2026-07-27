@@ -17,6 +17,7 @@ const TODO_KEY           = "plant_care_todos_v1";
 const CLAUDE_SETTINGS_KEY= "plant_care_anthropic_settings_v1";
 const CLAUDE_HISTORY_KEY = "plant_care_chat_history_v1";
 const CARE_NOTES_KEY     = "plant_care_care_notes_v1";
+const ROOM_PLAN_KEY      = "plant_care_room_plan_v1";
 
 /*
  * Seasonal config — calibrated for INDOOR plants in AUSTIN, TX, kept at a
@@ -161,10 +162,15 @@ function buildSchedule(plantId, logEntries, explicitPlant) {
    * stuck in the past and made the snooze look broken. */
   let snoozeApplied = false;
   const today = Dates.today();
+  /* Anchor the snooze "from now" to the day the snooze was SET (snoozedAt),
+   * NOT to a moving `today`. Using `today` made the next date drift forward
+   * by one day every day the plant stayed overdue, so the snooze never
+   * settled. A snooze is a ONE-TIME push, not a rolling daily delay. */
+  const snoozeAnchor = (snooze && snooze.snoozedAt) ? Dates.fromIso(snooze.snoozedAt) : today;
   while (nextDate <= endOfYear) {
     let dateToPush = nextDate;
     if (snooze && snooze.addDays > 0 && !snoozeApplied) {
-      const base = nextDate < today ? today : nextDate;
+      const base = nextDate < snoozeAnchor ? snoozeAnchor : nextDate;
       dateToPush = Dates.addDays(base, snooze.addDays);
       snoozeApplied = true;
     }
@@ -223,7 +229,10 @@ function nextWatering(plantId, logEntries, explicitPlant) {
      * yellow ("In Nd") or blue ("In Nd"), and the snoozed-by line appears
      * underneath. */
     const baseNext = today;
-    const nextNoLog = snoozeDays > 0 ? Dates.addDays(baseNext, snoozeDays) : baseNext;
+    /* Anchor to when the snooze was set (snoozedAt) so a "no log yet + snoozed"
+     * plant settles on a fixed date instead of sliding forward every day. */
+    const snoozeAnchor = snooze && snooze.snoozedAt ? Dates.fromIso(snooze.snoozedAt) : today;
+    const nextNoLog = snoozeDays > 0 ? Dates.addDays(snoozeAnchor, snoozeDays) : baseNext;
     const daysUntilNoLog = Dates.daysBetween(today, nextNoLog);
     let statusNoLog;
     if (daysUntilNoLog <= 0) statusNoLog = "due";
@@ -253,7 +262,12 @@ function nextWatering(plantId, logEntries, explicitPlant) {
    *     feels broken.
    *   - If the next-watering is in the future, snooze just delays it by N. */
   if (snoozeDays > 0) {
-    const baseForSnooze = next < today ? today : next;
+    /* Anchor to the day the snooze was SET (snoozedAt), not a moving `today`,
+     * so the recommendation doesn't creep forward one day at a time while the
+     * plant stays overdue. A snooze is a ONE-TIME push, not a rolling delay.
+     * Once (snoozedAt + N) passes, the plant correctly reads overdue again. */
+    const snoozeAnchor = snooze && snooze.snoozedAt ? Dates.fromIso(snooze.snoozedAt) : today;
+    const baseForSnooze = next < snoozeAnchor ? snoozeAnchor : next;
     next = Dates.addDays(baseForSnooze, snoozeDays);
   }
   const daysUntil = Dates.daysBetween(today, next);
@@ -612,6 +626,97 @@ const CareNotesStore = {
       cleaned[plantId] = list.map(sanitizeCareNote).filter(n => n.messages.length > 0);
     });
     this.save(cleaned);
+  }
+};
+
+/* ----------- Room placement planner storage (localStorage) -----------
+ *
+ * Lets the user create their own rooms and drop owned plants into them so
+ * they can plan around real windowsill / shelf space. A plant lives in at
+ * most ONE planned room at a time, so `assignments` maps plantId -> roomId.
+ *
+ * Shape:
+ * {
+ *   rooms:       [ { id, name, note, createdAt } ],
+ *   assignments: { [plantId]: roomId }
+ * }
+ */
+const RoomPlanStore = {
+  all() {
+    try {
+      const o = JSON.parse(localStorage.getItem(ROOM_PLAN_KEY) || "{}");
+      return {
+        rooms: Array.isArray(o.rooms) ? o.rooms : [],
+        assignments: (o.assignments && typeof o.assignments === "object") ? o.assignments : {}
+      };
+    } catch { return { rooms: [], assignments: {} }; }
+  },
+  save(o) {
+    localStorage.setItem(ROOM_PLAN_KEY, JSON.stringify({
+      rooms: Array.isArray(o.rooms) ? o.rooms : [],
+      assignments: (o.assignments && typeof o.assignments === "object") ? o.assignments : {}
+    }));
+  },
+  addRoom(name, note) {
+    const o = this.all();
+    const room = {
+      id: cryptoId(),
+      name: String(name || "").slice(0, 80).trim() || "Untitled room",
+      note: String(note || "").slice(0, 200).trim(),
+      createdAt: Dates.iso(Dates.today())
+    };
+    o.rooms.push(room);
+    this.save(o);
+    return room;
+  },
+  updateRoom(id, patch) {
+    const o = this.all();
+    const room = o.rooms.find(r => r.id === id);
+    if (!room) return;
+    if (typeof patch.name === "string") room.name = patch.name.slice(0, 80).trim() || room.name;
+    if (typeof patch.note === "string") room.note = patch.note.slice(0, 200).trim();
+    this.save(o);
+  },
+  removeRoom(id) {
+    const o = this.all();
+    o.rooms = o.rooms.filter(r => r.id !== id);
+    Object.keys(o.assignments).forEach(pid => { if (o.assignments[pid] === id) delete o.assignments[pid]; });
+    this.save(o);
+  },
+  assign(plantId, roomId) {
+    if (!plantId) return;
+    const o = this.all();
+    if (roomId) o.assignments[plantId] = roomId;
+    else delete o.assignments[plantId];
+    this.save(o);
+  },
+  unassign(plantId) { this.assign(plantId, null); },
+  plantsIn(roomId) {
+    const o = this.all();
+    return Object.keys(o.assignments).filter(pid => o.assignments[pid] === roomId);
+  },
+  roomFor(plantId) {
+    return this.all().assignments[plantId] || null;
+  },
+  clearAll() { localStorage.removeItem(ROOM_PLAN_KEY); },
+  replaceAll(data) {
+    if (!data || typeof data !== "object") { this.clearAll(); return; }
+    const rooms = Array.isArray(data.rooms) ? data.rooms
+      .filter(r => r && r.id)
+      .map(r => ({
+        id: String(r.id),
+        name: String(r.name || "Untitled room").slice(0, 80),
+        note: String(r.note || "").slice(0, 200),
+        createdAt: r.createdAt || Dates.iso(Dates.today())
+      })) : [];
+    const validIds = new Set(rooms.map(r => r.id));
+    const assignments = {};
+    if (data.assignments && typeof data.assignments === "object") {
+      Object.entries(data.assignments).forEach(([pid, rid]) => {
+        if (validIds.has(rid)) assignments[pid] = rid;
+      });
+    }
+    this.save({ rooms, assignments });
   }
 };
 
