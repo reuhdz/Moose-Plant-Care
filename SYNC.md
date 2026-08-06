@@ -20,6 +20,7 @@ node tools/build-pages.js         # copy runtime files into ../plant-care-site
 | `index.html`                             | `index.html`                             |
 | `css/styles.css`                         | `css/styles.css`                         |
 | `js/plants-data.js`                      | `js/plants-data.js`                      |
+| `js/care-library.js`                     | `js/care-library.js`                     |
 | `js/watering.js`                         | `js/watering.js`                         |
 | `js/app.js`                              | `js/app.js`                              |
 | `data/watering-log.json`                 | `data/watering-log.json`                 |

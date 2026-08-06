@@ -32,8 +32,8 @@
     <button class="tab-btn" role="tab" aria-selected="false" data-tab="chat">
       <span class="tab-icon">🤖</span> Ask Claude
     </button>
-    <button class="tab-btn" role="tab" aria-selected="false" data-tab="soil">
-      <span class="tab-icon">🪴</span> Soil Mix
+    <button class="tab-btn" role="tab" aria-selected="false" data-tab="analyze">
+      <span class="tab-icon">🔎</span> Analyze
     </button>
     <button class="tab-btn" role="tab" aria-selected="false" data-tab="placement">
       <span class="tab-icon">📍</span> Placement
@@ -284,17 +284,49 @@
       </div>
     </div>
 
-    <!-- =================== SOIL MIX TAB =================== -->
-    <section id="tab-soil" class="tab-panel" role="tabpanel">
-      <div class="soil-intro">
-        <h2>🪴 Current Soil Mix</h2>
+    <!-- =================== ANALYZE TAB =================== -->
+    <section id="tab-analyze" class="tab-panel" role="tabpanel">
+      <div class="analyze-intro">
+        <h2>🔎 Care Analyzer</h2>
         <p class="muted">
-          Each card shows the soil mix you currently have your plant in (or
-          <em>pending</em> if not set yet) plus a research-based recommendation.
-          Update a plant's soil from the <strong>Log &amp; Data → Plant Profile</strong> form.
+          Always includes the plant's profile (pot, category, soil, ideal conditions,
+          recommended rooms, room-plan assignment). Optionally adds watering log,
+          condition log, care notes, and todos — then asks Claude for feedback
+          (or runs a local summary if no API key). Uses the same Anthropic key as
+          <strong>Ask Claude</strong>.
         </p>
       </div>
-      <div id="soil-cards" class="soil-cards"></div>
+
+      <form id="analyze-form" class="analyze-form" autocomplete="off">
+        <div class="analyze-grid">
+          <div class="form-row">
+            <label for="analyze-plant">Plant</label>
+            <select id="analyze-plant" aria-label="Plant to analyze"></select>
+          </div>
+          <fieldset class="analyze-includes">
+            <legend>Include</legend>
+            <label><input type="checkbox" id="analyze-include-water" checked /> Watering log</label>
+            <label><input type="checkbox" id="analyze-include-conditions" checked /> Condition log</label>
+            <label><input type="checkbox" id="analyze-include-notes" checked /> Care notes</label>
+            <label><input type="checkbox" id="analyze-include-todos" checked /> Todos</label>
+          </fieldset>
+          <p class="muted small analyze-includes-hint">
+            Plant profile details (pot, category, soil, ideal conditions, recommended rooms, your room-plan assignment) are always included.
+          </p>
+          <div class="form-row analyze-extra-row">
+            <label for="analyze-extra">Extra context (optional)</label>
+            <textarea id="analyze-extra" rows="2" maxlength="800" placeholder="e.g. Yellowing after last weekend's soak; just moved to 1F bathroom…"></textarea>
+          </div>
+        </div>
+        <div class="analyze-actions">
+          <button type="submit" class="primary-btn" id="analyze-run-btn">🔎 Run analysis</button>
+          <button type="button" class="secondary-btn" id="analyze-local-btn">📋 Local summary only</button>
+          <button type="button" class="secondary-btn" id="analyze-save-btn" hidden>💾 Save result to plant notes</button>
+        </div>
+        <p id="analyze-status" class="analyze-status muted small" aria-live="polite"></p>
+      </form>
+
+      <article id="analyze-result" class="analyze-result" aria-live="polite"></article>
     </section>
 
     <!-- =================== PLACEMENT TAB =================== -->
@@ -477,6 +509,7 @@
   </footer>
 
   <script src="js/plants-data.js"></script>
+  <script src="js/care-library.js"></script>
   <script src="js/watering.js"></script>
   <script src="js/app.js"></script>
 </body>

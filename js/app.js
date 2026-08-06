@@ -170,7 +170,7 @@
       if (target === "calendar") renderCalendar();
       if (target === "todos") renderTodosTab();
       if (target === "chat") renderChatTab();
-      if (target === "soil") renderSoilTab();
+      if (target === "analyze") renderAnalyzeTab();
       if (target === "placement") renderPlacementTab();
       if (target === "log") { renderRecentLog(); resetProfileForm("new"); }
     });
@@ -198,6 +198,141 @@
     { key: "feeding",        label: "Feeding",        icon: "🥄" },
     { key: "troubleshooting",label: "Troubleshooting",icon: "🔍" }
   ];
+
+  /* ---------- Care Library render helpers (chopstick / prop / troubleshoot) ---------- */
+  function renderChopstickGuideHtml(plant) {
+    const g = (typeof CHOPSTICK_SOIL_CHECK !== "undefined") ? CHOPSTICK_SOIL_CHECK : null;
+    if (!g) return "";
+    /* Use <ol> numbering only — do not also prefix "1." in the text (double bullets). */
+    const steps = (g.steps || []).map(s => `<li>${escapeHtml(s)}</li>`).join("");
+    const reading = (g.reading || []).map(r => `
+      <tr>
+        <td>${escapeHtml(r.look)}</td>
+        <td>${escapeHtml(r.meaning)}</td>
+      </tr>`).join("");
+    const tips = (g.plantTips || []).map(t => `<li>${escapeHtml(t)}</li>`).join("");
+    const src = (g.sources || []).map(s =>
+      `<li><a href="${escapeAttr(s.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.label)}</a></li>`
+    ).join("");
+
+    const plantGuide = (typeof getChopstickForPlant === "function")
+      ? getChopstickForPlant(plant)
+      : null;
+    const plantBlock = plantGuide ? `
+      <div class="chopstick-plant-specific">
+        <h4>For this plant${plant?.potSize ? ` · ${escapeHtml(plant.potSize)} pot` : ""}</h4>
+        <div class="chopstick-plant-grid">
+          <div class="chopstick-plant-row">
+            <span class="chopstick-plant-key">📏 Check depth</span>
+            <span class="chopstick-plant-val">${escapeHtml(plantGuide.depth || "—")}</span>
+          </div>
+          <div class="chopstick-plant-row">
+            <span class="chopstick-plant-key">💧 Water when</span>
+            <span class="chopstick-plant-val">${escapeHtml(plantGuide.waterWhen || "—")}</span>
+          </div>
+          <div class="chopstick-plant-row">
+            <span class="chopstick-plant-key">⏳ Wait when</span>
+            <span class="chopstick-plant-val">${escapeHtml(plantGuide.waitWhen || "—")}</span>
+          </div>
+          ${plantGuide.notes ? `
+            <div class="chopstick-plant-row">
+              <span class="chopstick-plant-key">📝 Notes</span>
+              <span class="chopstick-plant-val">${escapeHtml(plantGuide.notes)}</span>
+            </div>
+          ` : ""}
+        </div>
+      </div>
+    ` : "";
+
+    return `
+      <div class="care-extra chopstick-guide">
+        <h4>🥢 ${escapeHtml(g.title)}</h4>
+        <p class="muted small">${escapeHtml(g.summary || "")}</p>
+        ${plantBlock}
+        <ol class="chopstick-steps">${steps}</ol>
+        <div class="chopstick-reading-wrap">
+          <strong>General stick reading (all plants)</strong>
+          <table class="care-data-table">
+            <thead><tr><th>What you see</th><th>What it means</th></tr></thead>
+            <tbody>${reading}</tbody>
+          </table>
+        </div>
+        <ul class="chopstick-tips">${tips}</ul>
+        ${src ? `<details class="care-extra-sources"><summary>Sources</summary><ul>${src}</ul></details>` : ""}
+      </div>
+    `;
+  }
+
+  function renderPropagationMethodsHtml(plant) {
+    const methods = (typeof getPropagationMethods === "function")
+      ? getPropagationMethods(plant)
+      : [];
+    if (!methods.length) return "";
+    const rows = methods.map(m => `
+      <tr>
+        <td><strong>${escapeHtml(m.method || "—")}</strong></td>
+        <td class="prop-success">${escapeHtml(m.success || "—")}</td>
+        <td>${escapeHtml(m.timeline || "—")}</td>
+        <td>${escapeHtml(m.notes || "")}</td>
+      </tr>`).join("");
+    return `
+      <div class="care-extra prop-methods">
+        <h4>🌱 Methods &amp; typical first-timer success rates</h4>
+        <p class="muted small">Rates are horticultural consensus for healthy material in warm growing conditions — not lab guarantees. Your plant-specific tip notes follow below.</p>
+        <table class="care-data-table prop-table">
+          <thead>
+            <tr><th>Method</th><th>Success</th><th>Timeline</th><th>Notes</th></tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+    `;
+  }
+
+  function renderTroubleshootingGuideHtml(plant) {
+    const items = (typeof getTroubleshootingGuide === "function")
+      ? getTroubleshootingGuide(plant)
+      : [];
+    if (!items.length) return "";
+    const cards = items.map(t => {
+      const urg = ["high", "normal", "low"].includes(t.urgency) ? t.urgency : "normal";
+      return `
+        <details class="trouble-item urgency-${escapeAttr(urg)}">
+          <summary>
+            <span class="trouble-urgency" aria-hidden="true">${urg === "high" ? "🔴" : urg === "low" ? "🟢" : "🟡"}</span>
+            <span class="trouble-symptom">${escapeHtml(t.symptom || "—")}</span>
+          </summary>
+          <div class="trouble-body">
+            <p><strong>Likely causes:</strong> ${escapeHtml(t.causes || "—")}</p>
+            <p><strong>Fix:</strong> ${escapeHtml(t.fix || "—")}</p>
+          </div>
+        </details>`;
+    }).join("");
+    return `
+      <div class="care-extra trouble-guide">
+        <h4>🔍 Symptom guide</h4>
+        <p class="muted small">Start here for the fast path. Red = act soon, yellow = common/fixable, green = usually cosmetic or slow. Longer plant-specific notes follow below.</p>
+        <div class="trouble-list">${cards}</div>
+      </div>
+    `;
+  }
+
+  /** "Signs it's time to repot" — rendered inside the Repotting care tile. */
+  function renderRepotSignsHtml(plant) {
+    if (!Array.isArray(plant?.repotSigns) || !plant.repotSigns.length) return "";
+    const items = plant.repotSigns
+      .filter(s => typeof s === "string" && s.trim().length)
+      .map(s => `<li>${escapeHtml(s)}</li>`)
+      .join("");
+    if (!items) return "";
+    return `
+      <div class="care-extra repot-signs-inline">
+        <h4>👀 Signs it's time to repot <span class="muted small">(${plant.repotSigns.length} to watch)</span></h4>
+        <ul class="repot-signs-list">${items}</ul>
+        <p class="repot-signs-footnote muted small">Watch for any of these — a single strong signal is usually enough to schedule a repot. Multiple signals together = time to act now.</p>
+      </div>
+    `;
+  }
 
   function populatePrimarySelect() {
     const all = PlantStore.allPlants();
@@ -274,17 +409,25 @@
       </section>
     ` : "";
 
-    /* --- Tip sections --- */
-    const hasTips = plant.tips && Object.keys(plant.tips).length > 0;
+    /* --- Tip sections (with structured Care Library extras) --- */
     const sections = CARE_SECTIONS.map((s, i) => {
       const text = plant.tips?.[s.key];
-      const body = text
+      let extras = "";
+      if (s.key === "watering") extras = renderChopstickGuideHtml(plant);
+      if (s.key === "soil") extras = renderPlantSoilCardHtml(plant);
+      if (s.key === "propagation") extras = renderPropagationMethodsHtml(plant);
+      if (s.key === "troubleshooting") extras = renderTroubleshootingGuideHtml(plant);
+      if (s.key === "repotting") extras = renderRepotSignsHtml(plant);
+      const prose = text
         ? `<div class="care-body">${escapeHtml(text)}</div>`
-        : `<div class="care-body coming-soon">Coming soon — add details for "${s.label}" in <code>js/plants-data.js</code> (or use the Plant Profile form to add a plant first).</div>`;
+        : (extras
+          ? ""
+          : `<div class="care-body coming-soon">Coming soon — add details for "${s.label}" in <code>js/plants-data.js</code>.</div>`);
       return `
-        <details class="care-section" ${i === 0 ? "open" : ""}>
+        <details class="care-section">
           <summary><span class="icon">${s.icon}</span> ${s.label}</summary>
-          ${body}
+          ${extras}
+          ${prose}
         </details>
       `;
     }).join("");
@@ -337,34 +480,6 @@
       ? `<p class="muted small">📝 ${escapeHtml(plant.comments)}</p>` : "";
 
     /* --- Transfer Plan card (only for water-propagation plants) --- */
-    /* Repot signs card — universal, plant-specific bulleted list of what
-     * to watch for. Applies to ANY plant (nursery-pot arrivals AND
-     * established plants in their long-term pots). Renders only if the
-     * plant has a `repotSigns` array with at least one entry. Sits between
-     * the watering tile and the repot-suggestion card so users see the
-     * general signs FIRST, then the actionable repot recommendation (if any).
-     */
-    let repotSignsCard = "";
-    if (Array.isArray(plant.repotSigns) && plant.repotSigns.length) {
-      const items = plant.repotSigns
-        .filter(s => typeof s === "string" && s.trim().length)
-        .map(s => `<li>${escapeHtml(s)}</li>`)
-        .join("");
-      if (items) {
-        repotSignsCard = `
-          <details class="repot-signs-card" open>
-            <summary>
-              <span class="repot-signs-icon">👀</span>
-              <span class="repot-signs-label">Signs it's time to repot</span>
-              <span class="repot-signs-count">${plant.repotSigns.length} to watch</span>
-            </summary>
-            <ul class="repot-signs-list">${items}</ul>
-            <p class="repot-signs-footnote muted small">Watch for any of these — a single strong signal is usually enough to schedule a repot. Multiple signals together = time to act now.</p>
-          </details>
-        `;
-      }
-    }
-
     /* Repot suggestion card — for plants currently in a nursery pot that
      * need upsizing / soil-swap. Data shape (all optional except targetPotSize):
      *   repotSuggestion: {
@@ -376,12 +491,13 @@
      *     summary:        "One-line rationale",
      *     alternatives:   ["Terracotta 4\"","Ceramic 4\"",…]  // optional
      *   }
+     * "Signs it's time to repot" lives inside the Repotting care tile.
      */
     let repotSuggestionCard = "";
     if (plant.repotted) {
       /* Already repotted out of the nursery pot — show a small confirmation
        * instead of the (now-stale) nursery repot recommendation. The general
-       * "Signs it's time to repot" card above still covers the next repot. */
+       * "Signs it's time to repot" list in the Repotting tile covers the next up-pot. */
       const nowSoilLabel = (plant.currentSoilMix && SOIL_TYPES[plant.currentSoilMix])
         ? SOIL_TYPES[plant.currentSoilMix].label
         : (plant.currentSoilMix || "fresh mix");
@@ -394,7 +510,7 @@
               <span class="repot-val"><strong>${escapeHtml(plant.potSize || "?")}</strong> pot · ${escapeHtml(nowSoilLabel)}</span>
             </div>
           </div>
-          <p class="repot-summary">Repotted into its longer-term pot &amp; mix. Watch the "Signs it's time to repot" list above for the next up-pot.</p>
+          <p class="repot-summary">Repotted into its longer-term pot &amp; mix. Watch the "Signs it's time to repot" list in the Repotting section for the next up-pot.</p>
         </section>
       `;
     } else if (plant.repotSuggestion && typeof plant.repotSuggestion === "object") {
@@ -573,6 +689,34 @@
       </section>
     `;
 
+    const ratingOpts = (PLANT_CONDITION_OPTIONS || ["Thriving", "Healthy", "Okay", "Struggling", "Recovering"])
+      .map(r => `<option value="${escapeAttr(r)}"${plant.condition === r ? " selected" : ""}>${escapeHtml(r)}</option>`)
+      .join("");
+    const plantConditionBlock = `
+      <section class="plant-condition-section" data-plant-id="${escapeAttr(plant.id)}">
+        <h3>🩺 Condition log <span class="muted small plant-condition-count"></span></h3>
+        <p class="muted small">Track how this plant looks over time. Entries feed the Analyze tab.</p>
+        <form class="plant-condition-form" data-plant-id="${escapeAttr(plant.id)}" autocomplete="off">
+          <div class="plant-condition-inputs">
+            <label>
+              <span class="log-input-label">Date</span>
+              <input type="date" name="date" class="plant-condition-date" required />
+            </label>
+            <label>
+              <span class="log-input-label">Condition</span>
+              <select name="rating" class="plant-condition-rating" required>${ratingOpts}</select>
+            </label>
+            <label class="plant-condition-note-label">
+              <span class="log-input-label">Note (optional)</span>
+              <input type="text" name="note" class="plant-condition-note" maxlength="280" placeholder="e.g. New leaf unfurling; tips still crispy…" />
+            </label>
+          </div>
+          <button type="submit" class="primary-btn plant-condition-submit">🩺 Log condition</button>
+        </form>
+        <div class="plant-condition-list"></div>
+      </section>
+    `;
+
     detailEl.innerHTML = `
       <header class="plant-header">
         <h2>${escapeHtml(plant.displayName)}</h2>
@@ -595,7 +739,7 @@
 
       ${photoBlock}
       ${plantWateringBlock}
-      ${repotSignsCard}
+      ${plantConditionBlock}
       ${repotSuggestionCard}
       ${plantTodosBlock}
       ${plantNotesBlock}
@@ -661,6 +805,36 @@
         }
       });
     }
+
+    /* Condition log form + list */
+    renderPlantConditionLogSection(plant.id);
+    const condSection = detailEl.querySelector(".plant-condition-section");
+    const condForm = condSection?.querySelector(".plant-condition-form");
+    if (condForm) {
+      const dateInput = condForm.querySelector(".plant-condition-date");
+      if (dateInput && !dateInput.value) dateInput.value = Dates.iso(Dates.today());
+      condForm.addEventListener("submit", handlePlantConditionLogSubmit);
+    }
+    if (condSection) {
+      condSection.addEventListener("click", e => {
+        const delBtn = e.target.closest(".plant-condition-delete");
+        if (!delBtn) return;
+        const item = delBtn.closest(".plant-condition-item");
+        const entryId = item?.dataset.entryId;
+        const plantId = condSection.dataset.plantId;
+        if (!entryId || !plantId) return;
+        if (!confirm("Delete this condition log entry?")) return;
+        ConditionLogStore.remove(plantId, entryId);
+        renderPlantConditionLogSection(plantId);
+        flash("Condition entry deleted 🗑");
+      });
+    }
+
+    /* Soil card → Plant Profile */
+    detailEl.querySelector(".plant-soil-edit-btn")?.addEventListener("click", e => {
+      const id = e.currentTarget.dataset.editPlantId;
+      openPlantProfileForSoil(id);
+    });
 
     /* Wire up the "Save photo to folder" button(s) */
     detailEl.querySelectorAll(".save-photo-btn").forEach(btn => {
@@ -1474,6 +1648,7 @@
       todos: TodoStore.all(),
       careNotes: CareNotesStore.all(),
       roomPlan: RoomPlanStore.all(),
+      conditionLog: ConditionLogStore.all(),
       exportedAt: new Date().toISOString()
     };
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
@@ -1504,6 +1679,7 @@
           if (parsed.todos !== undefined) TodoStore.replaceAll(parsed.todos);
           if (parsed.careNotes !== undefined) CareNotesStore.replaceAll(parsed.careNotes);
           if (parsed.roomPlan !== undefined) RoomPlanStore.replaceAll(parsed.roomPlan);
+          if (parsed.conditionLog !== undefined) ConditionLogStore.replaceAll(parsed.conditionLog);
         } else {
           throw new Error("Unrecognized JSON shape.");
         }
@@ -1515,6 +1691,8 @@
          * strip so any imported saved notes show up immediately. */
         const visiblePlant = detailEl?.querySelector(".plant-notes-section");
         if (visiblePlant) renderPlantNotesSection(visiblePlant.dataset.plantId);
+        const visibleCond = detailEl?.querySelector(".plant-condition-section");
+        if (visibleCond) renderPlantConditionLogSection(visibleCond.dataset.plantId);
         flash("Imported! 📥");
       } catch (err) {
         alert("Could not import file: " + err.message);
@@ -1561,21 +1739,20 @@
     populateProfileExisting();
     populateTodoDropdowns();
     populateChatDropdowns();
+    populateAnalyzePlantSelect();
     // Refresh whatever's currently displayed
     handlePrimaryChange();
     renderCalendar();
-    /* Re-render the soil tab if it's the active panel */
-    if (document.querySelector("#tab-soil.active")) renderSoilTab();
     /* Re-render the todos tab if it's the active panel */
     if (document.querySelector("#tab-todos.active")) renderTodosTab();
     /* Re-render chat tab dropdowns if it's the active panel */
     if (document.querySelector("#tab-chat.active")) renderChatTab();
+    if (document.querySelector("#tab-analyze.active")) renderAnalyzeTab();
   }
 
   /* ============================================================
-   * Soil Mix tab
+   * Soil evaluation (shown per-plant in Care Guide)
    * ============================================================ */
-  const soilCardsEl = document.getElementById("soil-cards");
 
   /**
    * Compute a soil status for a plant based on its currentSoilMix vs idealSoil[].
@@ -1645,67 +1822,53 @@
     };
   }
 
-  function renderSoilTab() {
-    if (!soilCardsEl) return;
-    const all = PlantStore.allPlants();
-    const ownedIds = sortByDisplayName(PlantStore.ownedIds(), all);
-    /* Only show owned plants — variants are reference-only and don't have currentSoilMix */
-    const plants = ownedIds.map(id => all[id]).filter(p => p && !p.isVariant);
-
-    soilCardsEl.innerHTML = plants.map(p => {
-      const ev = evaluateSoil(p);
-      const pot = p.potSize && p.potSize !== "—" ? p.potSize : "";
-      const actionLine = ev.action
-        ? `<div class="soil-rec" style="border-left-color: var(--accent-2, var(--accent));"><span class="rec-title">💡 Notes</span>${escapeHtml(ev.action)}</div>`
-        : "";
-      return `
-        <article class="soil-card" data-plant-id="${escapeAttr(p.id)}">
-          <div class="soil-card-head">
-            <div>
-              <div class="soil-card-name">${plantCareLinkHtml(p.id, p.displayName)}</div>
-              ${pot ? `<div class="soil-card-pot">${escapeHtml(pot)} pot</div>` : ""}
-            </div>
-            <span class="soil-status status-${ev.status}">${escapeHtml(ev.statusLabel)}</span>
+  /** Soil status card — rendered inside the Soil Mix care tile. */
+  function renderPlantSoilCardHtml(plant) {
+    if (!plant || plant.isVariant) return "";
+    const ev = evaluateSoil(plant);
+    const actionLine = ev.action
+      ? `<div class="soil-rec" style="border-left-color: var(--accent-2, var(--accent));"><span class="rec-title">💡 Notes</span>${escapeHtml(ev.action)}</div>`
+      : "";
+    return `
+      <div class="care-extra plant-soil-inline soil-card" data-plant-id="${escapeAttr(plant.id)}">
+        <div class="soil-card-head">
+          <div>
+            <div class="soil-card-name">🪴 Current vs recommended</div>
+            ${plant.potSize && plant.potSize !== "—" ? `<div class="soil-card-pot">${escapeHtml(plant.potSize)} pot</div>` : ""}
           </div>
+          <span class="soil-status status-${ev.status}">${escapeHtml(ev.statusLabel)}</span>
+        </div>
+        <div class="soil-row">
+          <span class="label">Current:</span>
+          <span class="value">${escapeHtml(SOIL_TYPES[plant.currentSoilMix || "pending"]?.label || "Unknown")}</span>
+        </div>
+        <div class="soil-row">
+          <span class="label">Recommended:</span>
+          <span class="value">${(plant.idealSoil || []).map(id => escapeHtml(SOIL_TYPES[id]?.label || id)).join(" or ") || "<em>(not researched yet)</em>"}</span>
+        </div>
+        <div class="soil-rec">
+          <span class="rec-title">${escapeHtml(ev.title)}</span>
+          <span>${ev.body}</span>
+        </div>
+        ${actionLine}
+        <button type="button" class="edit-btn plant-soil-edit-btn" data-edit-plant-id="${escapeAttr(plant.id)}">✎ Edit soil in Plant Profile</button>
+      </div>
+    `;
+  }
 
-          <div class="soil-row">
-            <span class="label">Current:</span>
-            <span class="value">${escapeHtml(SOIL_TYPES[p.currentSoilMix || "pending"]?.label || "Unknown")}</span>
-          </div>
-          <div class="soil-row">
-            <span class="label">Recommended:</span>
-            <span class="value">${(p.idealSoil || []).map(id => escapeHtml(SOIL_TYPES[id]?.label || id)).join(" or ") || "<em>(not researched yet)</em>"}</span>
-          </div>
-
-          <div class="soil-rec">
-            <span class="rec-title">${escapeHtml(ev.title)}</span>
-            <span>${ev.body}</span>
-          </div>
-          ${actionLine}
-
-          <button type="button" class="edit-btn" data-edit-plant-id="${escapeAttr(p.id)}">✎ Edit in Plant Profile</button>
-        </article>
-      `;
-    }).join("");
-
-    /* Wire the "edit" buttons to jump to the Plant Profile form for this plant */
-    soilCardsEl.querySelectorAll("[data-edit-plant-id]").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const id = btn.dataset.editPlantId;
-        document.querySelector('.tab-btn[data-tab="log"]')?.click();
-        /* Wait one tick for the Log panel to mount, then open the profile in edit mode */
-        setTimeout(() => {
-          if (profileMode.value !== "edit") {
-            profileMode.value = "edit";
-            populateProfileExisting();
-          }
-          profileExisting.value = id;
-          loadProfileFromExisting();
-          setProfileFieldsVisibility("edit");
-          profileSoil?.focus();
-        }, 50);
-      });
-    });
+  function openPlantProfileForSoil(plantId) {
+    if (!plantId) return;
+    document.querySelector('.tab-btn[data-tab="log"]')?.click();
+    setTimeout(() => {
+      if (profileMode.value !== "edit") {
+        profileMode.value = "edit";
+        populateProfileExisting();
+      }
+      profileExisting.value = plantId;
+      loadProfileFromExisting();
+      setProfileFieldsVisibility("edit");
+      profileSoil?.focus();
+    }, 50);
   }
 
   /* ============================================================
@@ -2591,6 +2754,64 @@
   }
 
   /* ---------- Care Guide — "Notes from past chats" section ---------- */
+  function renderPlantConditionLogSection(plantId) {
+    const host = detailEl?.querySelector(`.plant-condition-section[data-plant-id="${cssEscape(plantId)}"]`);
+    if (!host) return;
+    const list = host.querySelector(".plant-condition-list");
+    const countEl = host.querySelector(".plant-condition-count");
+    if (!list) return;
+    const entries = ConditionLogStore.forPlant(plantId).slice(0, 20);
+    if (countEl) countEl.textContent = entries.length ? `(${entries.length})` : "";
+    if (!entries.length) {
+      list.innerHTML = `<div class="plant-condition-empty muted small">No condition logs yet — rate how the plant looks after a check-in.</div>`;
+      return;
+    }
+    list.innerHTML = entries.map(e => {
+      const tone = ({
+        Thriving: "good", Healthy: "good", Okay: "ok",
+        Struggling: "bad", Recovering: "warn"
+      })[e.rating] || "ok";
+      return `
+        <div class="plant-condition-item tone-${tone}" data-entry-id="${escapeAttr(e.id)}">
+          <div class="plant-condition-item-main">
+            <span class="plant-condition-rating-badge">${escapeHtml(e.rating)}</span>
+            <span class="plant-condition-date">${escapeHtml(e.date || "")}</span>
+            ${e.note ? `<span class="plant-condition-note-text">${escapeHtml(e.note)}</span>` : ""}
+          </div>
+          <button type="button" class="plant-condition-delete" aria-label="Delete condition entry">🗑</button>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function handlePlantConditionLogSubmit(e) {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const plantId = form.dataset.plantId;
+    if (!plantId) return;
+    const date = form.querySelector(".plant-condition-date")?.value;
+    const rating = form.querySelector(".plant-condition-rating")?.value;
+    const note = form.querySelector(".plant-condition-note")?.value || "";
+    if (!date || !rating) return;
+
+    ConditionLogStore.add(plantId, { date, rating, note });
+
+    /* Keep the profile "condition" badge in sync with the latest rating */
+    const all = PlantStore.allPlants();
+    const plant = all[plantId];
+    if (plant) {
+      if (plant.isCustom || String(plantId).startsWith("user_")) {
+        PlantStore.upsertCustom({ ...plant, condition: rating });
+      } else {
+        PlantStore.setOverlay(plantId, { condition: rating });
+      }
+    }
+
+    /* Full re-render so the header Condition badge stays in sync */
+    renderPlantDetail(plantId);
+    flash(`Logged condition: ${rating} 🩺`);
+  }
+
   function renderPlantNotesSection(plantId) {
     const host = detailEl?.querySelector(`.plant-notes-section[data-plant-id="${cssEscape(plantId)}"]`);
     if (!host) return;
@@ -3800,6 +4021,454 @@ Other plants in collection (for cross-reference): ${ownedIds.filter(id => id !==
     fireSnooze(btn);
   }
 
+  /* ============================================================
+   * Analyze tab — Claude (or local heuristic) feedback from logs/notes/todos
+   * ============================================================ */
+  const analyzePlantSel   = document.getElementById("analyze-plant");
+  const analyzeForm       = document.getElementById("analyze-form");
+  const analyzeIncludeWater = document.getElementById("analyze-include-water");
+  const analyzeIncludeConditions = document.getElementById("analyze-include-conditions");
+  const analyzeIncludeNotes = document.getElementById("analyze-include-notes");
+  const analyzeIncludeTodos = document.getElementById("analyze-include-todos");
+  const analyzeExtra      = document.getElementById("analyze-extra");
+  const analyzeRunBtn     = document.getElementById("analyze-run-btn");
+  const analyzeLocalBtn   = document.getElementById("analyze-local-btn");
+  const analyzeSaveBtn    = document.getElementById("analyze-save-btn");
+  const analyzeStatusEl   = document.getElementById("analyze-status");
+  const analyzeResultEl   = document.getElementById("analyze-result");
+  let analyzeLastResult   = null; /* { plantId, text, model, ts } */
+  let analyzeInFlight     = false;
+
+  function populateAnalyzePlantSelect() {
+    if (!analyzePlantSel) return;
+    const all = PlantStore.allPlants();
+    const ownedIds = sortByDisplayName(PlantStore.ownedIds(), all);
+    const prev = analyzePlantSel.value;
+    analyzePlantSel.innerHTML = [
+      `<option value="ALL">All owned plants (overview)</option>`,
+      ...ownedIds.map(id => `<option value="${id}">${escapeHtml(all[id].displayName)}</option>`)
+    ].join("");
+    if (prev && [...analyzePlantSel.options].some(o => o.value === prev)) {
+      analyzePlantSel.value = prev;
+    }
+  }
+
+  function setAnalyzeStatus(msg, kind = "") {
+    if (!analyzeStatusEl) return;
+    analyzeStatusEl.textContent = msg || "";
+    analyzeStatusEl.className = "analyze-status muted small" + (kind ? ` ${kind}` : "");
+  }
+
+  function renderAnalyzeTab() {
+    populateAnalyzePlantSelect();
+    if (analyzeSaveBtn) analyzeSaveBtn.hidden = !analyzeLastResult;
+  }
+
+  /** Resolve window-entry ids that may be strings or { id, back, note }. */
+  function placementEntryId(entry) {
+    return typeof entry === "string" ? entry : (entry && entry.id) || null;
+  }
+
+  /** Recommended windows + planned room for Analyze / care context. */
+  function getPlantPlacementContext(pid) {
+    const lightRef = (typeof PLANT_LIGHT_REF !== "undefined") ? PLANT_LIGHT_REF[pid] : null;
+    const windows = [];
+    if (typeof HOME_WINDOWS !== "undefined" && Array.isArray(HOME_WINDOWS)) {
+      HOME_WINDOWS.forEach(w => {
+        const thriveEntry = (w.thrive || []).find(e => placementEntryId(e) === pid);
+        const solidEntry = (w.solid || []).find(e => placementEntryId(e) === pid);
+        const keepOut = Array.isArray(w.keepOut) && w.keepOut.includes(pid);
+        let match = null;
+        let back = false;
+        let note = "";
+        if (thriveEntry) {
+          match = "thrive";
+          back = !!(thriveEntry && typeof thriveEntry === "object" && thriveEntry.back);
+          note = (thriveEntry && typeof thriveEntry === "object" && thriveEntry.note) || "";
+        } else if (solidEntry) {
+          match = "solid";
+          back = !!(solidEntry && typeof solidEntry === "object" && solidEntry.back);
+          note = (solidEntry && typeof solidEntry === "object" && solidEntry.note) || "";
+        } else if (keepOut) {
+          match = "keepOut";
+        }
+        if (!match) return;
+        windows.push({
+          windowId: w.id,
+          label: w.label || `${w.floor} · ${w.name}`,
+          bearing: w.bearing || "",
+          match,
+          setBack4to7ft: back,
+          note
+        });
+      });
+    }
+
+    const plan = RoomPlanStore.all();
+    const roomId = plan.assignments[pid] || null;
+    const plannedRoom = roomId
+      ? (plan.rooms.find(r => r.id === roomId) || null)
+      : null;
+
+    return {
+      lightNeeds: lightRef ? {
+        light: lightRef.light || "",
+        humidity: lightRef.humidity || "",
+        best: lightRef.best || "",
+        humidifierRecommended: !!lightRef.hum,
+        flag: lightRef.flag || ""
+      } : null,
+      recommendedWindows: windows,
+      plannedRoom: plannedRoom
+        ? { id: plannedRoom.id, name: plannedRoom.name, note: plannedRoom.note || "" }
+        : null
+    };
+  }
+
+  /** Pack plant profile + activity for the model / local summary. */
+  function buildAnalyzePayload(plantId, opts) {
+    const all = PlantStore.allPlants();
+    const log = WaterLog.all();
+    const today = Dates.today();
+    const includeWater = opts.water !== false;
+    const includeNotes = opts.notes !== false;
+    const includeTodos = opts.todos !== false;
+    const includeConditions = opts.conditions !== false;
+    const ids = plantId === "ALL" ? PlantStore.ownedIds() : [plantId];
+
+    const blocks = ids.map(pid => {
+      const p = all[pid];
+      if (!p) return null;
+      const nx = nextWatering(pid, log, p);
+      const entries = includeWater
+        ? log.filter(e => e.plantId === pid).sort((a, b) => (b.date || "").localeCompare(a.date || "")).slice(0, 12)
+        : [];
+      const gaps = [];
+      for (let i = 0; i < entries.length - 1; i++) {
+        const a = Dates.fromIso(entries[i].date);
+        const b = Dates.fromIso(entries[i + 1].date);
+        if (a && b) gaps.push(Math.round((a - b) / 86400000));
+      }
+      const avgGap = gaps.length
+        ? Math.round(gaps.reduce((s, n) => s + n, 0) / gaps.length)
+        : null;
+      const notes = includeNotes ? CareNotesStore.forPlant(pid).slice(-5) : [];
+      const todos = includeTodos
+        ? TodoStore.list().filter(t => t.plantId === pid).slice(0, 20)
+        : [];
+      const conditionEntries = includeConditions
+        ? ConditionLogStore.forPlant(pid).slice(0, 12)
+        : [];
+      const soilEv = evaluateSoil(p);
+      const placement = getPlantPlacementContext(pid);
+      const idealConditions = p.conditions
+        ? {
+            light: p.conditions.light || null,
+            temperature: p.conditions.temperature || null,
+            humidity: p.conditions.humidity || null,
+            soilMoisture: p.conditions.soilMoisture || null
+          }
+        : null;
+
+      return {
+        id: pid,
+        name: p.displayName,
+        scientific: p.names?.scientific || "",
+        category: (p.category || "").replace(/_/g, " "),
+        potSize: p.potSize || "",
+        cuttingsCount: p.cuttingsCount != null ? p.cuttingsCount : null,
+        repotted: !!p.repotted,
+        profileCondition: p.condition || "",
+        comments: p.comments || "",
+        soil: {
+          currentId: p.currentSoilMix || "pending",
+          currentLabel: SOIL_TYPES[p.currentSoilMix || "pending"]?.label || p.currentSoilMix || "Unknown",
+          idealIds: p.idealSoil || [],
+          idealLabels: (p.idealSoil || []).map(id => SOIL_TYPES[id]?.label || id),
+          status: soilEv.status,
+          statusLabel: soilEv.statusLabel,
+          recommendation: soilEv.title,
+          notes: p.soilNotes || soilEv.action || ""
+        },
+        idealConditions,
+        placement,
+        intervals: {
+          hot: p.wateringDaysHot,
+          warm: p.wateringDays,
+          cool: p.wateringDaysCool
+        },
+        nextWatering: nx ? {
+          date: Dates.iso(nx.nextDate),
+          status: nx.status,
+          daysUntil: nx.daysUntil,
+          message: nx.message || ""
+        } : null,
+        recentWaterings: entries.map(e => ({ date: e.date, note: e.note || "" })),
+        avgDaysBetweenLastLogs: avgGap,
+        conditionLog: conditionEntries.map(e => ({
+          date: e.date,
+          rating: e.rating,
+          note: e.note || ""
+        })),
+        careNotes: notes.map(n => ({
+          title: n.title,
+          ts: n.ts,
+          excerpt: (n.messages || []).map(m => `${m.role}: ${String(m.text || "").slice(0, 280)}`).join("\n")
+        })),
+        todos: todos.map(t => ({
+          title: t.title,
+          category: t.category,
+          dueDate: t.dueDate || "",
+          notes: t.notes || "",
+          done: !!t.completedAt
+        }))
+      };
+    }).filter(Boolean);
+
+    return {
+      today: Dates.iso(today),
+      locale: "Pflugerville / Austin, TX — indoor 75–80°F",
+      plants: blocks
+    };
+  }
+
+  function buildLocalAnalyzeSummary(payload) {
+    const lines = [];
+    lines.push(`# Local care summary (${payload.today})`);
+    lines.push("");
+    payload.plants.forEach(p => {
+      lines.push(`## ${p.name}`);
+      lines.push(`- Profile: ${p.category || "—"} · pot ${p.potSize || "—"} · condition ${p.profileCondition || "—"}`);
+      if (p.soil) {
+        lines.push(`- Soil: ${p.soil.currentLabel} (${p.soil.statusLabel}); ideal ${ (p.soil.idealLabels || []).join(" / ") || "—" }`);
+      }
+      if (p.placement?.plannedRoom) {
+        lines.push(`- Planned room: ${p.placement.plannedRoom.name}`);
+      } else {
+        lines.push("- Planned room: (unassigned in room planner)");
+      }
+      if (p.placement?.lightNeeds?.best) {
+        lines.push(`- Recommended placement: ${p.placement.lightNeeds.best}`);
+      }
+      const thrive = (p.placement?.recommendedWindows || []).filter(w => w.match === "thrive").map(w => w.label);
+      if (thrive.length) lines.push(`- Thrive windows: ${thrive.join("; ")}`);
+      const nx = p.nextWatering;
+      if (nx) {
+        const st = nx.status === "overdue"
+          ? `OVERDUE by ${Math.abs(nx.daysUntil)}d`
+          : nx.status === "due"
+            ? "due today"
+            : `next in ${nx.daysUntil}d (${nx.date})`;
+        lines.push(`- Water status: ${st}`);
+      } else {
+        lines.push("- Water status: no schedule yet (log a watering to start)");
+      }
+      if (p.avgDaysBetweenLastLogs != null && p.intervals.warm != null) {
+        const drift = p.avgDaysBetweenLastLogs - p.intervals.warm;
+        lines.push(`- Recent avg gap: ${p.avgDaysBetweenLastLogs}d vs warm target ${p.intervals.warm}d (${drift > 2 ? "drier than target" : drift < -2 ? "wetter than target" : "near target"})`);
+      }
+      if (p.recentWaterings?.length) {
+        lines.push(`- Last water logs: ${p.recentWaterings.slice(0, 4).map(e => e.date + (e.note ? ` “${e.note}”` : "")).join("; ")}`);
+      } else {
+        lines.push("- Last water logs: (none in selection)");
+      }
+      if (p.conditionLog?.length) {
+        lines.push(`- Condition trend: ${p.conditionLog.slice(0, 5).map(e => `${e.date} ${e.rating}${e.note ? ` (${e.note})` : ""}`).join(" → ")}`);
+      } else {
+        lines.push("- Condition trend: (no condition logs yet)");
+      }
+      const openTodos = (p.todos || []).filter(t => !t.done);
+      lines.push(`- Open todos: ${openTodos.length ? openTodos.map(t => t.title).join("; ") : "(none)"}`);
+      lines.push(`- Care notes saved: ${(p.careNotes || []).length}`);
+      if (p.comments) lines.push(`- Owner comment: ${p.comments}`);
+      lines.push("");
+    });
+    lines.push("_Heuristic only — run AI analysis for diagnosis & next actions._");
+    return lines.join("\n");
+  }
+
+  function buildAnalyzeSystemPrompt() {
+    return `You are a practical houseplant care analyst for Moose's Plant Care (Pflugerville / Austin, TX, indoor 75–80°F, dry AC air).
+
+You will receive JSON for one or more plants including:
+- Profile: pot size, category, comments, repot status
+- Soil: current vs ideal mix + mismatch status
+- Ideal environmental conditions (light/temp/humidity/soil moisture)
+- Placement: light/humidity needs, thrive/solid/keep-out windows, and the user's planned room assignment
+- Activity: watering history, condition-log trend, care notes, todos
+
+Write a clear report with:
+1. **Overall status** (1–2 sentences)
+2. **Per plant** — what's going well, risks (watering drift, soil mismatch, placement mismatch vs planned room, declining condition ratings, overdue tasks), and 2–4 concrete next actions
+3. **Cross-cutting tips** only if analyzing multiple plants
+
+Rules:
+- Use the user's actual numbers and fields; don't invent log entries.
+- If planned room conflicts with recommended windows / keep-outs, call that out.
+- Prefer chopstick/finger checks over rigid calendar obedience when watering drift is large.
+- Use condition-log trend (Thriving→Struggling etc.) as a health signal.
+- Keep it concise; use bullets.
+- If data is thin, say what to log next (especially condition logs).
+- Do not claim disease certainty without symptoms in notes/extra context.`;
+  }
+
+  async function runAnalyzeWithClaude(payload, extraText) {
+    const apiKey = ClaudeSettings.apiKey;
+    if (!apiKey) throw new Error("No Anthropic API key — set one in Ask Claude → Settings, or use Local summary.");
+    const model = ClaudeSettings.model || DEFAULT_CLAUDE_MODEL;
+    const userText =
+      `Analyze this plant-care data and give feedback.\n\n` +
+      (extraText ? `Extra context from owner:\n${extraText}\n\n` : "") +
+      `DATA (JSON):\n${JSON.stringify(payload, null, 2)}`;
+
+    const resp = await fetch(ANTHROPIC_API_URL, {
+      method: "POST",
+      headers: {
+        "x-api-key": apiKey,
+        "anthropic-version": ANTHROPIC_VERSION,
+        "content-type": "application/json",
+        "anthropic-dangerous-direct-browser-access": "true"
+      },
+      body: JSON.stringify({
+        model,
+        max_tokens: 2200,
+        system: buildAnalyzeSystemPrompt(),
+        messages: [{ role: "user", content: userText }],
+        stream: false
+      })
+    });
+    if (!resp.ok) {
+      let errBody = "";
+      try { errBody = await resp.text(); } catch { /* ignore */ }
+      throw new Error(`HTTP ${resp.status}: ${errBody.slice(0, 400)}`);
+    }
+    const data = await resp.json();
+    const text = (data.content || []).filter(b => b.type === "text").map(b => b.text).join("\n").trim();
+    if (!text) throw new Error("Empty response from Claude.");
+    const usage = data.usage || null;
+    const cost = chatComputeCost(usage, model);
+    return { text, model, usage, cost };
+  }
+
+  function showAnalyzeResult(text, meta) {
+    if (!analyzeResultEl) return;
+    analyzeResultEl.innerHTML = `
+      <header class="analyze-result-head">
+        <h3>Analysis result</h3>
+        <p class="muted small">${escapeHtml(meta || "")}</p>
+      </header>
+      <div class="analyze-result-body">${renderChatMarkdown(text)}</div>
+    `;
+  }
+
+  async function handleAnalyzeRun(useAi) {
+    if (analyzeInFlight) return;
+    const plantId = analyzePlantSel?.value || "ALL";
+    const opts = {
+      water: !!analyzeIncludeWater?.checked,
+      conditions: !!analyzeIncludeConditions?.checked,
+      notes: !!analyzeIncludeNotes?.checked,
+      todos: !!analyzeIncludeTodos?.checked
+    };
+    if (!opts.water && !opts.conditions && !opts.notes && !opts.todos) {
+      setAnalyzeStatus("Select at least one activity source (water / conditions / notes / todos). Profile details are always included.", "err");
+      return;
+    }
+    const payload = buildAnalyzePayload(plantId, opts);
+    const extra = (analyzeExtra?.value || "").trim();
+    analyzeInFlight = true;
+    if (analyzeRunBtn) analyzeRunBtn.disabled = true;
+    if (analyzeLocalBtn) analyzeLocalBtn.disabled = true;
+
+    try {
+      if (useAi) {
+        setAnalyzeStatus("Asking Claude…");
+        const { text, model, cost } = await runAnalyzeWithClaude(payload, extra);
+        analyzeLastResult = {
+          plantId: plantId === "ALL" ? (payload.plants[0]?.id || "monstera") : plantId,
+          multi: plantId === "ALL",
+          text,
+          model,
+          ts: new Date().toISOString()
+        };
+        showAnalyzeResult(text, `${model}${cost ? ` · ~${formatUSD(cost)}` : ""} · AI`);
+        setAnalyzeStatus("AI analysis complete.", "ok");
+      } else {
+        const text = buildLocalAnalyzeSummary(payload) +
+          (extra ? `\n\n## Extra context\n${extra}` : "");
+        analyzeLastResult = {
+          plantId: plantId === "ALL" ? (payload.plants[0]?.id || "monstera") : plantId,
+          multi: plantId === "ALL",
+          text,
+          model: "local-heuristic",
+          ts: new Date().toISOString()
+        };
+        showAnalyzeResult(text, "Local heuristic (no API call)");
+        setAnalyzeStatus("Local summary ready. Use Run analysis for Claude feedback.", "ok");
+      }
+      if (analyzeSaveBtn) analyzeSaveBtn.hidden = false;
+    } catch (err) {
+      setAnalyzeStatus(err.message || String(err), "err");
+      /* Auto-fallback to local if AI fails and user asked for AI */
+      if (useAi) {
+        const text = buildLocalAnalyzeSummary(payload);
+        showAnalyzeResult(text, "Local fallback after AI error");
+        analyzeLastResult = {
+          plantId: plantId === "ALL" ? (payload.plants[0]?.id || "monstera") : plantId,
+          multi: plantId === "ALL",
+          text,
+          model: "local-heuristic",
+          ts: new Date().toISOString()
+        };
+        if (analyzeSaveBtn) analyzeSaveBtn.hidden = false;
+      }
+    } finally {
+      analyzeInFlight = false;
+      if (analyzeRunBtn) analyzeRunBtn.disabled = false;
+      if (analyzeLocalBtn) analyzeLocalBtn.disabled = false;
+    }
+  }
+
+  function handleAnalyzeSave() {
+    if (!analyzeLastResult) return;
+    let plantId = analyzeLastResult.plantId;
+    if (analyzeLastResult.multi) {
+      const pick = analyzePlantSel?.value;
+      if (pick && pick !== "ALL") plantId = pick;
+      else {
+        flash("Pick a specific plant in the dropdown before saving a multi-plant analysis.");
+        return;
+      }
+    }
+    const title = `Care analysis — ${Dates.formatPretty(Dates.today())}`;
+    CareNotesStore.add(plantId, {
+      id: cryptoId(),
+      ts: analyzeLastResult.ts || new Date().toISOString(),
+      title,
+      source: "conversation",
+      model: analyzeLastResult.model || "",
+      plantContextAtSave: plantId,
+      messages: [
+        { role: "user", text: "Run care analysis (water log / notes / todos)." },
+        { role: "assistant", text: analyzeLastResult.text }
+      ]
+    });
+    flash("Saved analysis to plant notes 💾");
+    if (document.querySelector("#tab-care.active")) {
+      const current = primarySelect?.value;
+      if (current === plantId) renderPlantNotesSection(plantId);
+    }
+  }
+
+  if (analyzeForm) {
+    analyzeForm.addEventListener("submit", e => {
+      e.preventDefault();
+      handleAnalyzeRun(true);
+    });
+  }
+  if (analyzeLocalBtn) analyzeLocalBtn.addEventListener("click", () => handleAnalyzeRun(false));
+  if (analyzeSaveBtn) analyzeSaveBtn.addEventListener("click", handleAnalyzeSave);
+
   /* Attach the snooze gesture handlers to both stable parents that host
    * .snooze-btn elements: `nextSummary` on the Calendar tab, `detailEl` on
    * the Care Guide tab. The handler code is identical — the buttons carry
@@ -3863,6 +4532,7 @@ Other plants in collection (for cross-reference): ${ownedIds.filter(id => id !==
     populateProfileExisting();
     populateTodoDropdowns();
     populateChatDropdowns();
+    populateAnalyzePlantSelect();
     handlePrimaryChange();
     logDate.value = Dates.iso(Dates.today());
     const today = Dates.today();
@@ -3870,10 +4540,10 @@ Other plants in collection (for cross-reference): ${ownedIds.filter(id => id !==
     syncCalendarControlClears();
     renderCalendar();
     renderRecentLog();
-    renderSoilTab();
     renderPlacementTab();
     renderTodosTab();
     renderChatTab();
+    renderAnalyzeTab();
     resetProfileForm("new");
     if (mig.migrated > 0) {
       const moved = mig.summary.reduce((n, s) => n + s.waterLogEntriesMoved, 0);

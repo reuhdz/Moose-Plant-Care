@@ -8,7 +8,7 @@
 |---|---|
 | Audience | Developers / maintainers (including AI coding agents) |
 | Scope | Architecture, **core logic & algorithms**, data model, features, build/deploy |
-| Last updated | 2026-07-27 (Jul repotting batch, bonsai plant, care-data revisit) |
+| Last updated | 2026-08-04 (Care Library, Analyze tab, condition log, Care Guide UX, soil-in-tips) |
 | Owner | Personal POC — `Personal_POC/Plant_Care` |
 | Companion doc | [`project-requirements-and-handoff.md`](./project-requirements-and-handoff.md) — inventory, edit recipes, session logs |
 
@@ -43,6 +43,7 @@ flowchart LR
 
     subgraph DataLayer["Static data + engine"]
         PD[plants-data.js]
+        CLIB[care-library.js]
         ENG[watering.js]
     end
 
@@ -54,6 +55,7 @@ flowchart LR
         TD[(TodoStore)]
         CN[(CareNotesStore)]
         RP[(RoomPlanStore)]
+        CND[(ConditionLogStore)]
         CL[(ClaudeSettings + ChatHistory)]
     end
 
@@ -68,10 +70,12 @@ flowchart LR
 
     HTML --> UI
     CSS --> HTML
+    CLIB --> UI
     PD --> ENG
     PD --> UI
+    CLIB --> PD
     ENG --> UI
-    UI --> WL & SNZ & PS & IMG & TD & CN & RP & CL
+    UI --> WL & SNZ & PS & IMG & TD & CN & RP & CND & CL
     UI -. BYOK chat .-> API
     PD & ENG & UI --> SF
     SF --> PG
@@ -89,22 +93,24 @@ flowchart LR
 
 | Layer | File(s) | Responsibility |
 |---|---|---|
-| Shell | `index.html` | Tab nav, seven tab panels, form markup, script load order |
-| Presentation | `css/styles.css` | Mobile-first layout, light/dark themes via `[data-theme]`, component styles |
+| Shell | `index.html` | Tab nav, seven tab panels (Soil Mix nav tab removed), form markup, script load order |
+| Presentation | `css/styles.css` | Mobile-first layout, light/dark themes via `[data-theme]`, Care Guide `details.care-section` accordions |
 | Domain data | `js/plants-data.js` | `PLANTS`, `SOIL_TYPES`, `HOME_WINDOWS` / `HOME_EXPOSURES` / `PLANT_LIGHT_REF`, legacy `PLANT_PLACEMENT`, static config arrays |
-| Schedule engine | `js/watering.js` | Seasonal intervals, `nextWatering`, `buildSchedule`, `RoomPlanStore`, all `*Store` persistence except images/theme |
-| UI orchestration | `js/app.js` | Tab switching, every `render*()` function, Claude module, import/export, gestures |
+| Care library | `js/care-library.js` | `CHOPSTICK_SOIL_CHECK`, propagation + troubleshooting matrices, `getPropagationMethods`, `getTroubleshootingGuide`, `CareLibrary` |
+| Schedule engine | `js/watering.js` | Seasonal intervals, `nextWatering`, `buildSchedule`, `RoomPlanStore`, `ConditionLogStore`, other `*Store` persistence except images/theme |
+| UI orchestration | `js/app.js` | Tab switching, every `render*()` function, Analyze tab, Claude module, import/export, gestures |
 | Build | `tools/*.js` | Single-file bundle + GitHub Pages sync (Node only; not required at runtime) |
 
 ### Script load order (critical)
 
 ```html
 <script src="js/plants-data.js"></script>
+<script src="js/care-library.js"></script>
 <script src="js/watering.js"></script>
 <script src="js/app.js"></script>
 ```
 
-`watering.js` expects globals from `plants-data.js`. `app.js` wraps everything in an IIFE and calls `init()` on load.
+`watering.js` expects globals from `plants-data.js`. `care-library.js` reads `plant.category` and optional plant-specific overrides but does not depend on `watering.js`. `app.js` wraps everything in an IIFE and calls `init()` on load.
 
 ---
 
@@ -401,18 +407,85 @@ Shape: {
 
 **`build-single-html.js`:**
 
-1. Read `index.html`, `css/styles.css`, three JS files
+1. Read `index.html`, `css/styles.css`, four JS files (`plants-data`, `care-library`, `watering`, `app`)
 2. Replace `<link href="css/styles.css">` with inline `<style>`
-3. Replace three `<script src="js/...">` tags with one `<script>` block (order preserved: plants-data → watering → app)
+3. Replace four `<script src="js/...">` tags with one `<script>` block (order: plants-data → care-library → watering → app)
 4. Escape `</script>` in JS source
 5. Sanity-check no relative asset refs remain
 6. Write `dist/Mooses-Plant-Care.html`
 
 **`build-pages.js`:**
 
-1. Copy runtime files from `Plant_Care/` → sibling `plant-care-site/` per `COPIES` table
+1. Copy runtime files from `Plant_Care/` → sibling `plant-care-site/` per `COPIES` table (includes `js/care-library.js`)
 2. Single-file build lands at `offline/Mooses-Plant-Care.html`
 3. Does **not** touch `.github/`, `.nojekyll`, deploy README, or git history
+
+### 3.11 Care library — `js/care-library.js`
+
+Structured Care Guide extras that complement (not replace) `plant.tips.*` prose in `plants-data.js`.
+
+| Export | Role |
+|---|---|
+| `CHOPSTICK_SOIL_CHECK` | Static guide: steps, reading chart, plant tips, sources — injected into the **Watering** tip tile via `renderChopstickGuideHtml()` |
+| `PROPAGATION_LIBRARY` | Per-plant or per-category propagation methods with typical first-timer **success rates** |
+| `TROUBLESHOOTING_LIBRARY` | Symptom → causes → fix (+ urgency) matrices, merged plant-specific + category |
+| `getPropagationMethods(plant)` | Plant override → else `CATEGORY_PROPAGATION[category]` |
+| `getTroubleshootingGuide(plant)` | Plant override → else category matrix |
+| `CareLibrary` | Namespace object exposing chopstick data + both resolvers |
+
+Rendering hooks in `renderPlantDetail()` (`CARE_SECTIONS` map):
+
+| Tip key | Extra HTML helper |
+|---|---|
+| `watering` | `renderChopstickGuideHtml()` |
+| `soil` | `renderPlantSoilCardHtml(plant)` — current vs ideal soil card (formerly Soil Mix tab) |
+| `propagation` | `renderPropagationMethodsHtml(plant)` |
+| `troubleshooting` | `renderTroubleshootingGuideHtml(plant)` |
+| `repotting` | `renderRepotSignsHtml(plant)` — plant `repotSigns[]` moved **into** this tile |
+
+All tip tiles use `<details class="care-section">` **without** a default `open` attribute — **collapsed by default** (including Lighting).
+
+### 3.12 Condition log — `ConditionLogStore` — `js/watering.js`
+
+**Storage key:** `plant_care_condition_log_v1`
+
+```
+Shape: {
+  [plantId]: [
+    { id, date: "YYYY-MM-DD", ts: ISO, rating, note }
+  ]
+}
+```
+
+**Ratings:** `PLANT_CONDITION_OPTIONS` in `app.js` — `Thriving`, `Healthy`, `Okay`, `Struggling`, `Recovering`.
+
+**UI:** Care Guide section `🩺 Condition log` (form + history list). On submit, `handlePlantConditionLogSubmit`:
+
+1. `ConditionLogStore.add(plantId, { date, rating, note })`
+2. Updates profile `condition` via `PlantStore.setOverlay` (built-ins) or `upsertCustom` (custom plants)
+3. Full `renderPlantDetail(plantId)` so the header condition badge stays in sync
+
+Included in JSON export/import as `conditionLog`. Feeds **Analyze** tab when "Condition log" is checked.
+
+### 3.13 Analyze tab — `js/app.js`
+
+Main nav tab `🔎 Analyze` (`data-tab="analyze"`) sits between **Ask Claude** and **Placement**.
+
+**Always-included context** (via `buildAnalyzePayload`): merged plant profile — pot, category, comments, `repotted`, soil evaluation (`evaluateSoil`), ideal `conditions`, `PLANT_LIGHT_REF`, `HOME_WINDOWS` thrive/solid/keepOut matches (`getPlantPlacementContext`), `RoomPlanStore` planned room.
+
+**Optional includes** (checkboxes; at least one required): watering log, condition log, care notes, todos.
+
+| Function | Purpose |
+|---|---|
+| `buildAnalyzePayload(plantId, opts)` | JSON bundle for one plant or `ALL` owned plants |
+| `getPlantPlacementContext(pid)` | Light ref + window matches + planned room |
+| `buildLocalAnalyzeSummary(payload)` | Offline heuristic report (watering drift, soil/placement mismatch) |
+| `runAnalyzeWithClaude(payload, extraText)` | Non-streaming Anthropic call; reuses BYOK key from `ClaudeSettings` |
+| `renderAnalyzeTab()` | Populate plant select; show/hide save button |
+
+**Save:** "💾 Save result to plant notes" writes analysis text into `CareNotesStore` (same archive path as chat saves).
+
+**Fallback:** "📋 Local summary only" when no API key or user prefers heuristics.
 
 ---
 
@@ -439,8 +512,9 @@ Plant_Care/
 ├── css/styles.css                      # All styling (light + dark)
 ├── js/
 │   ├── plants-data.js                  # PLANTS + static config (primary edit target)
-│   ├── watering.js                     # Schedule engine + TodoStore, Claude stores, etc.
-│   └── app.js                          # UI, Claude chat, import/export (~3.5k lines)
+│   ├── care-library.js                 # Chopstick guide, propagation/troubleshooting matrices
+│   ├── watering.js                     # Schedule engine + stores (incl. ConditionLogStore)
+│   └── app.js                          # UI, Analyze, Claude chat, import/export
 ├── data/
 │   ├── watering-log.json               # Empty starter template
 │   ├── images/                         # Optional portable JPG photos per plantId
@@ -471,7 +545,7 @@ sequenceDiagram
     participant plants-data.js
     participant localStorage
 
-    Browser->>app.js: Load scripts (plants-data → watering → app)
+    Browser->>app.js: Load scripts (plants-data → care-library → watering → app)
     app.js->>app.js: loadTheme()
     app.js->>app.js: migrateCustomToBuiltins()
     app.js->>localStorage: Read custom plants, overlays, images, log, snoozes
@@ -479,7 +553,7 @@ sequenceDiagram
     app.js->>localStorage: Migrate overlays, images, log ids; remove custom
     app.js->>app.js: populate*Select() for all tabs
     app.js->>watering.js: nextWatering / buildSchedule for calendar
-    app.js->>app.js: renderCalendar, renderSoilTab, renderPlacementTab, renderTodosTab, renderChatTab
+    app.js->>app.js: renderCalendar, renderPlacementTab, renderTodosTab, renderChatTab
     app.js-->>Browser: Interactive UI ready
 ```
 
@@ -511,9 +585,9 @@ Every owned plant is a key in the `PLANTS` object. Required and common fields:
 | `sources` | `{label, url}[]` | **Minimum 5** reputable citations per plant |
 | `idealSoil` | string[] | Keys into `SOIL_TYPES` |
 | `currentSoilMix` | string | User-facing default; overridden by overlay |
-| `soilNotes` | string? | Shown on Soil Mix tab |
+| `soilNotes` | string? | Optional owner/soil notes (soil status card in Care Guide → Soil tip) |
 | `comments` | string? | Free-text owner notes |
-| `repotSigns` | string[] | Universal collapsible “signs it's time to repot” (all 38 plants) |
+| `repotSigns` | string[] | Observable repot signals — rendered inside **Repotting** tip tile (`renderRepotSignsHtml`) |
 | `repotted` | boolean? | When `true`, Care Guide shows green “Repotted ✅” confirmation instead of stale `repotSuggestion` |
 | `repotSuggestion` | object? | Nursery-pot plants only — urgency, target pot/soil, technique (ignored at render when `repotted: true`) |
 | `isPropagation` | boolean? | Water-rooting mode |
@@ -533,7 +607,7 @@ Every owned plant is a key in the `PLANTS` object. Required and common fields:
 
 ### 7.2 Soil catalog (`SOIL_TYPES`)
 
-Each soil type has `label`, `drainage`, `retention`, `description`. Used by Soil Mix tab and profile form. Keys include `standard_potting`, `amended_potting`, `cactus_mix`, `aroid_mix`, `terrarium_mix`, `water_propagation`, `pending`, `other`, etc.
+Each soil type has `label`, `drainage`, `retention`, `description`. Used by the inline soil card in Care Guide → **Soil** tip and the Plant Profile form. Keys include `standard_potting`, `amended_potting`, `cactus_mix`, `aroid_mix`, `terrarium_mix`, `water_propagation`, `pending`, `other`, etc.
 
 Status logic: see **§3.6** (`evaluateSoil`).
 
@@ -565,6 +639,7 @@ Rendering logic: see **§3.7** and **§3.9** (room planner).
 | Claude settings | `plant_care_anthropic_settings_v1` | `watering.js` → `ClaudeSettings` | **No** (device-local BYOK) |
 | Chat history | `plant_care_chat_history_v1` | `watering.js` → `ChatHistory` | **No** |
 | Care notes | `plant_care_care_notes_v1` | `watering.js` → `CareNotesStore` | Yes |
+| Condition log | `plant_care_condition_log_v1` | `watering.js` → `ConditionLogStore` | Yes |
 | Room plan | `plant_care_room_plan_v1` | `watering.js` → `RoomPlanStore` | Yes |
 
 **Overlay fields** on built-ins: `condition`, `comments`, `potSize`, `currentSoilMix`, photo (via `ImageStore`). Tips, intervals, and sources are **not** overlay-editable — edit `plants-data.js`.
@@ -582,7 +657,7 @@ Export payload (Log & Data tab):
 ```js
 {
   waterLog, customPlants, overlays, images,
-  snoozes, todos, careNotes, roomPlan, exportedAt
+  snoozes, todos, careNotes, conditionLog, roomPlan, exportedAt
 }
 ```
 
@@ -609,7 +684,7 @@ Intervals are research-based, not user-editable. Snooze + calendar projection: *
 
 ### 9.1 Tab system
 
-Seven tabs in `index.html` nav; `data-tab` attribute drives switching in `app.js`:
+Seven tabs in `index.html` nav; `data-tab` attribute drives switching in `app.js`. The standalone **🪴 Soil Mix** nav tab was removed — soil status lives in Care Guide → **Soil** tip (`renderPlantSoilCardHtml`).
 
 | Tab id | Label | Default? | Primary render function |
 |---|---|---|---|
@@ -617,7 +692,7 @@ Seven tabs in `index.html` nav; `data-tab` attribute drives switching in `app.js
 | `todos` | ✅ Todos | | `renderTodosTab()` |
 | `care` | 📖 Care Guide | | `renderPlantDetail()` |
 | `chat` | 🤖 Ask Claude | | `renderChatTab()` |
-| `soil` | 🪴 Soil Mix | | `renderSoilTab()` |
+| `analyze` | 🔎 Analyze | | `renderAnalyzeTab()` |
 | `placement` | 📍 Placement | | `renderPlacementTab()` |
 | `log` | 💧 Log & Data | | `renderRecentLog()` |
 
@@ -640,6 +715,7 @@ Each tile includes status badge, last/next dates, snooze shift line, snooze butt
 | `plantCareLinkHtml(pid, text)` | Inline tappable plant name → Care Guide — **§3.5** |
 | `openChatForPlant(plantId)` | Pre-selects plant context in Claude tab; focuses input |
 | `openTodosForPlant(plantId)` | Sets todo filter; switches to Todos tab |
+| `openPlantProfileForSoil(plantId)` | Log tab → Plant Profile edit, focus soil dropdown (from inline soil card) |
 
 ### 9.4 Snooze gesture handling
 
@@ -651,18 +727,17 @@ Renders in order:
 
 1. Meta header (pot, cuttings, condition, category)
 2. Photo (folder `data/images/<id>.jpg` first, then `ImageStore` fallback)
-3. Action pills (todos manage, Ask Claude)
-4. Notes from past chats (`CareNotesStore`)
-5. 💧 Next watering tile (shared helper)
-6. 👀 Repot signs (`repotSigns` — collapsible `<details>`; always shown)
-7. 🪴 Repot card — **`repotted: true` first** → green `.urgency-done` confirmation (“Out of the nursery pot”, current pot + mix); else `repotSuggestion` → urgency-colored nursery recommendation (`.urgency-urgent|soon|seasonal`)
+3. 💧 Next watering tile + inline log form (shared helper)
+4. 🩺 Condition log (form + history; syncs overlay `condition` badge)
+5. 🪴 Repot card — **`repotted: true` first** → green confirmation; else `repotSuggestion` nursery card
+6. Todos strip + action pills (todos manage, Ask Claude)
+7. Notes from past chats (`CareNotesStore`)
 8. 📦 Transfer plan (water propagations only)
-9. Conditions card
-10. Tip accordions (`CARE_SECTIONS` order in `app.js`)
-11. Todos strip for this plant
-12. Sources list
+9. Conditions card (ideal vs passing)
+10. Tip accordions (`CARE_SECTIONS`) — **collapsed `<details>`**; each may include Care Library extras (§3.11): chopstick guide, inline soil card, propagation table, troubleshooting matrix, inline repot signs
+11. Sources list
 
-`CARE_SECTIONS` controls tip section order, labels, and icons. Adding a new tip type requires updating every plant **and** this array.
+`CARE_SECTIONS` controls tip section order, labels, and icons. Adding a new tip type requires updating every plant **and** this array (and optionally `care-library.js` for structured extras).
 
 ---
 
@@ -672,11 +747,11 @@ Renders in order:
 |---|---|---|
 | **📅 Calendar** | Urgency sort §3.3; snooze §3.2; quick-log §3.3; `nextWatering` §3.1 | `renderCalendar`, `renderNextSummary`, `handleWaterNowClick` |
 | **✅ Todos** | 10 categories; filter/sort by urgency; plant chips link via `plantCareLinkHtml` | `TodoStore`, `renderTodosTab` |
-| **📖 Care Guide** | Variant selectors §3.5; inline water tile + Just watered; repot signs + repotted/repot cards | `renderPlantDetail` |
+| **📖 Care Guide** | Variant selectors §3.5; collapsed tip tiles + Care Library §3.11; condition log §3.12; inline soil card | `renderPlantDetail`, `care-library.js` |
 | **🤖 Ask Claude** | System prompt, SSE, cost §3.8 | `sendChatMessage`, `buildClaudeSystemPrompt` |
-| **🪴 Soil Mix** | Status engine §3.6; plant names link to Care Guide | `evaluateSoil`, `renderSoilTab` |
+| **🔎 Analyze** | Profile + placement context; optional logs; Claude or local summary §3.13 | `buildAnalyzePayload`, `runAnalyzeWithClaude` |
 | **📍 Placement** | Window cards §3.7; dual filters; room planner §3.9 | `renderPlacementTab`, `RoomPlanStore` |
-| **💧 Log & Data** | Profile CRUD; merge §3.4; JSON import/export incl. `roomPlan` | `PlantStore`, export handler |
+| **💧 Log & Data** | Profile CRUD; merge §3.4; JSON import/export incl. `conditionLog`, `roomPlan` | `PlantStore`, export handler |
 
 ---
 
@@ -703,7 +778,7 @@ cd Plant_Care
 node tools/build-single-html.js
 ```
 
-Output: `dist/Mooses-Plant-Care.html` — inlines CSS + all three JS files into one HTML document. Escapes `</script>` in source. No relative asset paths. As of 2026-07-27 the bundle is ~728 KB (expanded care-tip text across all 38 plants).
+Output: `dist/Mooses-Plant-Care.html` — inlines CSS + all four JS files into one HTML document. Escapes `</script>` in source. No relative asset paths. As of 2026-08-04 the bundle is ~802 KB (Care Library matrices + expanded tips).
 
 **Caveats:** no `data/watering-log.json` template load; no folder photo fallback; localStorage still holds user data.
 
@@ -714,7 +789,7 @@ node tools/build-single-html.js   # refresh single-file first
 node tools/build-pages.js         # copy runtime files to plant-care-site/
 ```
 
-Copies: `index.html`, `css/`, `js/`, `data/watering-log.json`, `data/images/README.md`, single-file → `offline/Mooses-Plant-Care.html`.
+Copies: `index.html`, `css/`, `js/` (including `care-library.js`), `data/watering-log.json`, `data/images/README.md`, single-file → `offline/Mooses-Plant-Care.html`.
 
 Does **not** overwrite deploy scaffolding (`.github/workflows/deploy.yml`, `.nojekyll`, `README.md`, `SYNC.md`).
 
@@ -757,11 +832,116 @@ git add . && git commit -m "Update site" && git push
 
 ---
 
-## 14. Relationship to other docs
+## 14. Recommended data model for a Spring REST backend
+
+This section maps today's **static catalog + localStorage** design to a relational schema suitable for **Spring Boot 3 REST**, **PostgreSQL** (recommended primary store), and a **React or Angular SPA**. MongoDB can hold the same shapes as nested documents (`PlantCatalog.tips`, troubleshooting matrices) if the team prefers document-first catalog seeding — but normalize **user-mutable events** (waterings, condition logs, todos) for queryability and sync.
+
+### 14.1 Design principles
+
+| Principle | Static app today | Production REST app |
+|---|---|---|
+| Catalog vs instance | `PLANTS` + `care-library.js` + `HOME_*` are read-mostly | Seed `plant_catalog`, `soil_type`, `home_window`, propagation/troubleshooting tables from JS exports |
+| User data | Per-browser localStorage keys | Rows scoped by `user_id` / `household_id` |
+| AI secrets | BYOK in `localStorage` | Anthropic key on server (env) or encrypted per-user BYOK — **never** long-term in browser storage for multi-user |
+| Auth | None | JWT (stateless SPA) or session cookie + CSRF; household membership for shared collections |
+| Photos | base64 in `ImageStore` | Object storage (S3-compatible) + `plant_photo` metadata |
+
+### 14.2 Entity overview (ER)
+
+See also: [`diagrams/spring-rest-er.mmd`](./diagrams/spring-rest-er.mmd).
+
+```mermaid
+erDiagram
+    HOUSEHOLD ||--o{ APP_USER : has
+    APP_USER ||--o{ OWNED_PLANT : owns
+    PLANT_CATALOG ||--o{ OWNED_PLANT : instantiates
+    OWNED_PLANT ||--o{ WATERING_EVENT : logs
+    OWNED_PLANT ||--o{ CONDITION_LOG_ENTRY : tracks
+    OWNED_PLANT ||--o{ PLANT_TASK : has
+    OWNED_PLANT ||--o{ CARE_NOTE : archives
+    OWNED_PLANT ||--o| SNOOZE : may_have
+    ROOM ||--o{ ROOM_ASSIGNMENT : contains
+    OWNED_PLANT ||--o| ROOM_ASSIGNMENT : placed_in
+    SOIL_TYPE ||--o{ OWNED_PLANT : current_mix
+    HOME_WINDOW ||--o{ WINDOW_PLANT_REC : lists
+    PLANT_CATALOG ||--o{ WINDOW_PLANT_REC : for_plant
+```
+
+### 14.3 Entities (fields, keys, catalog vs mutable)
+
+| Entity | PK | Key fields | FKs / indexes | Catalog (seed) vs user-mutable |
+|---|---|---|---|---|
+| **Household** | `id` UUID | `name`, `timezone`, `created_at` | — | Mutable (admin) |
+| **AppUser** | `id` UUID | `email`, `password_hash` or `oauth_sub`, `display_name` | `household_id` | Mutable |
+| **PlantCatalog** | `slug` VARCHAR | `display_name`, `category`, `scientific_name`, `watering_days_warm/hot/cool`, JSONB `conditions`, JSONB `tips`, JSONB `sources`, JSONB `repot_signs`, JSONB `repot_suggestion`, flags (`is_propagation`, …) | Index on `category` | **Catalog** — seed from `plants-data.js` |
+| **PropagationMethod** | `id` UUID | `catalog_slug`, `method`, `success_rate`, `timeline`, `notes`, `sort_order` | FK `catalog_slug` → PlantCatalog; fallback rows with `catalog_slug = NULL` + `category` | **Catalog** — seed from `PROPAGATION_LIBRARY` / `CATEGORY_PROPAGATION` |
+| **TroubleshootingRow** | `id` UUID | `catalog_slug` or `category`, `symptom`, `causes`, `fix`, `urgency` | Index `(catalog_slug)`, `(category)` | **Catalog** — seed from `TROUBLESHOOTING_LIBRARY` |
+| **ChopstickGuide** | singleton or version row | JSONB matching `CHOPSTICK_SOIL_CHECK` | — | **Catalog** |
+| **SoilType** | `key` VARCHAR | `label`, `drainage`, `retention`, `description` | — | **Catalog** — `SOIL_TYPES` |
+| **PlantIdealSoil** | `(catalog_slug, soil_key)` | — | FKs to catalog + soil | **Catalog** |
+| **HomeWindow** | `id` VARCHAR | `floor`, `name`, `bearing`, `light`, `humidity`, humidifier JSON, `avoid` prose | — | **Catalog** — `HOME_WINDOWS` |
+| **WindowPlantRec** | `id` UUID | `window_id`, `catalog_slug`, `match` (`thrive`\|`solid`\|`keep_out`), `set_back`, `note` | Index `(catalog_slug, match)` | **Catalog** |
+| **PlantLightRef** | `catalog_slug` PK | `light`, `humidity`, `best`, `humidifier_flag` | — | **Catalog** — `PLANT_LIGHT_REF` |
+| **OwnedPlant** | `id` UUID | `custom_display_name` (optional), `pot_size`, `current_soil_key`, `condition_rating`, `comments`, `cuttings_count`, `repotted`, `photo_url`, `is_custom` | FK `user_id`, FK `catalog_slug` (nullable for fully custom), index `(user_id)` | **User** — merges `PlantStore` overlays + custom plants |
+| **WateringEvent** | `id` UUID | `watered_on` DATE, `note` | FK `owned_plant_id`, index `(owned_plant_id, watered_on DESC)` | **User** — `WaterLog` |
+| **ConditionLogEntry** | `id` UUID | `logged_on`, `rating` ENUM, `note`, `created_at` | FK `owned_plant_id`, index `(owned_plant_id, logged_on DESC)` | **User** — `ConditionLogStore` |
+| **PlantTask** | `id` UUID | `title`, `category`, `due_date`, `notes`, `completed_at`, `created_at` | FK `owned_plant_id` nullable, index `(user_id, completed_at)` | **User** — `TodoStore` |
+| **CareNote** | `id` UUID | `title`, `source`, `model`, JSONB `messages`, `created_at` | FK `owned_plant_id` | **User** — `CareNotesStore` |
+| **Snooze** | `owned_plant_id` PK | `add_days`, `snoozed_at` | FK `owned_plant_id` | **User** — `SnoozeStore` |
+| **Room** | `id` UUID | `name`, `note`, `created_at` | FK `household_id` | **User** — `RoomPlanStore.rooms` |
+| **RoomAssignment** | `(room_id, owned_plant_id)` | — | FKs; unique on `owned_plant_id` (one room per plant) | **User** |
+| **AiAnalysisRun** (optional) | `id` UUID | `prompt_version`, JSONB `payload`, `result_text`, `model`, `cost_usd`, `created_at` | FK `user_id`, FK `owned_plant_id` nullable | **User** — server-side audit of Analyze tab |
+| **ChatMessage** (optional) | `id` UUID | `role`, `content`, `tokens`, `created_at` | FK `conversation_id` | **User** — if chat history moves server-side |
+
+**OwnedPlant ↔ catalog:** Built-ins reference `catalog_slug = prayer_plant`, etc. User overlays (`condition`, `potSize`, `currentSoilMix`, `comments`) become columns on `OwnedPlant`. Custom plants (`user_*`) either get their own catalog row on promote or store JSONB `custom_care` until promoted.
+
+### 14.4 Suggested REST resource sketch
+
+Base path `/api/v1`. All routes require auth unless noted.
+
+| Resource | Endpoints | Maps from |
+|---|---|---|
+| Catalog | `GET /catalog/plants`, `GET /catalog/plants/{slug}`, `GET /catalog/soil-types`, `GET /catalog/windows` | `PLANTS`, `SOIL_TYPES`, `HOME_*` |
+| Plants | `GET/POST /plants`, `GET/PATCH/DELETE /plants/{id}` | Owned instances |
+| Waterings | `GET/POST /plants/{id}/waterings`, `DELETE /plants/{id}/waterings/{eventId}` | `WaterLog` |
+| Conditions | `GET/POST /plants/{id}/conditions`, `DELETE .../{entryId}` | `ConditionLogStore` |
+| Todos | `GET/POST /todos`, `PATCH /todos/{id}` | `TodoStore` |
+| Notes | `GET/POST /plants/{id}/notes`, `DELETE /notes/{id}` | `CareNotesStore` |
+| Snooze | `PUT /plants/{id}/snooze`, `DELETE /plants/{id}/snooze` | `SnoozeStore` |
+| Rooms | `GET/POST /rooms`, `PUT /rooms/{id}/assignments/{plantId}` | `RoomPlanStore` |
+| Analyze | `POST /plants/{id}/analyze` (body: include flags + extra text) | `runAnalyzeWithClaude` — **API key on server** |
+| Export | `GET /me/export` | Full JSON export shape |
+| Import | `POST /me/import` | Idempotent merge like client import |
+
+Schedule endpoints (`GET /plants/{id}/next-watering`) can wrap the same `nextWatering` logic porting `intervalForDate` / snooze rules to Java.
+
+### 14.5 Auth and Claude API handling
+
+- **JWT:** SPA stores access token in memory; refresh via HttpOnly cookie or short-lived refresh token rotation.
+- **Household sync:** `OwnedPlant.household_id` lets multiple devices share one collection without merging localStorage manually.
+- **Claude:** Production should call Anthropic from a Spring `@Service` using a server secret or per-user encrypted BYOK table. The browser-direct BYOK + `anthropic-dangerous-direct-browser-access` pattern is acceptable for this personal static POC only.
+- **Analyze payload:** Server rebuilds the same JSON structure as `buildAnalyzePayload` so the SPA does not send unverified client-only fields.
+
+### 14.6 Migration: localStorage JSON export → PostgreSQL
+
+1. User exports JSON from Log & Data (`waterLog`, `customPlants`, `overlays`, `images`, `snoozes`, `todos`, `careNotes`, `conditionLog`, `roomPlan`).
+2. Import job (CLI or `POST /me/import`):
+   - **Catalog** already seeded — match `plantId` / overlay keys to `catalog_slug`.
+   - For each owned plant id in export: upsert `OwnedPlant` (pot, soil, condition from overlay merge).
+   - Insert `WateringEvent`, `ConditionLogEntry`, `PlantTask`, `CareNote` rows preserving dates.
+   - Map `snoozes[plantId]` → `Snooze` row.
+   - Map `roomPlan.rooms` + `assignments` → `Room` + `RoomAssignment` (resolve plant ids to new UUIDs via slug map).
+   - **Images:** decode base64 from export → upload to object storage; store URL on `OwnedPlant`.
+3. Skip `ClaudeSettings` / chat history (device-local by design) unless user opts into server chat migration.
+4. Validate: recompute next-watering for a sample plant and compare to static app.
+
+---
+
+## 15. Relationship to other docs
 
 | Document | Use when |
 |---|---|
-| **This guide** | Understanding code structure, data flow, feature wiring |
+| **This guide** | Understanding code structure, data flow, feature wiring, future REST schema |
 | [`project-requirements-and-handoff.md`](./project-requirements-and-handoff.md) | Plant inventory, full schema examples, agent edit recipes, session history |
 | [`README.md`](../README.md) | End-user how-to-run and feature summary |
 | [`plant-care-site/SYNC.md`](../../plant-care-site/SYNC.md) | Deploy folder sync notes (if present) |
@@ -770,11 +950,12 @@ git add . && git commit -m "Update site" && git push
 
 ## Sources consulted
 
-- `c:\Users\szfy8z\Personal_POC\Plant_Care\js\watering.js` — `SEASONAL_CONFIG`, `nextWatering`, `SnoozeStore`, `RoomPlanStore`, `buildSchedule`
-- `c:\Users\szfy8z\Personal_POC\Plant_Care\js\app.js` — merge, soil, placement (`renderPlacementTab`, `plantCareLinkHtml`, `handleWaterNowClick`), chat, snooze, urgency sort, navigation
-- `c:\Users\szfy8z\Personal_POC\Plant_Care\js\plants-data.js` — `HOME_WINDOWS`, `HOME_EXPOSURES`, `PLANT_LIGHT_REF`, `CLAUDE_MODELS`
-- `c:\Users\szfy8z\Personal_POC\Plant_Care\css\styles.css` — cozy den dark-theme tokens, `.repot-suggestion-card.urgency-done`
-- `c:\Users\szfy8z\Personal_POC\Plant_Care\js\app.js` — `repotted` branch in `renderPlantDetail` repot card (L381–399)
-- `c:\Users\szfy8z\Personal_POC\Plant_Care\dist\Mooses-Plant-Care.html` — ~728 KB single-file bundle (2026-07-27)
-- `c:\Users\szfy8z\Personal_POC\Plant_Care\tools\build-single-html.js`, `build-pages.js` — §3.10
+- `c:\Users\szfy8z\Personal_POC\Plant_Care\js\care-library.js` — `CHOPSTICK_SOIL_CHECK`, `getPropagationMethods`, `getTroubleshootingGuide`, `CareLibrary`
+- `c:\Users\szfy8z\Personal_POC\Plant_Care\js\watering.js` — `SEASONAL_CONFIG`, `nextWatering`, `SnoozeStore`, `RoomPlanStore`, `ConditionLogStore`, `buildSchedule`
+- `c:\Users\szfy8z\Personal_POC\Plant_Care\js\app.js` — Care Guide render, Analyze tab (`buildAnalyzePayload`, `runAnalyzeWithClaude`), merge, soil (`evaluateSoil`, `renderPlantSoilCardHtml`), placement, chat, snooze, export/import
+- `c:\Users\szfy8z\Personal_POC\Plant_Care\js\plants-data.js` — `HOME_WINDOWS`, `HOME_EXPOSURES`, `PLANT_LIGHT_REF`, `PLANT_CONDITION_OPTIONS`, `CLAUDE_MODELS`
+- `c:\Users\szfy8z\Personal_POC\Plant_Care\css\styles.css` — `.care-section`, cozy den dark-theme tokens
+- `c:\Users\szfy8z\Personal_POC\Plant_Care\index.html` — tab nav (Analyze; no Soil tab), script order
+- `c:\Users\szfy8z\Personal_POC\Plant_Care\tools\build-single-html.js`, `build-pages.js` — four-file bundle + Pages sync
+- `c:\Users\szfy8z\Personal_POC\Plant_Care\dist\Mooses-Plant-Care.html` — ~802 KB single-file bundle (2026-08-04)
 - `c:\Users\szfy8z\Personal_POC\Plant_Care\docs\project-requirements-and-handoff.md` — validated behavior cross-check

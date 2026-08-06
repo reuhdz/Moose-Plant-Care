@@ -1,0 +1,59 @@
+erDiagram
+    HOUSEHOLD ||--o{ APP_USER : has
+    APP_USER ||--o{ OWNED_PLANT : owns
+    PLANT_CATALOG ||--o{ OWNED_PLANT : instantiates
+    OWNED_PLANT ||--o{ WATERING_EVENT : logs
+    OWNED_PLANT ||--o{ CONDITION_LOG_ENTRY : tracks
+    OWNED_PLANT ||--o{ PLANT_TASK : has
+    OWNED_PLANT ||--o{ CARE_NOTE : archives
+    OWNED_PLANT ||--o| SNOOZE : may_have
+    OWNED_PLANT ||--o| ROOM_ASSIGNMENT : placed_in
+    ROOM ||--o{ ROOM_ASSIGNMENT : contains
+    SOIL_TYPE ||--o{ OWNED_PLANT : current_mix
+    PLANT_CATALOG }o--o{ SOIL_TYPE : ideal_mix
+    HOME_WINDOW ||--o{ WINDOW_PLANT_REC : lists
+    PLANT_CATALOG ||--o{ WINDOW_PLANT_REC : recommended_for
+    APP_USER ||--o{ AI_ANALYSIS_RUN : triggers
+    OWNED_PLANT ||--o{ AI_ANALYSIS_RUN : subject
+
+    HOUSEHOLD {
+        uuid id PK
+        string name
+        string timezone
+    }
+    APP_USER {
+        uuid id PK
+        uuid household_id FK
+        string email UK
+        string display_name
+    }
+    PLANT_CATALOG {
+        string slug PK
+        string display_name
+        string category
+        jsonb tips
+        jsonb conditions
+        jsonb sources
+    }
+    OWNED_PLANT {
+        uuid id PK
+        uuid user_id FK
+        string catalog_slug FK
+        string pot_size
+        string current_soil_key FK
+        string condition_rating
+        boolean repotted
+    }
+    WATERING_EVENT {
+        uuid id PK
+        uuid owned_plant_id FK
+        date watered_on
+        text note
+    }
+    CONDITION_LOG_ENTRY {
+        uuid id PK
+        uuid owned_plant_id FK
+        date logged_on
+        string rating
+        text note
+    }

@@ -18,6 +18,7 @@ const CLAUDE_SETTINGS_KEY= "plant_care_anthropic_settings_v1";
 const CLAUDE_HISTORY_KEY = "plant_care_chat_history_v1";
 const CARE_NOTES_KEY     = "plant_care_care_notes_v1";
 const ROOM_PLAN_KEY      = "plant_care_room_plan_v1";
+const CONDITION_LOG_KEY  = "plant_care_condition_log_v1";
 
 /*
  * Seasonal config — calibrated for INDOOR plants in AUSTIN, TX, kept at a
@@ -738,3 +739,91 @@ function sanitizeCareNote(n) {
     messages
   };
 }
+
+/* ----------- Condition log — time-series health ratings per plant -----------
+ *
+ * Logged from each plant's Care Guide. Used by the Analyze tab so Claude can
+ * see how the plant's condition has been trending (not just the latest badge).
+ *
+ * Shape:
+ *   {
+ *     [plantId]: [
+ *       {
+ *         id: cryptoId(),
+ *         date: "YYYY-MM-DD",
+ *         ts: ISO timestamp,
+ *         rating: "Thriving" | "Healthy" | "Okay" | "Struggling" | "Recovering",
+ *         note: string
+ *       },
+ *       ...
+ *     ]
+ *   }
+ */
+const ConditionLogStore = {
+  all() {
+    try { return JSON.parse(localStorage.getItem(CONDITION_LOG_KEY) || "{}"); }
+    catch { return {}; }
+  },
+  save(obj) { localStorage.setItem(CONDITION_LOG_KEY, JSON.stringify(obj || {})); },
+  forPlant(plantId) {
+    const all = this.all();
+    const list = Array.isArray(all[plantId]) ? all[plantId] : [];
+    return list.slice().sort((a, b) => (b.date || "").localeCompare(a.date || "") || (b.ts || "").localeCompare(a.ts || ""));
+  },
+  add(plantId, entry) {
+    if (!plantId || !entry) return null;
+    const all = this.all();
+    const list = Array.isArray(all[plantId]) ? all[plantId] : [];
+    const rating = String(entry.rating || "").trim();
+    const allowed = (typeof PLANT_CONDITION_OPTIONS !== "undefined" && Array.isArray(PLANT_CONDITION_OPTIONS))
+      ? PLANT_CONDITION_OPTIONS
+      : ["Thriving", "Healthy", "Okay", "Struggling", "Recovering"];
+    const clean = {
+      id: entry.id || cryptoId(),
+      date: entry.date || Dates.iso(Dates.today()),
+      ts: entry.ts || new Date().toISOString(),
+      rating: allowed.includes(rating) ? rating : "Okay",
+      note: String(entry.note || "").trim().slice(0, 280)
+    };
+    list.push(clean);
+    all[plantId] = list;
+    this.save(all);
+    return clean;
+  },
+  remove(plantId, entryId) {
+    const all = this.all();
+    const list = Array.isArray(all[plantId]) ? all[plantId] : [];
+    const filtered = list.filter(e => e.id !== entryId);
+    if (filtered.length) all[plantId] = filtered;
+    else delete all[plantId];
+    this.save(all);
+  },
+  latest(plantId) {
+    const list = this.forPlant(plantId);
+    return list[0] || null;
+  },
+  clearForPlant(plantId) {
+    const all = this.all();
+    delete all[plantId];
+    this.save(all);
+  },
+  clearAll() { localStorage.removeItem(CONDITION_LOG_KEY); },
+  replaceAll(data) {
+    if (!data || typeof data !== "object") { this.clearAll(); return; }
+    const cleaned = {};
+    const allowed = (typeof PLANT_CONDITION_OPTIONS !== "undefined" && Array.isArray(PLANT_CONDITION_OPTIONS))
+      ? PLANT_CONDITION_OPTIONS
+      : ["Thriving", "Healthy", "Okay", "Struggling", "Recovering"];
+    Object.entries(data).forEach(([plantId, list]) => {
+      if (!Array.isArray(list)) return;
+      cleaned[plantId] = list.map(e => ({
+        id: e.id || cryptoId(),
+        date: e.date || Dates.iso(Dates.today()),
+        ts: e.ts || new Date().toISOString(),
+        rating: allowed.includes(e.rating) ? e.rating : "Okay",
+        note: String(e.note || "").trim().slice(0, 280)
+      })).filter(e => e.date);
+    });
+    this.save(cleaned);
+  }
+};
