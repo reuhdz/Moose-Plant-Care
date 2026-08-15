@@ -8,7 +8,7 @@
 |---|---|
 | Audience | Developers / maintainers (including AI coding agents) |
 | Scope | Architecture, **core logic & algorithms**, data model, features, build/deploy |
-| Last updated | 2026-08-14 (Aug 2026 moves: outdoor NW patio, ZZ 5", Schefflera 13.5", Mondo 9×9, corn canes split, Monstera air layers + water cuttings) |
+| Last updated | 2026-08-14 (Moon cactus Hylocereus new apical growth; Monstera grow-light intensity/distance) |
 | Owner | Personal POC — `Personal_POC/Plant_Care` |
 | Companion doc | [`project-requirements-and-handoff.md`](./project-requirements-and-handoff.md) — inventory, edit recipes, session logs |
 

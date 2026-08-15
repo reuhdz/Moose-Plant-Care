@@ -629,7 +629,8 @@ const TROUBLESHOOTING_LIBRARY = {
     _t("Brown patches / sun scorch", "Direct hot sun", "Sheer curtain or move back from SW glass.", "normal"),
     _t("Aerial roots everywhere", "Normal — seeking support/moisture", "Guide to moss pole or trim if unwanted (safe).", "low"),
     _t("After chop: wilting stumps", "Transplant / root loss stress", "Bright indirect, steady moisture (not swamp), no fert 3–4 wks.", "normal"),
-    _t("Air-layer moss drying out", "Wrap not sealed / summer AC", "Remist sphagnum 1–2×/week; reseal plastic. Don't soak the 13.5\" pot to compensate.", "normal")
+    _t("Air-layer moss drying out", "Wrap not sealed / summer AC", "Remist sphagnum 1–2×/week; reseal plastic. Don't soak the 13.5\" pot to compensate.", "normal"),
+    _t("Bleached / warm leaves under lamp", "Grow light too close or too intense", "UMN: hang foliage lights 12–24\" above the canopy. Raise 4–6\" if a leaf feels warm.", "normal")
   ],
   monstera_water_cuttings: [
     _t("No roots after 4+ weeks", "Node not submerged, too dim, or no node (UMN Extension)", "Confirm a node is in the water; bright indirect; discard leaf-only chops.", "high"),
@@ -771,7 +772,8 @@ const TROUBLESHOOTING_LIBRARY = {
     _t("Wet core in the 9×9 cube", "Overpot volume / blocked drainage", "Probe the center; wait; never leave a saucer (Clemson: moist not waterlogged).", "normal")
   ],
   assorted_cacti: [
-    _t("One cactus soft, others fine", "Species mismatch in watering", "Unpot soft one; dry culture separately.", "high")
+    _t("One cactus soft, others fine", "Species mismatch in watering", "Unpot soft one; dry culture separately.", "high"),
+    _t("New green shoot on cut moon-cactus stalk", "Hylocereus resuming dragon-fruit habit (UF/IFAS topping)", "Healthy. Don't water extra. Pinch extras or re-graft a colored scion soon if you want another moon top.", "low")
   ],
   succulent_frankenstein_a: [
     _t("One species mushy in the mix", "Overwater for the most drought-tolerant member", "Remove casualty; water for the thirstiest-tolerant compromise (dry side).", "high")
