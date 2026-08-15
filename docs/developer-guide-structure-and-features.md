@@ -8,7 +8,7 @@
 |---|---|
 | Audience | Developers / maintainers (including AI coding agents) |
 | Scope | Architecture, **core logic & algorithms**, data model, features, build/deploy |
-| Last updated | 2026-08-04 (Care Library, Analyze tab, condition log, Care Guide UX, soil-in-tips) |
+| Last updated | 2026-08-14 (Aug 2026 moves: outdoor NW patio, ZZ 5", Schefflera 13.5", Mondo 9×9, corn canes split, Monstera air layers + water cuttings) |
 | Owner | Personal POC — `Personal_POC/Plant_Care` |
 | Companion doc | [`project-requirements-and-handoff.md`](./project-requirements-and-handoff.md) — inventory, edit recipes, session logs |
 
@@ -21,7 +21,7 @@ This guide explains **how the app is structured, how non-trivial client-side alg
 **Moose's Plant Care** is a fully offline-capable **static** personal plant-care web app:
 
 - Pure **HTML + CSS + vanilla JavaScript** — no framework, no transpilation, no backend required to run.
-- Tracks **38 owned plants** with research-backed care data, watering schedules, placement, soil tracking, todos, and optional BYOK Claude chat.
+- Tracks **40 owned plants** with research-backed care data, watering schedules, placement, soil tracking, todos, and optional BYOK Claude chat.
 - Dual-themed UI: light green/leaf palette (unchanged) and a dark **"cozy den"** palette — warm brown backgrounds, golden-retriever amber primary (`#e0a94f`), soft leaf-green accent (`#8fce8f`), teal scheduled accent (`#5bc8b8`). Header/title/meta use 🐶 favicon; app renamed from "Cowboy Bebop Green House" to **Moose's Plant Care** (Moose is the owner's dog).
 - Runs on desktop or phone via folder open, local HTTP server, single-file build, or GitHub Pages deploy copy.
 

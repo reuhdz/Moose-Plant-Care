@@ -173,7 +173,7 @@ const PLANTS = {
     wateringDaysHot: 8,
     wateringDaysCool: 14,
     currentSoilMix: "amended_potting",
-    comments: "Repotted from 10\" → 13.5\" pot in last 2 months, BUT the original root ball is still in the store potting medium (only the outer soil was replaced). Watch for inconsistent moisture between the inner peat-heavy core and the outer amended mix — water deeply and let the whole rootball dry uniformly between waterings.",
+    comments: "Repotted from 10\" → 13.5\" pot (original root ball still in store peat; outer soil is 60/30 amended mix). Aug 2026 propagation project: air-layering 4 vines on the mother plant (still attached) AND 3 top cuttings in water. Parent canopy is lighter after the chops — expect a short sulk, then new axillary growth below each cut (per UMN Extension). Keep the four sphagnum wraps moist (not dripping); do not sever until roots are 1–2\" inside the moss.",
     idealSoil: ["aroid_mix", "amended_potting", "standard_potting"],
     soilNotes: "User has 60/30 potting/perlite (close to amended_potting). A true aroid mix with orchid bark would be even better for aerial root health, but the current blend is workable. ⚠️ Original root ball still in store soil — next repot, bare-root the core and switch fully to amended mix.",
     conditions: {
@@ -185,9 +185,9 @@ const PLANTS = {
     tips: {
       lighting: "Bright, indirect light produces the largest leaves and the most fenestrations (the iconic splits and holes). Tolerates medium light but grows slowly with smaller, less-split leaves.\n\n• Avoid harsh direct afternoon sun — leaves burn.\n• Early morning sun (east window) is great.\n• Rotate the pot 1/4 turn every 2 weeks so all vines get even light.\n• If you have grow lights, 10–12 hrs of bright indirect-equivalent works well in winter.\n\n• In this home, the 1F Living Room corner (vaulted dual NE/SE light) and 1F Bathroom (set back from the SE beam) are your best matches per PLANT_LIGHT_REF.",
       soil: "Chunky, well-draining AROID mix. Recipe: 1 part standard potting soil + 1 part orchid bark + 1 part perlite + handful of horticultural charcoal + handful of coco coir. Slightly acidic (pH 5.5–7.0).\n\nReady-made aroid mixes (e.g. Sungro, Soil Sunrise) work fine; just confirm there's visible chunky bark and perlite.",
-      watering: "METHOD — soak-and-dry: Monstera deliciosa stores some moisture in its thick roots and aerial roots; let the top 2\" of soil dry before a deep drench. Never keep the 13.5\" pot continuously wet — root rot is the #1 killer (per RHS and University of Wisconsin Extension).\n\nHOW TO CHECK READINESS (your 13.5\" pot):\n• Finger test: stick 2 knuckles deep — if damp/cool, wait; if dry and crumbly at 2\", water.\n• Pot weight: lift the side — a thirsty 13.5\" pot feels noticeably lighter than 24 hrs after a soak.\n• Moisture meter: 3–4 in the upper half = time to water; don't water at 7+ unless you're confirming a dry deep zone.\n• Plant tells: slight leaf droop + dry top 2\" = thirsty. Yellowing with wet soil = overwatered.\n\n⚠️ DUAL-SOIL NOTE: your root ball is still in original store peat while the outer 60/30 amended mix dries faster — water deeply enough to rewet the inner core, then let the WHOLE mass dry uniformly.\n\nCENTRAL TEXAS CADENCE (Pflugerville, indoor AC):\n• Hot AC season (Apr–Oct): every 7–9 days — large pot + AC = slower surface dry but steady evaporation.\n• Peak summer (Jun–Sep): every 7–8 days in 1F Corner; 8–9 days if set back in humid 1F Bath.\n• Mild winter (Nov–Feb): every 12–16 days — dormancy slows uptake.\n• 2F SW window would dry this pot faster (avoid — too hot/direct); NW rooms OK with longer intervals.\n\nBOTTOM-WATERING: optional for this size — top-watering until runoff is usually better for a 13.5\" pot so the inner root ball gets saturated. If top soil is hydrophobic, bottom-soak 30 min then top-water to rewet.\n\nWATER QUALITY: moderately sensitive — room-temp filtered or tap water left 24 hrs is fine; flush with plain water every 2–3 months to clear fertilizer salts (brown edges).\n\nOVER- vs UNDER-watering tells:\n• Over: multiple yellow leaves at once, black stems, mushy roots, fungus-gnat clouds, drooping WITH wet soil.\n• Under: crispy brown leaf edges, curling leaves, drooping WITH dry top 2\", slow new leaf production.",
+      watering: "METHOD — soak-and-dry: Monstera deliciosa stores some moisture in its thick roots and aerial roots; let the top 2\" of soil dry before a deep drench. Never keep the 13.5\" pot continuously wet — root rot is the #1 killer (per RHS and University of Wisconsin Extension).\n\nHOW TO CHECK READINESS (your 13.5\" pot):\n• Finger test: stick 2 knuckles deep — if damp/cool, wait; if dry and crumbly at 2\", water.\n• Pot weight: lift the side — a thirsty 13.5\" pot feels noticeably lighter than 24 hrs after a soak.\n• Moisture meter: 3–4 in the upper half = time to water; don't water at 7+ unless you're confirming a dry deep zone.\n• Plant tells: slight leaf droop + dry top 2\" = thirsty. Yellowing with wet soil = overwatered.\n\n⚠️ DUAL-SOIL NOTE: your root ball is still in original store peat while the outer 60/30 amended mix dries faster — water deeply enough to rewet the inner core, then let the WHOLE mass dry uniformly.\n\n⚠️ AUG 2026 CHOPS: 3 top cuttings came off this plant, so the canopy transpires a bit less. Do NOT compensate by watering more — keep the same soak-and-dry. The four air-layer moss wraps are a SEPARATE moisture job (mist the sphagnum so it stays damp; that water should not drench the pot).\n\nCENTRAL TEXAS CADENCE (Pflugerville, indoor AC):\n• Hot AC season (Apr–Oct): every 7–9 days — large pot + AC = slower surface dry but steady evaporation.\n• Peak summer (Jun–Sep): every 7–8 days in 1F Corner; 8–9 days if set back in humid 1F Bath.\n• Mild winter (Nov–Feb): every 12–16 days — dormancy slows uptake.\n• 2F SW window would dry this pot faster (avoid — too hot/direct); NW rooms OK with longer intervals.\n\nBOTTOM-WATERING: optional for this size — top-watering until runoff is usually better for a 13.5\" pot so the inner root ball gets saturated. If top soil is hydrophobic, bottom-soak 30 min then top-water to rewet.\n\nWATER QUALITY: moderately sensitive — room-temp filtered or tap water left 24 hrs is fine; flush with plain water every 2–3 months to clear fertilizer salts (brown edges).\n\nOVER- vs UNDER-watering tells:\n• Over: multiple yellow leaves at once, black stems, mushy roots, fungus-gnat clouds, drooping WITH wet soil.\n• Under: crispy brown leaf edges, curling leaves, drooping WITH dry top 2\", slow new leaf production.",
       pruning: "Prune in spring/early summer when growth is active.\n\n• Cut just above a NODE (the bump where leaves/aerial roots emerge) at a 45° angle. New growth emerges from below the cut.\n• Save cuttings for propagation.\n• Remove damaged or wayward vines to encourage bushier growth.\n• Wipe leaves with a damp microfiber cloth monthly so they photosynthesize efficiently.\n• Don't remove more than 1/3 of the plant's mass at once.",
-      propagation: "Stem cuttings with at LEAST one node and ideally an aerial root.\n\n• Method A (water): place in clean water, change weekly, roots appear in 3–6 weeks; transplant when roots are 2–3\" long.\n• Method B (sphagnum moss): wrap node in moist sphagnum, place in clear container with high humidity; roots faster (~3 weeks).\n• Method C (air-layering): wrap a node still attached to the parent in moist sphagnum + plastic wrap; cut and pot once roots form.\n\nSpring/summer best; success rate ~80%+.",
+      propagation: "IN PROGRESS (Aug 2026): 4 air layers on the mother + 3 top cuttings in water. University of Minnesota Extension: Monstera ONLY roots from a node (the thickened ring where a leaf/aerial root attaches). A leaf with no node will stay green for weeks then rot — it will never become a plant.\n\nAIR LAYERS (4 vines, still attached — safest method, ~90–95% per typical aroid practice):\n• Keep sphagnum MOIST, not dripping. Squeeze moss before wrapping; remist 1–2×/week if the wrap feels light.\n• Clear plastic + sealed ends holds humidity. If moss goes bone-dry, roots stall; if soaking-wet + anaerobic smell, loosen and remake the wrap.\n• Optional: a shallow notch just below the node speeds roots (The Spruce / standard air-layer technique) — skip if you already have a live aerial root in the wrap.\n• Ready to sever when roots inside the moss are ~1–2\" (often 4–8 weeks in warm months). Cut BELOW the new root mass with sterile shears, pot into aroid mix, keep bright-indirect and slightly more humid for 1–2 weeks. Do not fertilize for 3–4 weeks.\n\nWATER TOP CUTTINGS (3 — tracked as their own Care Guide entry):\n• Node + preferably an aerial root must be submerged; leaves stay above water (UMN Extension).\n• Change water when cloudy / at least weekly. Roots commonly 2–4 weeks; new leaves can take 2–3 months.\n• Pot when several roots are 2–3\" long. See Monstera (Water Cuttings).\n\nSpring/summer is the right season — you are in it. Success ~80%+ for node cuttings, higher for air layers.",
       repotting: "Every 2–3 years or when heavily root-bound. With a 14\" pot you may be at terminal indoor size — instead, TOP-DRESS with fresh soil yearly (scoop out the top 2\" and replace) and prune roots if needed.\n\nAdd a MOSS POLE or trellis to support vines and encourage larger leaves with more fenestrations. Tie vines gently with plant ties; aerial roots will grip the moss when kept moist.",
       feeding: "Balanced liquid fertilizer (20-20-20) at HALF strength every 4 weeks in spring/summer. Slow-release granular pellets (Osmocote) in spring are an easy alternative.\n\nFlush soil with plain water every 2–3 months to prevent fertilizer salt buildup.\nWinter: no fertilizer unless under strong grow lights.",
       troubleshooting: "• Yellow leaves → most often overwatering (per The Spruce and RHS). Check: wet soil + droop = rot; dry top 2\" + droop = thirst. Unpot and inspect roots if yellowing persists — trim black/mushy roots, repot in fresh aroid mix.\n• Brown crispy edges/tips → underwatering, low humidity (Central Texas AC ~30–45%), or salt buildup — soak deeply, raise humidity near 50%+, flush soil.\n• Brown patches with yellow halos → fungal leaf spot from wet foliage or overwatering — remove affected leaves, improve airflow, let soil dry.\n• Drooping/wilting → check soil first: dry = water now; wet = hold off, check roots for rot.\n• Leaf curling → underwatering OR overwatering (per The Spruce) — finger-test the top 2\" before acting.\n• Leaf drop (sudden, multiple) → cold draft below 50°F, repot shock, or severe overwatering — stabilize environment.\n• No fenestrations on new leaves → insufficient light OR plant still juvenile (solid juvenile leaves are normal on young vines).\n• Faded/scorched leaves → too much direct sun (especially 2F SW afternoon beam) — move to 1F Corner or Bath set back.\n• Leggy growth, small leaves → not enough light — move to 1F Corner or add grow lights 10–12 hrs/day.\n• Root rot (brown mushy roots, sour smell) → unpot, cut rot, repot dry-ish, wait 7 days before re-watering.\n• Spider mites (fine webs, stippling) → shower leaves, insecticidal soap weekly × 3; boost humidity.\n• Mealybugs (cottony white clusters) → alcohol Q-tip dab; neem if widespread.\n• Scale (bumps on stems, sticky floor) → scrape, alcohol swab, horticultural oil.\n• Thrips (silvery scars, black droppings) → rinse, blue sticky traps, spinosad spray.\n• Fungus gnats → let top 2\" dry between waterings; sticky traps.\n• Aphids (on new unfurling leaves) → rinse, insecticidal soap.\n• ⚠️ Toxic to cats, dogs, and humans if chewed — insoluble calcium oxalates per ASPCA (Monstera deliciosa).",
@@ -199,7 +199,70 @@ const PLANTS = {
       { label: "The Sill — Monstera Care Guide", url: "https://www.thesill.com/blog/plant-care-monstera-deliciosa" },
       { label: "Costa Farms — Monstera Care", url: "https://costafarms.com/plants/monstera" },
       { label: "ASPCA — Monstera Toxicity", url: "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/monstera-deliciosa" },
-      { label: "The Spruce — Monstera Deliciosa Care", url: "https://www.thespruce.com/how-to-grow-monstera-deliciosa-5072671" }
+      { label: "The Spruce — Monstera Deliciosa Care", url: "https://www.thespruce.com/how-to-grow-monstera-deliciosa-5072671" },
+      { label: "University of Minnesota Extension — Propagating Monstera deliciosa", url: "https://extension.umn.edu/houseplants/propagating-monstera-deliciosa" }
+    ]
+  },
+
+  monstera_water_cuttings: {
+    id: "monstera_water_cuttings",
+    isPropagation: true,
+    cuttingsCount: 3,
+    repotSigns: [
+      "Several white roots on each cutting reach 2–3\" (the pot-up signal — not a soil-pot rootbound sign)",
+      "Water stays cloudy within 1–2 days of a change (bacterial load — refresh more often / rinse roots)",
+      "A cutting's stem base turns brown/mushy (remove that cutting; it will not recover in the jar)",
+      "Leaves yellow while roots are still <1\" (too little light, or a node-less cutting)",
+      "Roots fill the jar in a dense mat and start circling (time to soil — water roots get brittle if left too long)",
+      "No root nubs after 4–5 weeks on a cutting that has a clear node (check node is actually submerged)"
+    ],
+    displayName: "Monstera (Water Cuttings)",
+    potSize: "Water jar",
+    category: "tropical",
+    names: {
+      common: ["Monstera top cuttings", "Swiss Cheese Plant cuttings", "Water-propagating Monstera"],
+      scientific: "Monstera deliciosa (3 apical / top cuttings from the mother plant)"
+    },
+    wateringDays: 7,
+    wateringDaysHot: 5,
+    wateringDaysCool: 7,
+    currentSoilMix: "water_propagation",
+    comments: "Aug 2026: 3 TOP cuttings taken from the 13.5\" mother Monstera and set in water. University of Minnesota Extension: each cutting MUST include a node (and ideally an aerial root). Change water at least weekly (sooner if cloudy). Roots often show in 2–4 weeks in warm months; new leaves can take 2–3 months. Do not pot until several roots are 2–3\" — water-grown roots are more brittle and need a gentle soil transition.",
+    idealSoil: ["water_propagation", "aroid_mix"],
+    soilNotes: "These are in water, not soil. When roots hit 2–3\", graduate ALL 3 into one 5–6\" pot of aroid mix (same family as the mother) so they clump into a full plant. Keep the first 1–2 weeks slightly more even-moist than the mother's strict dry-down, then ease onto soak-and-dry.",
+    transferPlan: {
+      potSize: '5–6"',
+      soilType: "aroid_mix",
+      summary: "Wait until several roots on each cutting are 2–3\" long (often 4–8 weeks from the Aug 2026 chop). Pot all 3 together in one 5–6\" pot of chunky aroid mix. Water in once, then keep just-moist for 10–14 days (water roots hate a sudden desert dry-down). Bright indirect only — no direct sun on a freshly potted cutting. No fertilizer for 3–4 weeks.",
+      alternatives: [
+        "Three 4\" pots (one cutting each — slower to look full, easier to isolate a weak cutting)",
+        "Sphagnum → aroid mix (if a cutting is slow in water, move the node to moist sphagnum under a humidity dome)",
+        "Same 13.5\" mother pot (only if you want to refill gaps — usually worse than a dedicated starter pot)"
+      ]
+    },
+    conditions: {
+      light:        { ideal: "Bright indirect — same as mother, no hot direct sun on the jar", passing: "Medium-bright; too dim = slow/no roots" },
+      temperature:  { ideal: "68–80°F (20–27°C)", passing: "65–85°F; keep off cold AC vents" },
+      humidity:     { ideal: "50%+ around the leaves", passing: "Average home; mist leaves if AC is very dry" },
+      soilMoisture: { ideal: "Node submerged in clean water; leaves above the waterline", passing: "Refresh when cloudy; never let the node dry out" }
+    },
+    tips: {
+      lighting: "Bright INDIRECT only while rooting. A jar on a hot sill cooks cuttings (glass + water = heat spike).\n\n• Best: 1F Living Room window (36° NE) or set back in 1F Corner — same safe foliage light as the mother.\n• Avoid 2F SW afternoon beam.\n• Rotate the jar so all three cuttings get even light.\n• Pale new petioles or no root nubs after a month usually means the jar is too dim, not that you need fertilizer (don't fertilize water props).",
+      soil: "No soil yet. When you pot up: 1 part potting + 1 part orchid bark + 1 part perlite (or a bagged aroid mix). That matches the mother's long-term mix and avoids drowning water roots in dense peat.",
+      watering: "METHOD — water culture, not soil watering: University of Minnesota Extension roots Monstera in plain water as long as a NODE is submerged. The 'watering' event is a WATER CHANGE, not a drench.\n\nHOW TO CHECK (your 3 top cuttings):\n• Weekly swap to room-temp water (filtered or tap left 24 hrs). Sooner if cloudy, slimy, or smelly.\n• Rinse the jar and gently rinse roots under lukewarm water during each change.\n• Keep the node + any aerial-root nub under water; keep leaf blades dry (submerged leaves rot).\n• Top off between changes if evaporation drops the waterline below the node — Central Texas AC dries jars faster than you'd think.\n\nCENTRAL TEXAS CADENCE (Pflugerville, indoor AC):\n• Peak summer (now): check every 5–7 days; heat + light grow biofilm faster.\n• After pot-up: see Transfer Plan — not this weekly jar schedule.\n\nOVER- vs UNDER- cues:\n• Over (stagnant water): mushy brown stem, sour smell, collapsing petiole — discard that cutting, keep the healthy ones.\n• Under (node exposed): stalled roots, wrinkled petiole — raise the waterline immediately.",
+      pruning: "Don't prune cuttings while they are rooting — every leaf is feeding root growth. Remove only a leaf that is fully yellow/mushy so it doesn't foul the water.",
+      propagation: "These ARE the propagation. Confirm each of the 3 has a node. If one was a leaf-only petiole chop, it will not root (UMN Extension) — compost it rather than waiting months.\n\nSister project: 4 air layers still on the mother (higher success, slower). Do not mix timelines — pot water cuttings when THEY are ready; sever air layers only after moss-wrap roots hit 1–2\".",
+      repotting: "First 'repot' = water → soil when roots are 2–3\". After that, follow normal Monstera 2–3 year cycle. Don't jump a freshly potted clump into a 13.5\" pot — 5–6\" is enough.",
+      feeding: "No fertilizer in the jar (algae + burn). After 3–4 weeks in soil, quarter-strength balanced liquid in spring/summer only.",
+      troubleshooting: "• No roots after 4+ weeks → node not in water, jar too dim, or not actually a node (UMN Extension). Check anatomy; move brighter-indirect.\n• Slimy/brown stem base → bacterial rot from stagnant water. Remove that cutting; bleach-rinse the jar; start fresh water.\n• Yellow leaf on an otherwise firm cutting → common after a chop; one leaf can yellow while roots start. If the stem is mushy, it's rot not shock.\n• White healthy roots then sudden brown tips → water too warm/stale or direct sun on the jar.\n• After pot-up, severe wilt → water roots drying too fast. Bag/humidity dome 3–5 days, keep mix just-moist, no direct sun.\n• Fungus gnats → only after soil transfer if you keep the mix wet; let the top inch dry.\n• ⚠️ Toxic — calcium oxalates per ASPCA (same as mother). Don't let Moose chew the jar leaves."
+    },
+    sources: [
+      { label: "University of Minnesota Extension — Propagating Monstera deliciosa", url: "https://extension.umn.edu/houseplants/propagating-monstera-deliciosa" },
+      { label: "University of Wisconsin Horticulture — Monstera deliciosa", url: "https://hort.extension.wisc.edu/articles/monstera-deliciosa-split-leaf-philodendron/" },
+      { label: "RHS — Monstera deliciosa", url: "https://www.rhs.org.uk/plants/11281/monstera-deliciosa/details" },
+      { label: "The Spruce — How to Propagate Monstera", url: "https://www.thespruce.com/how-to-propagate-monstera-7113171" },
+      { label: "Missouri Botanical Garden — Monstera deliciosa", url: "https://www.missouribotanicalgarden.org/PlantFinder/PlantFinderDetails.aspx?taxonid=274375" },
+      { label: "ASPCA — Monstera Toxicity", url: "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/monstera-deliciosa" }
     ]
   },
 
@@ -480,26 +543,26 @@ const PLANTS = {
     id: "mondo_grass",
     repotSigns: [
       "Tuft is packed into a rectangular block-shape when viewed from the side (all growth going up, no room to fan out)",
-      "Roots circling out of the 7.5\" drainage holes",
+      "Roots circling out of the 9\" × 9\" drainage holes",
       "Newest leaves brown at the tips even with adequate watering",
       "Water pours through in <5 seconds — dense root mat has replaced soil",
       "Tuft is visibly pushing up above the pot rim by an inch or more",
       "Growth stalls in growing season (Ophiopogon can double in size annually if not root-constrained)"
     ],
     displayName: "Mondo Grass",
-    potSize: '7.5"',
+    potSize: '9" × 9"',
     category: "ornamental_grass",
     names: {
       common: ["Mondo Grass", "Monkey Grass", "Dwarf Lilyturf", "Japanese Mondo Grass"],
       scientific: "Ophiopogon japonicus"
     },
-    wateringDays: 8,
-    wateringDaysHot: 6,
-    wateringDaysCool: 12,
+    wateringDays: 10,
+    wateringDaysHot: 8,
+    wateringDaysCool: 14,
     currentSoilMix: "amended_potting",
-    comments: "Repotted in last 2 months from 5\" → 7.5\" pot — significant up-pot. Watering intervals stretched ~30% to match the bigger soil reservoir. Soil is 70/30 potting/perlite.",
+    comments: "✅ Aug 2026: planted into a 9\" × 9\" (9\" depth) pot — roughly double the soil volume of the old 7.5\" round. Clemson HGIC (Liriope and Mondo Grass): keep evenly moist, never waterlogged; mondo is a moisture-lover that still rots in a stagnant deep core. Stretch the cadence vs. the 7.5\" pot and finger-test the top inch before watering. 70/30 potting/perlite.",
     idealSoil: ["standard_potting", "amended_potting", "african_violet"],
-    soilNotes: "User has 70/30 potting/perlite — slightly more drainage than mondo grass strictly needs, but the larger 7.5\" pot stays moist enough overall. Healthy choice.",
+    soilNotes: "70/30 potting/perlite in a deep 9\" × 9\" square — extra perlite is now important because the 9\" depth holds a wet core longer than the old 7.5\". Confirm drainage holes aren't blocked; mondo hates a perched water table (Clemson HGIC).",
     conditions: {
       light:        { ideal: "Partial shade to bright indirect; morning sun OK", passing: "Full shade to filtered sun; afternoon direct sun bleaches" },
       temperature:  { ideal: "60–80°F (15–27°C)", passing: "Hardy outdoors USDA 7–10; indoors anything ≥50°F" },
@@ -509,10 +572,10 @@ const PLANTS = {
     tips: {
       lighting: "Versatile: partial shade to full sun outdoors, bright indirect indoors.\n\n• In hot direct sun the foliage may bleach — afternoon shade ideal.\n• Indoors, near an east or filtered south window works well.\n• In low light it survives but thins.\n\n• In this home, the 1F Living Room window (36° NE — soft bright indirect + gentle AM sun) is the best match per PLANT_LIGHT_REF.",
       soil: "Moisture-retentive but well-draining.\n\nRecipe: standard potting mix + 20% compost + 10% perlite.\nSlightly acidic to neutral (pH 5.5–6.5).\nMulch the top in larger pots to retain moisture.",
-      watering: "METHOD — evenly moist (between steady-moisture and soak-and-dry): Ophiopogon japonicus likes consistent moisture but tolerates brief drying better than true tropicals. Never bone dry for long, never soggy.\n\nHOW TO CHECK READINESS (your 7.5\" pot — recently up-potted from 5\"):\n• Finger test: water when the top ~1\" feels dry — the larger 7.5\" reservoir holds moisture longer than the old 5\" pot.\n• Pot weight: lighter than post-water = check the top inch.\n• Moisture meter: 4–5 in upper third = ideal; water at 3 or below.\n• Plant tells: brown tips on newest blades, thinning/clumping center, or blades folding slightly = thirsty. Yellow centers + wet soil = too much.\n\nCENTRAL TEXAS CADENCE (Pflugerville, indoor AC):\n• Hot AC season (Apr–Oct): every 6–8 days — 70/30 mix in 7.5\" pot dries steadily with AC.\n• Peak summer (Jun–Sep): every 6 days at 1F Window (NE); 7–8 days in humid 1F Bath.\n• Mild winter (Nov–Feb): every 10–12 days — growth slows outdoors-equivalent but don't neglect.\n• Avoid 2F SW — afternoon heat + low humidity browns tips fast.\n\nBOTTOM-WATERING: helpful for even moisture in a dense tuft — soak tray 20 min, drain fully.\n\nWATER QUALITY: moderately tolerant of tap water; flush with plain water every 2–3 months to prevent salt buildup (brown tips). Filtered water helps in hard-water Central Texas areas.\n\nOVER- vs UNDER-watering tells:\n• Over: yellowing centers of blades, mushy base, sour smell, fungus gnats.\n• Under: brown crispy tips, thinning clump, soil pulling from pot edges.",
+      watering: "METHOD — evenly moist (between steady-moisture and soak-and-dry): Ophiopogon japonicus likes consistent moisture but tolerates brief drying better than true tropicals. Never bone dry for long, never soggy.\n\nHOW TO CHECK READINESS (your 9\" × 9\" × 9\"-deep pot — Aug 2026 plant-up from 7.5\"):\n• Finger test: water when the top ~1\" feels dry. Probe toward the CENTER — a 9\" cube can stay wet in the core while the corners look dry (Clemson HGIC: even moisture, not a swamp).\n• Pot weight: this pot is heavy; learn the post-water vs. thirsty difference rather than guessing.\n• Moisture meter: 4–5 in the upper third = ideal; water at 3 or below. If the bottom third reads 7+ while the top is dry, wait and improve drainage/airflow.\n• Plant tells: brown tips on newest blades, thinning/clumping center, or blades folding slightly = thirsty. Yellow centers + wet soil = too much.\n\nCENTRAL TEXAS CADENCE (Pflugerville, indoor AC):\n• Hot AC season (Apr–Oct): every 8–10 days — the 9\" reservoir holds longer than the 7.5\".\n• Peak summer (Jun–Sep): every 8 days at 1F Window (NE); 9–10 days in humid 1F Bath.\n• Mild winter (Nov–Feb): every 12–14 days.\n• Avoid 2F SW — afternoon heat + low humidity browns tips fast (Clemson: part shade).\n\nBOTTOM-WATERING: helpful for even moisture in a dense tuft — soak tray 20–30 min, drain fully. Don't leave the 9\" cube sitting in a saucer.\n\nWATER QUALITY: moderately tolerant of tap water; flush with plain water every 2–3 months to prevent salt buildup (brown tips). Filtered water helps in hard-water Central Texas areas.\n\nOVER- vs UNDER-watering tells:\n• Over: yellowing centers of blades, mushy base, sour smell, fungus gnats.\n• Under: brown crispy tips, thinning clump, soil pulling from pot edges.",
       pruning: "Shear back to 2–3\" tall once a year in EARLY SPRING to refresh foliage and remove brown tips. New blades emerge cleaner and brighter green.\n\n• Trim any individual brown blades at any time at the base.\n• Use sharp scissors or pruning snips.",
       propagation: "Easiest by DIVISION.\n\n• Lift the clump (or unpot), gently pull or cut into smaller plugs, each with roots + 3–5 blades.\n• Replant immediately and water in.\n• Best in early spring; success rate ~95%.\n• Single plant divides into 4–6 new pots easily.",
-      repotting: "Every 2–3 years or when rootbound.\n\n• Divide while repotting — the plant rejuvenates from division.\n• Up-pot by 1–2\" or split into multiple pots.\n• Refresh soil completely.",
+      repotting: "Every 2–3 years or when rootbound.\n\n• Divide while repotting — the plant rejuvenates from division (Clemson HGIC).\n• You just moved into a 9\" × 9\" cube (Aug 2026) — do NOT upsize again soon; mondo likes a filled clump more than empty wet corners.\n• Refresh soil completely at the next divide (likely 2–3 years).",
       feeding: "LIGHT feeder.\n\n• Balanced slow-release fertilizer (e.g. Osmocote) in spring.\n• Or liquid 10-10-10 at half strength every 6–8 weeks during the growing season.\n• None in winter.",
       troubleshooting: "• Browning tips/edges → underwatering, salt/fluoride buildup, or hot dry air (Central Texas AC or 2F SW exposure) — flush soil, increase frequency, move to 1F Window (NE).\n• Yellow centers of blades → overwatering or poor drainage — let top 1\" dry, check roots.\n• Yellowing entire blades (multiple) → overwatering rot OR extreme drought — check soil moisture first.\n• Drooping/wilting tuft → dry soil = water; wet soil = root issue.\n• Leaf drop (individual brown blades) → normal aging at base OR underwatering stress — trim at soil line.\n• Thinning clump / sparse growth → divide and refresh soil, or increase light slightly.\n• Faded/bleached blades → too much direct sun — move off SW windows.\n• Root rot (mushy roots, sour soil) → unpot, trim rot, repot in fresh 70/30 mix.\n• Spider mites (fine webs, stippled blades in dry indoor air) → rinse thoroughly, insecticidal soap weekly × 3.\n• Mealybugs (rare on grass-like foliage) → alcohol swab.\n• Scale (bumps on base) → scrape, alcohol, horticultural oil.\n• Fungus gnats → let surface dry slightly; sticky traps.\n• Slugs/snails (outdoors only in Central Texas) → handpick or iron phosphate bait.\n• White/black fungal spots → reduce wetting foliage, improve airflow.\n• ✅ Non-toxic — Ophiopogon japonicus is not listed as toxic by ASPCA (no dedicated entry; safe for pets in standard references).",
     },
@@ -544,11 +607,11 @@ const PLANTS = {
       common: ["Firestick", "Candle Stick", "Pencil Cactus (misnomer — not a cactus)", "Sticks on Fire", "Indian Tree Spurge", "Milkbush"],
       scientific: "Euphorbia tirucalli 'Sticks on Fire' (also sold as 'Rosea')"
     },
-    wateringDays: 24,
-    wateringDaysHot: 22,
+    wateringDays: 18,
+    wateringDaysHot: 12,
     wateringDaysCool: 40,
     currentSoilMix: "cactus_mix",
-    comments: "Repotted in last 2 months. Sometimes called \"Candle Stick\" or \"Pencil Cactus\" — but it's actually a Euphorbia, not a true cactus. Soil is 50/50 cacti mix / perlite, 4\" pot.",
+    comments: "✅ Aug 2026: moved OUTDOORS on the same 301° NW exposure as 2F Room 2 (late-afternoon/evening summer sun). Still in the 4\" pot, 50/50 cacti mix / perlite. Missouri Botanical Garden + NC State: full sun for color, but in hot summers this species appreciates some afternoon shade — the NW patio's late beam is a better match than all-day SW blast IF you acclimate 7–14 days. Bring inside before nights ~50°F (typically late Oct in Pflugerville). ⚠️ Caustic latex + Moose: keep the pot where a dog cannot brush or chew it. Dump saucers after thunderstorms — rot from sitting wet is the #1 killer.",
     idealSoil: ["cactus_mix"],
     soilNotes: "User's 50/50 cacti mix + perlite is textbook. Euphorbias need this kind of fast-draining mix — root rot is the only real way to kill them.",
     conditions: {
@@ -558,9 +621,9 @@ const PLANTS = {
       soilMoisture: { ideal: "Bone dry; stems just slightly wrinkling = water", passing: "Bone dry → soak → repeat" }
     },
     tips: {
-      lighting: "FULL SUN is essential for the orange/red coloration. 6+ hours of direct sun.\n\n• In low light it stays green and becomes leggy.\n• Acclimate slowly when moving outdoors to prevent sunburn (white/yellow patches).\n• South or west window indoors; supplement with a grow light if light is limited.\n• The famous fire color intensifies in cooler temperatures (fall/early winter).\n\n• In this home, 2F Living Room (215° SW — intense hot afternoon sun, low humidity) is the best match per PLANT_LIGHT_REF.",
+      lighting: "FULL SUN is essential for the orange/red coloration. 6+ hours of direct sun.\n\n• CURRENT (Aug 2026): outdoors on the 301° NW side (same compass as 2F Room 2). Late-day summer sun + bright sky — not as many direct hours as 2F SW (215°), but enough to push color vs. indoor life.\n• NC State / Missouri Botanical Garden: in hot summers this species often wants some afternoon shade. If stems bleach white/yellow, pull it into light shade for the 3–6 pm blast, then return to the NW beam.\n• Acclimate 7–14 days (an hour more sun each day) — a sudden indoor→patio move sunburns even sun-lovers.\n• Bring indoors to 2F Living Room (215° SW) before nights approach 50°F; Pflugerville is USDA 8b/9a, not hardy (MBG: zones 11–12).\n• Indoors, south or west window; supplement with a grow light if color fades.\n• ⚠️ Toxic latex — site the pot out of Moose's path.",
       soil: "Very GRITTY, fast-draining succulent/cactus mix.\n\nRecipe:\n• 1 part cactus mix\n• 1 part pumice\n• 1 part coarse sand or 1/4\" lava rock\n\nTerracotta strongly recommended.",
-      watering: "METHOD — strict soak-and-dry, err dry: Euphorbia tirucalli stores water in pencil-thin stems; overwatering = rapid rot (per The Spruce and Missouri Botanical Garden). Wait until soil is bone dry AND stems show slight wrinkling. Terracotta 4\" pot helps in Central Texas AC.\n\nHOW TO CHECK READINESS (your 4\" pot, 50/50 cacti mix + perlite):\n• Finger test: soil completely dry 2\" down = check stems.\n• Pot weight: 4\" pot feels hollow-light = likely ready.\n• Stem plumpness: slight wrinkling on newest tips = thirsty; plump firm stems = wait.\n• Moisture meter: 1–2 throughout = water; anything above 3 = wait.\n\nCENTRAL TEXAS CADENCE (Pflugerville, indoor AC ~30–45% RH):\n• Hot AC season (Apr–Oct): every 18–24 days in 2F LR (SW) — intense sun + AC = fast dry-down.\n• Peak summer (Jun–Sep): every 18–22 days; stems wrinkle before soil fully dries in small 4\" pot.\n• Mild winter (Nov–Feb): every 35–40 days — near-zero water; cool temps intensify red coloration.\n• Drench at soil line ONLY — never pour over stems (sap + rot risk).\n• Empty saucer immediately; never leave standing water.\n\nOVER- vs UNDER-watering tells:\n• Over: soft/mushy/blackened stem base, stems turning black from bottom up.\n• Under: yellow/shriveled tips, stems feel papery and deeply wrinkled.",
+      watering: "METHOD — strict soak-and-dry, err dry: Euphorbia tirucalli stores water in pencil-thin stems; overwatering = rapid rot (per The Spruce and Missouri Botanical Garden). Wait until soil is bone dry AND stems show slight wrinkling.\n\nHOW TO CHECK READINESS (your 4\" pot, 50/50 cacti mix + perlite, NOW OUTDOORS NW):\n• Finger test: soil completely dry 2\" down = check stems.\n• Pot weight: 4\" pot feels hollow-light = likely ready. Outdoor wind/heat dries this tiny pot much faster than indoor AC.\n• Stem plumpness: slight wrinkling on newest tips = thirsty; plump firm stems = wait.\n• After rain: dump the saucer the same day. Do not count a storm as a 'good watering' if the pot sat flooded.\n\nCENTRAL TEXAS CADENCE:\n• Outdoor peak summer (Jun–Sep, current): every 10–14 days, but CHECK weekly — a 4\" pot in 100°F wind can dry in under a week.\n• Indoor AC (when you bring it in): every 18–24 days in 2F LR SW.\n• Mild winter indoors (Nov–Feb): every 35–40 days — near-zero water; cool temps intensify red coloration.\n• Drench at soil line ONLY — never pour over stems (sap + rot risk).\n• Empty saucer immediately; never leave standing water.\n\nOVER- vs UNDER-watering tells:\n• Over: soft/mushy/blackened stem base, stems turning black from bottom up.\n• Under: yellow/shriveled tips, stems feel papery and deeply wrinkled.",
       pruning: "⚠️ TOXIC: This plant exudes a milky white LATEX SAP that is severely irritating to skin and eyes — temporary blindness is possible if it contacts eyes.\n\n• ALWAYS wear nitrile gloves AND eye protection.\n• Prune in warm dry weather; rinse cuts with cold water to seal sap.\n• Cut stems with sharp clean shears just above a branching point.\n• Keep pets and children far away during pruning.\n• Wash tools, hands, and any contaminated surfaces immediately.",
       propagation: "Stem cuttings (with all toxicity precautions):\n\n• Take 4–6\" cuttings.\n• RINSE the cut end with cold water to stop sap flow.\n• Let callus for 5–7 days in shade.\n• Plant in dry gritty mix.\n• Don't water for 2 weeks.\n• Roots in 4–6 weeks. Success rate ~80% if dry.\n• Wear gloves the entire time.",
       repotting: "Every 3–4 years.\n\n• Spring only (active growth).\n• Wear gloves and protect skin/eyes.\n• Up-pot by 1\" only.\n• Let plant settle a week before watering.\n• Top-heavy plants benefit from a heavier terracotta pot or stone weight in the bottom.",
@@ -581,27 +644,28 @@ const PLANTS = {
   schefflera: {
     id: "schefflera",
     repotSigns: [
-      "Roots circling out of the 9\" pot drainage holes — the plant is still in original store soil, so rootbound + wrong soil is a double signal",
+      "Roots circling out of the 13.5\" pot drainage holes",
       "New umbrella leaflets have FEWER palm-fingers than mature ones (young growth = 4–5 fingers; healthy mature = 9+)",
       "New leaves smaller than previous flush",
-      "Water beads on the surface and takes 30+ seconds to soak in (peat crust / hydrophobic soil)",
+      "Water beads on the surface and takes 30+ seconds to soak in (hydrophobic soil)",
       "Yellow lower leaves persistent (not related to a recent watering event)",
       "Plant leans over easily — top-heavy for the rootball anchor"
     ],
     displayName: "Schefflera (Variegated Yellow)",
-    potSize: '9"',
+    potSize: '13.5"',
+    repotted: true,
     category: "tropical",
     names: {
       common: ["Schefflera (Yellow Variegated)", "Variegated Hawaiian Umbrella Plant", "Schefflera 'Gold Capella'", "Schefflera 'Trinette'"],
       scientific: "Schefflera arboricola (variegated cultivar — likely 'Gold Capella' or 'Trinette')"
     },
-    wateringDays: 9,
-    wateringDaysHot: 7,
-    wateringDaysCool: 13,
-    currentSoilMix: "other",
-    comments: "⚠️ NOT repotted in the last 2 months — still in original store soil (peat-heavy, likely dense). User topped off with about 1\" of potting/fertilizer/perlite mix on top. 9\" pot. Variegated cultivars need slightly more light than solid green to keep the gold pattern. Plan to bare-root and switch to amended_potting at next repotting (spring is best).",
+    wateringDays: 12,
+    wateringDaysHot: 10,
+    wateringDaysCool: 16,
+    currentSoilMix: "amended_potting",
+    comments: "✅ Aug 2026: repotted from 9\" → 13.5\" (same dimension as the Monstera). ⚠️ That is a ~4.5\" jump — Clemson HGIC indoor transplanting + Schefflera guides recommend only 1–2\" larger to avoid a wet unused soil mass. Compensate: water LESS often, check 2–3\" deep, never leave a saucer. Expect 2–4 weeks of leaf-drop sulk (normal). Confirm mix is well-draining (60/40 potting/perlite or similar). Variegated cultivars still need more light than the dark-green form to keep gold pattern.",
     idealSoil: ["standard_potting", "amended_potting", "aroid_mix"],
-    soilNotes: "⚠️ Still in original store soil — peat-heavy, holds water too long. The 1\" amended top layer helps but doesn't solve the core issue. Next repotting (spring is ideal): gently bare-root the central rootball and switch fully to 60/40 potting/perlite. Until then, water carefully — let the pot dry more than usual between waterings to compensate for the moisture-retentive core.",
+    soilNotes: "✅ Freshly in a 13.5\" pot (Aug 2026). The oversized jump is the main risk — unused outer soil stays wet while the old 9\" rootball dries. Water only when the MID-zone (2–3\") is dry, not when the surface crust looks dry. Next cycle: top-dress yearly rather than upsizing again (Clemson: large containers are top-dressed, not endlessly up-potted).",
     conditions: {
       light:        { ideal: "Bright, indirect with 1–2 hrs gentle direct sun",    passing: "Medium indirect; tolerates lower light but grows leggy & loses variegation" },
       temperature:  { ideal: "65–80°F (18–27°C)",                                  passing: "60–90°F; protect from cold drafts under 55°F" },
@@ -611,10 +675,10 @@ const PLANTS = {
     tips: {
       lighting: "Bright, INDIRECT light is ideal — produces the densest, most variegated growth. A few hours of GENTLE morning direct sun (east window) is great; afternoon direct sun can scorch leaves.\n\n• Tolerates medium indirect light but stems get leggy and lower leaves drop.\n• Variegated varieties (gold-splash) need MORE light than solid green to keep their pattern.\n• Rotate the pot 1/4 turn every 1–2 weeks for even growth.\n• Move outdoors to dappled shade in summer if desired — acclimate over 2 weeks to avoid sunburn.\n\n• In this home, the 1F Living Room corner and 2F NW rooms (298°/301°) are your best matches per PLANT_LIGHT_REF.",
       soil: "Standard well-draining indoor potting mix with extra drainage.\n\nRecipe:\n• 3 parts standard potting mix\n• 1 part perlite\n• 1 part orchid bark or coco coir chunks\n\nSlightly acidic (pH 6.0–6.5). A 10\" pot benefits from a 1\" gravel layer at the bottom if drainage is borderline.",
-      watering: "METHOD — soak-and-dry: Schefflera arboricola prefers the top 1–2\" to dry between deep waterings. It stores some moisture in its woody stems but rots easily in the peat-heavy original store soil still in your 9\" pot.\n\nHOW TO CHECK READINESS (your 9\" pot — original peat core + 1\" amended top):\n• Finger test: top 1–2\" dry = water; if damp below surface, wait (peat core holds water longer than the amended top).\n• Pot weight: noticeably lighter = check finger depth.\n• Moisture meter: 3–4 in upper half of pot = water time.\n• Plant tells: drooping + dry top 2\" = thirsty. Mass leaf drop + wet soil = overwatered.\n\nCENTRAL TEXAS CADENCE (Pflugerville, indoor AC):\n• Hot AC season (Apr–Oct): every 7–9 days — compensate for moisture-retentive peat core by checking, not calendar alone.\n• Peak summer (Jun–Sep): every 7 days in 1F Corner; 8–9 days in NW rooms (2F Room 1/2).\n• Mild winter (Nov–Feb): every 12–14 days.\n• ⚠️ Until bare-rooted into amended mix, err on the dry side — the peat core stays wet while the top looks dry.\n\nBOTTOM-WATERING: less ideal for a deep 9\" pot with peat core — top-water until runoff to saturate the inner rootball.\n\nWATER QUALITY: moderately tolerant of tap water; flush with plain water every 2–3 months to clear fertilizer salts (brown leaf edges per NC State Extension). Room-temp water avoids root shock.\n\nOVER- vs UNDER-watering tells:\n• Over (#1 killer): sudden mass leaf drop with yellowing, black/mushy roots, soggy peat smell.\n• Under: black/crispy leaf tips first, then leaf drop with browning (not yellow), lighter pot weight.",
+      watering: "METHOD — soak-and-dry: Schefflera arboricola prefers the top 1–2\" to dry between deep waterings. It stores some moisture in woody stems but #1 killer is wet unused soil after an oversized repot (Clemson HGIC: choose a pot only 1–2\" larger — you jumped 9\" → 13.5\").\n\nHOW TO CHECK READINESS (your 13.5\" pot — Aug 2026, same size as Monstera):\n• Finger/chopstick test: 2–3\" deep must be dry. A dry crust over a wet outer ring is the overpot trap.\n• Pot weight: this is now a heavy pot; compare 24 hrs after a soak vs. thirsty.\n• Moisture meter: 3–4 in the MID-zone = water; 6+ in the outer soil = wait even if the old rootball feels dry.\n• Plant tells: drooping + dry mid-zone = thirsty. Mass leaf drop + wet soil = overwatered / post-repot sulk — do not 'help' with more water.\n\n⚠️ POST-REPOT (next 3–4 weeks): water lightly once to settle, then wait longer than the old 9\" cadence. No fertilizer 4–6 weeks.\n\nCENTRAL TEXAS CADENCE (Pflugerville, indoor AC):\n• Hot AC season (Apr–Oct): every 10–12 days — bigger reservoir dries slower.\n• Peak summer (Jun–Sep): every 10 days in 1F Corner; 11–12 in NW rooms.\n• Mild winter (Nov–Feb): every 14–16 days.\n\nBOTTOM-WATERING: skip on a 13.5\" overpot — it wets the unused outer soil first. Top-water slowly until a little runoff, then empty the saucer.\n\nWATER QUALITY: moderately tap-tolerant; flush every 2–3 months (brown edges = salts, per NC State Extension).\n\nOVER- vs UNDER-watering tells:\n• Over (#1 now): sudden mass leaf drop with yellowing, sour smell, fungus gnats in a pot that never used to gnat.\n• Under: black/crispy tips first, then leaf drop with browning (not yellow), lighter pot.",
       pruning: "Schefflera tolerates aggressive pruning — one of the easiest houseplants to shape.\n\n• Cut just ABOVE a leaf node with sharp clean shears.\n• Trim leggy stems back by 1/3 to 1/2 in early spring to encourage bushier, denser growth.\n• Pinch new growth tips weekly during the growing season to build density.\n• Remove dead/yellow leaves at the petiole anytime.\n• ⚠️ Sap is mildly irritating — wear gloves if you're sensitive; wipe shears with alcohol between cuts.\n• Don't remove more than 1/3 of total foliage at once.",
       propagation: "STEM CUTTINGS are by far the easiest method.\n\n• Take a 4–6\" cutting with 3–4 leaves from a healthy stem, just below a node.\n• Strip the bottom 2 leaves.\n• Dip the cut end in rooting hormone (IBA powder).\n• Insert into moist perlite/peat mix OR a glass of water.\n• Cover loosely with a plastic bag to maintain humidity.\n• Roots in 4–8 weeks. Success rate ~70% with rooting hormone, ~40% without.\n• Best time: spring/early summer.\n• Air-layering also works well for thicker stems.",
-      repotting: "Every 2–3 years or when roots circle the pot.\n\n• Spring (March–May) is ideal.\n• Up-pot by only 2 inches — schefflera prefers slightly snug roots.\n• At 10\" you may be approaching terminal indoor size; consider top-dressing yearly instead (scoop out top 2\" of soil, replace with fresh mix).\n• Trim circling/dead roots when repotting.\n• Don't fertilize for 4–6 weeks after to let nicked roots heal.",
+      repotting: "Every 2–3 years or when roots circle the pot.\n\n• You just jumped to 13.5\" (Aug 2026) — that is terminal indoor size for this home. Next: TOP-DRESS yearly (scoop top 2\", replace with fresh mix) rather than another upsize (Clemson HGIC topdressing for large containers).\n• Spring (March–May) is still the ideal season; you did it in August — extra-conservative watering until new growth resumes.\n• Don't fertilize for 4–6 weeks after to let nicked roots heal.",
       feeding: "Balanced liquid fertilizer (10-10-10 or 20-20-20) at HALF strength every 4 weeks during spring and summer.\n\n• Slow-release granular (Osmocote) in spring as an easy alternative — one application lasts 3–4 months.\n• Reduce to once every 8 weeks in fall.\n• NONE in winter unless growing strongly under grow lights.\n• Flush soil with plain water every 2–3 months to clear fertilizer salts (brown leaf edges = salt buildup).",
       troubleshooting: "• Sudden mass leaf drop → #1 cause is OVERWATERING (per Missouri Botanical Garden and NC State Extension) — especially with the peat-heavy original soil. Check roots: black/mushy = rot; repot into 60/40 amended mix at next opportunity. Also triggered by sudden light/move changes.\n• Yellow leaves with brown tips → inconsistent watering — establish a finger-test routine.\n• Black/brown tips only → underwatering OR low humidity (Central Texas AC) OR salt buildup — flush soil, increase humidity near 50%.\n• Drooping/wilting → dry top 2\" = water; wet soil = hold off, inspect roots.\n• Leaf drop (gradual, lower leaves) → normal aging OR underwatering — distinguish by tip color (brown = dry, yellow = wet).\n• Leggy growth, sparse umbrella leaflets → insufficient light — move to 1F Corner or NW room window.\n• Loss of gold variegation → needs more light than solid-green form.\n• Faded/scorched leaflets → too much direct afternoon sun (avoid 2F SW).\n• Root rot (mushy roots, sour soil) → unpot, trim rot, repot in amended mix, reduce watering 2 weeks.\n• Sticky residue on leaves/floor → SCALE on stems — alcohol swab, horticultural oil.\n• Fine webs between leaflets → SPIDER MITES in dry AC air — rinse, insecticidal soap weekly × 3.\n• White cottony spots in joints → MEALYBUGS — alcohol Q-tip.\n• Thrips (silvery streaks on new growth) → rinse, sticky traps, spinosad.\n• Fungus gnats → peat core staying too wet — let top 2\" dry; sticky traps.\n• Aphids (rare, on new shoots) → rinse, insecticidal soap.\n• ⚠️ Toxic to cats, dogs, and humans — insoluble calcium oxalate crystals per ASPCA (Schefflera).",
     },
@@ -625,7 +689,8 @@ const PLANTS = {
       { label: "The Sill — Schefflera Care Guide", url: "https://www.thesill.com/blog/plant-care" },
       { label: "ASPCA — Schefflera Toxicity", url: "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/schefflera" },
       { label: "Costa Farms — Schefflera Care", url: "https://costafarms.com/plants/schefflera" },
-      { label: "NC State Extension — Schefflera arboricola", url: "https://plants.ces.ncsu.edu/plants/schefflera-arboricola/" }
+      { label: "NC State Extension — Schefflera arboricola", url: "https://plants.ces.ncsu.edu/plants/schefflera-arboricola/" },
+      { label: "Clemson HGIC — Indoor Plants: Transplanting & Repotting", url: "https://hgic.clemson.edu/factsheet/indoor-plants-transplanting-repotting/" }
     ]
   },
 
@@ -662,7 +727,7 @@ const PLANTS = {
     tips: {
       lighting: "Solid-green Schefflera is MORE TOLERANT of medium light than the variegated form — it can handle north-facing windows and dimmer corners while still growing well.\n\n• Bright indirect is still optimal — the plant will be denser and bushier.\n• Rotate weekly for even growth.\n• Leaf drop after a move is usually a light-shock reaction, not a watering problem. Give 2–4 weeks to adjust before changing anything else.\n\n• In this home, the 1F Living Room corner and 1F Room 1 (131° SE + fan) are your best matches per PLANT_LIGHT_REF.",
       soil: "User has it in 60/40 potting/perlite, which is ideal. See the soilNotes field on the Soil Mix tab for context. Avoid pure cactus mix and avoid moisture-retentive mixes (African violet, sphagnum) — both extremes cause problems.",
-      watering: "METHOD — soak-and-dry: Solid-green Schefflera arboricola in your well-amended 60/40 mix dries faster than the 9\" variegated cousin — let the top 1\" dry fully before a deep drench.\n\nHOW TO CHECK READINESS (your 5.5\" pot):\n• Finger test: top 1\" dry = water — the smaller pot means faster dry-down than the 9\" specimen.\n• Pot weight: 5.5\" pot feels light and hollow when thirsty.\n• Moisture meter: 3 in upper third = water.\n• Plant tells: drooping + dry soil = thirsty. Mass leaf drop + wet soil = overwatered.\n\nCENTRAL TEXAS CADENCE (Pflugerville, indoor AC):\n• Hot AC season (Apr–Oct): every 5–7 days in 1F Room 1 (overhead fan accelerates drying).\n• Peak summer (Jun–Sep): every 5 days — check daily during heat waves.\n• Mild winter (Nov–Feb): every 9–11 days.\n• 1F Corner (vaulted, harder to raise humidity) is fine — this form tolerates average humidity better than variegated.\n\nBOTTOM-WATERING: optional for 5.5\" — top-water until runoff is simpler for a shallow root zone.\n\nWATER QUALITY: tap water at room temp is fine; flush every 2–3 months to prevent salt crust (brown tips). Filtered water optional.\n\nOVER- vs UNDER-watering tells:\n• Over: yellow leaves dropping in clusters, mushy stems, wet soil smell.\n• Under: crispy black tips, drooping with dry top 1\", slower new leaflet production.",
+      watering: "METHOD — soak-and-dry: Solid-green Schefflera arboricola in your well-amended 60/40 mix dries faster than the 13.5\" variegated cousin — let the top 1\" dry fully before a deep drench.\n\nHOW TO CHECK READINESS (your 5.5\" pot):\n• Finger test: top 1\" dry = water — the smaller pot means faster dry-down than the 13.5\" specimen.\n• Pot weight: 5.5\" pot feels light and hollow when thirsty.\n• Moisture meter: 3 in upper third = water.\n• Plant tells: drooping + dry soil = thirsty. Mass leaf drop + wet soil = overwatered.\n\nCENTRAL TEXAS CADENCE (Pflugerville, indoor AC):\n• Hot AC season (Apr–Oct): every 5–7 days in 1F Room 1 (overhead fan accelerates drying).\n• Peak summer (Jun–Sep): every 5 days — check daily during heat waves.\n• Mild winter (Nov–Feb): every 9–11 days.\n• 1F Corner (vaulted, harder to raise humidity) is fine — this form tolerates average humidity better than variegated.\n\nBOTTOM-WATERING: optional for 5.5\" — top-water until runoff is simpler for a shallow root zone.\n\nWATER QUALITY: tap water at room temp is fine; flush every 2–3 months to prevent salt crust (brown tips). Filtered water optional.\n\nOVER- vs UNDER-watering tells:\n• Over: yellow leaves dropping in clusters, mushy stems, wet soil smell.\n• Under: crispy black tips, drooping with dry top 1\", slower new leaflet production.",
       pruning: "Same as the variegated form — Schefflera tolerates aggressive pruning beautifully.\n\n• Cut just above a node with sharp clean shears.\n• Pinch new growth tips weekly to build density.\n• ⚠️ Mildly irritating sap — wear gloves if sensitive.\n• Don't remove more than 1/3 of foliage at once.",
       propagation: "Stem cuttings root reliably in late spring / early summer.\n\n• 4–6\" cutting with 3–4 leaves, just below a node.\n• Dip in rooting hormone.\n• Insert in moist perlite or in water (success ~70% with hormone, ~40% without).\n• Roots in 4–8 weeks.\n• Air-layering is also effective for thicker stems.",
       repotting: "Every 2–3 years or when roots circle the pot.\n\n• Spring is best.\n• Up-pot by only 2\" at a time.\n• Schefflera prefers slightly snug roots.\n• Don't fertilize for 4–6 weeks after repotting.",
@@ -939,27 +1004,28 @@ const PLANTS = {
   dracaena_fragrans: {
     id: "dracaena_fragrans",
     repotSigns: [
-      "Roots circling out of the 13.5\" pot drainage holes",
+      "Roots circling out of the 9\" × 9\" drainage holes",
       "New leaves are markedly SHORTER than the mature strappy leaves",
-      "Cane starts leaning (13.5\" pot rootball no longer counterbalances a tall cane)",
-      "Water drains through the peat mix in seconds instead of the usual slow soak",
+      "Cane starts leaning (9\" pot rootball no longer counterbalances a tall cane)",
+      "Water drains through in seconds instead of the usual slow soak",
       "Yellow lower leaves persistent (not from a specific over/underwatering event)",
       "Growth stalls entirely in growing season — Dracaenas will normally push a new leaf every 4–6 weeks in warm months"
     ],
-    displayName: "Dracaena fragrans (Corn Plant)",
-    potSize: '13.5"',
+    displayName: "Corn Plant (Cane A)",
+    potSize: '9" × 9"',
+    repotted: true,
     category: "tropical",
     names: {
       common: ["Corn Plant", "Cornstalk Dracaena", "Mass Cane", "Happy Plant"],
       scientific: "Dracaena fragrans (formerly D. deremensis)"
     },
-    wateringDays: 11,
-    wateringDaysHot: 9,
-    wateringDaysCool: 17,
+    wateringDays: 8,
+    wateringDaysHot: 7,
+    wateringDaysCool: 13,
     currentSoilMix: "amended_potting",
-    comments: "Repotted in last 2 months — LOST A NODE after the repot shock. Other nodes look healthy now, no further leaf drop. Last watered 6/20. Soil is 60/40 potting/perlite, 13.5\" pot.\n\nDracaenas are SENSITIVE TO TAP WATER FLUORIDE — switching to distilled or rainwater will reduce brown leaf tips significantly.",
+    comments: "✅ Aug 2026: the two corn-plant stalks were SEPARATED from the shared 13.5\" pot into their own 9\" × 9\" pots. This is Cane A (watering-log history stays on this ID). UF/IFAS Dracaena: expect some leaf drop after division/repot shock — you already lost a node earlier; another 2–4 weeks of sulk is normal. 9×9 dries FASTER than 13.5\". Use distilled/rain/filtered water — fluoride brown tips. Pair: Corn Plant (Cane B).",
     idealSoil: ["standard_potting", "amended_potting"],
-    soilNotes: "User's 60/40 potting/perlite gives good drainage. Dracaena fragrans prefers medium-retentive soil — the perlite boost protects against overwatering in the 13.5\" pot. Watch for compaction over 2-3 years.",
+    soilNotes: "60/40 potting/perlite in a 9\" × 9\" square. Smaller volume than the old shared 13.5\" — perlite still protects against overwatering after division. Don't pack wet mix (Clemson HGIC).",
     conditions: {
       light:        { ideal: "Bright, indirect (filtered south or east window)", passing: "Medium indirect; tolerates low light but grows slowly" },
       temperature:  { ideal: "65–80°F (18–27°C)",                                passing: "60–90°F; protect below 55°F" },
@@ -969,10 +1035,10 @@ const PLANTS = {
     tips: {
       lighting: "Bright, INDIRECT light is best — direct hot afternoon sun bleaches leaves.\n\n• An east window or several feet back from a south/west window is ideal.\n• Will tolerate medium-low light but won't push new growth.\n• Rotate the pot 1/4 turn every couple weeks for even growth.\n• If new leaves come in smaller or paler than older ones, light is too low.\n\n• In this home, the 1F Living Room window (36° NE) and 1F Corner are your best matches per PLANT_LIGHT_REF.",
       soil: "User's 60/40 potting/perlite is solid. Standard potting mix amended with extra perlite gives the right balance. Avoid pure mineral mixes (cactus, bonsai) — too fast-draining.",
-      watering: "METHOD — soak-and-dry: Dracaena fragrans stores moisture in its cane — let the top 2\" dry between deep waterings. Slightly drought-tolerant but fluoride-sensitive (brown tips from tap water per University of Florida IFAS).\n\nHOW TO CHECK READINESS (your 13.5\" pot):\n• Finger test: top 2\" dry = water — large pot means slower surface dry than smaller houseplants.\n• Pot weight: noticeably lighter than post-water = check depth.\n• Moisture meter: 3–4 in upper half = water.\n• Plant tells: drooping + dry top 2\" = thirsty. Multiple yellow leaves + wet soil = overwatered.\n\nCENTRAL TEXAS CADENCE (Pflugerville, indoor AC ~30–45% RH):\n• Hot AC season (Apr–Oct): every 9–11 days — 60/40 mix in 13.5\" pot holds moisture well.\n• Peak summer (Jun–Sep): every 9 days at 1F Window (NE); 10–11 days in 1F Corner.\n• Mild winter (Nov–Feb): every 15–18 days — growth slows; lost a node after recent repot so go conservative.\n• Avoid overwatering post-repot — let roots recover before resuming deep soaks.\n\nBOTTOM-WATERING: optional for 13.5\" — top-water until runoff ensures the deep root zone gets saturated.\n\nWATER QUALITY (critical — per University of Florida IFAS and The Spruce):\n• Dracaena is HIGHLY fluoride- and salt-sensitive — Central Texas tap water causes classic brown leaf tips.\n• Use distilled, rainwater, or filtered water ONLY. Letting tap sit 24 hrs removes chlorine but NOT fluoride.\n• Flush the 13.5\" pot with plain filtered water every 6–8 weeks to leach salts (fertilizer + minerals).\n\nOVER- vs UNDER-watering tells:\n• Over: multiple yellow/brown leaves at once, soft mushy cane base, black roots, wet soil smell.\n• Under: brown crispy tips/edges (also fluoride), bottom leaves yellow one-at-a-time (some normal aging), drooping with dry soil.",
+      watering: "METHOD — soak-and-dry: Dracaena fragrans stores moisture in its cane — let the top 2\" dry between deep waterings. Slightly drought-tolerant but fluoride-sensitive (brown tips from tap water per University of Florida IFAS).\n\nHOW TO CHECK READINESS (your 9\" × 9\" pot — Aug 2026, one cane):\n• Finger test: top 2\" dry = water. Smaller square than the old 13.5\" so this happens sooner.\n• Pot weight: noticeably lighter than post-water = check depth.\n• Moisture meter: 3–4 in upper half = water.\n• Plant tells: drooping + dry top 2\" = thirsty. Multiple yellow leaves + wet soil = overwatered.\n\nCENTRAL TEXAS CADENCE (Pflugerville, indoor AC ~30–45% RH):\n• Hot AC season (Apr–Oct): every 7–8 days — 60/40 mix in 9×9 dries faster than the old shared 13.5\".\n• Peak summer (Jun–Sep): every 7 days at 1F Window (NE); 8 days in 1F Corner.\n• Mild winter (Nov–Feb): every 12–14 days.\n• ⚠️ POST-DIVISION: water lightly to settle, then wait — UF/IFAS-style shock (leaf drop) is normal for 2–4 weeks. Don't drown a sulking cane.\n\nBOTTOM-WATERING: optional — top-water until runoff, empty saucer.\n\nWATER QUALITY (critical — per University of Florida IFAS and The Spruce):\n• Dracaena is HIGHLY fluoride- and salt-sensitive — Central Texas tap water causes classic brown leaf tips.\n• Use distilled, rainwater, or filtered water ONLY. Letting tap sit 24 hrs removes chlorine but NOT fluoride.\n• Flush the 9×9 pot with plain filtered water every 6–8 weeks to leach salts (fertilizer + minerals).\n\nOVER- vs UNDER-watering tells:\n• Over: multiple yellow/brown leaves at once, soft mushy cane base, black roots, wet soil smell.\n• Under: brown crispy tips/edges (also fluoride), bottom leaves yellow one-at-a-time (some normal aging), drooping with dry soil.",
       pruning: "Easy to prune for shape and size.\n\n• Trim brown leaf tips with sharp scissors — follow the natural leaf shape so it looks intentional.\n• Cut entire canes back to whatever height you want — new growth sprouts from below the cut (the user's lost node).\n• Best in spring before active growth.\n• Wipe the wound with cinnamon to prevent rot.\n• Each cane can be cut at different heights for a tiered look.",
       propagation: "Easy via stem (cane) cuttings.\n\n• Cut a healthy cane into 4–6\" sections; mark the 'up' end on each.\n• Optional: dip the bottom end in rooting hormone.\n• Plant upright in moist potting mix OR root in water (slower but easier to monitor).\n• Roots in 4–8 weeks; new top growth 2–3 weeks after.\n• Success rate ~70–80%.\n• Best in spring/early summer when warm.",
-      repotting: "Every 2–3 years or when root-bound.\n\n• Spring is best.\n• At 13.5\", the user is close to terminal indoor pot size — consider top-dressing instead (scoop out top 2\" of soil, replace with fresh amended_potting).\n• Up-pot by no more than 2\" diameter if growing.\n• ⚠️ Dracaenas often drop a leaf or two from REPOT SHOCK (like the user's lost node) — water lightly, don't fertilize for a month, give 3–4 weeks to recover.\n• Trim circling roots when repotting.",
+      repotting: "Every 2–3 years or when root-bound.\n\n• Spring is best.\n• Aug 2026 split: each cane now has its own 9\" × 9\". Do not jump back to 13.5\" — extra unused soil around a single cane is a rot risk (Clemson: 1–2\" upsize only).\n• ⚠️ Dracaenas often drop a leaf or two from REPOT/DIVISION SHOCK — water lightly, don't fertilize for a month, give 3–4 weeks to recover.\n• Trim circling roots when you next refresh soil.",
       feeding: "Balanced liquid fertilizer at HALF strength every 6 weeks spring–summer.\n\n• None in fall/winter unless growing under lights.\n• Slow-release pellets (Osmocote) in spring work well as an alternative — 3–4 months coverage.\n• Flush with plain water every 2–3 months to clear accumulated fertilizer salts (which contribute to leaf-tip burn).\n• Dracaenas are LIGHT feeders — overfeeding causes salt buildup → more tip burn.",
       troubleshooting: "• Brown crispy leaf tips/edges → #1 cause is FLUORIDE in tap water (per University of Florida IFAS) — switch to distilled/rain/filtered. Also low humidity (Central Texas AC ~30–45%) and salt buildup — flush monthly, humidifier optional at 50%+.\n• Yellow leaves (bottom only, one at a time) → natural aging — pluck off.\n• Yellow leaves (multiple, quickly) → overwatering/root rot — unpot, trim black/mushy roots, repot in fresh 60/40 mix.\n• Drooping/wilting → dry top 2\" = water with filtered water; wet soil = hold off, check roots.\n• Leaf drop (mass) → overwatering, cold draft below 55°F, or repot shock (you lost a node after recent repot — give 4 weeks).\n• Leaf curling → underwatering or low humidity — check soil + switch to filtered water.\n• Faded/pale new leaves → insufficient light — move toward 1F Window or Corner.\n• Scorched/bleached patches → too much direct sun — avoid 2F SW.\n• Root rot (mushy cane base, black roots) → cut above rot, root healthy top as cutting.\n• White stippling + fine webs → SPIDER MITES in dry AC air — rinse, insecticidal soap weekly × 3.\n• Mealybugs (cottony clusters) → alcohol Q-tip.\n• Scale (bumps, sticky floor) → scrape, alcohol, horticultural oil.\n• Thrips → rinse, sticky traps, spinosad.\n• Fungus gnats → let top 2\" dry; sticky traps.\n• Soft mushy cane → root rot — emergency surgery above rot line.\n• Bent/kinked stem → repot shock or uneven light — rotate pot weekly.\n• ⚠️ Toxic to cats and dogs — saponins cause vomiting, drooling, dilated pupils per ASPCA (Corn Plant / Dracaena fragrans).",
     },
@@ -983,7 +1049,60 @@ const PLANTS = {
       { label: "The Sill — Dracaena Care Guide", url: "https://www.thesill.com/blog/plant-care" },
       { label: "ASPCA — Corn Plant Toxicity", url: "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/corn-plant" },
       { label: "Costa Farms — Dracaena Care", url: "https://costafarms.com/plants/dracaena" },
-      { label: "The Spruce — Corn Plant (Dracaena fragrans) Care", url: "https://www.thespruce.com/grow-dracaena-fragrans-indoors-1902748" }
+      { label: "The Spruce — Corn Plant (Dracaena fragrans) Care", url: "https://www.thespruce.com/grow-dracaena-fragrans-indoors-1902748" },
+      { label: "Clemson HGIC — Indoor Plants: Transplanting & Repotting", url: "https://hgic.clemson.edu/factsheet/indoor-plants-transplanting-repotting/" }
+    ]
+  },
+
+  dracaena_fragrans_b: {
+    id: "dracaena_fragrans_b",
+    repotSigns: [
+      "Roots circling out of the 9\" × 9\" drainage holes",
+      "New leaves are markedly SHORTER than the mature strappy leaves",
+      "Cane starts leaning (9\" pot rootball no longer counterbalances a tall cane)",
+      "Water drains through in seconds instead of the usual slow soak",
+      "Yellow lower leaves persistent (not from a specific over/underwatering event)",
+      "Growth stalls entirely in growing season — Dracaenas will normally push a new leaf every 4–6 weeks in warm months"
+    ],
+    displayName: "Corn Plant (Cane B)",
+    potSize: '9" × 9"',
+    repotted: true,
+    category: "tropical",
+    names: {
+      common: ["Corn Plant", "Cornstalk Dracaena", "Mass Cane", "Happy Plant"],
+      scientific: "Dracaena fragrans (formerly D. deremensis)"
+    },
+    wateringDays: 8,
+    wateringDaysHot: 7,
+    wateringDaysCool: 13,
+    currentSoilMix: "amended_potting",
+    comments: "✅ Aug 2026: second stalk from the old shared 13.5\" corn plant, now solo in a 9\" × 9\" pot. Same species/care as Cane A but its OWN watering log — after a split, two canes rarely drink on the same day. UF/IFAS: filtered water (fluoride), expect 2–4 weeks of division sulk, don't overwater a stressed cane.",
+    idealSoil: ["standard_potting", "amended_potting"],
+    soilNotes: "Same 60/40 potting/perlite target as Cane A. Independent 9×9 cube — check THIS pot's weight, not Cane A's.",
+    conditions: {
+      light:        { ideal: "Bright, indirect (filtered south or east window)", passing: "Medium indirect; tolerates low light but grows slowly" },
+      temperature:  { ideal: "65–80°F (18–27°C)",                                passing: "60–90°F; protect below 55°F" },
+      humidity:     { ideal: "50–60%",                                           passing: "40%+; brown leaf tips in dry air" },
+      soilMoisture: { ideal: "Top 2\" dries between waterings",                  passing: "Slightly drought-tolerant" }
+    },
+    tips: {
+      lighting: "Bright, INDIRECT light is best — direct hot afternoon sun bleaches leaves.\n\n• Same spots as Cane A: 1F Living Room window (36° NE) and 1F Corner.\n• You can park the two 9×9 pots as a pair, but rotate independently so each cane doesn't lean the same way.\n• If new leaves come in smaller or paler than older ones, light is too low.",
+      soil: "60/40 potting/perlite. Avoid cactus/bonsai mixes — too fast for Dracaena. Avoid moisture-control peat — fluoride + wet peat = tip burn and rot.",
+      watering: "METHOD — soak-and-dry: same as Cane A. Let the top 2\" dry. Fluoride-sensitive (UF/IFAS).\n\nHOW TO CHECK (this 9\" × 9\", Cane B only):\n• Do not copy Cane A's calendar — after a split, root mass and leaf count differ.\n• Finger 2\" dry → water with filtered/distilled/rain water.\n• Empty the saucer.\n\nCADENCE: every 7–8 days in peak summer AC; 12–14 days in winter. Post-division: err dry for 2–4 weeks.\n\nOVER: multiple yellow leaves + wet mix. UNDER: crispy tips (also fluoride) + light pot.",
+      pruning: "Same as Cane A — brown tips follow the leaf shape; cane cuts resprout below the wound. Cinnamon on fresh cuts. Don't match heights unless you want a matched pair.",
+      propagation: "This cane IS the result of dividing a two-cane pot. Further props: 4–6\" cane sections, mark 'up', water or soil, 4–8 weeks (UF/IFAS / The Spruce).",
+      repotting: "Leave it in the 9×9 through this recovery. Next upsize +1–2\" only, spring, after new growth is steady. No fertilizer 4 weeks post-split.",
+      feeding: "None for 4 weeks after the Aug 2026 split. Then half-strength balanced liquid every 6 weeks spring–summer. Flush salts every 6–8 weeks — salts + fluoride = worse tip burn.",
+      troubleshooting: "• Brown crispy tips → fluoride in tap (UF/IFAS) — filtered water, flush salts.\n• Mass leaf drop after the split → expected shock 2–4 weeks; do not add water or fertilizer.\n• Yellow cluster + wet soil → overwater in the new 9×9; hold off, check roots.\n• One cane thriving, this one not → different root damage at split; keep them on independent logs.\n• ⚠️ Toxic to cats and dogs — saponins per ASPCA (Corn Plant / Dracaena fragrans)."
+    },
+    sources: [
+      { label: "Missouri Botanical Garden — Dracaena fragrans", url: "https://www.missouribotanicalgarden.org/PlantFinder/PlantFinderDetails.aspx?taxonid=276317" },
+      { label: "University of Florida IFAS — Dracaena fragrans", url: "https://edis.ifas.ufl.edu/publication/FP173" },
+      { label: "RHS — Dracaena fragrans", url: "https://www.rhs.org.uk/plants/search-results?query=dracaena+fragrans" },
+      { label: "ASPCA — Corn Plant Toxicity", url: "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/corn-plant" },
+      { label: "Costa Farms — Dracaena Care", url: "https://costafarms.com/plants/dracaena" },
+      { label: "The Spruce — Corn Plant (Dracaena fragrans) Care", url: "https://www.thespruce.com/grow-dracaena-fragrans-indoors-1902748" },
+      { label: "Clemson HGIC — Indoor Plants: Transplanting & Repotting", url: "https://hgic.clemson.edu/factsheet/indoor-plants-transplanting-repotting/" }
     ]
   },
 
@@ -1987,27 +2106,28 @@ const PLANTS = {
   zz_plant: {
     id: "zz_plant",
     repotSigns: [
-      "🔴 THIS PLANT: plastic pot is already BULGING/STRETCHING (2026-07-20) — the classic ZZ 'repot me now' signal",
+      "Roots circling out of the 5\" drainage holes (next cycle — you just left the stretching 4\")",
       "Rhizomes visible pushing up through the soil surface",
       "Rhizomes visible against the pot walls when you tilt the pot in light",
       "Glossy leaflets duller than they used to be",
-      "Water drains through in <5 seconds despite the peat-based nursery mix",
-      "Any cracking sound when you gently squeeze the plastic pot = rhizomes are physically constrained"
+      "Water drains through in <5 seconds",
+      "Any cracking sound when you gently squeeze the pot = rhizomes physically constrained again"
     ],
     displayName: "ZZ Plant",
-    potSize: '4"',
+    potSize: '5"',
+    repotted: true,
     category: "tropical",
     names: {
       common: ["ZZ Plant", "Zanzibar Gem", "Aroid Palm", "Emerald Palm", "Fern Arum"],
       scientific: "Zamioculcas zamiifolia"
     },
-    wateringDays: 21,
-    wateringDaysHot: 18,
-    wateringDaysCool: 35,
-    currentSoilMix: "other",
-    comments: "⚠️ Still in original 4\" nursery pot — AND the plastic pot has started BULGING/STRETCHING (2026-07-20). The underground rhizomes are pushing against the plastic walls, which is the plant's clearest 'repot me now' signal. Escalated repot urgency from 'seasonal' → 'urgent'; the rhizomes are physically constrained and further delay risks cracking the pot open and/or restricting rhizome growth long-term. NOT a succulent botanically — it's an aroid (same family as Monstera, Pothos) — but it stores water in bulbous underground rhizomes and behaves like one. World-class low-maintenance plant: tolerates deep shade, drought for MONTHS, and neglect. ⚠️ TOXIC if ingested — all parts. Keep away from pets and children. Black spots on stems are NORMAL (natural pigment). Extremely slow grower.",
+    wateringDays: 18,
+    wateringDaysHot: 16,
+    wateringDaysCool: 32,
+    currentSoilMix: "amended_potting",
+    comments: "✅ Aug 2026: repotted 4\" stretching nursery pot → 5\" (the correct +1\" jump per Clemson HGIC indoor transplanting). ZZ stores water in potato-like rhizomes — it likes to be slightly snug; do NOT jump again soon. Hold water 7–10 days post-repot if any rhizomes were nicked, then resume soak-and-dry. Aroid, not a succulent. ⚠️ TOXIC if ingested — all parts. Black stem spots are normal pigment. Slow grower.",
     idealSoil: ["standard_potting", "amended_potting"],
-    soilNotes: "The nursery mix (usually peat-based) is fine for ZZ Plants — they actually prefer standard potting mix over cactus mix (unlike everything else in this batch). A little extra perlite (~25%) improves drainage without hurting the plant. Repot mainly to give the rhizomes more room, not to swap the soil.",
+    soilNotes: "Now in a 5\" pot. Prefer 75/25 potting + perlite (amended_potting) over cactus mix — rhizomes struggle in pure grit. Clemson: don't pack wet media. Next repot only when rhizomes surface or the 5\" starts to deform (likely 2–3 years).",
     repotSuggestion: {
       urgency: "urgent",
       targetPotSize: '5–6"',
@@ -2028,9 +2148,9 @@ const PLANTS = {
       soilMoisture: { ideal: "Dry between waterings — top 2\" bone dry",        passing: "Drought tolerant for weeks to months" }
     },
     tips: {
-      lighting: "Genuinely tolerates a huge light range — from bright indirect (fastest growth) all the way down to a dim office corner (slow but survives).\n\n• Bright indirect = fastest growth; new leaflets emerge more often.\n• Medium indirect = fine, growth slows.\n• Low indirect = the plant lives, but growth is basically zero.\n• AVOID direct sun (especially afternoon) — will scorch the glossy leaflets to yellow/brown.\n• A north-facing window is ideal. East is also great.\n• Rotate 1/4 turn monthly — ZZ grows slowly enough that weekly rotation isn't needed.\n\n• In this home, 1F Living Room window (36° NE — soft bright indirect) is a flexible safe match per PLANT_LIGHT_REF — repot urgently first (pot is stretching).",
+      lighting: "Genuinely tolerates a huge light range — from bright indirect (fastest growth) all the way down to a dim office corner (slow but survives).\n\n• Bright indirect = fastest growth; new leaflets emerge more often.\n• Medium indirect = fine, growth slows.\n• Low indirect = the plant lives, but growth is basically zero.\n• AVOID direct sun (especially afternoon) — will scorch the glossy leaflets to yellow/brown.\n• A north-facing window is ideal. East is also great.\n• Rotate 1/4 turn monthly — ZZ grows slowly enough that weekly rotation isn't needed.\n\n• In this home, 1F Living Room window (36° NE) and 2F Room 2 (set back from the late NW beam) are flexible safe matches. The urgent-repot blocker is done.",
       soil: "Standard well-draining potting mix. 75/25 potting + perlite is ideal.\n\n• Do NOT use cactus mix — too gritty; the rhizomes struggle in it.\n• Do NOT use pure peat/coir — too moisture-retentive; root rot risk.\n• Neutral pH.\n• Ceramic pot preferred for stability — mature ZZ plants get top-heavy.\n• Repot every 2–3 years or when rhizomes crack the pot.",
-      watering: "METHOD — strict dry-between, err dry: Zamioculcas zamiifolia stores water in potato-like rhizomes — overwatering is the FASTEST way to kill it (per Clemson HGIC and The Spruce). The rhizomes survive MONTHS without water but almost never survive soggy peat nursery mix. ⚠️ Pot is already stretching (urgent repot) — cramped rhizomes + wet soil = elevated rot risk until repotted.\n\nHOW TO CHECK READINESS (your 4\" nursery pot, peat-based store mix):\n• Finger test: top 2\" bone dry = check deeper; if ANY moisture below, wait.\n• Pot weight: 4\" pot feels hollow-light = likely ready.\n• Rhizome check (at repot): firm potato-like = healthy; soft/mushy = rot.\n• Moisture meter: 1–2 throughout = water; 3+ = wait (peat retains moisture).\n• Plant tells: wrinkled stems = rare underwatering. Yellow leaflets + wet soil = OVERWATERING (99% of cases per Clemson).\n\nCENTRAL TEXAS CADENCE (Pflugerville, indoor AC ~30–45% RH):\n• Hot AC season (Apr–Oct): every 18–21 days — peat nursery mix holds water longer than cactus mix; don't rush.\n• Peak summer (Jun–Sep): every 18 days; check finger depth, not calendar alone.\n• Mild winter (Nov–Feb): every 30–35 days — near-zero water; once a month is often plenty.\n• Drench thoroughly, drain saucer immediately; never leave standing water.\n• After urgent repot to 75/25 potting + perlite: resume 7–10 day dry-down before first post-repot water.\n• When in doubt, DON'T water (per The Spruce).\n\nOVER- vs UNDER-watering tells:\n• Over: yellow leaflets, mushy rhizomes, sour soil, fungus gnats, leaflets falling en masse.\n• Under: wrinkled/curling stems (rare), rhizomes slightly soft but not mushy.",
+      watering: "METHOD — strict dry-between, err dry: Zamioculcas zamiifolia stores water in potato-like rhizomes — overwatering is the FASTEST way to kill it (per Clemson HGIC and The Spruce).\n\nHOW TO CHECK READINESS (your 5\" pot, Aug 2026 repot):\n• Finger test: top 2\" bone dry = check deeper; if ANY moisture below, wait.\n• Pot weight: 5\" pot feels hollow-light = likely ready. Amended mix dries faster than the old nursery peat.\n• Moisture meter: 1–2 throughout = water; 3+ = wait.\n• Plant tells: wrinkled stems = rare underwatering. Yellow leaflets + wet soil = OVERWATERING (99% of cases per Clemson).\n\n⚠️ POST-REPOT: if rhizomes were nicked, no water 7–10 days so tissue can callus (then resume). Fresh mix + a slightly larger pot is still a rot risk if you water on the old 'peat always wet' fear in reverse — wait for a dry stick.\n\nCENTRAL TEXAS CADENCE (Pflugerville, indoor AC ~30–45% RH):\n• Hot AC season (Apr–Oct): every 16–18 days in the 5\" amended mix.\n• Peak summer (Jun–Sep): every 16 days; check finger depth, not calendar alone.\n• Mild winter (Nov–Feb): every 30–32 days — once a month is often plenty.\n• Drench thoroughly, drain saucer immediately; never leave standing water.\n• When in doubt, DON'T water (per The Spruce).\n\nOVER- vs UNDER-watering tells:\n• Over: yellow leaflets, mushy rhizomes, sour soil, fungus gnats, leaflets falling en masse.\n• Under: wrinkled/curling stems (rare), rhizomes slightly soft but not mushy.",
       pruning: "Minimal.\n\n• Cut yellowing/damaged stems at the base with sterile shears (any partial cut on a stem just makes the whole stem die back).\n• Do not remove healthy stems for shape — new growth is very slow.\n• Wipe leaflets with a damp cloth every 4–6 weeks to remove dust — a lot of the leaflets means dust builds up fast.",
       propagation: "Two methods — both work, both SLOW (months).\n\n• LEAF PROP: Pluck a single leaflet from a mature stem; let it callus 1–2 days; press the cut end into damp potting mix. In 6–12 months a small rhizome forms; then a shoot appears. Slow but reliable.\n• DIVISION: Un-pot the whole plant in spring; gently pull apart the rhizome cluster; each chunk with 2+ stems and its own rhizome becomes a new plant. Fastest way to get a new mature-looking plant.\n• Water propagation of stem cuttings works too but takes 3–6 months for roots.\n• Success rate: 80% for both — patience is the limiting factor.",
       repotting: "Every 2–3 years only.\n\n• Signs it's time: rhizomes visible at soil surface, plastic pot bulging/cracking/STRETCHING, plant top-heavy. The pot-stretch signal is what happened to this plant on 2026-07-20 — do NOT try to squeeze more time out of a stretched pot; the rhizomes are physically constrained.\n• Spring/early summer preferred BUT if the pot is already deformed, repot immediately in any season — ZZ's rhizome water storage makes off-season repotting low-risk.\n• Up-pot by 1–2 inches ONLY — ZZ likes to be slightly rhizome-bound; jumping 3+ inches invites root rot.\n• If rhizomes won't slide out of a deformed plastic pot: CUT the pot open with sturdy scissors. Snapping a rhizome is worse than sacrificing the pot.\n• Standard mix + 25% perlite.\n• Ceramic pot for stability (top-heavy stems tip a lightweight plastic pot).\n• No water for 5–7 days after (7–10 days if any rhizomes were nicked or trimmed).",
@@ -2043,7 +2163,8 @@ const PLANTS = {
       { label: "University of Florida IFAS — ZZ Plant", url: "https://gardeningsolutions.ifas.ufl.edu/plants/houseplants/zz-plant.html" },
       { label: "NC State Extension — Zamioculcas zamiifolia", url: "https://plants.ces.ncsu.edu/plants/zamioculcas-zamiifolia/" },
       { label: "ASPCA — ZZ Plant toxicity", url: "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/zz-plant" },
-      { label: "The Spruce — ZZ Plant Care Guide", url: "https://www.thespruce.com/zz-zanzibar-gem-plant-profile-4796783" }
+      { label: "The Spruce — ZZ Plant Care Guide", url: "https://www.thespruce.com/zz-zanzibar-gem-plant-profile-4796783" },
+      { label: "Clemson HGIC — Indoor Plants: Transplanting & Repotting", url: "https://hgic.clemson.edu/factsheet/indoor-plants-transplanting-repotting/" }
     ]
   },
 
@@ -2065,11 +2186,11 @@ const PLANTS = {
       common: ["Desert Rose", "Mock Azalea", "Impala Lily", "Sabi Star"],
       scientific: "Adenium obesum"
     },
-    wateringDays: 12,
-    wateringDaysHot: 10,
+    wateringDays: 8,
+    wateringDaysHot: 6,
     wateringDaysCool: 45,
     currentSoilMix: "cactus_mix",
-    comments: "✅ Repotted Jul 2026 into a 5\" pot with a heavily mineral cactus mix (up ~1\" from the 4\" nursery pot, out of the rot-prone peat). Caudiciform succulent — the swollen base ('caudex') is the plant's signature. Stunning pink/red trumpet-shaped flowers on mature plants. ⚠️ HIGHLY TOXIC sap — used historically in Africa as arrow poison. Wear gloves when pruning; keep away from pets, children, and don't touch your face after handling. Enters DEEP dormancy in winter — drops leaves and looks dead. Do not water during dormancy — this is when most beginner growers kill it.",
+    comments: "✅ Aug 2026: moved OUTDOORS on the same 301° NW exposure as 2F Room 2 (late-afternoon/evening summer sun), still in the Jul 2026 5\" mineral-mix pot. UF/IFAS (EP474): Adenium needs 6+ hours bright light to flower, irrigate regularly WITH drainage in summer, and is a deck/patio plant that MUST come inside for winter — not freeze-tolerant; Pflugerville is zone 8b/9a. NW patio gives fewer direct hours than 2F SW, so blooms may be modest, but outdoor DLI still beats any indoor window. Dump saucers after storms. ⚠️ HIGHLY TOXIC sap (cardiac glycosides) — keep off Moose's path. Winter: leaves drop, look 'dead', water almost never.",
     idealSoil: ["cactus_mix"],
     soilNotes: "Now in a heavily mineral cactus blend (out of the nursery peat, the #1 killer of Desert Rose in cool/humid winters — the caudex rots from the base up). Keep the caudex base dry and never let it sit wet.",
     repotSuggestion: {
@@ -2092,9 +2213,9 @@ const PLANTS = {
       soilMoisture: { ideal: "Dry between waterings (growing season); DRY for months (dormancy)", passing: "Drought tolerant year-round; sensitive to wet soil" }
     },
     tips: {
-      lighting: "FULL SUN is non-negotiable for flowering and to prevent the plant from stretching leggy.\n\n• South- or west-facing window, within 1 foot of the glass.\n• 6+ hours direct sun daily minimum in the growing season.\n• Summer: can move outdoors to full sun after 2 weeks of acclimation.\n• Winter dormancy: still wants a bright cool location, but the plant drops its leaves and doesn't photosynthesize much anyway.\n• Grow light supplement: 12–14 hrs, 6–12 inches above canopy.\n• In this home, 2F Living Room (215° SW — intense afternoon sun, low humidity) is THE desert powerhouse per PLANT_LIGHT_REF.",
+      lighting: "FULL SUN is non-negotiable for flowering and to prevent the plant from stretching leggy.\n\n• CURRENT (Aug 2026): outdoors, 301° NW (same direction as 2F Room 2). UF/IFAS: 6+ hours bright light to maintain summer flowering. NW late-day sun is less total hours than a south/west patio — better than indoor, maybe not bloom-max.\n• If you want more flowers, a summer afternoon on the 2F SW side (215°) is stronger; NW is the milder, slightly safer heat load.\n• Acclimate 7–14 days if it just left indoor AC — even desert plants sunburn on a sudden move.\n• Bring the container in before nights ~50°F (UF/IFAS: chill causes leaf yellow/drop; freeze kills). Typical Pflugerville first-frost window is mid-November — don't wait for frost.\n• Winter indoor home: 2F Living Room SW, then nearly dry until spring.\n• Grow light supplement: 12–14 hrs if you overwinter in a dimmer room.",
       soil: "EXTREMELY mineral-heavy. This is the single most important care factor.\n\n• 1 part cactus mix + 1 part pumice + 1 part perlite (or coarse sand). NO peat-heavy mixes.\n• Terracotta pot strongly preferred.\n• Top-dress with fine gravel around the caudex to keep the base dry.\n• Slightly acidic to neutral pH (6.0–7.0).\n• Repot every 2 years while young, less often as it matures.",
-      watering: "METHOD — seasonal soak-and-dry discipline is the #1 care skill: Adenium obesum caudex stores water; overwatering in dormancy kills 90% of beginner plants (per NC State Extension and ASPCA toxicity notes on caudiciform rot risk).\n\nHOW TO CHECK READINESS (your 5\" pot, fresh heavily mineral cactus mix):\n• Caudex test: firm, full, smooth = fine; soft/spongy or wrinkled = investigate (underwater OR rot).\n• Pot weight: light 5\" terracotta = ready in growing season.\n• Skewer to bottom — bone dry throughout before watering.\n\n⚠️ FRESHLY REPOTTED (Jul 2026): no water 10 days post-repot to let nicked roots callus, then resume growing-season schedule. New mineral mix drains much faster than old nursery peat — the 5\" pot dries ~2–3 days quicker.\n\nCENTRAL TEXAS CADENCE (Pflugerville, indoor AC ~30–45% RH):\n• Growing season (Apr–Oct): every 10–12 days in 2F LR SW.\n• Peak summer (Jun–Sep): every 10 days; may stretch to 7 days if outdoors in full Central Texas sun.\n• ⚠️ WINTER DORMANCY (Nov–Feb): NEAR-ZERO WATER. When leaves drop, the plant is fully dormant/leafless — do NOT water on a calendar. One or two light drinks the ENTIRE winter ONLY if caudex starts to soften/wrinkle (not mushy).\n• Grow lights through winter short days if keeping in bright cool spot.\n\nTECHNIQUE:\n• Soak until runoff, empty saucer within 15 min.\n• Keep caudex base dry — gravel top-dress helps.\n• Terracotta + mineral mix strongly preferred.\n• Wear gloves — caustic/cardiac-glycoside sap (per ASPCA).\n• When in doubt during dormancy, DON'T water.",
+      watering: "METHOD — seasonal soak-and-dry discipline is the #1 care skill: Adenium obesum caudex stores water; overwatering in dormancy kills 90% of beginner plants (per NC State Extension and ASPCA toxicity notes on caudiciform rot risk).\n\nHOW TO CHECK READINESS (your 5\" pot, mineral cactus mix, NOW OUTDOORS NW):\n• Caudex test: firm, full, smooth = fine; soft/spongy or wrinkled = investigate (underwater OR rot).\n• Pot weight: light 5\" pot = ready in growing season. Outdoor heat/wind dries it faster than indoor AC.\n• Skewer to bottom — bone dry throughout before watering.\n• After thunderstorms: empty the saucer the same day. UF/IFAS: irrigate regularly but provide drainage — sitting wet rots the caudex.\n\nCENTRAL TEXAS CADENCE:\n• Outdoor peak summer (current): every 5–7 days in 100°F weather, still only when the mix is dry. Check twice a week; don't calendar-water through a rainy week.\n• Indoor growing season (when you bring it in): every 10–12 days in 2F LR SW.\n• ⚠️ WINTER DORMANCY (Nov–Feb, indoors): NEAR-ZERO WATER. When leaves drop, do NOT water on a calendar. One or two light drinks the ENTIRE winter ONLY if caudex starts to soften/wrinkle (not mushy).\n• Grow lights through winter short days if keeping in bright cool spot.\n\nTECHNIQUE:\n• Soak until runoff, empty saucer within 15 min.\n• Keep caudex base dry — gravel top-dress helps.\n• Terracotta + mineral mix strongly preferred.\n• Wear gloves — caustic/cardiac-glycoside sap (per ASPCA).\n• When in doubt during dormancy, DON'T water.",
       pruning: "Prune in spring only, wearing GLOVES (toxic sap).\n\n• Prune back leggy stems to shape.\n• Removing branch tips forces multi-branching — a great way to encourage more flowers.\n• Cuttings root but produce plants without the swollen caudex (the caudex only forms from seed-grown plants).\n• Never prune during winter dormancy.\n• Clean tools with alcohol between cuts.",
       propagation: "Two paths, very different results.\n\n• SEEDS (best): Produces the classic swollen caudex — the whole point of Desert Rose. Sow fresh seed on damp cactus mix in spring; germinates in 1–2 weeks. Takes 3–5 years to bloom.\n• CUTTINGS: Faster to flower but produces plants WITHOUT the caudex — they look like ordinary shrubs. Take 5–6 inch cuttings in spring; let callus 5–7 days; plant in dry cactus mix; light mist after 2 weeks; roots in 4–6 weeks. Success rate ~70%.",
       repotting: "Every 2–3 years while young, every 3–5 years for mature plants.\n\n• Spring only — never fall or winter.\n• Up-pot by 1 inch.\n• Wear GLOVES.\n• Very mineral mix.\n• Consider raising the caudex slightly above soil for a bonsai-like effect.\n• No water for 10 days after.",
@@ -2106,6 +2227,7 @@ const PLANTS = {
       { label: "NC State Extension — Adenium obesum (toxicity)", url: "https://plants.ces.ncsu.edu/plants/adenium-obesum/" },
       { label: "Missouri Botanical Garden — Adenium obesum", url: "https://www.missouribotanicalgarden.org/PlantFinder/PlantFinderDetails.aspx?taxonid=276116" },
       { label: "University of Florida IFAS — Adenium", url: "https://edis.ifas.ufl.edu/publication/EP111" },
+      { label: "UF/IFAS EP474 — Florida Foliage House Plant Care: Adenium obesum", url: "https://edis.ifas.ufl.edu/publication/EP474" },
       { label: "RHS — Cacti & Succulents growing guide", url: "https://www.rhs.org.uk/plants/types/cacti-succulents/houseplants/growing-guide" },
       { label: "Missouri Botanical Garden — Cacti & Succulents fact sheet", url: "https://www.missouribotanicalgarden.org/Portals/0/Gardening/Gardening%20Help/Factsheets/Cactus%20and%20Succulents10.pdf" }
     ]
@@ -2247,6 +2369,7 @@ const OWNED_PLANT_IDS = [
   /* In-soil established plants */
   "prayer_plant",
   "monstera",
+  "monstera_water_cuttings",
   "thai_constellation",
   "schefflera",
   "schefflera_dark",
@@ -2262,6 +2385,7 @@ const OWNED_PLANT_IDS = [
   "succulent_frankenstein_a",
   "succulent_frankenstein_b",
   "dracaena_fragrans",
+  "dracaena_fragrans_b",
   "cordyline_fruticosa",
   "assorted_cacti",
   "royal_ivy",
@@ -2318,9 +2442,8 @@ const POTHOS_VARIANTS = [
   "philodendron_silver_stripe"
 ];
 
-/* Currently-owned WATER-rooting cuttings — none right now (all graduated to soil).
- * Kept as empty array so UI filters / lookups still work without a null check. */
-const WATER_PROPAGATION_IDS = [];
+/* Currently-owned WATER-rooting cuttings — Aug 2026: 3 Monstera top cuttings. */
+const WATER_PROPAGATION_IDS = ["monstera_water_cuttings"];
 
 const PLANT_CATEGORIES_FOR_CUSTOM = [
   "Tropical",
@@ -2474,7 +2597,13 @@ const PLANT_PLACEMENT = {
     ideal: ["second_floor_open", "living_room_open", "living_room_window_morning", "bedroom"],
     ok: ["living_room_fireplace", "living_room_window_stained", "second_floor_window"],
     avoid: ["bathroom"],
-    rationale: "Monstera produces the largest fenestrated leaves in bright indirect with optional 1–3 hrs of morning direct sun. The 2nd-floor open area is the gold standard. Bedroom (bright indirect, no direct) is now equivalent to LR-Open in light terms — a perfectly good spot for Monstera. Avoid only the bathroom (light too low, leaves stay solid without splits). The fireplace mantle works light-wise, but the 13.5\" pot is heavy and bulky — only consider it if the mantle is wide and load-rated."
+    rationale: "Monstera produces the largest fenestrated leaves in bright indirect with optional 1–3 hrs of morning direct sun. The 2nd-floor open area is the gold standard. Bedroom (bright indirect, no direct) is now equivalent to LR-Open in light terms — a perfectly good spot for Monstera. Avoid only the bathroom (light too low, leaves stay solid without splits). The fireplace mantle works light-wise, but the 13.5\" pot is heavy and bulky — only consider it if the mantle is wide and load-rated. Aug 2026: 4 air layers stay on this plant — don't move it to harsh sun while wraps are on."
+  },
+  monstera_water_cuttings: {
+    ideal: ["living_room_open", "bedroom", "living_room_window_stained"],
+    ok: ["living_room_window_morning", "second_floor_open"],
+    avoid: ["bathroom", "second_floor_window", "living_room_fireplace"],
+    rationale: "Three Monstera top cuttings in a water jar (UMN Extension: node required). Bright indirect only — a jar in hot direct sun cooks cuttings. Keep near the mother for similar light, but not on the 2F SW sill. Bathroom humidity is fine but stagnant air + a jar invites slime."
   },
   thai_constellation: {
     ideal: ["living_room_window_morning", "second_floor_open", "living_room_fireplace"],
@@ -2486,7 +2615,7 @@ const PLANT_PLACEMENT = {
     ideal: ["living_room_open", "second_floor_open", "living_room_window_morning", "bedroom"],
     ok: ["living_room_window_stained", "living_room_fireplace", "second_floor_window"],
     avoid: ["bathroom"],
-    rationale: "Variegated yellow Schefflera REQUIRES bright indirect to keep its variegation — too dim and new leaves emerge all-green within 4–6 weeks. The bedroom (bright indirect, no direct) is excellent for maintaining variegation. Tolerates 1–3 hrs morning direct (Window A, fireplace) too. Avoid the bathroom (light too low → variegation reverts to green). The 9\" pot is heavy, so floor-standing in the living room, 2nd floor, or bedroom corner works best."
+    rationale: "Variegated yellow Schefflera REQUIRES bright indirect to keep its variegation — too dim and new leaves emerge all-green within 4–6 weeks. The bedroom (bright indirect, no direct) is excellent for maintaining variegation. Tolerates 1–3 hrs morning direct (Window A, fireplace) too. Avoid the bathroom (light too low → variegation reverts to green). Aug 2026: now in a 13.5\" pot (same as Monstera) — floor-standing only; overpot means extra-conservative watering."
   },
   schefflera_dark: {
     ideal: ["living_room_open", "second_floor_open", "bedroom", "living_room_window_stained"],
@@ -2534,7 +2663,7 @@ const PLANT_PLACEMENT = {
     ideal: ["second_floor_window", "living_room_window_morning", "living_room_fireplace"],
     ok: ["living_room_window_stained"],
     avoid: ["bathroom", "bedroom", "living_room_open", "second_floor_open"],
-    rationale: "Euphorbia tirucalli MUST have direct sun to maintain its iconic red/orange tips — without strong direct light, it stays plain green and grows floppy/leggy within a few weeks. ⚠️ NO room in this house provides the 6+ hours of direct sun this plant truly wants. The 2F window (1–3 hrs PM direct) and the morning-direct spots (Window A, fireplace) are the best available — colors will be muted vs. a true sun spot but the plant will survive. The bedroom (now confirmed indirect-only) is OUT — Firestick stays green there. Consider a grow light if you want vibrant tip color. ⚠️ The milky sap is toxic and skin-irritating — keep out of children's and pets' reach wherever you place it."
+    rationale: "Euphorbia tirucalli MUST have direct sun to maintain its iconic red/orange tips — without strong direct light, it stays plain green and grows floppy/leggy within a few weeks. Aug 2026: outdoors on the 301° NW patio (same compass as 2F Room 2) — late-day summer sun. Missouri Botanical Garden / NC State: full sun, but hot summers often want some afternoon shade; acclimate 7–14 days; bring in before ~50°F. Indoor fallback remains 2F SW. ⚠️ Toxic latex — keep out of Moose's path."
   },
   kalanchoe: {
     ideal: ["living_room_window_morning", "second_floor_window", "living_room_fireplace"],
@@ -2564,7 +2693,13 @@ const PLANT_PLACEMENT = {
     ideal: ["living_room_open", "second_floor_open", "bedroom"],
     ok: ["bathroom", "living_room_window_stained", "living_room_fireplace", "living_room_window_morning"],
     avoid: ["second_floor_window"],
-    rationale: "Dracaena fragrans is famously low-light tolerant — it's the classic 'corner of an office' plant. Bright indirect (LR-Open, 2F-Open, bedroom) is ideal; medium indirect (bathroom) is perfectly fine. Direct sun (especially afternoon at the 2F window) scorches the long strappy leaves. The 13.5\" pot is heavy → place once and leave; the bedroom corner is now a legitimate option since the light is right."
+    rationale: "Dracaena fragrans is famously low-light tolerant — it's the classic 'corner of an office' plant. Bright indirect (LR-Open, 2F-Open, bedroom) is ideal; medium indirect (bathroom) is perfectly fine. Direct sun (especially afternoon at the 2F window) scorches the long strappy leaves. Aug 2026: canes split into two 9×9 pots (Cane A + Cane B) — lighter than the old 13.5\", easier to place, still keep them out of hot PM sun."
+  },
+  dracaena_fragrans_b: {
+    ideal: ["living_room_open", "second_floor_open", "bedroom"],
+    ok: ["bathroom", "living_room_window_stained", "living_room_fireplace", "living_room_window_morning"],
+    avoid: ["second_floor_window"],
+    rationale: "Same light profile as Cane A. Park as a pair if you want, but this cane has its own watering log after the Aug 2026 split."
   },
   cordyline_fruticosa: {
     ideal: ["living_room_window_morning", "second_floor_open", "living_room_open"],
@@ -2683,13 +2818,13 @@ const PLANT_PLACEMENT = {
     ideal: ["living_room_open", "second_floor_open", "bedroom", "bathroom"],
     ok: ["living_room_window_stained", "living_room_window_morning", "living_room_fireplace"],
     avoid: ["second_floor_window"],
-    rationale: "ZZ Plant is the classic 'office corner' plant — it genuinely tolerates the widest light range in the entire collection. Bright indirect (LR-Open, 2F-Open, bedroom) is where it grows FASTEST. Medium indirect (bathroom) is perfectly fine. Morning-direct spots (Window A, fireplace) are OK but scorching risk if the plant is right in the beam — pull back 2 feet. ⚠️ ONLY hard avoid is the 2F window's PM direct sun — the glossy leaflets burn to yellow/brown. Great fill-in candidate for any low-light spot you couldn't otherwise use. Keep out of pet reach — TOXIC to cats/dogs."
+    rationale: "ZZ Plant is the classic 'office corner' plant — it genuinely tolerates the widest light range in the entire collection. Bright indirect (LR-Open, 2F-Open, bedroom) is where it grows FASTEST. Medium indirect (bathroom) is perfectly fine. Morning-direct spots (Window A, fireplace) are OK but scorching risk if the plant is right in the beam — pull back 2 feet. ⚠️ ONLY hard avoid is the 2F window's PM direct sun — the glossy leaflets burn to yellow/brown. Aug 2026: correctly up-potted 4\" → 5\" (Clemson: +1–2\" only). Keep out of pet reach — TOXIC to cats/dogs."
   },
   desert_rose: {
     ideal: ["second_floor_window", "living_room_window_morning", "living_room_fireplace"],
     ok: ["living_room_window_stained"],
     avoid: ["bathroom", "bedroom", "living_room_open", "second_floor_open"],
-    rationale: "Adenium obesum is the most sun-hungry plant in the collection — wants 6+ hours of direct sun daily for the trademark trumpet flowers and to prevent leggy growth. ⚠️ NO spot in this house comes close to that budget — the 2F window (PM direct 1–3 hrs) is the best available; morning-direct spots (Window A, fireplace) are second best. The bedroom (bright indirect only) essentially guarantees no flowers ever. ⚠️ Bathroom is doubly disqualified: not enough sun AND chronic humidity = caudex rot within weeks. Consider a supplemental grow light (100W+ LED, 12–14 hrs/day) if you want to see it bloom. Keep away from pets — TOXIC sap."
+    rationale: "Adenium obesum is the most sun-hungry plant in the collection — UF/IFAS EP474 wants 6+ hours of bright light for flowers and treats it as a deck/patio plant that comes in for winter. Aug 2026: outdoors on the 301° NW side (same as 2F Room 2). That is better DLI than any indoor window, but fewer direct hours than 2F SW. Bring the 5\" pot in before nights ~50°F. Bathroom is doubly disqualified: not enough sun AND humidity = caudex rot. Keep away from pets — TOXIC sap."
   }
 };
 
@@ -2707,7 +2842,9 @@ const PLACEMENT_SOURCES = [
   { label: "Costa Farms — Light Levels for Houseplants", url: "https://costafarms.com/how-to/houseplants/light-levels-for-houseplants" },
   { label: "The Sill — How to Determine Light in Your Home", url: "https://www.thesill.com/blog/how-to-tell-how-much-light-your-plant-is-getting" },
   { label: "American Orchid Society — Light for Phalaenopsis", url: "https://www.aos.org/orchids/orchid-care/light.aspx" },
-  { label: "Cactus & Succulent Society of America — Indoor Cactus Care", url: "https://cactusandsucculentsociety.org/" }
+  { label: "UF/IFAS EP474 — Adenium obesum (patio / frost)", url: "https://edis.ifas.ufl.edu/publication/EP474" },
+  { label: "University of Minnesota Extension — Propagating Monstera deliciosa", url: "https://extension.umn.edu/houseplants/propagating-monstera-deliciosa" },
+  { label: "Clemson HGIC — Indoor Plants: Transplanting & Repotting", url: "https://hgic.clemson.edu/factsheet/indoor-plants-transplanting-repotting/" }
 ];
 
 /* ============================================================
@@ -2715,7 +2852,7 @@ const PLACEMENT_SOURCES = [
  * for the user's actual home (Pflugerville, TX, ~30.4°N).
  *
  * This is the data behind the "Placement" tab's canvas-style view:
- * 8 real windows across 2 floors, each with a light + humidity
+ * 9 real windows/zones across 2 floors + one outdoor patio, each with a light + humidity
  * profile and Thrive / Also-solid / Keep-out plant lists.
  *
  * Plants are referenced by PLANT id. An entry can be a bare id
@@ -2738,7 +2875,7 @@ const HOME_WINDOWS = [
     light: "Direct morning-to-midday sun, then bright.",
     humidity: "HIGH — showers keep it the most humid room downstairs.",
     thrive: ["mini_orchid", { id: "prayer_plant", back: true }, { id: "cordyline_fruticosa", back: true }, "wandering_dude", { id: "thai_constellation", back: true }, { id: "monstera", back: true }],
-    solid: [{ id: "fittonia", note: "no direct", back: true }, { id: "ginseng_ficus_cutting", back: true }, { id: "dracaena_fragrans", back: true }],
+    solid: [{ id: "fittonia", note: "no direct", back: true }, { id: "ginseng_ficus_cutting", back: true }, { id: "dracaena_fragrans", back: true }, { id: "dracaena_fragrans_b", back: true }, { id: "monstera_water_cuttings", back: true }],
     avoid: "All succulents & cacti — String of Pearls, Haworthia, Lady Finger, Desert Rose rot in this humidity. Keep the cream-variegated tropicals just back from the direct beam.",
     keepOut: ["string_of_pearls", "haworthia", "lady_finger_cactus", "desert_rose", "assorted_cacti", "aloe_vera", "firestick", "sedum_angelina", "burrows_tail", "baby_burros_tail", "succulent_frankenstein_a", "succulent_frankenstein_b", "variegated_elephant_bush", "variegated_elephant_bush_bonsai", "kalanchoe"]
   },
@@ -2762,7 +2899,7 @@ const HOME_WINDOWS = [
     light: "Two exposures (gentle NE early morning + SE morning/midday) in a big vaulted, double-height room open to the 2nd floor — tall, bright and airy with lots of ambient bounce. Usable plant-level light still comes from the windows, but it's the longest span of soft-to-moderate direct light in the house.",
     humidity: "Average — but the vaulted volume open to the 2F lets moisture disperse fast, so it's hard to raise humidity here.",
     thrive: [{ id: "monstera", back: true }, "schefflera", { id: "marble_queen_pothos", back: true }, { id: "pearls_jade_pothos", back: true }, { id: "philodendron_silver_stripe", back: true }, "ginseng_ficus"],
-    solid: [{ id: "cordyline_fruticosa", back: true }, { id: "dracaena_fragrans", back: true }, "snake_plant", "kalanchoe", { id: "zz_plant", back: true }, "haworthia", "baby_burros_tail", "string_of_pearls", "burrows_tail", { id: "pothos_combo", back: true }],
+    solid: [{ id: "cordyline_fruticosa", back: true }, { id: "dracaena_fragrans", back: true }, { id: "dracaena_fragrans_b", back: true }, "snake_plant", "kalanchoe", { id: "zz_plant", back: true }, "haworthia", "baby_burros_tail", "string_of_pearls", "burrows_tail", { id: "pothos_combo", back: true }],
     avoid: "Nothing really struggles here — it's your best all-rounder. Deep-shade-only plants would be wasted on it.",
     keepOut: []
   },
@@ -2773,8 +2910,8 @@ const HOME_WINDOWS = [
     humidifier: { rec: "skip", note: "Big vaulted room open to the 2F — a small humidifier's mist just dissipates into the volume and barely moves RH. Skip it here; humidify the enclosed 2F Room 2 instead and give any humidity-lovers you keep here pebble trays." },
     light: "Gentle morning sun only, bright indirect the rest of the day, in the big vaulted living room open to the 2nd floor — tall and airy, so the light stays soft and even. Still the safest window for foliage that scorches.",
     humidity: "Average — and the vaulted, double-height volume lets any added moisture dissipate quickly.",
-    thrive: ["royal_ivy", "golden_pothos", "marble_queen_pothos", "pothos_combo", "terrarium_a", "terrarium_b", "zz_plant"],
-    solid: [{ id: "prayer_plant", note: "add humidity" }, "monstera", "dracaena_fragrans", "mondo_grass", "mini_orchid", "ginseng_ficus_cutting", "pearls_jade_pothos", "philodendron_silver_stripe"],
+    thrive: ["royal_ivy", "golden_pothos", "marble_queen_pothos", "pothos_combo", "terrarium_a", "terrarium_b", "zz_plant", "monstera_water_cuttings"],
+    solid: [{ id: "prayer_plant", note: "add humidity" }, "monstera", "dracaena_fragrans", "dracaena_fragrans_b", "mondo_grass", "mini_orchid", "ginseng_ficus_cutting", "pearls_jade_pothos", "philodendron_silver_stripe"],
     avoid: "Full-sun desert plants (Desert Rose, Firestick, cacti) — not enough direct light to keep them tight & colored.",
     keepOut: ["desert_rose", "firestick", "lady_finger_cactus", "assorted_cacti", "sedum_angelina", "aloe_vera", "succulent_frankenstein_a", "variegated_elephant_bush", "variegated_elephant_bush_bonsai"]
   },
@@ -2788,7 +2925,7 @@ const HOME_WINDOWS = [
     thrive: ["desert_rose", "firestick", "lady_finger_cactus", "assorted_cacti", "sedum_angelina", "aloe_vera", "succulent_frankenstein_a", "variegated_elephant_bush", "variegated_elephant_bush_bonsai"],
     solid: [{ id: "snake_plant", back: true }, "ginseng_ficus", { id: "burrows_tail", note: "acclimate slowly" }],
     avoid: "Cream/variegated tropicals, Fittonia, Rattlesnake Calathea, Thai — they'll scorch. Shield Haworthia from the harshest beam.",
-    keepOut: ["fittonia", "prayer_plant", "thai_constellation", "monstera", "mini_orchid", "terrarium_a", "terrarium_b", "cordyline_fruticosa", "marble_queen_pothos", "pearls_jade_pothos", "golden_pothos", "pothos_combo", "philodendron_silver_stripe", "ginseng_ficus_cutting"]
+    keepOut: ["fittonia", "prayer_plant", "thai_constellation", "monstera", "monstera_water_cuttings", "mini_orchid", "terrarium_a", "terrarium_b", "cordyline_fruticosa", "marble_queen_pothos", "pearls_jade_pothos", "golden_pothos", "pothos_combo", "philodendron_silver_stripe", "ginseng_ficus_cutting"]
   },
   {
     id: "f2_bath", floor: "Second floor", name: "Bathroom (rarely used)", bearing: "208° SW",
@@ -2810,7 +2947,7 @@ const HOME_WINDOWS = [
     light: "Late-afternoon/evening summer sun, bright indirect otherwise. Warm 2nd floor.",
     humidity: "Average / low.",
     thrive: ["snake_plant", { id: "zz_plant", back: true }, "ginseng_ficus", "schefflera", { id: "wandering_dude", back: true }, "variegated_elephant_bush", "variegated_elephant_bush_bonsai"],
-    solid: [{ id: "monstera", back: true }, { id: "golden_pothos", back: true }, { id: "dracaena_fragrans", back: true }, { id: "cordyline_fruticosa", back: true }, "haworthia", "baby_burros_tail", "string_of_pearls", "burrows_tail"],
+    solid: [{ id: "monstera", back: true }, { id: "golden_pothos", back: true }, { id: "dracaena_fragrans", back: true }, { id: "dracaena_fragrans_b", back: true }, { id: "cordyline_fruticosa", back: true }, "haworthia", "baby_burros_tail", "string_of_pearls", "burrows_tail"],
     avoid: "Fittonia and terrariums (the late beam is too hot for them). Deep-humidity tropicals want the 1F bathroom.",
     keepOut: ["fittonia", "terrarium_a", "terrarium_b"]
   },
@@ -2821,10 +2958,22 @@ const HOME_WINDOWS = [
     humidifier: { rec: "use", note: "BEST home for your one small humidifier — a smaller, ENCLOSED NW room that actually holds humidity (unlike the vaulted 1F living room). Cluster the humidity-lovers — Rattlesnake Calathea, Cordyline, Monstera, pothos group — within 2–3 ft of the unit and add a small fan on low to spread the plume." },
     light: "Identical light to Room 1 — split the collection: make this the bright-indirect foliage room, Room 1 the succulent/sun room.",
     humidity: "Average / low.",
-    thrive: [{ id: "golden_pothos", back: true }, { id: "marble_queen_pothos", back: true }, { id: "pearls_jade_pothos", back: true }, { id: "philodendron_silver_stripe", back: true }, { id: "monstera", back: true }, { id: "zz_plant", back: true }, { id: "dracaena_fragrans", back: true }],
+    thrive: [{ id: "golden_pothos", back: true }, { id: "marble_queen_pothos", back: true }, { id: "pearls_jade_pothos", back: true }, { id: "philodendron_silver_stripe", back: true }, { id: "monstera", back: true }, { id: "zz_plant", back: true }, { id: "dracaena_fragrans", back: true }, { id: "dracaena_fragrans_b", back: true }],
     solid: [{ id: "prayer_plant", note: "add humidity", back: true }, { id: "royal_ivy", back: true }, { id: "terrarium_b", back: true }, { id: "cordyline_fruticosa", back: true }],
     avoid: "Full-sun cacti/Desert Rose (send to 2F SW). Keep the direct late beam off the pothos variegation midsummer.",
     keepOut: ["desert_rose", "lady_finger_cactus", "assorted_cacti", "firestick", "sedum_angelina", "aloe_vera", "succulent_frankenstein_a", "variegated_elephant_bush", "variegated_elephant_bush_bonsai"]
+  },
+  {
+    id: "outdoor_f2_room2", floor: "Outdoors", name: "Outside 2F Room 2", bearing: "301° NW",
+    tier: "Late-day sun · summer patio",
+    label: "Outdoor · 2F Room 2 (NW)",
+    humidifier: { rec: "skip", note: "Outdoors — skip the humidifier. Watch rain and overnight lows, not indoor RH." },
+    light: "Same compass as indoor 2F Room 2 (301° NW): late-afternoon/evening summer sun plus open-sky brightness. Fewer direct hours than 2F SW (215°), but far more DLI than any indoor NW room. UF/IFAS wants 6+ hrs for Desert Rose flowers — this exposure is a good summer step-up, not a south-facing patio.",
+    humidity: "Central Texas outdoor — humid mornings, thunderstorm pulses, then hot dry afternoons. Saucers must dump after rain (Adenium and Euphorbia rot in standing water).",
+    thrive: ["desert_rose", "firestick"],
+    solid: ["aloe_vera", "sedum_angelina", "lady_finger_cactus", "assorted_cacti", "variegated_elephant_bush", "variegated_elephant_bush_bonsai"],
+    avoid: "Tropicals (Monstera, Calathea, Fittonia, water cuttings) will scorch. Bring desert plants in before nights ~50°F (typically late Oct in Pflugerville). Acclimate 7–14 days. ⚠️ Toxic sap + Moose: site pots off the dog path.",
+    keepOut: ["monstera", "monstera_water_cuttings", "thai_constellation", "prayer_plant", "fittonia", "mini_orchid", "terrarium_a", "terrarium_b", "mondo_grass", "dracaena_fragrans", "dracaena_fragrans_b", "ginseng_ficus_cutting"]
   }
 ];
 
@@ -2832,7 +2981,8 @@ const HOME_WINDOWS = [
 const HOME_PLACEMENT_NOTES = [
   { tone: "info", title: "💧 Your one small humidifier — where to put it", body: "A small humidifier only humidifies a tight pocket — realistically a 2–4 ft radius, not a whole room — and a big open volume defeats it entirely. So skip the bathrooms (already humid), the sunny/succulent rooms (want it dry), AND the 1F living room (vaulted and open to the 2F — the mist just dissipates). Best home: the enclosed 2F Room 2, which actually holds humidity. Cluster the fussy humidity-lovers — Rattlesnake Calathea, Fittonia, Mini Orchid, Thai Constellation, Cordyline, Monstera — within 2–3 ft of the unit, and add a small fan on low to spread the plume. Plants that benefit are tagged 💧 in the reference table and their focus view." },
   { tone: "info", title: "🏔️ The 1F living room is vaulted (open to the 2F)", body: "The downstairs living room has a double-height vaulted ceiling open to the second floor — tall, bright and airy with lots of ambient bounce, which keeps it your most versatile foliage space. But that same big open volume makes it the hardest room to humidify: a small humidifier can't keep up. Put the humidifier in the enclosed 2F Room 2 and rely on grouping + pebble trays for any humidity-lovers you keep downstairs." },
-  { tone: "warning", title: "ZZ Plant — repot before you place it", body: "Its nursery pot is stretching (urgent). Sort the repot first; then it's happy in almost any bright-indirect spot — light is the least of its worries." },
+  { tone: "success", title: "Desert Rose + Firestick — summer patio (NW)", body: "Aug 2026 they sit outdoors on the same 301° NW heading as 2F Room 2. UF/IFAS (Adenium) and Missouri Botanical Garden / NC State (Euphorbia tirucalli): summer sun is correct; dump saucers after storms; acclimate; bring containers in before nights ~50°F. NW late-day sun is milder than 2F SW — good heat compromise, modest bloom potential. Keep both off Moose's path (toxic sap)." },
+  { tone: "info", title: "ZZ Plant — 5\" pot, urgent stretch is done", body: "Aug 2026: up-potted 4\" → 5\" (Clemson HGIC: only 1–2\" larger). Hold water 7–10 days if rhizomes were nicked, then resume long dry-downs. It's now a normal bright-indirect plant — 1F Window, 2F Room 2 set back, etc." },
   { tone: "danger", title: "Rot-risk succulents stay out of bathrooms", body: "Lady Finger Cactus (never), String of Pearls, Haworthia and Desert Rose soften and rot above ~60% humidity. Their zone is the 2F SW living room plus the NW rooms — dry, bright, warm." },
   { tone: "info", title: "Fittonia — the humidity diva", body: "Wants 70%+ humidity but no direct sun. The 1F bathroom, set back from the SE beam, is its dream spot: steady moisture in the air, no scorch." },
   { tone: "info", title: "Terrariums — bright indirect only", body: "They make their own 80–95% humidity, so they don't need a bathroom. Park them at the 1F NE window; direct sun cooks the sealed glass and boils the plants inside." },
@@ -2844,22 +2994,24 @@ const HOME_PLACEMENT_NOTES = [
  * Keyed by PLANT id. flag ∈ info|warning|danger for a callout dot. */
 const PLANT_LIGHT_REF = {
   prayer_plant:               { light: "Bright indirect, no direct",            humidity: "High 60%+ (fussy)",     best: "1F Bath (set back, humid), 1F Window (NE)", flag: "info", hum: true },
-  monstera:                   { light: "Bright indirect",                        humidity: "High 60%+",             best: "1F Corner, 1F Bath", hum: true },
+  monstera:                   { light: "Bright indirect",                        humidity: "High 60%+",             best: "1F Corner, 1F Bath — 4 air layers on plant", hum: true },
+  monstera_water_cuttings:    { light: "Bright indirect (jar, no hot sun)",      humidity: "Avg 50%+",              best: "1F Window / Corner — water jar", flag: "info" },
   thai_constellation:         { light: "Bright indirect (needs more)",           humidity: "High 60–70%",           best: "1F Bath (set back), 1F Corner", hum: true },
-  schefflera:                 { light: "Bright + 1–2h direct",                   humidity: "Avg 50–60%",            best: "1F Corner, 2F Rooms (NW)" },
+  schefflera:                 { light: "Bright + 1–2h direct",                   humidity: "Avg 50–60%",            best: "1F Corner, 2F Rooms (NW) — 13.5\" pot" },
   schefflera_dark:            { light: "Bright + morning direct",                humidity: "Avg 50–60%",            best: "1F Corner, 1F Room 1" },
   mini_orchid:                { light: "Bright indirect + gentle AM",            humidity: "High 50–70%",           best: "1F Bathroom (best match)", hum: true },
   ginseng_ficus:              { light: "Bright + 2–4h direct",                   humidity: "Med 50–70%",            best: "2F LR (SW), 1F Room 1" },
   ginseng_ficus_cutting:      { light: "Bright indirect (establishing)",         humidity: "High 60–70%",           best: "1F Bathroom, 1F Window", hum: true },
   snake_plant:                { light: "Bright indirect + some direct",          humidity: "Any 20–80%",            best: "Flexible — 2F Bath, NW rooms" },
   aloe_vera:                  { light: "Full sun 4–6h",                          humidity: "Low 30–50%",            best: "2F LR (SW), 2F Bath" },
-  mondo_grass:                { light: "Bright indirect / part shade",           humidity: "Avg 50–60%",            best: "1F Window (NE)" },
-  firestick:                  { light: "Full sun 6h+",                           humidity: "Low 30–40%",            best: "2F LR (SW)" },
+  mondo_grass:                { light: "Bright indirect / part shade",           humidity: "Avg 50–60%",            best: "1F Window (NE) — 9×9 pot" },
+  firestick:                  { light: "Full sun 6h+ (summer patio)",            humidity: "Low 30–40%",            best: "Outdoor 2F Rm2 NW (summer); 2F LR SW (winter)", flag: "info" },
   kalanchoe:                  { light: "Bright + 2–4h AM direct",                humidity: "Avg 40–60%",            best: "1F Room 1, 1F Corner" },
   burrows_tail:               { light: "Bright + 2–3h gentle direct",            humidity: "Low 30–50%",            best: "1F Corner, NW rooms" },
   succulent_frankenstein_a:   { light: "Bright direct 4–6h",                     humidity: "Low 30–50%",            best: "2F LR (SW)" },
   succulent_frankenstein_b:   { light: "Bright indirect + AM direct",            humidity: "Low 30–50%",            best: "1F Room 1, 1F Corner" },
-  dracaena_fragrans:          { light: "Bright indirect (filtered)",             humidity: "Avg 50–60%",            best: "1F Window, 1F Corner" },
+  dracaena_fragrans:          { light: "Bright indirect (filtered)",             humidity: "Avg 50–60%",            best: "1F Window, 1F Corner — Cane A 9×9" },
+  dracaena_fragrans_b:        { light: "Bright indirect (filtered)",             humidity: "Avg 50–60%",            best: "1F Window, 1F Corner — Cane B 9×9" },
   cordyline_fruticosa:        { light: "Bright indirect 4h+",                    humidity: "High 50–70%",           best: "1F Bathroom, 1F Corner", hum: true },
   assorted_cacti:             { light: "Bright, mostly direct 4h+",              humidity: "Low 20–40%",            best: "2F LR (SW)" },
   royal_ivy:                  { light: "Bright indirect (E/N)",                  humidity: "Avg 50–60%",            best: "1F Window (NE)" },
@@ -2877,8 +3029,8 @@ const PLANT_LIGHT_REF = {
   lady_finger_cactus:         { light: "Full sun 4–6h+",                         humidity: "Low 30–40%",            best: "2F LR (SW) — NEVER a bathroom", flag: "danger" },
   variegated_elephant_bush:   { light: "Full/part sun 6h+",                      humidity: "Low–Med",               best: "2F LR (SW), 2F Bath" },
   variegated_elephant_bush_bonsai: { light: "Full/part sun 6h+",                 humidity: "Low–Med",               best: "2F LR (SW), 2F Bath" },
-  zz_plant:                   { light: "Bright indirect (low-tolerant)",         humidity: "Any 20–70%",            best: "Flexible — repot first (urgent)", flag: "warning" },
-  desert_rose:                { light: "Full sun 6h+",                           humidity: "Low, avoid >60%",       best: "2F LR (SW)", flag: "info" },
+  zz_plant:                   { light: "Bright indirect (low-tolerant)",         humidity: "Any 20–70%",            best: "Flexible — now in 5\" pot" },
+  desert_rose:                { light: "Full sun 6h+",                           humidity: "Low, avoid >60%",       best: "Outdoor 2F Rm2 NW (summer); 2F LR SW (winter)", flag: "info" },
   terrarium_a:                { light: "Bright indirect ONLY",                   humidity: "Self 80–95%",           best: "1F Window (NE) — no direct sun", flag: "info" },
   terrarium_b:                { light: "Bright indirect ONLY",                   humidity: "Self 80–95%",           best: "1F Window / NW room — no direct sun", flag: "info" }
 };

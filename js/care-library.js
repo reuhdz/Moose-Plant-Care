@@ -68,7 +68,13 @@ const CHOPSTICK_BY_PLANT = {
     "Insert 2–3\" deep (mid-zone of the 13.5\" pot). Surface crust lies — check mid-depth.",
     "Clean/dry wood at ~2\" → deep soak until runoff (rewet the inner store-peat core, then let the whole mass dry evenly).",
     "Dark/damp or soil clinging at 2\" → wait 1–2 days.",
-    "Dual-soil note: outer mix dries faster than the peat core — a dry tip with a damp mid-zone means wait, then soak thoroughly next time."
+    "Dual-soil note: outer mix dries faster than the peat core. Air-layer moss wraps are a separate mist job — don't drench the pot to 'water' the sphagnum."
+  ),
+  monstera_water_cuttings: _c(
+    "No soil stick — this is a water jar. Check that each NODE is still submerged.",
+    "Change water weekly (sooner if cloudy). Top off if evaporation dropped the waterline below the node.",
+    "Slimy/smelly water or a mushy stem → discard that cutting and rinse the jar; don't 'wait it out'.",
+    "UMN Extension: a leaf with no node will never root. Pot when several roots are 2–3\"."
   ),
   thai_constellation: _c(
     "Insert 1–2\" deep in the 5\" pot (most of the root zone in aroid mix).",
@@ -77,10 +83,10 @@ const CHOPSTICK_BY_PLANT = {
     "Small pot dries fast under AC; still prioritize stick over calendar. Cream tissue burns from overwater stress too."
   ),
   schefflera: _c(
-    "Insert 1–2\" deep in the 9\" pot.",
-    "Dry/clean at 1–2\" → water thoroughly.",
-    "Damp/dark at that depth → wait.",
-    "Variegated form wants even moisture without staying wet — mid-depth dry is the green light."
+    "Insert 2–3\" deep in the 13.5\" pot (Aug 2026 overpot — mid-zone, not just the crust).",
+    "Dry/clean at 2–3\" → water thoroughly, empty the saucer.",
+    "Damp/dark at that depth → wait. A dry surface over wet unused outer soil is the overpot trap.",
+    "Clemson HGIC: pots should only go +1–2\". You jumped 9→13.5\" — err dry until new growth resumes."
   ),
   schefflera_dark: _c(
     "Insert ~1\" deep in the 5.5\" pot.",
@@ -119,16 +125,16 @@ const CHOPSTICK_BY_PLANT = {
     "Wrinkled lower leaves + dry stick = thirsty. Mushy leaves + damp stick = overwatered — stop watering."
   ),
   mondo_grass: _c(
-    "Insert ~1\" deep in the 7.5\" pot.",
-    "Dry at 1\" → water to even moisture (not a desert dry-down).",
-    "Damp at 1\" → wait.",
-    "Larger reservoir after the up-pot holds water longer than the old 5\" — don't water on the old cadence blindly."
+    "Insert ~1\" deep, then also check toward the CENTER of the 9\" × 9\" × 9\" cube.",
+    "Dry at 1\" AND the core isn't swampy → water to even moisture (not a desert dry-down).",
+    "Damp at 1\" or a wet core → wait. Corners dry faster than the middle.",
+    "Aug 2026 plant-up roughly doubled volume vs 7.5\" — don't water on the old cadence (Clemson HGIC: moist, not waterlogged)."
   ),
   firestick: _c(
-    "Insert 1–1.5\" deep in the 4\" pot (full dry-down).",
-    "Bone-dry clean stick → water lightly/thoroughly once; let dry hard again. Stems just starting to wrinkle = also a cue.",
-    "Any dampness → wait. Long dry spells are normal.",
-    "⚠️ Caustic sap — gloves when handling. Prefer dry readings over frequent sips."
+    "Insert 1–1.5\" deep in the 4\" pot (full dry-down). Outdoors, also dump the saucer after rain.",
+    "Bone-dry clean stick → water at the soil line once; let dry hard again. Stems just starting to wrinkle = also a cue.",
+    "Any dampness → wait. After a storm, wet saucer ≠ 'already watered well' if it sat flooded.",
+    "⚠️ Caustic sap — gloves. NW patio dries a 4\" pot faster than indoor AC — check weekly in August."
   ),
   kalanchoe: _c(
     "Insert ~1\" deep in the 4\" pot.",
@@ -161,10 +167,16 @@ const CHOPSTICK_BY_PLANT = {
     "Mixed needs: when in doubt, wait. Separate pots later if one species always sulks."
   ),
   dracaena_fragrans: _c(
-    "Insert 2\" deep in the 13.5\" pot (ignore dry surface dust).",
-    "Dry/clean at 2\" → deep water; flush occasionally for fluoride tip-burn prevention.",
+    "Insert 2\" deep in the 9\" × 9\" pot (Cane A — ignore dry surface dust).",
+    "Dry/clean at 2\" → deep water with filtered water; flush occasionally for fluoride tip-burn prevention.",
     "Damp at 2\" → wait.",
-    "Large pot: mid-depth reading prevents watering a dry crust over a wet core."
+    "Post-split (Aug 2026): this cane dries faster than the old shared 13.5\". Don't copy Cane B's day."
+  ),
+  dracaena_fragrans_b: _c(
+    "Insert 2\" deep in THIS 9\" × 9\" (Cane B) — do not use Cane A's stick reading.",
+    "Dry/clean at 2\" → water with filtered/distilled/rain water.",
+    "Damp at 2\" → wait. Division shock looks like thirst — wet soil + yellow leaves means hold off.",
+    "Same species as Cane A; independent root mass after the Aug 2026 split."
   ),
   cordyline_fruticosa: _c(
     "Insert 1–2\" deep in the 9.5\" pot.",
@@ -263,16 +275,16 @@ const CHOPSTICK_BY_PLANT = {
     "Rooted division (not a cutting): no long moist rooting phase — treat like the parent in a faster-drying pot."
   ),
   zz_plant: _c(
-    "Insert ~2\" deep in the 4\" pot (top 2\" should go bone dry).",
+    "Insert ~2\" deep in the 5\" pot (top 2\" should go bone dry).",
     "Clean dry stick at 2\" → water thoroughly, then ignore for a long stretch.",
     "Any moisture at 2\" → wait. Yellow stalks + damp stick = overwatering.",
-    "Rhizomes store water — a dry deep stick is required. Bulging nursery pot is a repot cue, not a water cue."
+    "Aug 2026: correctly up-potted 4→5\". If rhizomes were nicked, wait 7–10 days before the first post-repot water."
   ),
   desert_rose: _c(
-    "Insert 1.5–2\" deep in the 5\" pot / gritty mix.",
-    "Growing season: fully dry stick → water well, then dry hard. Dormancy (cool/short days): keep dry for long stretches even if leaves yellow/drop.",
+    "Insert 1.5–2\" deep in the 5\" pot / gritty mix. Outdoors: dump saucer after rain first.",
+    "Growing season: fully dry stick → water well, then dry hard. Dormancy (cool/short days, indoors): keep dry for long stretches even if leaves yellow/drop.",
     "Damp stick → wait. Soft caudex + damp stick = rot emergency.",
-    "Winter dormancy overrides summer cadence — dry stick does NOT always mean water in dormancy."
+    "UF/IFAS: summer patio OK with drainage; winter freeze is fatal. Outdoor August heat dries the 5\" faster than indoor AC."
   ),
   terrarium_a: _c(
     "Do not use a deep chopstick as the primary tool — sealed jar moisture is read by glass condensation + surface look.",
@@ -427,10 +439,15 @@ const PROPAGATION_LIBRARY = {
     _m("Stem cuttings in water/soil", "~0–10%", "Fails", "Common beginner mistake with Calathea/Goeppertia — skip.")
   ],
   monstera: [
-    _m("Water cuttings (node + leaf)", "80–90%", "Roots 2–4 wks; pot-ready 3–6 wks", "Node required; aerial root speeds success. Change cloudy water."),
+    _m("Air layering (IN PROGRESS — 4 vines)", "90–95%", "4–8 weeks", "Keep sphagnum moist not dripping. Sever only after 1–2\" roots in the wrap (UMN / The Spruce)."),
+    _m("Water cuttings (IN PROGRESS — 3 tops)", "80–90%", "Roots 2–4 wks; pot-ready 3–6 wks", "Node required. Tracked as Monstera (Water Cuttings). Change cloudy water."),
     _m("Soil / sphagnum cuttings", "75–85%", "3–6 weeks", "Stronger roots; keep humid and barely moist."),
-    _m("Air layering", "90–95%", "4–8 weeks", "Best for valuable vines / first-timers who want low risk. Sever only after 1–2\" roots."),
-    _m("Wet-stick / node-only", "50–70%", "2–4+ months", "Possible but slower and fussier — not first-timer friendly.")
+    _m("Wet-stick / node-only", "50–70%", "2–4+ months", "Possible but slower — not first-timer friendly.")
+  ],
+  monstera_water_cuttings: [
+    _m("This entry IS the 3 water top cuttings", "80–90% if each has a node", "Roots 2–4 wks (UMN Extension)", "Change water weekly. Pot at 2–3\" roots into 5–6\" aroid mix, all 3 together."),
+    _m("Leaf-only / no node", "0%", "Fails", "UMN: will stay green then rot. Compost it."),
+    _m("Sister air layers on mother", "90–95%", "4–8 weeks", "Do not mix timelines — sever moss wraps only when rooted.")
   ],
   thai_constellation: [
     _m("Air layering", "90%+", "6–10 weeks", "Safest for expensive variegated tissue. Pick a node with plenty of green."),
@@ -500,8 +517,13 @@ const PROPAGATION_LIBRARY = {
   ],
   dracaena_fragrans: [
     _m("Stem / cane cuttings (top cut)", "75–85%", "3–8 weeks", "Root top in water or soil; stump often resprouts."),
+    _m("Cane division (DONE Aug 2026)", "High if each cane kept roots", "2–4 wk sulk", "Two stalks now live in separate 9×9 pots (Cane A + Cane B)."),
     _m("Air layering thick canes", "85–90%", "6–12 weeks", "Good for tall leggy plants."),
     _m("Cane sections (leafless)", "50–70%", "1–3 months", "Keep warm/humid; slower.")
+  ],
+  dracaena_fragrans_b: [
+    _m("This cane IS the Aug 2026 split", "N/A — already divided", "2–4 wk recovery", "Independent watering from Cane A. Filtered water; don't overwater a sulking cane."),
+    _m("Further cane cuttings", "75–85%", "3–8 weeks", "Same methods as Cane A once it is growing again.")
   ],
   cordyline_fruticosa: [
     _m("Stem cuttings in water or soil", "70–85%", "3–6 weeks", "Warm + humid. Tops root more reliably than bare mid-stem."),
@@ -606,7 +628,13 @@ const TROUBLESHOOTING_LIBRARY = {
     _t("Yellow leaf with wet soil", "Overwatering", "Chopstick check deep; extend dry-down; inspect roots if repeated.", "high"),
     _t("Brown patches / sun scorch", "Direct hot sun", "Sheer curtain or move back from SW glass.", "normal"),
     _t("Aerial roots everywhere", "Normal — seeking support/moisture", "Guide to moss pole or trim if unwanted (safe).", "low"),
-    _t("After chop: wilting stumps", "Transplant / root loss stress", "Bright indirect, steady moisture (not swamp), no fert 3–4 wks.", "normal")
+    _t("After chop: wilting stumps", "Transplant / root loss stress", "Bright indirect, steady moisture (not swamp), no fert 3–4 wks.", "normal"),
+    _t("Air-layer moss drying out", "Wrap not sealed / summer AC", "Remist sphagnum 1–2×/week; reseal plastic. Don't soak the 13.5\" pot to compensate.", "normal")
+  ],
+  monstera_water_cuttings: [
+    _t("No roots after 4+ weeks", "Node not submerged, too dim, or no node (UMN Extension)", "Confirm a node is in the water; bright indirect; discard leaf-only chops.", "high"),
+    _t("Mushy brown stem in the jar", "Stagnant water / bacteria", "Remove that cutting; rinse jar; weekly water changes.", "high"),
+    _t("Wilt after potting up", "Water roots drying too fast", "Humidity dome 3–5 days; keep mix just-moist; no direct sun.", "normal")
   ],
   thai_constellation: [
     _t("Cream sections crispy brown", "Sunburn, low humidity, or salt burn", "No direct hot sun; 60%+ humidity; filtered water; flush soil.", "high"),
@@ -617,7 +645,8 @@ const TROUBLESHOOTING_LIBRARY = {
   desert_rose: [
     _t("Yellow leaves", "Overwatering, natural shed into dormancy, or light stress", "If soil wet → emergency dry-down. Winter: expect leaf drop; keep bone dry-ish.", "high"),
     _t("Soft caudex", "Fatal-leaning rot", "Unpot, cut to firm white tissue, callus, dry culture.", "high"),
-    _t("No flowers", "Needs more sun / seasonal cue", "Full sun 6+ hrs; mature plants bloom more.", "low"),
+    _t("No flowers", "Needs more sun / seasonal cue", "UF/IFAS: 6+ hrs bright light. NW patio is better than indoor, SW patio is stronger.", "low"),
+    _t("Sunscald after the outdoor move", "No acclimation", "7–14 day harden-off; temporary afternoon shade.", "normal"),
     _t("⚠️ Sap exposure", "Toxic / irritating milky sap", "Gloves; keep away from pets/kids; don't get in eyes.", "high")
   ],
   string_of_pearls: [
@@ -627,7 +656,7 @@ const TROUBLESHOOTING_LIBRARY = {
   ],
   zz_plant: [
     _t("Yellow stalks", "Overwatering (almost always)", "ZZ wants long dry intervals. Check rhizomes for mush.", "high"),
-    _t("Bulging / stretched nursery pot", "Rhizomes packing the pot", "Repot / free rhizomes — don't wait for cracks to worsen.", "normal"),
+    _t("Post-repot sulk in the 5\" pot", "Normal after the Aug 2026 +1\" upsize", "No water 7–10 days if nicked; then dry-downs. Don't jump pot size again (Clemson).", "normal"),
     _t("No growth for months", "Normal in low light / winter", "ZZ is slow — not dead if stalks firm.", "low")
   ],
   wandering_dude: [
@@ -645,8 +674,10 @@ const TROUBLESHOOTING_LIBRARY = {
     _t("No rebloom", "Needs light + slight seasonal cue; don't cut green spikes early", "Bright indirect; patience on green spikes.", "low")
   ],
   firestick: [
-    _t("⚠️ Sap burn", "Caustic latex", "Gloves/goggles; wash skin immediately; never rub eyes.", "high"),
-    _t("Losing red color / going green", "Not enough light", "Full sun or strong grow light.", "normal")
+    _t("⚠️ Sap burn", "Caustic latex", "Gloves/goggles; wash skin immediately; never rub eyes. Keep off Moose's path outdoors.", "high"),
+    _t("Losing red color / going green", "Not enough light", "NW patio late sun should help vs indoor; 2F SW is stronger. MBG: some afternoon shade in extreme heat.", "normal"),
+    _t("Sunscald (white patches) after going outside", "Moved too fast", "Acclimate 7–14 days; temporary shade at 3–6 pm.", "normal"),
+    _t("Rot after a thunderstorm", "Saucer left full", "Dump water the same day; mineral mix; err dry.", "high")
   ],
   terrarium_a: [
     _t("Constant fog / pooling", "Overwatered closed system", "Vent 4–8 hrs until only morning fog.", "high"),
@@ -697,10 +728,16 @@ const TROUBLESHOOTING_LIBRARY = {
     _t("Brown tips despite moist soil", "Fluoride/salt sensitivity", "Filtered water; flush; humidity helps.", "normal")
   ],
   dracaena_fragrans: [
-    _t("Brown tips", "Fluoride in tap water (classic Dracaena)", "Filtered/distilled; don't overfeed.", "normal")
+    _t("Brown tips", "Fluoride in tap water (classic Dracaena)", "Filtered/distilled; don't overfeed.", "normal"),
+    _t("Leaf drop after cane split", "Division / repot shock (UF/IFAS-typical)", "Hold fertilizer 4 weeks; don't drown the 9×9. Cane B has its own log.", "normal")
+  ],
+  dracaena_fragrans_b: [
+    _t("Leaf drop after the Aug 2026 split", "Division shock", "Independent from Cane A — check THIS pot. Err dry 2–4 weeks.", "normal"),
+    _t("Brown tips", "Fluoride in tap water", "Filtered/distilled; flush salts.", "normal")
   ],
   schefflera: [
-    _t("Leaf drop when unhappy", "Light/water/move stress", "Stabilize; variegated form is fussier.", "normal")
+    _t("Leaf drop when unhappy", "Light/water/move stress", "Stabilize; variegated form is fussier.", "normal"),
+    _t("Soggy 13.5\" pot after the jump from 9\"", "Overpot — unused soil stays wet (Clemson: +1–2\" only)", "Water less often; check 2–3\" deep; empty saucer; no fertilizer 4–6 weeks.", "high")
   ],
   schefflera_dark: [
     _t("Leaf drop", "Same as variegated but usually hardier", "Check watering extremes first.", "normal")
@@ -730,7 +767,8 @@ const TROUBLESHOOTING_LIBRARY = {
     _t("No blooms", "Needs bright light + longer dark nights in fall for bud set (florist types)", "Bright light; don't leave grow lights on 24/7.", "low")
   ],
   mondo_grass: [
-    _t("Browning in hot direct sun", "Afternoon scorch", "Morning sun / bright indirect preferred indoors.", "low")
+    _t("Browning in hot direct sun", "Afternoon scorch", "Morning sun / bright indirect preferred indoors.", "low"),
+    _t("Wet core in the 9×9 cube", "Overpot volume / blocked drainage", "Probe the center; wait; never leave a saucer (Clemson: moist not waterlogged).", "normal")
   ],
   assorted_cacti: [
     _t("One cactus soft, others fine", "Species mismatch in watering", "Unpot soft one; dry culture separately.", "high")
