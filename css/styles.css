@@ -1935,6 +1935,9 @@ html[data-theme="dark"] .snooze-btn:hover {
 .next-list .water-now-row,
 .plant-watering-section .water-now-row {
   margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
 }
 .water-now-btn {
   background: var(--primary-2, #1f7a2e);
@@ -1954,10 +1957,21 @@ html[data-theme="dark"] .snooze-btn:hover {
 }
 .water-now-btn:hover { filter: brightness(1.06); }
 .water-now-btn:active { transform: scale(0.96); }
+.water-now-btn.water-fertilized-btn {
+  background: transparent;
+  color: var(--primary-2, #1f7a2e);
+  border-color: var(--primary-2, #1f7a2e);
+  box-shadow: none;
+}
 html[data-theme="dark"] .water-now-btn {
   background: var(--primary);
   border-color: var(--primary);
   color: #14210a;
+}
+html[data-theme="dark"] .water-now-btn.water-fertilized-btn {
+  background: transparent;
+  color: var(--primary);
+  border-color: var(--primary);
 }
 @media (max-width: 700px) {
   .water-now-btn { padding: 11px 18px; font-size: 0.92rem; min-height: 42px; }
@@ -2638,8 +2652,17 @@ html[data-theme="dark"] .plant-water-log-form input { background: rgba(255, 255,
   padding: 8px 16px !important;
   font-size: 0.88rem !important;
 }
+.plant-water-log-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: center;
+}
 @media (max-width: 500px) {
   .plant-water-log-submit { align-self: stretch; }
+  .plant-water-log-actions { flex-direction: column; align-items: stretch; }
+  .plant-water-log-actions .fertilized-toggle,
+  .plant-water-log-actions .plant-water-log-submit { width: 100%; }
 }
 
 /* Care Guide — "Notes from past chats" section */
@@ -3198,11 +3221,72 @@ html[data-theme="dark"] .recent-log .log-name { color: var(--ink); }
   font-size: 1rem;
   padding: 2px 6px;
 }
+.recent-log .log-meta {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+}
 .recent-log .log-note {
   grid-column: 1 / -1;
   color: var(--muted);
   font-style: italic;
   font-size: 0.8rem;
+}
+.recent-log .log-item-fertilized {
+  background: color-mix(in srgb, var(--primary, #7cb342) 8%, transparent);
+  border-radius: 6px;
+}
+
+/* Fertilized toggle used on log forms + recent-log retroactive mark. */
+.fertilized-toggle {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  color: var(--primary-2, #1f7a2e);
+  border: 1.5px dashed var(--border);
+  border-radius: 999px;
+  padding: 7px 14px;
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.12s, border-color 0.12s, color 0.12s, transform 0.06s;
+}
+.fertilized-toggle:hover {
+  border-color: var(--primary-2, #1f7a2e);
+  background: color-mix(in srgb, var(--primary, #7cb342) 12%, transparent);
+}
+.fertilized-toggle:active { transform: scale(0.97); }
+.fertilized-toggle.is-on,
+.fertilized-toggle[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--primary, #7cb342) 22%, transparent);
+  border-style: solid;
+  border-color: var(--primary-2, #1f7a2e);
+  color: var(--primary-2, #1f7a2e);
+}
+html[data-theme="dark"] .fertilized-toggle {
+  color: var(--primary);
+}
+html[data-theme="dark"] .fertilized-toggle.is-on,
+html[data-theme="dark"] .fertilized-toggle[aria-pressed="true"] {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 18%, transparent);
+}
+.form-row-fertilized {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+}
+.log-form .form-row-fertilized label { display: none; }
+.recent-log .log-fertilize-toggle {
+  padding: 4px 10px;
+  font-size: 0.78rem;
 }
 
 .muted { color: var(--muted); font-size: 0.9rem; }

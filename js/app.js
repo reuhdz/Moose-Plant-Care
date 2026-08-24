@@ -666,7 +666,10 @@
               <input type="text" name="note" class="plant-water-log-note" maxlength="140" placeholder="e.g. Bottom-watered, added drainage layer…" />
             </label>
           </div>
-          <button type="submit" class="primary-btn plant-water-log-submit">💧 Log a watering</button>
+          <div class="plant-water-log-actions">
+            <button type="button" class="fertilized-toggle plant-water-log-fertilized" aria-pressed="false" title="Mark this watering as including fertilizer">🌱 Fertilized</button>
+            <button type="submit" class="primary-btn plant-water-log-submit">💧 Log a watering</button>
+          </div>
         </form>
       </section>
     `;
@@ -755,6 +758,7 @@
     const waterForm    = waterSection?.querySelector(".plant-water-log-form");
     if (waterForm) {
       waterForm.addEventListener("submit", handlePlantDetailLogSubmit);
+      wireFertilizedToggle(waterForm.querySelector(".plant-water-log-fertilized"));
     }
 
     /* Render the plant's todos into the just-injected section, and wire up
@@ -887,7 +891,11 @@
       const schedule = buildSchedule(pid, log, all[pid]);
       schedule.forEach(item => {
         const iso = Dates.iso(item.date);
-        (cells[iso] ||= []).push({ plantId: pid, type: item.type });
+        (cells[iso] ||= []).push({
+          plantId: pid,
+          type: item.type,
+          fertilized: !!item.fertilized
+        });
       });
     });
 
@@ -916,12 +924,15 @@
           if (days < 0 || days === 0) cls = "pill-due";
           else if (days <= 3) cls = "pill-soon";
         }
+        if (item.fertilized) cls += " pill-fertilized";
+        const fertBit = item.fertilized ? " · fertilized" : "";
         return `<button type="button" class="pill ${cls}"
                   data-plant-id="${escapeAttr(item.plantId)}"
                   data-type="${escapeAttr(item.type)}"
                   data-date="${escapeAttr(iso)}"
-                  aria-label="${escapeAttr(plantName)} — ${item.type} on ${iso}"
-                  title="${escapeAttr(plantName)} — ${item.type}">${escapeHtml(shortName(plantName))}</button>`;
+                  data-fertilized="${item.fertilized ? "1" : "0"}"
+                  aria-label="${escapeAttr(plantName)} — ${item.type}${fertBit} on ${iso}"
+                  title="${escapeAttr(plantName)} — ${item.type}${fertBit}">${escapeHtml(shortName(plantName))}${item.fertilized ? "🌱" : ""}</button>`;
       }).join("");
 
       cellsHtml.push(`
@@ -968,12 +979,16 @@
                    : nx.status === "soon" ? "soon" : "scheduled";
 
     const lastTxt = nx.lastDate ? `Last: ${Dates.formatPretty(nx.lastDate)}` : "No log yet";
+    const fertTxt = nx.lastFertilizedDate
+      ? ` · Last fertilized: ${Dates.formatPretty(nx.lastFertilizedDate)}`
+      : "";
     const nextTxt = `Next: ${Dates.formatPretty(nx.nextDate)}`;
     const snoozeTxt = nx.snooze ? ` · 🕗 snoozed +${nx.snooze}d` : "";
 
     const waterNowBtn = `
       <div class="water-now-row">
         <button type="button" class="water-now-btn" data-id="${escapeAttr(pid)}" title="Log a watering for ${escapeAttr(plant.displayName)} today">💧 Just watered</button>
+        <button type="button" class="water-now-btn water-fertilized-btn" data-id="${escapeAttr(pid)}" data-fertilized="1" title="Log a watering with fertilizer for ${escapeAttr(plant.displayName)} today">🌱 + fertilizer</button>
       </div>
     `;
 
@@ -994,8 +1009,8 @@
     const nameHtml = `<button type="button" class="tile-name-link" data-care-plant-id="${escapeAttr(pid)}" title="Open ${escapeAttr(plant.displayName)} care guide">${escapeHtml(plant.displayName)}<span class="tile-name-link-icon" aria-hidden="true">📖</span></button>`;
 
     const mainLeft = includeName
-      ? `<div><div class="name">${nameHtml}</div><div class="when">${lastTxt} · ${nextTxt}${snoozeTxt}</div></div>`
-      : `<div class="when">${lastTxt} · ${nextTxt}${snoozeTxt}</div>`;
+      ? `<div><div class="name">${nameHtml}</div><div class="when">${lastTxt}${fertTxt} · ${nextTxt}${snoozeTxt}</div></div>`
+      : `<div class="when">${lastTxt}${fertTxt} · ${nextTxt}${snoozeTxt}</div>`;
 
     return `
       <div class="row ${rowClass}" data-plant-id="${escapeAttr(pid)}">
@@ -1125,11 +1140,12 @@
     const plantId = pill.dataset.plantId;
     const type    = pill.dataset.type;
     const iso     = pill.dataset.date;
+    const fertilized = pill.dataset.fertilized === "1";
     const all     = PlantStore.allPlants();
     const plant   = all[plantId];
     const name    = plant?.displayName || plantId;
     const typeLabel = type === "actual"
-      ? "💧 Logged watering"
+      ? (fertilized ? "💧🌱 Logged watering + fertilizer" : "💧 Logged watering")
       : "📅 Scheduled watering";
     const prettyDate = iso ? Dates.formatPretty(new Date(iso + "T00:00:00")) : "";
     calPillPopoverBody.innerHTML = `
@@ -1201,8 +1217,29 @@
   const logPlantSelect = document.getElementById("log-plant");
   const logDate        = document.getElementById("log-date");
   const logNote        = document.getElementById("log-note");
+  const logFertilized  = document.getElementById("log-fertilized");
   const logForm        = document.getElementById("water-log-form");
   const recentLogEl    = document.getElementById("recent-log");
+
+  function setFertilizedToggle(btn, on) {
+    if (!btn) return;
+    btn.setAttribute("aria-pressed", on ? "true" : "false");
+    btn.classList.toggle("is-on", !!on);
+  }
+
+  function isFertilizedToggleOn(btn) {
+    return !!btn && btn.getAttribute("aria-pressed") === "true";
+  }
+
+  function wireFertilizedToggle(btn) {
+    if (!btn || btn.dataset.fertWired === "1") return;
+    btn.dataset.fertWired = "1";
+    btn.addEventListener("click", () => {
+      setFertilizedToggle(btn, !isFertilizedToggleOn(btn));
+    });
+  }
+
+  wireFertilizedToggle(logFertilized);
 
   function populateLogPlantSelect() {
     const all = PlantStore.allPlants();
@@ -1225,11 +1262,20 @@
 
     recentLogEl.innerHTML = entries.slice(0, 50).map(e => {
       const plantName = all[e.plantId]?.displayName || e.plantId;
+      const fertOn = !!e.fertilized;
       return `
-        <div class="log-item">
+        <div class="log-item${fertOn ? " log-item-fertilized" : ""}">
           <div class="log-name">${plantCareLinkHtml(e.plantId, plantName)}</div>
           <div class="log-date">${Dates.formatPretty(e._date)}</div>
           <button class="log-remove" data-id="${escapeAttr(e.id)}" title="Remove">✕</button>
+          <div class="log-meta">
+            <button type="button" class="log-fertilize-toggle fertilized-toggle${fertOn ? " is-on" : ""}"
+              data-id="${escapeAttr(e.id)}"
+              aria-pressed="${fertOn ? "true" : "false"}"
+              title="${fertOn ? "Remove fertilizer mark from this watering" : "Mark this watering as fertilized (retroactive)"}">
+              ${fertOn ? "🌱 Fertilized" : "🌱 Mark fertilized"}
+            </button>
+          </div>
           ${e.note ? `<div class="log-note">"${escapeHtml(e.note)}"</div>` : ""}
         </div>
       `;
@@ -1240,7 +1286,22 @@
         if (confirm("Remove this watering entry?")) {
           WaterLog.remove(btn.dataset.id);
           renderRecentLog();
+          if (document.querySelector("#tab-calendar.active")) renderCalendar();
         }
+      });
+    });
+
+    recentLogEl.querySelectorAll(".log-fertilize-toggle").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const id = btn.dataset.id;
+        const next = btn.getAttribute("aria-pressed") !== "true";
+        WaterLog.update(id, { fertilized: next });
+        renderRecentLog();
+        if (document.querySelector("#tab-calendar.active")) renderCalendar();
+        /* Refresh any open Care Guide watering tile so "Last fertilized" updates. */
+        const entry = WaterLog.all().find(e => e.id === id);
+        if (entry?.plantId) refreshPlantWateringSectionIfVisible(entry.plantId);
+        flash(next ? "Marked as fertilized 🌱" : "Fertilizer mark removed");
       });
     });
   }
@@ -1250,13 +1311,17 @@
     const entry = {
       plantId: logPlantSelect.value,
       date: logDate.value,
-      note: logNote.value.trim()
+      note: logNote.value.trim(),
+      fertilized: isFertilizedToggleOn(logFertilized)
     };
     if (!entry.plantId || !entry.date) return;
     WaterLog.add(entry);
     logNote.value = "";
+    setFertilizedToggle(logFertilized, false);
     renderRecentLog();
-    flash("Logged! 🌿");
+    if (document.querySelector("#tab-calendar.active")) renderCalendar();
+    refreshPlantWateringSectionIfVisible(entry.plantId);
+    flash(entry.fertilized ? "Logged with fertilizer! 🌱" : "Logged! 🌿");
   });
 
   /* ============================================================
@@ -2735,22 +2800,27 @@
     if (!plantId) return;
     const dateInput = form.querySelector(".plant-water-log-date");
     const noteInput = form.querySelector(".plant-water-log-note");
+    const fertBtn   = form.querySelector(".plant-water-log-fertilized");
     const date = dateInput?.value;
     const note = (noteInput?.value || "").trim();
+    const fertilized = isFertilizedToggleOn(fertBtn);
     if (!date) {
       dateInput?.focus();
       return;
     }
-    WaterLog.add({ plantId, date, note });
-    /* Reset only the note; keep the date so a "back-fill missed dates" workflow
-     * doesn't force the user to re-pick every time. */
+    WaterLog.add({ plantId, date, note, fertilized });
+    /* Reset only the note + fertilized toggle; keep the date so a "back-fill
+     * missed dates" workflow doesn't force the user to re-pick every time. */
     if (noteInput) noteInput.value = "";
+    setFertilizedToggle(fertBtn, false);
     /* Refresh views that depend on the log. */
     renderPlantWateringSection(plantId);
     renderRecentLog();
     if (document.querySelector("#tab-calendar.active")) renderCalendar();
     const plantName = PlantStore.allPlants()[plantId]?.displayName || "plant";
-    flash(`Logged watering for ${plantName} 🌿`);
+    flash(fertilized
+      ? `Logged watering + fertilizer for ${plantName} 🌱`
+      : `Logged watering for ${plantName} 🌿`);
   }
 
   /* ---------- Care Guide — "Notes from past chats" section ---------- */
@@ -3142,8 +3212,9 @@ Pot size: ${p.potSize || "—"}
 Current soil mix: ${p.currentSoilMix || "(pending)"}
 Condition: ${conditionLabels || "—"}
 Comments from owner: ${p.comments || "(none)"}
-Last logged watering: ${lastEntry ? `${lastEntry.date}${lastEntry.note ? ` — "${lastEntry.note}"` : ""}` : "(no log yet)"}
+Last logged watering: ${lastEntry ? `${lastEntry.date}${lastEntry.fertilized ? " (with fertilizer)" : ""}${lastEntry.note ? ` — "${lastEntry.note}"` : ""}` : "(no log yet)"}
 Next watering due: ${nx ? `${Dates.formatPretty(nx.nextDate)} (${nx.message || ""})` : "—"}
+Last fertilized watering: ${nx?.lastFertilizedDate ? Dates.formatPretty(nx.lastFertilizedDate) : "(none logged)"}
 Recommended placement zones (ideal): ${idealZones || "—"}
 Open todos for this plant:
 ${plantTodos.length
@@ -4203,7 +4274,15 @@ Other plants in collection (for cross-reference): ${ownedIds.filter(id => id !==
           daysUntil: nx.daysUntil,
           message: nx.message || ""
         } : null,
-        recentWaterings: entries.map(e => ({ date: e.date, note: e.note || "" })),
+        recentWaterings: entries.map(e => ({
+          date: e.date,
+          note: e.note || "",
+          fertilized: !!e.fertilized
+        })),
+        lastFertilized: (() => {
+          const fert = entries.find(e => e.fertilized);
+          return fert ? fert.date : null;
+        })(),
         avgDaysBetweenLastLogs: avgGap,
         conditionLog: conditionEntries.map(e => ({
           date: e.date,
@@ -4268,9 +4347,14 @@ Other plants in collection (for cross-reference): ${ownedIds.filter(id => id !==
         lines.push(`- Recent avg gap: ${p.avgDaysBetweenLastLogs}d vs warm target ${p.intervals.warm}d (${drift > 2 ? "drier than target" : drift < -2 ? "wetter than target" : "near target"})`);
       }
       if (p.recentWaterings?.length) {
-        lines.push(`- Last water logs: ${p.recentWaterings.slice(0, 4).map(e => e.date + (e.note ? ` “${e.note}”` : "")).join("; ")}`);
+        lines.push(`- Last water logs: ${p.recentWaterings.slice(0, 4).map(e => e.date + (e.fertilized ? " 🌱" : "") + (e.note ? ` “${e.note}”` : "")).join("; ")}`);
       } else {
         lines.push("- Last water logs: (none in selection)");
+      }
+      if (p.lastFertilized) {
+        lines.push(`- Last fertilized watering: ${p.lastFertilized}`);
+      } else {
+        lines.push("- Last fertilized watering: (none logged)");
       }
       if (p.conditionLog?.length) {
         lines.push(`- Condition trend: ${p.conditionLog.slice(0, 5).map(e => `${e.date} ${e.rating}${e.note ? ` (${e.note})` : ""}`).join(" → ")}`);
@@ -4492,9 +4576,10 @@ Rules:
    * The name-link is not a .snooze-btn, so the snooze handlers ignore it. */
   if (nextSummary) nextSummary.addEventListener("click", handleTileNameClick);
 
-  /* "💧 Just watered" button on a reminder tile: log a watering for today, which
-   * clears any snooze and bumps the plant down the queue. Wired on both stable
-   * parents (calendar summary + Care Guide detail tile). */
+  /* "💧 Just watered" / "🌱 + fertilizer" on a reminder tile: log a watering for
+   * today (optionally with fertilizer), which clears any snooze and bumps the
+   * plant down the queue. Wired on both stable parents (calendar summary +
+   * Care Guide detail tile). */
   function handleWaterNowClick(e) {
     const btn = e.target.closest(".water-now-btn");
     if (!btn) return;
@@ -4502,16 +4587,31 @@ Rules:
     e.stopPropagation();
     const id = btn.dataset.id;
     if (!id) return;
+    const fertilized = btn.dataset.fertilized === "1";
     const all = PlantStore.allPlants();
     const name = all[id]?.displayName || id;
     const today = Dates.iso(Dates.today());
-    const already = WaterLog.all().some(en => en.plantId === id && en.date === today);
-    if (already) {
-      flash(`${name} already logged as watered today 💧`);
+    const existing = WaterLog.all().find(en => en.plantId === id && en.date === today);
+    if (existing) {
+      /* Retroactive: if today's watering exists but wasn't marked fertilized,
+       * the fertilizer button upgrades it in place. */
+      if (fertilized && !existing.fertilized) {
+        WaterLog.update(existing.id, { fertilized: true });
+        flash(`Marked ${name}'s watering today as fertilized 🌱`);
+        renderCalendar();
+        renderRecentLog();
+        refreshPlantWateringSectionIfVisible(id);
+        return;
+      }
+      flash(existing.fertilized
+        ? `${name} already logged as watered + fertilized today 🌱`
+        : `${name} already logged as watered today 💧`);
       return;
     }
-    WaterLog.add({ plantId: id, date: today, note: "" });
-    flash(`Logged: watered ${name} today 💧`);
+    WaterLog.add({ plantId: id, date: today, note: "", fertilized });
+    flash(fertilized
+      ? `Logged: watered ${name} with fertilizer today 🌱`
+      : `Logged: watered ${name} today 💧`);
     renderCalendar();
     renderRecentLog();
     refreshPlantWateringSectionIfVisible(id);

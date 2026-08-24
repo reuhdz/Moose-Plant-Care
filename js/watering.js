@@ -140,7 +140,12 @@ function buildSchedule(plantId, logEntries, explicitPlant) {
 
   const actuals = logEntries
     .filter(e => e.plantId === plantId)
-    .map(e => ({ date: Dates.fromIso(e.date), type: "actual", note: e.note || "" }))
+    .map(e => ({
+      date: Dates.fromIso(e.date),
+      type: "actual",
+      note: e.note || "",
+      fertilized: !!e.fertilized
+    }))
     .sort((a, b) => a.date - b.date);
 
   const actualsInYear = actuals.filter(a => a.date >= startOfYear && a.date <= endOfYear);
@@ -202,6 +207,7 @@ function nextWatering(plantId, logEntries, explicitPlant) {
     // Custom plant without intervals — recommend logging first
     return {
       lastDate: null,
+      lastFertilizedDate: null,
       nextDate: Dates.today(),
       daysUntil: 0,
       status: "due",
@@ -242,6 +248,7 @@ function nextWatering(plantId, logEntries, explicitPlant) {
 
     return {
       lastDate: null,
+      lastFertilizedDate: null,
       nextDate: nextNoLog,
       daysUntil: daysUntilNoLog,
       status: statusNoLog,
@@ -279,8 +286,11 @@ function nextWatering(plantId, logEntries, explicitPlant) {
   else if (daysUntil <= 3) status = "soon";
   else status = "scheduled";
 
+  const lastFertilized = lastFertilizedDate(plantId, logEntries);
+
   return {
     lastDate: last,
+    lastFertilizedDate: lastFertilized,
     nextDate: next,
     daysUntil,
     status,
@@ -288,6 +298,15 @@ function nextWatering(plantId, logEntries, explicitPlant) {
     season: seasonForDate(last),
     snooze: snoozeDays
   };
+}
+
+/* Most recent watering that included fertilizer, or null. */
+function lastFertilizedDate(plantId, logEntries) {
+  const fertilized = (logEntries || [])
+    .filter(e => e.plantId === plantId && e.fertilized)
+    .map(e => Dates.fromIso(e.date))
+    .sort((a, b) => b - a);
+  return fertilized.length ? fertilized[0] : null;
 }
 
 /* ----------- Watering log storage (localStorage) ----------- */
@@ -306,10 +325,32 @@ const WaterLog = {
   },
   add(entry) {
     const all = this.all();
-    all.push({ id: cryptoId(), ...entry });
+    all.push({
+      id: cryptoId(),
+      plantId: entry.plantId,
+      date: entry.date,
+      note: entry.note || "",
+      fertilized: !!entry.fertilized
+    });
     this.save(all);
     /* Logging an actual watering clears the snooze for that plant */
     if (entry.plantId) SnoozeStore.clear(entry.plantId);
+  },
+  update(id, patch) {
+    const all = this.all();
+    const idx = all.findIndex(e => e.id === id);
+    if (idx < 0) return null;
+    const prev = all[idx];
+    const merged = {
+      id: prev.id,
+      plantId: ("plantId" in patch ? patch.plantId : prev.plantId),
+      date: ("date" in patch ? patch.date : prev.date),
+      note: ("note" in patch ? (patch.note || "") : (prev.note || "")),
+      fertilized: ("fertilized" in patch ? !!patch.fertilized : !!prev.fertilized)
+    };
+    all[idx] = merged;
+    this.save(all);
+    return merged;
   },
   remove(id) {
     this.save(this.all().filter(e => e.id !== id));
@@ -320,7 +361,13 @@ const WaterLog = {
   replaceAll(entries) {
     const cleaned = (entries || [])
       .filter(e => e && e.plantId && e.date)
-      .map(e => ({ id: e.id || cryptoId(), plantId: e.plantId, date: e.date, note: e.note || "" }));
+      .map(e => ({
+        id: e.id || cryptoId(),
+        plantId: e.plantId,
+        date: e.date,
+        note: e.note || "",
+        fertilized: !!e.fertilized
+      }));
     this.save(cleaned);
   }
 };
