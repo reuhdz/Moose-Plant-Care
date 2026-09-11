@@ -1763,6 +1763,153 @@ html[data-theme="dark"] .sources-section h3 { color: var(--primary); }
   color: var(--primary-2);
 }
 html[data-theme="dark"] .next-water-summary h2 { color: var(--primary); }
+.water-summary-hint {
+  margin: -0.35rem 0 0.85rem;
+  line-height: 1.35;
+}
+.water-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+.water-group {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.water-group-summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.85rem 1rem;
+  font-weight: 700;
+  color: var(--primary-2);
+  user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 48px;
+}
+html[data-theme="dark"] .water-group-summary { color: var(--primary); }
+.water-group-summary::-webkit-details-marker { display: none; }
+.water-group-summary::after {
+  content: "▾";
+  margin-left: auto;
+  transition: transform 0.2s;
+  color: var(--muted);
+}
+.water-group[open] > .water-group-summary::after { transform: rotate(180deg); }
+.water-group-summary:hover { background: var(--accent-soft); }
+html[data-theme="dark"] .water-group-summary:hover { background: rgba(224, 169, 79, 0.1); }
+.water-group-icon { font-size: 1.05rem; }
+.water-group-title { flex: 1; min-width: 0; }
+.water-group-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.75rem;
+  height: 1.75rem;
+  padding: 0 0.45rem;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--primary-2);
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+html[data-theme="dark"] .water-group-count {
+  background: rgba(224, 169, 79, 0.16);
+  color: var(--primary);
+}
+.water-group-overdue > .water-group-summary { border-left: 4px solid var(--due); }
+.water-group-soon > .water-group-summary { border-left: 4px solid var(--soon); }
+.water-group-watered > .water-group-summary { border-left: 4px solid var(--actual); }
+.water-group-body {
+  padding: 0.55rem 0.65rem 0.75rem;
+  border-top: 1px solid var(--border);
+  background: var(--paper-2);
+}
+.water-group-empty {
+  padding: 0.65rem 0.4rem;
+  text-align: center;
+  font-style: italic;
+}
+
+/* Last watered / fertilized chips — green when same day, yellow when not. */
+.log-dates {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.35rem;
+  margin: 0.35rem 0 0.2rem;
+}
+@media (max-width: 420px) {
+  .log-dates { grid-template-columns: 1fr; }
+}
+.log-date-chip {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 0.35rem 0.5rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  min-width: 0;
+}
+.log-date-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.85;
+}
+.log-date-value {
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.25;
+  word-break: break-word;
+}
+.log-dates-synced .log-date-chip {
+  background: color-mix(in srgb, var(--actual) 16%, transparent);
+  border-color: color-mix(in srgb, var(--actual) 45%, transparent);
+  color: var(--actual);
+}
+.log-dates-split .log-date-chip {
+  background: color-mix(in srgb, var(--soon) 16%, transparent);
+  border-color: color-mix(in srgb, var(--soon) 45%, transparent);
+  color: var(--soon);
+}
+.log-dates-empty .log-date-chip {
+  background: var(--paper-2);
+  border-color: var(--border);
+  color: var(--muted);
+}
+html[data-theme="dark"] .log-dates-synced .log-date-chip {
+  background: color-mix(in srgb, var(--actual) 22%, transparent);
+  color: var(--actual);
+}
+html[data-theme="dark"] .log-dates-split .log-date-chip {
+  background: color-mix(in srgb, var(--soon) 22%, transparent);
+  color: var(--soon);
+}
+.next-list .row .when.next-line {
+  margin-top: 0.15rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+.next-list .row-main {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.65rem;
+  align-items: flex-start;
+}
+.next-list .tile-copy { min-width: 0; flex: 1; }
+.next-list .tile-status {
+  flex-shrink: 0;
+  text-align: right;
+  font-size: 0.86rem;
+}
+
 /* Next-watering tile grid.
  *  - Phones: single column (easier to scan top-to-bottom while scrolling).
  *  - Tablets + desktop: 2-column auto-fit grid for a denser overview.

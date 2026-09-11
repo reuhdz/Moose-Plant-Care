@@ -965,6 +965,39 @@
    * `opts.includeName` — set false when the caller already shows the
    * plant name in a bigger heading (e.g. Care Guide detail header).
    * ------------------------------------------------------------------ */
+  /* Preserve which watering-status groups are expanded across re-renders
+   * (snooze / just-watered / filter changes). Overdue starts open. */
+  const waterGroupOpenState = { overdue: true, soon: false, watered: false };
+
+  function renderLogDateChips(nx) {
+    const lastIso = nx.lastDate ? Dates.iso(nx.lastDate) : null;
+    const fertIso = nx.lastFertilizedDate ? Dates.iso(nx.lastFertilizedDate) : null;
+    let toneClass = "log-dates-empty";
+    if (lastIso && fertIso) {
+      toneClass = lastIso === fertIso ? "log-dates-synced" : "log-dates-split";
+    } else if (lastIso || fertIso) {
+      /* One present, one missing → treat as "not same day" (yellow). */
+      toneClass = "log-dates-split";
+    }
+    const sameHint = toneClass === "log-dates-synced"
+      ? "Watered and fertilized the same day"
+      : toneClass === "log-dates-split"
+        ? "Watered and fertilized on different days (or fertilizer not logged)"
+        : "No watering or fertilizer logged yet";
+    return `
+      <div class="log-dates ${toneClass}" title="${escapeAttr(sameHint)}">
+        <div class="log-date-chip">
+          <span class="log-date-label">Last watered</span>
+          <span class="log-date-value">${lastIso ? escapeHtml(Dates.formatPretty(nx.lastDate)) : "—"}</span>
+        </div>
+        <div class="log-date-chip">
+          <span class="log-date-label">Last fertilized</span>
+          <span class="log-date-value">${fertIso ? escapeHtml(Dates.formatPretty(nx.lastFertilizedDate)) : "—"}</span>
+        </div>
+      </div>
+    `;
+  }
+
   function renderWaterTileHtml(pid, plant, nx, opts = {}) {
     const { includeName = true } = opts;
 
@@ -978,12 +1011,9 @@
     const rowClass = (nx.status === "overdue" || nx.status === "due") ? "due"
                    : nx.status === "soon" ? "soon" : "scheduled";
 
-    const lastTxt = nx.lastDate ? `Last: ${Dates.formatPretty(nx.lastDate)}` : "No log yet";
-    const fertTxt = nx.lastFertilizedDate
-      ? ` · Last fertilized: ${Dates.formatPretty(nx.lastFertilizedDate)}`
-      : "";
     const nextTxt = `Next: ${Dates.formatPretty(nx.nextDate)}`;
     const snoozeTxt = nx.snooze ? ` · 🕗 snoozed +${nx.snooze}d` : "";
+    const dateChips = renderLogDateChips(nx);
 
     const waterNowBtn = `
       <div class="water-now-row">
@@ -1009,18 +1039,38 @@
     const nameHtml = `<button type="button" class="tile-name-link" data-care-plant-id="${escapeAttr(pid)}" title="Open ${escapeAttr(plant.displayName)} care guide">${escapeHtml(plant.displayName)}<span class="tile-name-link-icon" aria-hidden="true">📖</span></button>`;
 
     const mainLeft = includeName
-      ? `<div><div class="name">${nameHtml}</div><div class="when">${lastTxt}${fertTxt} · ${nextTxt}${snoozeTxt}</div></div>`
-      : `<div class="when">${lastTxt}${fertTxt} · ${nextTxt}${snoozeTxt}</div>`;
+      ? `<div class="tile-copy"><div class="name">${nameHtml}</div>${dateChips}<div class="when next-line">${nextTxt}${snoozeTxt}</div></div>`
+      : `<div class="tile-copy">${dateChips}<div class="when next-line">${nextTxt}${snoozeTxt}</div></div>`;
 
     return `
       <div class="row ${rowClass}" data-plant-id="${escapeAttr(pid)}">
         <div class="row-main">
           ${mainLeft}
-          <div><strong>${statusLabel}</strong></div>
+          <div class="tile-status"><strong>${statusLabel}</strong></div>
         </div>
         ${waterNowBtn}
         ${snoozeButtons}
       </div>
+    `;
+  }
+
+  function renderWaterGroup(groupKey, title, icon, items, emptyHint) {
+    const open = !!waterGroupOpenState[groupKey];
+    const count = items.length;
+    const listHtml = count
+      ? `<div class="next-list">${items.map(({ pid, plant, nx }) => renderWaterTileHtml(pid, plant, nx)).join("")}</div>`
+      : `<div class="water-group-empty muted small">${escapeHtml(emptyHint)}</div>`;
+    return `
+      <details class="water-group water-group-${escapeAttr(groupKey)}" data-group="${escapeAttr(groupKey)}"${open ? " open" : ""}>
+        <summary class="water-group-summary">
+          <span class="water-group-icon" aria-hidden="true">${icon}</span>
+          <span class="water-group-title">${escapeHtml(title)}</span>
+          <span class="water-group-count" aria-label="${count} plant${count === 1 ? "" : "s"}">${count}</span>
+        </summary>
+        <div class="water-group-body">
+          ${listHtml}
+        </div>
+      </details>
     `;
   }
 
@@ -1051,6 +1101,10 @@
       return collator.compare(a.plant.displayName, b.plant.displayName);
     });
 
+    const overdue = meta.filter(x => x.nx.status === "overdue" || x.nx.status === "due");
+    const soon    = meta.filter(x => x.nx.status === "soon");
+    const watered = meta.filter(x => x.nx.status === "scheduled");
+
     const filterSuffixParts = [];
     if (plantFilter && plantFilter !== "ALL" && all[plantFilter]) {
       filterSuffixParts.push(`🌿 ${all[plantFilter].displayName}`);
@@ -1071,12 +1125,18 @@
           : `No plants to schedule yet — add one from the Log &amp; Data tab.`;
       bodyHtml = `<div class="next-list-empty">${emptyMsg}</div>`;
     } else {
-      const rows = meta.map(({ pid, plant, nx }) => renderWaterTileHtml(pid, plant, nx)).join("");
-      bodyHtml = `<div class="next-list">${rows}</div>`;
+      bodyHtml = `
+        <div class="water-groups">
+          ${renderWaterGroup("overdue", "Overdue / due today", "⚠️", overdue, "Nothing overdue — nice work.")}
+          ${renderWaterGroup("soon", "Due soon", "🟡", soon, "Nothing due in the next 3 days.")}
+          ${renderWaterGroup("watered", "Watered / on track", "✅", watered, "No plants currently on a later schedule.")}
+        </div>
+      `;
     }
 
     nextSummary.innerHTML = `
       <h2>Next Watering <span class="muted small" style="font-weight:400;">· 📍 ${escapeHtml(SEASONAL_CONFIG.location)}${filterBadge}</span></h2>
+      <p class="water-summary-hint muted small">Tap a category to expand. Green dates = watered &amp; fertilized the same day; yellow = different days (or fertilizer not logged).</p>
       ${bodyHtml}
     `;
 
@@ -4619,12 +4679,59 @@ Rules:
   if (nextSummary) nextSummary.addEventListener("click", handleWaterNowClick);
   if (detailEl)    detailEl.addEventListener("click", handleWaterNowClick);
 
+  /* Remember which watering-status groups stay open across re-renders. */
+  if (nextSummary) {
+    nextSummary.addEventListener("toggle", e => {
+      const details = e.target.closest?.("details.water-group");
+      if (!details || !nextSummary.contains(details)) return;
+      const key = details.dataset.group;
+      if (key && Object.prototype.hasOwnProperty.call(waterGroupOpenState, key)) {
+        waterGroupOpenState[key] = details.open;
+      }
+    }, true);
+  }
+
+  /* One-time seed of initial watering dates for newly added plants (Sep 2026).
+   * Skips if the plant already has any log entry, and remembers per-plant so
+   * deleting a seed entry later won't auto-recreate it. */
+  const SEED_WATER_LOG_KEY = "plant_care_seed_water_logs_v1";
+  function seedNewPlantWaterLogs() {
+    let done = {};
+    try { done = JSON.parse(localStorage.getItem(SEED_WATER_LOG_KEY) || "{}") || {}; }
+    catch { done = {}; }
+    const seeds = [
+      { plantId: "monstera_adansonii", date: "2026-09-06", note: "(initial — ~5 days before add)" },
+      { plantId: "kalanchoe_fang",     date: "2026-09-04", note: "(initial — last Friday)" },
+      { plantId: "polka_dot_plant",    date: "2026-09-09", note: "(initial — 2 days before add)" }
+      /* string_of_buttons — no known last-watered date */
+    ];
+    let added = 0;
+    const existing = WaterLog.all();
+    seeds.forEach(seed => {
+      if (done[seed.plantId]) return;
+      if (!existing.some(e => e.plantId === seed.plantId)) {
+        WaterLog.add({
+          plantId: seed.plantId,
+          date: seed.date,
+          note: seed.note,
+          fertilized: false
+        });
+        added += 1;
+      }
+      done[seed.plantId] = true;
+    });
+    try { localStorage.setItem(SEED_WATER_LOG_KEY, JSON.stringify(done)); }
+    catch (e) { console.warn("Could not persist seed-log markers", e); }
+    return added;
+  }
+
   function init() {
     loadTheme();
     const mig = migrateCustomToBuiltins();
     if (mig.migrated > 0) {
       console.info("[plant-care] Merged custom plants into built-ins:", mig.summary);
     }
+    seedNewPlantWaterLogs();
     populatePrimarySelect();
     populateCalendarPlantSelect();
     populateLogPlantSelect();

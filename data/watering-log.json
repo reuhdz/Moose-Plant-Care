@@ -38,5 +38,23 @@
     "plantId": "kalanchoe",
     "date": "2026-01-04",
     "note": "Just blooms finishing"
+  },
+  {
+    "plantId": "monstera_adansonii",
+    "date": "2026-09-06",
+    "note": "(initial — ~5 days before add)",
+    "fertilized": false
+  },
+  {
+    "plantId": "kalanchoe_fang",
+    "date": "2026-09-04",
+    "note": "(initial — last Friday)",
+    "fertilized": false
+  },
+  {
+    "plantId": "polka_dot_plant",
+    "date": "2026-09-09",
+    "note": "(initial — 2 days before add)",
+    "fertilized": false
   }
 ]
