@@ -4702,8 +4702,8 @@ Rules:
     const seeds = [
       { plantId: "monstera_adansonii", date: "2026-09-06", note: "(initial — ~5 days before add)" },
       { plantId: "kalanchoe_fang",     date: "2026-09-04", note: "(initial — last Friday)" },
-      { plantId: "polka_dot_plant",    date: "2026-09-09", note: "(initial — 2 days before add)" }
-      /* string_of_buttons — no known last-watered date */
+      { plantId: "polka_dot_plant",    date: "2026-09-09", note: "(initial — 2 days before add)" },
+      { plantId: "string_of_buttons",  date: "2026-09-04", note: "(initial — last Friday)" }
     ];
     let added = 0;
     const existing = WaterLog.all();

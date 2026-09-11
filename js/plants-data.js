@@ -2539,7 +2539,7 @@ const PLANTS = {
     wateringDaysHot: 10,
     wateringDaysCool: 21,
     currentSoilMix: "cactus_mix",
-    comments: "New 2\" pot (Sep 2026). No confirmed last-watered date yet — log the first soak when the mix is fully dry. Stacked opposite leaves along the stem; pink edges intensify in strong light. Keep the crown dry.",
+    comments: "New 2\" pot (Sep 2026). Last watered Fri Sep 4. Stacked opposite leaves along the stem; pink edges intensify in strong light. Keep the crown dry.",
     idealSoil: ["cactus_mix"],
     soilNotes: "Gritty cactus mix + extra perlite/pumice. Peat nursery plugs rot stacked stems — bare-root into mineral mix when you upsize from 2\".",
     conditions: {

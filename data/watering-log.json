@@ -56,5 +56,11 @@
     "date": "2026-09-09",
     "note": "(initial — 2 days before add)",
     "fertilized": false
+  },
+  {
+    "plantId": "string_of_buttons",
+    "date": "2026-09-04",
+    "note": "(initial — last Friday)",
+    "fertilized": false
   }
 ]
