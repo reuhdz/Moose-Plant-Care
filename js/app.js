@@ -969,23 +969,72 @@
    * (snooze / just-watered / filter changes). Overdue starts open. */
   const waterGroupOpenState = { overdue: true, soon: false, watered: false };
 
+  /* Last-watered + last-fertilized pair used to cluster tiles that were
+   * logged together. Empty dates stay in their own "no log yet" bucket. */
+  function logMatchKey(nx) {
+    const lastIso = nx.lastDate ? Dates.iso(nx.lastDate) : "";
+    const fertIso = nx.lastFertilizedDate ? Dates.iso(nx.lastFertilizedDate) : "";
+    return `${lastIso}|${fertIso}`;
+  }
+
+  function logMatchTone(nx) {
+    const lastIso = nx.lastDate ? Dates.iso(nx.lastDate) : null;
+    const fertIso = nx.lastFertilizedDate ? Dates.iso(nx.lastFertilizedDate) : null;
+    if (lastIso && fertIso) return lastIso === fertIso ? "synced" : "split";
+    if (lastIso || fertIso) return "split";
+    return "empty";
+  }
+
+  function logMatchHint(tone) {
+    if (tone === "synced") return "Watered and fertilized the same day";
+    if (tone === "split") return "Watered and fertilized on different days (or fertilizer not logged)";
+    return "No watering or fertilizer logged yet";
+  }
+
+  function logMatchTitle(nx, tone) {
+    const wateredTxt = nx.lastDate ? Dates.formatPretty(nx.lastDate) : "—";
+    const fertTxt = nx.lastFertilizedDate ? Dates.formatPretty(nx.lastFertilizedDate) : "—";
+    if (tone === "empty") return "No watering or fertilizer logged yet";
+    if (tone === "synced") return `Watered & fertilized ${wateredTxt}`;
+    return `Watered ${wateredTxt} · Fertilized ${fertTxt}`;
+  }
+
+  /* Cluster plants that share the same last-watered + last-fertilized dates.
+   * Clusters (and plants inside them) stay in longest-overdue order. */
+  function clusterByMatchingLog(items) {
+    const buckets = new Map();
+    items.forEach(item => {
+      const key = logMatchKey(item.nx);
+      const list = buckets.get(key);
+      if (list) list.push(item);
+      else buckets.set(key, [item]);
+    });
+    const clusters = [...buckets.values()].map(members => {
+      const nx = members[0].nx;
+      return {
+        key: logMatchKey(nx),
+        tone: logMatchTone(nx),
+        members,
+        minDays: Math.min(...members.map(m => m.nx.daysUntil)),
+        lastMs: nx.lastDate ? nx.lastDate.getTime() : 0,
+        nx
+      };
+    });
+    clusters.sort((a, b) => {
+      if (a.minDays !== b.minDays) return a.minDays - b.minDays;
+      if (a.lastMs !== b.lastMs) return a.lastMs - b.lastMs;
+      return a.key.localeCompare(b.key);
+    });
+    return clusters;
+  }
+
   function renderLogDateChips(nx) {
     const lastIso = nx.lastDate ? Dates.iso(nx.lastDate) : null;
     const fertIso = nx.lastFertilizedDate ? Dates.iso(nx.lastFertilizedDate) : null;
-    let toneClass = "log-dates-empty";
-    if (lastIso && fertIso) {
-      toneClass = lastIso === fertIso ? "log-dates-synced" : "log-dates-split";
-    } else if (lastIso || fertIso) {
-      /* One present, one missing → treat as "not same day" (yellow). */
-      toneClass = "log-dates-split";
-    }
-    const sameHint = toneClass === "log-dates-synced"
-      ? "Watered and fertilized the same day"
-      : toneClass === "log-dates-split"
-        ? "Watered and fertilized on different days (or fertilizer not logged)"
-        : "No watering or fertilizer logged yet";
+    const tone = logMatchTone(nx);
+    const toneClass = `log-dates-${tone}`;
     return `
-      <div class="log-dates ${toneClass}" title="${escapeAttr(sameHint)}">
+      <div class="log-dates ${toneClass}" title="${escapeAttr(logMatchHint(tone))}">
         <div class="log-date-chip">
           <span class="log-date-label">Last watered</span>
           <span class="log-date-value">${lastIso ? escapeHtml(Dates.formatPretty(nx.lastDate)) : "—"}</span>
@@ -996,6 +1045,42 @@
         </div>
       </div>
     `;
+  }
+
+  function renderTileList(items) {
+    return `<div class="next-list">${items.map(({ pid, plant, nx }) => renderWaterTileHtml(pid, plant, nx)).join("")}</div>`;
+  }
+
+  function renderWaterLogCluster(cluster) {
+    const n = cluster.members.length;
+    const title = logMatchTitle(cluster.nx, cluster.tone);
+    return `
+      <section class="water-log-cluster log-dates-${escapeAttr(cluster.tone)}" aria-label="${escapeAttr(title)} · ${n} plant${n === 1 ? "" : "s"}">
+        <div class="water-log-cluster-head" title="${escapeAttr(logMatchHint(cluster.tone))}">
+          <span class="water-log-cluster-title">${escapeHtml(title)}</span>
+          <span class="water-log-cluster-count" aria-label="${n} plant${n === 1 ? "" : "s"}">${n}</span>
+        </div>
+        ${renderTileList(cluster.members)}
+      </section>
+    `;
+  }
+
+  /* Matching multi-plant log clusters get a header. Consecutive unique-date
+   * plants stay in one packed grid so the 2-column layout doesn't break. */
+  function renderClusteredTiles(items) {
+    const runs = [];
+    clusterByMatchingLog(items).forEach(cluster => {
+      if (cluster.members.length >= 2) {
+        runs.push({ type: "match", cluster });
+        return;
+      }
+      const last = runs[runs.length - 1];
+      if (last && last.type === "loose") last.members.push(...cluster.members);
+      else runs.push({ type: "loose", members: [...cluster.members] });
+    });
+    return `<div class="water-log-clusters">${runs.map(run =>
+      run.type === "match" ? renderWaterLogCluster(run.cluster) : renderTileList(run.members)
+    ).join("")}</div>`;
   }
 
   function renderWaterTileHtml(pid, plant, nx, opts = {}) {
@@ -1058,7 +1143,7 @@
     const open = !!waterGroupOpenState[groupKey];
     const count = items.length;
     const listHtml = count
-      ? `<div class="next-list">${items.map(({ pid, plant, nx }) => renderWaterTileHtml(pid, plant, nx)).join("")}</div>`
+      ? renderClusteredTiles(items)
       : `<div class="water-group-empty muted small">${escapeHtml(emptyHint)}</div>`;
     return `
       <details class="water-group water-group-${escapeAttr(groupKey)}" data-group="${escapeAttr(groupKey)}"${open ? " open" : ""}>
@@ -1092,12 +1177,15 @@
       .map(pid => ({ pid, plant: all[pid], nx: all[pid] ? nextWatering(pid, log, all[pid]) : null }))
       .filter(x => x.plant && x.nx);
 
-    /* Sort by urgency (most overdue first), tiebreak alphabetically. A snooze
-     * or a fresh water log naturally bumps `daysUntil` forward, so the tile
-     * automatically moves down the queue without any extra logic. */
+    /* Sort by urgency (most overdue first), then matching last-watered +
+     * last-fertilized dates, then name. `renderClusteredTiles` uses this
+     * order so a shared log pair stays together. A snooze or a fresh water
+     * log bumps `daysUntil` forward and the tile re-queues on next render. */
     const collator = new Intl.Collator(undefined, { sensitivity: "base", numeric: true });
     meta.sort((a, b) => {
       if (a.nx.daysUntil !== b.nx.daysUntil) return a.nx.daysUntil - b.nx.daysUntil;
+      const keyCmp = logMatchKey(a.nx).localeCompare(logMatchKey(b.nx));
+      if (keyCmp) return keyCmp;
       return collator.compare(a.plant.displayName, b.plant.displayName);
     });
 
@@ -1136,7 +1224,7 @@
 
     nextSummary.innerHTML = `
       <h2>Next Watering <span class="muted small" style="font-weight:400;">· 📍 ${escapeHtml(SEASONAL_CONFIG.location)}${filterBadge}</span></h2>
-      <p class="water-summary-hint muted small">Tap a category to expand. Green dates = watered &amp; fertilized the same day; yellow = different days (or fertilizer not logged).</p>
+      <p class="water-summary-hint muted small">Tap a category to expand. Plants that share the same last-watered and last-fertilized dates stay together, longest overdue first. Green dates = watered &amp; fertilized the same day; yellow = different days (or fertilizer not logged).</p>
       ${bodyHtml}
     `;
 
