@@ -1022,6 +1022,10 @@
     });
     clusters.sort((a, b) => {
       if (a.minDays !== b.minDays) return a.minDays - b.minDays;
+      /* Same urgency: show plants with a real log before the no-log dump. */
+      const aEmpty = a.tone === "empty" ? 1 : 0;
+      const bEmpty = b.tone === "empty" ? 1 : 0;
+      if (aEmpty !== bEmpty) return aEmpty - bEmpty;
       if (a.lastMs !== b.lastMs) return a.lastMs - b.lastMs;
       return a.key.localeCompare(b.key);
     });
