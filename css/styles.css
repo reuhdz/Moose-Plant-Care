@@ -1837,7 +1837,7 @@ html[data-theme="dark"] .water-group-count {
   font-style: italic;
 }
 
-/* Plants that share the same last-watered + last-fertilized dates. */
+/* Two watering-log subgroups: unmatched fertilizer vs matching same-day. */
 .water-log-clusters {
   display: flex;
   flex-direction: column;
