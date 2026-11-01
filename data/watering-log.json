@@ -62,5 +62,23 @@
     "date": "2026-09-04",
     "note": "(initial — last Friday)",
     "fertilized": false
+  },
+  {
+    "plantId": "polka_dot_plant",
+    "date": "2026-10-28",
+    "note": "(repot to 3.5×2.5 DIY Mix A — watered 4 days before Nov 1 update)",
+    "fertilized": false
+  },
+  {
+    "plantId": "pilea_peperomioides",
+    "date": "2026-10-30",
+    "note": "(initial — 6×5 DIY Mix A; watered 2 days before Nov 1 add)",
+    "fertilized": false
+  },
+  {
+    "plantId": "rubber_tree",
+    "date": "2026-10-30",
+    "note": "(initial — 6×5 DIY Mix B; watered 2 days before Nov 1 add)",
+    "fertilized": false
   }
 ]

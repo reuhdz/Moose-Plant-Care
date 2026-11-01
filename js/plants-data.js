@@ -92,6 +92,16 @@ const SOIL_TYPES = {
     drainage: "controlled", retention: "very_high",
     description: "Four-layer build typical of pre-planted retail closed terrariums: (1) ~1\" drainage gravel/pebbles at the bottom, (2) ~½\" activated horticultural charcoal (keeps the closed environment fresh and prevents anaerobic stink), (3) thin sphagnum-moss separator so soil doesn't migrate into the drainage layer, (4) peat- or coco-based growing media (often with a top dressing of preserved moss). The whole stack functions as a slow-release reservoir — watering needs are 5–10× lower than the same plants in open pots."
   },
+  diy_pilea_polka: {
+    label: "DIY Mix A — Pilea + Polka (coir/potting)",
+    drainage: "high", retention: "medium",
+    description: "Scoop recipe (same scoop throughout): 3 standard potting · 3 hydrated coco coir · 2 pumice · 1 orchid bark · ½ horticultural charcoal · pinch general fertilizer (label rate only — not a scoop). Mid-chunky moisture-holding blend for Pilea and Hypoestes; skip citrus/succulent grit. Adapted from Urban Sprout / Cafe Planta / Biology Insights ratios."
+  },
+  diy_rubber: {
+    label: "DIY Mix B — Rubber tree (chunky Ficus)",
+    drainage: "high", retention: "medium",
+    description: "Scoop recipe (same scoop throughout): 3 standard potting · 1 hydrated coco coir · 2 orchid bark · 2 pumice · 1 citrus/succulent mix · ½ horticultural charcoal · pinch general fertilizer (label rate only). Chunky forest-floor blend for Ficus elastica — more bark/grit than Mix A. Adapted from Greeny Gardener 2:1:1 + Home Leaf Studio aroid-style."
+  },
   other: {
     label: "Other / custom",
     drainage: null, retention: null,
@@ -2470,43 +2480,44 @@ const PLANTS = {
 
   polka_dot_plant: {
     id: "polka_dot_plant",
+    repotted: true,
     repotSigns: [
-      "Roots packing the tiny 2\" pot — water sits on top then rushes through",
+      "Roots packing the 3.5\" × 2.5\" pot — water sits on top then rushes through",
       "Daily wilting even when recently watered",
       "New leaves markedly smaller / greener (color fade from stress)",
       "Roots visible at drainage holes",
       "Plant lifts as a solid root plug",
-      "Soil hydrophobic after a dry spell in the micro-pot"
+      "DIY Mix A going hydrophobic after a hard dry-down"
     ],
     displayName: "Polka Dot Plant",
-    potSize: '2"',
+    potSize: '3.5" × 2.5"',
     category: "tropical",
     names: {
       common: ["Polka Dot Plant", "Freckle Face", "Measles Plant", "Flamingo Plant"],
       scientific: "Hypoestes phyllostachya"
     },
-    wateringDays: 5,
-    wateringDaysHot: 4,
-    wateringDaysCool: 8,
-    currentSoilMix: "african_violet",
-    comments: "New 2\" pot (Sep 2026). Last watered ~Sep 9. Colorful freckled foliage (pink/red/white cultivars). Tiny pot + Central Texas AC = check often; loves humidity like Fittonia. Pinch regularly or it gets leggy and blooms itself out.",
-    idealSoil: ["african_violet", "standard_potting"],
-    soilNotes: "Moisture-retentive but airy mix (African violet or peat/coco + fine perlite). In a 2\" pot the reservoir is tiny — upsize to 3–4\" within weeks for stability.",
+    wateringDays: 6,
+    wateringDaysHot: 5,
+    wateringDaysCool: 9,
+    currentSoilMix: "diy_pilea_polka",
+    comments: "✅ Nov 2026: up-potted from 2\" into a 3.5\" W × 2.5\" D pot with DIY Mix A (3 potting · 3 coir · 2 pumice · 1 bark · ½ charcoal · pinch fert). Last watered ~Oct 28 (4 days before this update). Freckled foliage still humidity-hungry like Fittonia — pinch regularly or it gets leggy and blooms itself out.",
+    idealSoil: ["diy_pilea_polka", "african_violet", "amended_potting", "standard_potting"],
+    soilNotes: "Now in DIY Mix A shared with Pilea — moisture-retentive but airy (potting + coir + pumice + light bark). Skip citrus/succulent grit; Hypoestes wilts if the medium is too gritty. 3.5×2.5 still dries faster than a deep 4\" — check the top ~1\".",
     conditions: {
       light:        { ideal: "Bright indirect; soft morning sun OK", passing: "Medium indirect; deep shade fades spots to green" },
       temperature:  { ideal: "65–80°F (18–27°C)", passing: "60–85°F; protect below 55°F" },
       humidity:     { ideal: "50–60%+", passing: "Below ~40% → crispy edges; bathroom/pebble tray helps" },
-      soilMoisture: { ideal: "Evenly moist — top ½–1\" dry then water", passing: "Wilts fast when dry; recovers quickly if caught early" }
+      soilMoisture: { ideal: "Evenly moist — top ~1\" dry then water", passing: "Wilts fast when dry; recovers quickly if caught early" }
     },
     tips: {
       lighting: "Bright INDIRECT light keeps pink/red freckles vivid (RHS). Harsh afternoon sun scorches and fades color; deep shade turns leaves greener.\n\n• East window or set back from SE beam.\n• Pinch flower spikes to keep energy in foliage.\n\n• Best home matches: 1F Bathroom (set back) and humidified 2F Room 2 per PLANT_LIGHT_REF.",
-      soil: "Fine, moisture-holding mix with drainage. African violet mix works. DIY: peat/coco + fine perlite. Avoid pure cactus grit — dries too fast in 2\".",
-      watering: "METHOD — keep evenly moist (not swampy): Hypoestes wants the top of the mix to dry slightly, then a thorough drink (RHS / Almanac).\n\nHOW TO CHECK (your 2\" pot):\n• Finger: top dry to ~½\" → water now.\n• Pot weight: feather-light = overdue.\n• Dramatic wilt = thirst (usually revives in 1–2 hrs after soak).\n\nCENTRAL TEXAS CADENCE:\n• Hot AC season: every 4–6 days (often every 3–4 in peak summer in a 2\" pot).\n• Winter: every 7–9 days — still never bone-dry for long.\n\nBottom-water 5–10 min, drain well. Prefer filtered water if tips brown from hard tap.",
+      soil: "DIY Mix A (current): 3 potting · 3 coir · 2 pumice · 1 orchid bark · ½ charcoal · fertilizer pinch only. Alternate: African violet mix or Cafe Planta-style 2 potting : 1 pumice : 1 coir. Avoid cactus-only grit.",
+      watering: "METHOD — keep evenly moist (not swampy): Hypoestes wants the top of the mix to dry slightly, then a thorough drink (RHS / Almanac).\n\nHOW TO CHECK (your 3.5\" × 2.5\" DIY Mix A pot):\n• Finger: top dry to ~1\" → water now.\n• Pot weight: noticeably light = overdue.\n• Dramatic wilt = thirst (usually revives in 1–2 hrs after soak).\n\nCENTRAL TEXAS CADENCE:\n• Hot AC season: every 5–7 days (3.5×2.5 still dries faster than deep pots).\n• Winter: every 8–10 days — still never bone-dry for long.\n\nBottom-water 5–10 min, drain well. Prefer filtered water if tips brown from hard tap.",
       pruning: "Pinch tips every 2–4 weeks for a bushy mound. Remove flower spikes. Cuttings root easily in water.",
       propagation: "Tip cuttings 3–4\" with nodes.\n\n• Water jar: roots in ~2 weeks.\n• Soil under humidity: similar timeline.\n• Success rate very high in warm months.",
-      repotting: "Upsize from 2\" to 3–4\" soon — micro-pots swing wet/dry too hard. Spring preferred; don't jump more than 1–2\" at a time.",
-      feeding: "Half-strength balanced liquid every 2–4 weeks in active growth. Skip winter. Pinch + feed keeps color dense.",
-      troubleshooting: "• Faded green leaves → low light.\n• Crispy brown edges → dry air / underwatering.\n• Yellow mushy stems → overwatering in peat.\n• Leggy + flowers → needs pinch + more light.\n• Generally considered non-toxic / low concern vs aroids — still discourage chewing."
+      repotting: "✅ Already moved 2\" → 3.5×2.5 (Nov 2026). Next upsize only when rootbound — spring preferred; don't jump more than 1–2\" at a time. Refresh Mix A if coir/bark breaks down (~12–18 months).",
+      feeding: "Half-strength balanced liquid every 2–4 weeks in active growth. Skip winter. Pinch + feed keeps color dense. The DIY pinch fertilizer is not a full feed schedule.",
+      troubleshooting: "• Faded green leaves → low light.\n• Crispy brown edges → dry air / underwatering.\n• Yellow mushy stems → overwatering in fine peat — Mix A should drain; empty saucers.\n• Leggy + flowers → needs pinch + more light.\n• Generally considered non-toxic / low concern vs aroids — still discourage chewing."
     },
     sources: [
       { label: "RHS — Hypoestes (Polka Dot Plant)", url: "https://www.rhs.org.uk/plants/hypoestes" },
@@ -2567,6 +2578,108 @@ const PLANTS = {
       { label: "World of Succulents — Crassula perforata", url: "https://worldofsucculents.com/crassula-perforata-string-of-buttons/" }
     ]
   },
+
+  pilea_peperomioides: {
+    id: "pilea_peperomioides",
+    repotted: true,
+    repotSigns: [
+      "Roots circling hard against the 6\" × 5\" walls / poking drainage holes",
+      "Water rushes through in seconds — Mix A collapsed or rootbound",
+      "Coin leaves shrinking or paling despite good light",
+      "Pot tips from top-heavy pups while the rootball is jammed",
+      "Surface stays wet for days after a soak (compaction)",
+      "Pups overcrowding the rim with nowhere to root"
+    ],
+    displayName: "Pilea (Chinese Money Plant)",
+    potSize: '6" × 5"',
+    category: "tropical",
+    names: {
+      common: ["Chinese Money Plant", "Pilea", "Missionary Plant", "Pancake Plant", "UFO Plant"],
+      scientific: "Pilea peperomioides"
+    },
+    wateringDays: 8,
+    wateringDaysHot: 7,
+    wateringDaysCool: 12,
+    currentSoilMix: "diy_pilea_polka",
+    comments: "Nov 2026: in a 6\" W × 5\" D pot with DIY Mix A (3 potting · 3 coir · 2 pumice · 1 bark · ½ charcoal · pinch fert) — same batch family as Polka Dot. Last watered ~Oct 30 (2 days before add). Rotate for even coin faces; pinch/share pups freely.",
+    idealSoil: ["diy_pilea_polka", "amended_potting", "aroid_mix", "standard_potting"],
+    soilNotes: "DIY Mix A is the research-backed coir-forward blend (Urban Sprout ~60% coir / 20% pumice style, adapted to your ingredients). Shares Mix A with Polka Dot — rubber tree uses chunkier Mix B instead.",
+    conditions: {
+      light:        { ideal: "Bright indirect; soft morning sun OK", passing: "Medium indirect; low light → sparse, smaller coins" },
+      temperature:  { ideal: "65–75°F (18–24°C)", passing: "60–85°F; protect from cold drafts below 55°F" },
+      humidity:     { ideal: "40–60%", passing: "Average home OK; crispy edges if bone-dry AC + missed waterings" },
+      soilMoisture: { ideal: "Top 1–2\" dry between thorough soaks", passing: "Droopy coins with dry mix = thirsty; yellow with wet mix = overwater" }
+    },
+    tips: {
+      lighting: "Bright INDIRECT light keeps coin leaves large, deep green, and upright (RHS / Almanac). Soft morning sun is fine; harsh afternoon sun bleaches or curls leaves.\n\n• East window or several feet back from bright south/west.\n• Rotate ¼ turn weekly so coins face evenly.\n• Pups along the soil line are normal — leave or pot up.\n\n• Best matches: 1F Corner, 1F Window (set back), humidified 2F Room 2 per PLANT_LIGHT_REF. Keep out of hot 2F SW beam.",
+      soil: "DIY Mix A (current): 3 potting · 3 coir · 2 pumice · 1 orchid bark · ½ charcoal · fertilizer pinch only. Alternate research blend: ~2:1:1 coir:pumice:bark. Avoid dense peat-only nursery soil long-term.",
+      watering: "METHOD — soak-and-dry to the top 1–2\": Pilea hates sitting wet (root rot) but also wilts dramatically when dry (The Urban Sprout / Extension).\n\nHOW TO CHECK (your 6\" × 5\" DIY Mix A pot):\n• Finger 1–2 knuckles — damp = wait; dry/crumbly = water thoroughly until runoff.\n• Pot weight: 6×5 feels light = ready.\n• Leaf tells: soft droop + dry top = thirsty (usually perks up in hours); yellow lower coins + wet mix = overwater.\n\nCENTRAL TEXAS CADENCE (Pflugerville, indoor AC):\n• Hot AC season (Apr–Oct): every 7–9 days.\n• Peak summer: every 7 days in bright rooms — Mix A drains but 6×5 still holds more than a 2\".\n• Mild winter (Nov–Feb): every 11–14 days.\n\nEmpty saucers. Room-temp filtered water if tips brown from hard tap.",
+      pruning: "Remove yellow/damaged coins at the stem. Pinch the growing tip lightly for a bushier plant. Harvest soil pups with a few roots for friends.",
+      propagation: "Soil pups / basal offsets are easiest.\n\n• Twist or cut a pup with roots; pot into Mix A; keep lightly moist 1–2 weeks.\n• Stem cuttings in water also root in 2–4 weeks.\n• Success rate very high in warm months.",
+      repotting: "Every 1–2 years or when rootbound in the 6×5. Upsize only 1–2\" at a time. Spring best. Refresh Mix A if coir/bark has broken down.",
+      feeding: "Half-strength balanced liquid every 3–4 weeks spring–early fall. The DIY pinch is not a season-long feed. Skip winter unless under strong grow lights.",
+      troubleshooting: "• Sudden wilt that recovers after water → underwatering (common).\n• Yellow leaves + wet soil → overwatering / poor drainage — confirm Mix A isn't compacted.\n• Curling / cupping coins → too much direct sun or inconsistent water.\n• Leggy stem with tiny leaves → low light; move brighter.\n• White crust on mix → hard-water salts — flush monthly.\n• ASPCA lists Pilea peperomioides as non-toxic to cats and dogs — still discourage chewing."
+    },
+    sources: [
+      { label: "RHS — Pilea peperomioides", url: "https://www.rhs.org.uk/plants/pilea-peperomioides" },
+      { label: "Almanac — Chinese Money Plant", url: "https://www.almanac.com/plant/chinese-money-plant" },
+      { label: "Missouri Botanical Garden — Pilea peperomioides", url: "https://www.missouribotanicalgarden.org/PlantFinder/PlantFinderDetails.aspx?taxonid=291656" },
+      { label: "Ask Extension — Pilea soil / drainage", url: "https://ask.extension.org/kb/faq.php?id=923409" },
+      { label: "The Spruce — Chinese Money Plant Care", url: "https://www.thespruce.com/growing-pilea-peperomioides-5077656" },
+      { label: "ASPCA — Non-Toxic Plants (Pilea)", url: "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants" }
+    ]
+  },
+
+  rubber_tree: {
+    id: "rubber_tree",
+    repotted: true,
+    repotSigns: [
+      "Thick roots circling / lifting the plant in the 6\" × 5\" pot",
+      "Water sits on Mix B then dumps through (rootbound channeling)",
+      "New leaves emerge much smaller than the previous flush",
+      "Pot becomes top-heavy and tips easily",
+      "Mix B broken down into mud after 12–18 months",
+      "Lower leaves yellow while the core stays wet for days"
+    ],
+    displayName: "Rubber Tree",
+    potSize: '6" × 5"',
+    category: "tropical",
+    names: {
+      common: ["Rubber Tree", "Rubber Plant", "India Rubber Fig", "Rubber Fig"],
+      scientific: "Ficus elastica"
+    },
+    wateringDays: 10,
+    wateringDaysHot: 8,
+    wateringDaysCool: 16,
+    currentSoilMix: "diy_rubber",
+    comments: "Nov 2026: in a 6\" W × 5\" D pot with DIY Mix B (3 potting · 1 coir · 2 bark · 2 pumice · 1 citrus/succulent · ½ charcoal · pinch fert) — chunkier than Pilea/Polka Mix A on purpose. Last watered ~Oct 30 (2 days before add). Wipe leaves; milky sap irritates skin and is toxic to pets.",
+    idealSoil: ["diy_rubber", "aroid_mix", "amended_potting", "standard_potting"],
+    soilNotes: "DIY Mix B is the chunky Ficus blend (Greeny Gardener 2:1:1 soil:pumice:bark + citrus grit). Do NOT share Mix A with Pilea/Polka long-term in a large pot — rubber wants more bark/air. Refresh when bark softens.",
+    conditions: {
+      light:        { ideal: "Bright indirect + 1–3 hrs gentle direct", passing: "Medium bright; low light → leggy, leaf drop" },
+      temperature:  { ideal: "65–80°F (18–27°C)", passing: "60–85°F; protect from cold drafts / sudden moves" },
+      humidity:     { ideal: "40–60%", passing: "Average home OK; dry AC may brown tips" },
+      soilMoisture: { ideal: "Top 1–2\" dry, then deep soak", passing: "Never leave the 6×5 sitting in a saucer" }
+    },
+    tips: {
+      lighting: "Bright light with some gentle direct sun keeps Ficus elastica compact and glossy (Missouri Botanical Garden / RHS). Sudden moves cause classic Ficus leaf drop — relocate gradually.\n\n• East window or bright corner with soft AM sun.\n• Variegated cultivars need MORE light than solid burgundy/black.\n• Wipe dust monthly so leaves photosynthesize.\n\n• Best matches: 1F Corner, 1F Room 1, 2F NW rooms per PLANT_LIGHT_REF. Avoid only the harshest unfiltered 2F SW for thin variegated types; solid green/burgundy usually OK set back.",
+      soil: "DIY Mix B (current): 3 potting · 1 coir · 2 orchid bark · 2 pumice · 1 citrus/succulent mix · ½ charcoal · fertilizer pinch only. Classic alternate: 2 potting : 1 pumice : 1 bark.",
+      watering: "METHOD — soak-and-dry: water thoroughly when the top 1–2\" of Mix B are dry (Home Leaf Studio / Greeny Gardener). Err slightly dry vs swampy — Ficus roots rot in dense wet peat.\n\nHOW TO CHECK (your 6\" × 5\" DIY Mix B pot):\n• Finger 1–2\" — dry = soak until runoff; cool/damp = wait.\n• Pot weight: light 6×5 = ready.\n• Leaf tells: soft droop + dry mix = thirsty; yellow drop + wet mix = overwater or move stress.\n\nCENTRAL TEXAS CADENCE:\n• Hot AC season: every 8–11 days.\n• Peak summer in bright rooms: every 8 days.\n• Mild winter: every 14–18 days — Ficus slows hard; don't chase leaf drop with water.\n\nEmpty saucers. Stable location beats perfect watering.",
+      pruning: "Prune in spring/summer with gloves — milky latex irritates skin and stains. Cut just above a node. Can top a leggy leader to branch.",
+      propagation: "Stem cuttings with a node.\n\n• Callus briefly; root in water or moist Mix B under humidity.\n• Warm months: roots in 3–6 weeks.\n• Air layering works on thicker stems.",
+      repotting: "Every 2–3 years or when rootbound in the 6×5. Upsize 1–2\" only. Spring. Wear gloves; expect some leaf drop after — stabilize light/water 2–4 weeks.",
+      feeding: "Balanced liquid at half strength every 4 weeks spring–early fall. Skip winter. DIY pinch fertilizer is not a full schedule.",
+      troubleshooting: "• Sudden leaf drop → classic Ficus sulk (move, draft, light change) — stabilize; don't drown it.\n• Yellow leaves + wet soil → overwatering / compacted mix.\n• Brown crispy edges → dry AC or underwatering.\n• Leggy sparse canopy → needs more light.\n• Sticky residue / brown bumps → scale (common on Ficus) — alcohol swabs + horticultural oil.\n• ⚠️ Toxic to cats and dogs (ASPCA — Fig / Ficus); sap irritates skin and GI — keep away from Moose."
+    },
+    sources: [
+      { label: "Missouri Botanical Garden — Ficus elastica", url: "https://www.missouribotanicalgarden.org/PlantFinder/PlantFinderDetails.aspx?taxonid=282788" },
+      { label: "RHS — Ficus elastica", url: "https://www.rhs.org.uk/plants/ficus-elastica" },
+      { label: "ASPCA — Fig (Ficus) Toxicity", url: "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/fig" },
+      { label: "The Spruce — Rubber Plant Care", url: "https://www.thespruce.com/growing-rubber-trees-1902767" },
+      { label: "Costa Farms — Rubber Tree", url: "https://costafarms.com/plants/rubber-tree" },
+      { label: "NC State Extension — Ficus elastica", url: "https://plants.ces.ncsu.edu/plants/ficus-elastica/" }
+    ]
+  },
 };
 
 const OWNED_PLANT_IDS = [
@@ -2621,7 +2734,10 @@ const OWNED_PLANT_IDS = [
   "monstera_adansonii",
   "kalanchoe_fang",
   "polka_dot_plant",
-  "string_of_buttons"
+  "string_of_buttons",
+  /* New arrivals (Nov 2026) — DIY Mix A/B in sized pots */
+  "pilea_peperomioides",
+  "rubber_tree"
 ];
 
 const SUCCULENT_VARIANTS = [
@@ -3000,13 +3116,25 @@ const PLANT_PLACEMENT = {
     ideal: ["bathroom"],
     ok: ["living_room_open", "second_floor_open", "bedroom"],
     avoid: ["second_floor_window", "living_room_window_morning", "living_room_fireplace"],
-    rationale: "Hypoestes is a humidity + bright-indirect plant (RHS). The 1F bathroom (set back from direct SE beam) is the dream spot for the tiny 2\" pot. Bedroom/open rooms need a pebble tray or humidifier. Direct sun fades and crisps the freckled leaves."
+    rationale: "Hypoestes is a humidity + bright-indirect plant (RHS). The 1F bathroom (set back from direct SE beam) is still the dream spot after the Nov 2026 upsize to 3.5×2.5 DIY Mix A. Bedroom/open rooms need a pebble tray or humidifier. Direct sun fades and crisps the freckled leaves."
   },
   string_of_buttons: {
     ideal: ["living_room_window_morning", "second_floor_window", "living_room_fireplace"],
     ok: ["living_room_window_stained", "living_room_open"],
     avoid: ["bathroom", "bedroom"],
     rationale: "Crassula perforata wants bright light with some gentle direct sun for tight pink-edged stacks. Morning-direct and 2F SW (acclimate) work. Avoid bathrooms — trapped moisture between stacked leaves invites rot. Dim rooms stretch the stacks."
+  },
+  pilea_peperomioides: {
+    ideal: ["living_room_open", "second_floor_open", "bedroom", "living_room_window_stained"],
+    ok: ["bathroom", "living_room_window_morning"],
+    avoid: ["second_floor_window"],
+    rationale: "Pilea peperomioides wants bright indirect with soft morning sun OK (RHS / Almanac). LR-Open, 2F-Open, bedroom, and stained-glass bounce keep coins large and even. Soft AM at Window A is OK if set back. Hard avoid: unfiltered 2F SW afternoon beam — bleaches and cups the pancakes. Bathroom works if humidity is welcome and the SE beam is blocked."
+  },
+  rubber_tree: {
+    ideal: ["living_room_open", "living_room_window_morning", "second_floor_open", "living_room_fireplace"],
+    ok: ["living_room_window_stained", "bedroom", "second_floor_window"],
+    avoid: ["bathroom"],
+    rationale: "Ficus elastica likes brighter light than Pilea — bright indirect plus 1–3 hrs gentle direct keeps it compact and glossy (Mo Bot / RHS). Corner, morning-direct, and NW rooms are strong. 2F SW is OK for solid burgundy if set back; variegated forms prefer filtered. Bathroom humidity is unnecessary and sap + tight quarters is a poor combo with pets. Expect leaf drop if you relocate abruptly."
   },
   /* ============= NEW NURSERY-POT ARRIVALS (Jul 2026) =============
    * Placement recommendations calibrated to the house's actual light budget
@@ -3111,10 +3239,10 @@ const HOME_WINDOWS = [
     humidifier: { rec: "not-needed", note: "Already the most humid room downstairs — save the humidifier for a drier spot." },
     light: "Direct morning-to-midday sun, then bright.",
     humidity: "HIGH — showers keep it the most humid room downstairs.",
-    thrive: ["mini_orchid", { id: "prayer_plant", back: true }, { id: "cordyline_fruticosa", back: true }, "wandering_dude", { id: "thai_constellation", back: true }, { id: "monstera", back: true }],
-    solid: [{ id: "fittonia", note: "no direct", back: true }, { id: "polka_dot_plant", note: "no direct", back: true }, { id: "ginseng_ficus_cutting", back: true }, { id: "dracaena_fragrans", back: true }, { id: "dracaena_fragrans_b", back: true }, { id: "monstera_water_cuttings", back: true }, { id: "monstera_adansonii", back: true }],
-    avoid: "All succulents & cacti — String of Pearls, String of Buttons, Haworthia, Lady Finger, Desert Rose, Kalanchoe Fang rot in this humidity. Keep the cream-variegated tropicals just back from the direct beam.",
-    keepOut: ["string_of_pearls", "string_of_buttons", "haworthia", "lady_finger_cactus", "desert_rose", "assorted_cacti", "aloe_vera", "firestick", "sedum_angelina", "burrows_tail", "baby_burros_tail", "succulent_frankenstein_a", "succulent_frankenstein_b", "variegated_elephant_bush", "variegated_elephant_bush_bonsai", "kalanchoe", "kalanchoe_fang"]
+    thrive: ["mini_orchid", { id: "prayer_plant", back: true }, { id: "cordyline_fruticosa", back: true }, "wandering_dude", { id: "thai_constellation", back: true }, { id: "monstera", back: true }, { id: "polka_dot_plant", note: "no direct", back: true }],
+    solid: [{ id: "fittonia", note: "no direct", back: true }, { id: "pilea_peperomioides", note: "no direct", back: true }, { id: "ginseng_ficus_cutting", back: true }, { id: "dracaena_fragrans", back: true }, { id: "dracaena_fragrans_b", back: true }, { id: "monstera_water_cuttings", back: true }, { id: "monstera_adansonii", back: true }],
+    avoid: "All succulents & cacti — String of Pearls, String of Buttons, Haworthia, Lady Finger, Desert Rose, Kalanchoe Fang rot in this humidity. Keep the cream-variegated tropicals just back from the direct beam. Rubber Tree doesn't need this humidity — put it in a brighter dry room.",
+    keepOut: ["string_of_pearls", "string_of_buttons", "haworthia", "lady_finger_cactus", "desert_rose", "assorted_cacti", "aloe_vera", "firestick", "sedum_angelina", "burrows_tail", "baby_burros_tail", "succulent_frankenstein_a", "succulent_frankenstein_b", "variegated_elephant_bush", "variegated_elephant_bush_bonsai", "kalanchoe", "kalanchoe_fang", "rubber_tree"]
   },
   {
     id: "f1_room1", floor: "First floor", name: "Room 1", bearing: "131° SE · nightly fan",
@@ -3123,8 +3251,8 @@ const HOME_WINDOWS = [
     humidifier: { rec: "skip", note: "The nightly overhead fan cancels out any humidifier — don't waste it here." },
     light: "Same SE morning sun as the bathroom.",
     humidity: "Drier — the overhead fan moves air all night (great pest/fungus deterrent, faster dry-down).",
-    thrive: ["ginseng_ficus", "kalanchoe", "kalanchoe_fang", "schefflera_dark", "snake_plant", "string_of_buttons"],
-    solid: ["succulent_frankenstein_b", "burrows_tail", "baby_burros_tail", "wandering_dude", { id: "zz_plant", back: true }, "aloe_vera"],
+    thrive: ["ginseng_ficus", "kalanchoe", "kalanchoe_fang", "schefflera_dark", "snake_plant", "string_of_buttons", "rubber_tree"],
+    solid: ["succulent_frankenstein_b", "burrows_tail", "baby_burros_tail", "wandering_dude", { id: "zz_plant", back: true }, "aloe_vera", { id: "pilea_peperomioides", note: "away from fan blast" }],
     avoid: "Humidity-lovers that hate moving air — Fittonia, Polka Dot Plant, Rattlesnake Calathea, Thai Constellation, Monstera go elsewhere.",
     keepOut: ["fittonia", "polka_dot_plant", "prayer_plant", "thai_constellation", "monstera", "monstera_adansonii", "mini_orchid", "terrarium_a", "terrarium_b"]
   },
@@ -3135,7 +3263,7 @@ const HOME_WINDOWS = [
     humidifier: { rec: "optional", note: "Low-impact here — this is the big vaulted living room open to the 2F, so its volume scatters a small humidifier. If you use it, huddle the foliage within 2–3 ft of the unit; otherwise rely on pebble trays." },
     light: "Two exposures (gentle NE early morning + SE morning/midday) in a big vaulted, double-height room open to the 2nd floor — tall, bright and airy with lots of ambient bounce. Usable plant-level light still comes from the windows, but it's the longest span of soft-to-moderate direct light in the house.",
     humidity: "Average — but the vaulted volume open to the 2F lets moisture disperse fast, so it's hard to raise humidity here.",
-    thrive: [{ id: "monstera", back: true }, { id: "monstera_adansonii", back: true }, "schefflera", { id: "marble_queen_pothos", back: true }, { id: "pearls_jade_pothos", back: true }, { id: "philodendron_silver_stripe", back: true }, "ginseng_ficus"],
+    thrive: [{ id: "monstera", back: true }, { id: "monstera_adansonii", back: true }, "schefflera", { id: "marble_queen_pothos", back: true }, { id: "pearls_jade_pothos", back: true }, { id: "philodendron_silver_stripe", back: true }, "ginseng_ficus", "pilea_peperomioides", "rubber_tree"],
     solid: [{ id: "cordyline_fruticosa", back: true }, { id: "dracaena_fragrans", back: true }, { id: "dracaena_fragrans_b", back: true }, "snake_plant", "kalanchoe", { id: "zz_plant", back: true }, "haworthia", "baby_burros_tail", "string_of_pearls", "string_of_buttons", "burrows_tail", { id: "pothos_combo", back: true }, { id: "polka_dot_plant", note: "add humidity", back: true }],
     avoid: "Nothing really struggles here — it's your best all-rounder. Deep-shade-only plants would be wasted on it.",
     keepOut: []
@@ -3147,8 +3275,8 @@ const HOME_WINDOWS = [
     humidifier: { rec: "skip", note: "Big vaulted room open to the 2F — a small humidifier's mist just dissipates into the volume and barely moves RH. Skip it here; humidify the enclosed 2F Room 2 instead and give any humidity-lovers you keep here pebble trays." },
     light: "Gentle morning sun only, bright indirect the rest of the day, in the big vaulted living room open to the 2nd floor — tall and airy, so the light stays soft and even. Still the safest window for foliage that scorches.",
     humidity: "Average — and the vaulted, double-height volume lets any added moisture dissipate quickly.",
-    thrive: ["royal_ivy", "golden_pothos", "marble_queen_pothos", "pothos_combo", "terrarium_a", "terrarium_b", "zz_plant", "monstera_water_cuttings"],
-    solid: [{ id: "prayer_plant", note: "add humidity" }, "monstera", "dracaena_fragrans", "dracaena_fragrans_b", "mondo_grass", "mini_orchid", "ginseng_ficus_cutting", "pearls_jade_pothos", "philodendron_silver_stripe"],
+    thrive: ["royal_ivy", "golden_pothos", "marble_queen_pothos", "pothos_combo", "terrarium_a", "terrarium_b", "zz_plant", "monstera_water_cuttings", "pilea_peperomioides"],
+    solid: [{ id: "prayer_plant", note: "add humidity" }, "monstera", "dracaena_fragrans", "dracaena_fragrans_b", "mondo_grass", "mini_orchid", "ginseng_ficus_cutting", "pearls_jade_pothos", "philodendron_silver_stripe", { id: "rubber_tree", note: "may stretch without AM sun" }],
     avoid: "Full-sun desert plants (Desert Rose, Firestick, cacti) — not enough direct light to keep them tight & colored.",
     keepOut: ["desert_rose", "firestick", "lady_finger_cactus", "assorted_cacti", "sedum_angelina", "aloe_vera", "succulent_frankenstein_a", "variegated_elephant_bush", "variegated_elephant_bush_bonsai"]
   },
@@ -3160,9 +3288,9 @@ const HOME_WINDOWS = [
     light: "Intense SW afternoon/evening direct sun; 2nd-floor warmth on top. Texas summer sun at full strength.",
     humidity: "Low / average — warm and dry.",
     thrive: ["desert_rose", "firestick", "lady_finger_cactus", "assorted_cacti", "sedum_angelina", "aloe_vera", "succulent_frankenstein_a", "variegated_elephant_bush", "variegated_elephant_bush_bonsai", "kalanchoe_fang"],
-    solid: [{ id: "snake_plant", back: true }, "ginseng_ficus", { id: "burrows_tail", note: "acclimate slowly" }, { id: "string_of_buttons", note: "acclimate slowly" }],
-    avoid: "Cream/variegated tropicals, Fittonia, Polka Dot, Rattlesnake Calathea, Thai — they'll scorch. Shield Haworthia from the harshest beam.",
-    keepOut: ["fittonia", "polka_dot_plant", "prayer_plant", "thai_constellation", "monstera", "monstera_adansonii", "monstera_water_cuttings", "mini_orchid", "terrarium_a", "terrarium_b", "cordyline_fruticosa", "marble_queen_pothos", "pearls_jade_pothos", "golden_pothos", "pothos_combo", "philodendron_silver_stripe", "ginseng_ficus_cutting"]
+    solid: [{ id: "snake_plant", back: true }, "ginseng_ficus", { id: "burrows_tail", note: "acclimate slowly" }, { id: "string_of_buttons", note: "acclimate slowly" }, { id: "rubber_tree", note: "set back / solid cultivars" }],
+    avoid: "Cream/variegated tropicals, Fittonia, Polka Dot, Pilea, Rattlesnake Calathea, Thai — they'll scorch. Shield Haworthia from the harshest beam.",
+    keepOut: ["fittonia", "polka_dot_plant", "pilea_peperomioides", "prayer_plant", "thai_constellation", "monstera", "monstera_adansonii", "monstera_water_cuttings", "mini_orchid", "terrarium_a", "terrarium_b", "cordyline_fruticosa", "marble_queen_pothos", "pearls_jade_pothos", "golden_pothos", "pothos_combo", "philodendron_silver_stripe", "ginseng_ficus_cutting"]
   },
   {
     id: "f2_bath", floor: "Second floor", name: "Bathroom (rarely used)", bearing: "208° SW",
@@ -3183,10 +3311,10 @@ const HOME_WINDOWS = [
     humidifier: { rec: "not-needed", note: "Mostly snake plant / ZZ / succulents here — they're happy in dry air; humidifier not needed." },
     light: "Late-afternoon/evening summer sun, bright indirect otherwise. Warm 2nd floor.",
     humidity: "Average / low.",
-    thrive: ["snake_plant", { id: "zz_plant", back: true }, "ginseng_ficus", "schefflera", { id: "wandering_dude", back: true }, "variegated_elephant_bush", "variegated_elephant_bush_bonsai"],
-    solid: [{ id: "monstera", back: true }, { id: "golden_pothos", back: true }, { id: "dracaena_fragrans", back: true }, { id: "dracaena_fragrans_b", back: true }, { id: "cordyline_fruticosa", back: true }, "haworthia", "baby_burros_tail", "string_of_pearls", "burrows_tail"],
+    thrive: ["snake_plant", { id: "zz_plant", back: true }, "ginseng_ficus", "schefflera", { id: "wandering_dude", back: true }, "variegated_elephant_bush", "variegated_elephant_bush_bonsai", "rubber_tree"],
+    solid: [{ id: "monstera", back: true }, { id: "golden_pothos", back: true }, { id: "dracaena_fragrans", back: true }, { id: "dracaena_fragrans_b", back: true }, { id: "cordyline_fruticosa", back: true }, "haworthia", "baby_burros_tail", "string_of_pearls", "burrows_tail", "pilea_peperomioides"],
     avoid: "Fittonia and terrariums (the late beam is too hot for them). Deep-humidity tropicals want the 1F bathroom.",
-    keepOut: ["fittonia", "terrarium_a", "terrarium_b"]
+    keepOut: ["fittonia", "terrarium_a", "terrarium_b", "polka_dot_plant"]
   },
   {
     id: "f2_room2", floor: "Second floor", name: "Room 2", bearing: "301° NW",
@@ -3195,8 +3323,8 @@ const HOME_WINDOWS = [
     humidifier: { rec: "use", note: "BEST home for your one small humidifier — a smaller, ENCLOSED NW room that actually holds humidity (unlike the vaulted 1F living room). Cluster the humidity-lovers — Rattlesnake Calathea, Cordyline, Monstera, pothos group — within 2–3 ft of the unit and add a small fan on low to spread the plume." },
     light: "Identical light to Room 1 — split the collection: make this the bright-indirect foliage room, Room 1 the succulent/sun room.",
     humidity: "Average / low.",
-    thrive: [{ id: "golden_pothos", back: true }, { id: "marble_queen_pothos", back: true }, { id: "pearls_jade_pothos", back: true }, { id: "philodendron_silver_stripe", back: true }, { id: "monstera", back: true }, { id: "zz_plant", back: true }, { id: "dracaena_fragrans", back: true }, { id: "dracaena_fragrans_b", back: true }],
-    solid: [{ id: "prayer_plant", note: "add humidity", back: true }, { id: "royal_ivy", back: true }, { id: "terrarium_b", back: true }, { id: "cordyline_fruticosa", back: true }],
+    thrive: [{ id: "golden_pothos", back: true }, { id: "marble_queen_pothos", back: true }, { id: "pearls_jade_pothos", back: true }, { id: "philodendron_silver_stripe", back: true }, { id: "monstera", back: true }, { id: "zz_plant", back: true }, { id: "dracaena_fragrans", back: true }, { id: "dracaena_fragrans_b", back: true }, "pilea_peperomioides"],
+    solid: [{ id: "prayer_plant", note: "add humidity", back: true }, { id: "royal_ivy", back: true }, { id: "terrarium_b", back: true }, { id: "cordyline_fruticosa", back: true }, { id: "polka_dot_plant", note: "add humidity", back: true }, "rubber_tree"],
     avoid: "Full-sun cacti/Desert Rose (send to 2F SW). Keep the direct late beam off the pothos variegation midsummer.",
     keepOut: ["desert_rose", "lady_finger_cactus", "assorted_cacti", "firestick", "sedum_angelina", "aloe_vera", "succulent_frankenstein_a", "variegated_elephant_bush", "variegated_elephant_bush_bonsai"]
   },
@@ -3221,7 +3349,8 @@ const HOME_PLACEMENT_NOTES = [
   { tone: "success", title: "Desert Rose + Firestick — summer patio (NW)", body: "Aug 2026 they sit outdoors on the same 301° NW heading as 2F Room 2. UF/IFAS (Adenium) and Missouri Botanical Garden / NC State (Euphorbia tirucalli): summer sun is correct; dump saucers after storms; acclimate; bring containers in before nights ~50°F. NW late-day sun is milder than 2F SW — good heat compromise, modest bloom potential. Keep both off Moose's path (toxic sap)." },
   { tone: "info", title: "ZZ Plant — 5\" pot, urgent stretch is done", body: "Aug 2026: up-potted 4\" → 5\" (Clemson HGIC: only 1–2\" larger). Hold water 7–10 days if rhizomes were nicked, then resume long dry-downs. It's now a normal bright-indirect plant — 1F Window, 2F Room 2 set back, etc." },
   { tone: "danger", title: "Rot-risk succulents stay out of bathrooms", body: "Lady Finger Cactus (never), String of Pearls, String of Buttons, Haworthia, Kalanchoe Fang and Desert Rose soften and rot above ~60% humidity. Their zone is the 2F SW living room plus the NW rooms — dry, bright, warm." },
-  { tone: "info", title: "Fittonia & Polka Dot — humidity divas", body: "Both want elevated humidity and no harsh direct sun. The 1F bathroom, set back from the SE beam, is the dream spot: steady moisture in the air, no scorch. The tiny Polka Dot 2\" pot dries especially fast elsewhere." },
+  { tone: "info", title: "Fittonia & Polka Dot — humidity divas", body: "Both want elevated humidity and no harsh direct sun. The 1F bathroom, set back from the SE beam, is the dream spot: steady moisture in the air, no scorch. Polka Dot is now in a 3.5×2.5 DIY Mix A pot (Nov 2026) — still check often vs deeper pots, just not as frantic as the old 2\"." },
+  { tone: "info", title: "Pilea + Rubber — two DIY mixes on purpose", body: "Nov 2026: Pilea and Polka share DIY Mix A (coir/potting-forward). Rubber Tree uses chunkier DIY Mix B (more bark + citrus grit) in the same 6×5 footprint. Don't swap those soils long-term — rubber wants more air in the root zone; Hypoestes wilts if the mix is too gritty." },
   { tone: "info", title: "Terrariums — bright indirect only", body: "They make their own 80–95% humidity, so they don't need a bathroom. Park them at the 1F NE window; direct sun cooks the sealed glass and boils the plants inside." },
   { tone: "neutral", title: "Winter sun shifts south & low", body: "Nov–Feb the sun swings low and south: the SE/SW windows carry the load while N/NE windows go dim. Rotate light-hungry plants toward SE/SW for the winter." },
   { tone: "success", title: "Your two premium spots", body: "The 1F living-room corner (dual NE/SE light) is the most versatile home for fussy variegated foliage; the 2F SW living room is a desert powerhouse for every full-sun succulent and cactus you own." }
@@ -3272,8 +3401,10 @@ const PLANT_LIGHT_REF = {
   terrarium_b:                { light: "Bright indirect ONLY",                   humidity: "Self 80–95%",           best: "1F Window / NW room — no direct sun", flag: "info" },
   monstera_adansonii:         { light: "Bright indirect (+ soft AM OK)",         humidity: "High 60%+",             best: "1F Corner / 2F Rm2 humidifier cluster", hum: true },
   kalanchoe_fang:             { light: "Bright + several hrs direct",            humidity: "Low 30–50%",            best: "2F LR (SW), 1F Room 1 — never bathroom", flag: "info" },
-  polka_dot_plant:            { light: "Bright indirect, no harsh sun",          humidity: "High 50–60%+",          best: "1F Bath (set back)", flag: "info", hum: true },
-  string_of_buttons:          { light: "Bright + 3–4h gentle direct",            humidity: "Low 30–50%",            best: "1F Room 1 / morning sun — not bathroom", flag: "info" }
+  polka_dot_plant:            { light: "Bright indirect, no harsh sun",          humidity: "High 50–60%+",          best: "1F Bath (set back) — 3.5×2.5 DIY Mix A", flag: "info", hum: true },
+  string_of_buttons:          { light: "Bright + 3–4h gentle direct",            humidity: "Low 30–50%",            best: "1F Room 1 / morning sun — not bathroom", flag: "info" },
+  pilea_peperomioides:        { light: "Bright indirect (+ soft AM OK)",         humidity: "Avg–High 40–60%",       best: "1F Corner / Window — 6×5 DIY Mix A", hum: true },
+  rubber_tree:                { light: "Bright + 1–3h gentle direct",            humidity: "Avg 40–60%",            best: "1F Corner / Room 1 — 6×5 DIY Mix B", flag: "info" }
 };
 
 /* ============================================================
