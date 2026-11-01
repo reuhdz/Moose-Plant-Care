@@ -17,6 +17,7 @@
   const CUSTOM_PLANTS_KEY = "plant_care_custom_plants_v1";
   const OVERLAYS_KEY      = "plant_care_plant_overlays_v1";
   const IMAGES_KEY        = "plant_care_images_v1";
+  const REMOVED_OWNED_KEY = "plant_care_removed_owned_v1";
 
   /* Image store — keyed by plantId, value is a base64 data URL (JPEG, resized). */
   const ImageStore = {
@@ -96,6 +97,31 @@
     },
     removeCustom(id) { this.saveCustom(this.customPlants().filter(p => p.id !== id)); },
 
+    /* Built-in catalog plants the user deleted from their owned collection.
+     * Kept out of ownedIds() so Care Guide / watering / placement stop listing them.
+     * Catalog entries in PLANTS remain for reference / future re-add. */
+    removedOwnedIds() {
+      try {
+        const raw = JSON.parse(localStorage.getItem(REMOVED_OWNED_KEY) || "[]");
+        return Array.isArray(raw) ? raw.filter(id => typeof id === "string") : [];
+      } catch { return []; }
+    },
+    saveRemovedOwned(ids) {
+      const cleaned = Array.from(new Set((ids || []).filter(id => typeof id === "string" && id)));
+      localStorage.setItem(REMOVED_OWNED_KEY, JSON.stringify(cleaned));
+    },
+    markRemovedOwned(id) {
+      if (!id || id.startsWith("user_")) return;
+      const all = this.removedOwnedIds();
+      if (!all.includes(id)) {
+        all.push(id);
+        this.saveRemovedOwned(all);
+      }
+    },
+    unmarkRemovedOwned(id) {
+      this.saveRemovedOwned(this.removedOwnedIds().filter(x => x !== id));
+    },
+
     overlays() {
       try { return JSON.parse(localStorage.getItem(OVERLAYS_KEY) || "{}"); }
       catch { return {}; }
@@ -127,7 +153,38 @@
       return merged;
     },
     ownedIds() {
-      return OWNED_PLANT_IDS.concat(this.customPlants().map(p => p.id));
+      const removed = new Set(this.removedOwnedIds());
+      return OWNED_PLANT_IDS
+        .filter(id => !removed.has(id))
+        .concat(this.customPlants().map(p => p.id));
+    },
+
+    /* Delete an owned plant from the user's collection (custom or built-in).
+     * Built-ins are hidden via removedOwnedIds; catalog research data stays in PLANTS. */
+    deleteOwned(id) {
+      if (!id) return false;
+      const isCustom = id.startsWith("user_");
+      if (isCustom) this.removeCustom(id);
+      else this.markRemovedOwned(id);
+      this.removeOverlay(id);
+      ImageStore.remove(id);
+      SnoozeStore.clear(id);
+      CareNotesStore.clearForPlant(id);
+      ConditionLogStore.clearForPlant(id);
+      RoomPlanStore.unassign(id);
+      /* Drop watering-log rows for this plant */
+      WaterLog.replaceAll(WaterLog.all().filter(e => e.plantId !== id));
+      /* Drop plant-specific todos (keep general / other-plant todos) */
+      const todos = TodoStore.all();
+      let todosChanged = false;
+      Object.keys(todos).forEach(tid => {
+        if (todos[tid]?.plantId === id) {
+          delete todos[tid];
+          todosChanged = true;
+        }
+      });
+      if (todosChanged) TodoStore.save(todos);
+      return true;
     }
   };
 
@@ -1560,7 +1617,8 @@
     profileNameRow.hidden  = isEdit && !isEditingCustom();
     profileSciRow.hidden   = isEdit && !isEditingCustom();
     profileCatRow.hidden   = isEdit && !isEditingCustom();
-    profileDelete.hidden   = !(isEdit && isEditingCustom());
+    /* Delete works for both custom and built-in owned plants */
+    profileDelete.hidden   = !(isEdit && !!profileExisting.value);
     updateWateringInfoDisplay(mode);
   }
 
@@ -1769,14 +1827,24 @@
 
   profileDelete.addEventListener("click", () => {
     const id = profileExisting.value;
-    if (!id || !id.startsWith("user_")) return;
-    if (!confirm("Delete this custom plant, its overlay data, and its photo? Watering log entries will remain.")) return;
-    PlantStore.removeCustom(id);
-    PlantStore.removeOverlay(id);
-    ImageStore.remove(id);
+    if (!id) return;
+    const all = PlantStore.ownedIds();
+    if (!all.includes(id)) {
+      alert("That plant is not in your owned collection.");
+      return;
+    }
+    const name = PlantStore.allPlants()[id]?.displayName || id;
+    const isCustom = id.startsWith("user_");
+    const msg = isCustom
+      ? `Delete "${name}"?\n\nThis removes the custom plant, photo, overlays, watering log, todos, notes, snooze, and room assignment. This cannot be undone.`
+      : `Remove "${name}" from your collection?\n\nIt will disappear from Care Guide, watering, soil, and placement lists. Photo, overlays, watering log, todos, notes, snooze, and room assignment for this plant are cleared. Catalog care research stays in the app data if you add it back later via a site update.`;
+    if (!confirm(msg)) return;
+    PlantStore.deleteOwned(id);
     refreshAllDropdowns();
-    resetProfileForm("new");
-    flash("Deleted.");
+    renderRecentLog();
+    if (document.querySelector("#tab-placement.active")) renderPlacementTab();
+    resetProfileForm("edit");
+    flash(`Removed "${name}".`);
   });
 
   /**
@@ -1834,6 +1902,7 @@
       careNotes: CareNotesStore.all(),
       roomPlan: RoomPlanStore.all(),
       conditionLog: ConditionLogStore.all(),
+      removedOwned: PlantStore.removedOwnedIds(),
       exportedAt: new Date().toISOString()
     };
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
@@ -1865,6 +1934,7 @@
           if (parsed.careNotes !== undefined) CareNotesStore.replaceAll(parsed.careNotes);
           if (parsed.roomPlan !== undefined) RoomPlanStore.replaceAll(parsed.roomPlan);
           if (parsed.conditionLog !== undefined) ConditionLogStore.replaceAll(parsed.conditionLog);
+          if (Array.isArray(parsed.removedOwned)) PlantStore.saveRemovedOwned(parsed.removedOwned);
         } else {
           throw new Error("Unrecognized JSON shape.");
         }
