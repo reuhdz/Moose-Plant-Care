@@ -506,9 +506,9 @@
 
       <h2>☁️ Firebase Sync</h2>
       <p class="muted">
-        Cloud copy lives in Firestore project <code>moose-plant-shop</code>
-        at <code>plantCare/moose</code>. Push uploads this device’s data; Pull replaces local stores from the cloud.
-        First Push (or Seed Cloud) writes the bundled export if the cloud doc is empty.
+        Cloud copy lives in Realtime Database project <code>moose-plant-shop</code>
+        at path <code>plantCare/moose</code>. Push uploads this device’s data; Pull replaces local stores from the cloud.
+        Seed Cloud writes the bundled export to that path.
       </p>
       <div class="io-buttons">
         <button id="cloud-pull" class="secondary-btn">☁️ Pull from Firebase</button>
@@ -530,7 +530,7 @@
   </footer>
 
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
   <script src="js/firebase-cloud.js"></script>
   <script src="js/plants-data.js"></script>
   <script src="js/care-library.js"></script>

@@ -1,11 +1,11 @@
 /**
- * Firebase cloud sync for Moose Plant Care.
+ * Firebase Realtime Database sync for Moose Plant Care.
  *
  * Uses the compat CDN SDKs (loaded from index.html) so the rest of the
  * classic-script app can call window.PlantCareCloud without a bundler.
  *
- * Document layout (single household snapshot, same shape as Export JSON):
- *   plantCare / moose
+ * Path (single household snapshot, same shape as Export JSON):
+ *   plantCare/moose
  *     waterLog, customPlants, overlays, images, snoozes, todos,
  *     careNotes, roomPlan, conditionLog, removedOwned, exportedAt, syncedAt
  */
@@ -15,6 +15,7 @@
   const FIREBASE_CONFIG = {
     apiKey: "AIzaSyDyBmEXPWyFp3nSCg4-yGhyXFe66zQyVcE",
     authDomain: "moose-plant-shop.firebaseapp.com",
+    databaseURL: "https://moose-plant-shop-default-rtdb.firebaseio.com",
     projectId: "moose-plant-shop",
     storageBucket: "moose-plant-shop.firebasestorage.app",
     messagingSenderId: "315095763791",
@@ -22,7 +23,7 @@
     measurementId: "G-0YKRG59WLR"
   };
 
-  const DOC_PATH = { collection: "plantCare", id: "moose" };
+  const RTDB_PATH = "plantCare/moose";
   const BUNDLED_EXPORT_URL = "data/plant-care-export.json";
 
   let app = null;
@@ -40,7 +41,7 @@
       app = global.firebase.apps?.length
         ? global.firebase.app()
         : global.firebase.initializeApp(FIREBASE_CONFIG);
-      db = global.firebase.firestore();
+      db = global.firebase.database();
       return db;
     } catch (err) {
       initError = err;
@@ -48,8 +49,8 @@
     }
   }
 
-  function docRef() {
-    return ensureFirebase().collection(DOC_PATH.collection).doc(DOC_PATH.id);
+  function rootRef() {
+    return ensureFirebase().ref(RTDB_PATH);
   }
 
   function normalizePayload(raw) {
@@ -70,17 +71,21 @@
     };
   }
 
+  function snapToPayload(val) {
+    if (val == null) return null;
+    return normalizePayload(val);
+  }
+
   async function pull() {
-    const snap = await docRef().get();
-    if (!snap.exists) return null;
-    return normalizePayload(snap.data());
+    const snap = await rootRef().once("value");
+    return snapToPayload(snap.val());
   }
 
   async function push(payload) {
     const data = normalizePayload(payload);
     data.syncedAt = new Date().toISOString();
     if (!data.exportedAt) data.exportedAt = data.syncedAt;
-    await docRef().set(data, { merge: false });
+    await rootRef().set(data);
     return data;
   }
 
@@ -91,7 +96,7 @@
   }
 
   /**
-   * If the cloud doc is missing, seed it from the bundled export JSON.
+   * If the cloud node is missing, seed it from the bundled export JSON.
    * Returns { seeded: boolean, data }.
    */
   async function ensureSeeded() {
@@ -104,21 +109,21 @@
 
   function statusMessage(err) {
     const msg = String(err?.message || err || "");
-    if (/Cloud Firestore API has not been used|SERVICE_DISABLED|firestore\.googleapis\.com/i.test(msg)) {
-      return "Firestore is not enabled yet on project moose-plant-shop. Create a Firestore database in the Firebase console, then try again.";
+    if (/404|not found|does not exist|FirebaseError:.*database/i.test(msg) && /database|rtdb|firebaseio/i.test(msg + FIREBASE_CONFIG.databaseURL)) {
+      return "Realtime Database is not created yet on moose-plant-shop. Create it in Firebase Console → Build → Realtime Database, then retry.";
     }
-    if (/permission|Missing or insufficient permissions/i.test(msg)) {
-      return "Firestore permission denied. Deploy firestore.rules (see firebase.json) or temporarily use test-mode rules.";
+    if (/Permission denied|permission_denied/i.test(msg)) {
+      return "Realtime Database permission denied. Deploy database.rules.json (firebase deploy --only database) or temporarily allow read/write in the console.";
     }
-    if (/Failed to get document because the client is offline/i.test(msg)) {
-      return "Firebase client is offline. Check network / authorized domains for this GitHub Pages host.";
+    if (/Failed to get|network|offline|ERR_NAME_NOT_RESOLVED/i.test(msg)) {
+      return "Could not reach Realtime Database. Confirm databaseURL in js/firebase-cloud.js matches the URL shown in Firebase Console, and that this GitHub Pages host is an authorized domain.";
     }
     return msg || "Unknown Firebase error";
   }
 
   global.PlantCareCloud = {
     config: FIREBASE_CONFIG,
-    docPath: DOC_PATH,
+    rtdbPath: RTDB_PATH,
     bundledExportUrl: BUNDLED_EXPORT_URL,
     ensureFirebase,
     normalizePayload,

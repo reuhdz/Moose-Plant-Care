@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "plantCare": {
+      "moose": {
+        ".read": true,
+        ".write": true
+      }
+    }
+  }
+}

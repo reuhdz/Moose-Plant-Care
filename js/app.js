@@ -2025,11 +2025,11 @@
     try {
       const data = await cloud.pull();
       if (!data) {
-        setCloudStatus("No cloud document yet at plantCare/moose. Use Seed Cloud or Push first.");
+        setCloudStatus("No data yet at Realtime Database path plantCare/moose. Use Seed Cloud or Push first.");
         flash("Cloud empty — nothing to pull");
         return;
       }
-      if (!confirm(`Replace local data with Firebase snapshot?\n\n${data.waterLog.length} waterings · synced ${data.syncedAt || data.exportedAt || "unknown"}`)) {
+      if (!confirm(`Replace local data with Firebase Realtime Database snapshot?\n\n${data.waterLog.length} waterings · synced ${data.syncedAt || data.exportedAt || "unknown"}`)) {
         setCloudStatus("Pull cancelled.");
         return;
       }
@@ -2047,7 +2047,7 @@
     setCloudStatus("Pushing to Firebase…");
     try {
       const payload = collectExportPayload();
-      if (!confirm(`Push this device’s data to Firebase plantCare/moose?\n\n${payload.waterLog.length} waterings will overwrite the cloud copy.`)) {
+      if (!confirm(`Push this device’s data to Realtime Database path plantCare/moose?\n\n${payload.waterLog.length} waterings will overwrite the cloud copy.`)) {
         setCloudStatus("Push cancelled.");
         return;
       }
@@ -2066,13 +2066,13 @@
     setCloudStatus("Seeding Firebase from bundled export…");
     try {
       const existing = await cloud.pull();
-      if (existing && !confirm(`Cloud already has ${existing.waterLog.length} waterings (synced ${existing.syncedAt || existing.exportedAt || "unknown"}).\n\nOverwrite with data/plant-care-export.json?`)) {
+      if (existing && !confirm(`Realtime Database already has ${existing.waterLog.length} waterings (synced ${existing.syncedAt || existing.exportedAt || "unknown"}).\n\nOverwrite with data/plant-care-export.json?`)) {
         setCloudStatus("Seed cancelled — cloud left unchanged.");
         return;
       }
       const bundled = await cloud.loadBundledExport();
       const saved = await cloud.push(bundled);
-      setCloudStatus(`Seeded plantCare/moose from bundled export (${saved.waterLog.length} waterings).`);
+      setCloudStatus(`Seeded Realtime Database plantCare/moose from bundled export (${saved.waterLog.length} waterings).`);
       flash("Firebase seeded from export 🌱");
     } catch (err) {
       const msg = cloud.statusMessage(err);
