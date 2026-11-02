@@ -4,10 +4,15 @@
  * - Reads PLANTS data from plants-data.js (global).
  * - Reads/writes the user's watering log via WaterLog (localStorage + import/export).
  * - Computes:
- *   - Next watering date for a plant (based on last logged + plant interval + season).
+ *   - Next watering date for a plant (last log + plant-specific seasonal interval).
  *   - Full 2026 schedule per plant (projected from last-known watering or Jan 1, 2026).
  *
- * Cool-season months: Nov, Dec, Jan, Feb (indices 10, 11, 0, 1).
+ * Seasonality is PER PLANT:
+ *   1. Absolute days on the plant win when present
+ *      (wateringDaysHot / Spring / Fall / Cool / Dormant + wateringDays).
+ *   2. Otherwise the plant's seasonalHabit (or category default) supplies
+ *      phenology months + multipliers of wateringDays.
+ *   3. Habits model natural slowing / dormancy (succulents, cacti, Adenium, etc.).
  */
 
 const YEAR = 2026;
@@ -21,48 +26,125 @@ const ROOM_PLAN_KEY      = "plant_care_room_plan_v1";
 const CONDITION_LOG_KEY  = "plant_care_condition_log_v1";
 
 /*
- * Seasonal config — calibrated for INDOOR plants in AUSTIN, TX, kept at a
- * controlled 75–80°F year-round.
+ * Seasonal habits — calibrated for Pflugerville / Austin indoor collection
+ * (mostly 75–80°F indoors; some patio plants in summer).
  *
- *   🔥 hot   = Jun, Jul, Aug, Sep      → uses plant.wateringDaysHot
- *   ☀️ warm = Mar, Apr, May, Oct, Nov → uses plant.wateringDays
- *   ❄️ cool = Dec, Jan, Feb           → uses plant.wateringDaysCool
+ * Phenology keys: spring | summer | fall | winter | dormant
+ * months[] is Jan→Dec.
  *
- * Why the differences are small between "hot" and "warm" here:
- *   - Indoor temp is constant, so the dominant seasonal drivers are
- *     LIGHT (day length / sun angle) and HUMIDITY (winter heating dries the
- *     air, summer AC dries it less aggressively).
- *   - Summer indoors: longer days + brighter ambient light = slightly more
- *     growth and water uptake. Bump of ~10–15% from warm.
- *   - Winter indoors: shorter days, plants slow growth. Bigger slowdown
- *     (~50–60% longer interval) even though heated air is dry — reduced
- *     photosynthesis dominates.
- *
- * If a plant doesn't define wateringDaysHot, we estimate it as
- * `wateringDays * HOT_FALLBACK_MULTIPLIER`.
- *
- * To recalibrate (e.g. if you move plants outdoors or to another climate):
- * change `MONTH_SEASONS` and `HOT_FALLBACK_MULTIPLIER` here.
+ * Absolute plant fields (when set) always override multipliers:
+ *   wateringDaysSpring, wateringDaysHot (summer), wateringDays (baseline),
+ *   wateringDaysFall, wateringDaysCool (winter), wateringDaysDormant
  */
+const SEASONAL_HABITS = {
+  tropical: {
+    id: "tropical",
+    label: "Evergreen tropical",
+    emoji: "🌿",
+    months: ["winter","winter","spring","spring","spring","summer","summer","summer","summer","fall","fall","winter"],
+    multipliers: { spring: 1.0, summer: 0.88, fall: 1.15, winter: 1.55, dormant: 1.8 }
+  },
+  pothos: {
+    id: "pothos",
+    label: "Trailing aroid / pothos",
+    emoji: "🍃",
+    months: ["winter","winter","spring","spring","spring","summer","summer","summer","summer","fall","fall","winter"],
+    multipliers: { spring: 0.95, summer: 0.85, fall: 1.12, winter: 1.5, dormant: 1.7 }
+  },
+  humidity: {
+    id: "humidity",
+    label: "Humidity-loving foliage",
+    emoji: "💧",
+    /* Dry winter AC still pulls moisture — winter slowdown is milder than succulents. */
+    months: ["winter","winter","spring","spring","spring","summer","summer","summer","summer","fall","fall","winter"],
+    multipliers: { spring: 1.0, summer: 0.9, fall: 1.1, winter: 1.35, dormant: 1.5 }
+  },
+  succulent: {
+    id: "succulent",
+    label: "Succulent (winter slowdown)",
+    emoji: "🌵",
+    months: ["winter","winter","spring","spring","spring","summer","summer","summer","summer","fall","winter","winter"],
+    multipliers: { spring: 1.0, summer: 0.9, fall: 1.45, winter: 2.1, dormant: 2.6 }
+  },
+  cactus: {
+    id: "cactus",
+    label: "Cactus (hard winter dry-down)",
+    emoji: "🏜️",
+    months: ["dormant","dormant","spring","spring","spring","summer","summer","summer","summer","fall","dormant","dormant"],
+    multipliers: { spring: 1.05, summer: 0.95, fall: 1.6, winter: 2.4, dormant: 3.0 }
+  },
+  semi_dormant: {
+    id: "semi_dormant",
+    label: "Semi-dormant (bonsai / woody)",
+    emoji: "🌳",
+    months: ["winter","winter","spring","spring","spring","summer","summer","summer","summer","fall","fall","winter"],
+    multipliers: { spring: 0.95, summer: 0.88, fall: 1.25, winter: 1.75, dormant: 2.2 }
+  },
+  winter_dormant: {
+    id: "winter_dormant",
+    label: "Winter dormant",
+    emoji: "😴",
+    /* Adenium / Euphorbia patio plants: growth season spring–early fall, then nearly dry. */
+    months: ["dormant","dormant","spring","spring","spring","summer","summer","summer","summer","fall","dormant","dormant"],
+    multipliers: { spring: 0.95, summer: 0.85, fall: 1.7, winter: 3.0, dormant: 3.4 }
+  },
+  orchid: {
+    id: "orchid",
+    label: "Orchid / epiphyte",
+    emoji: "🌸",
+    months: ["winter","winter","spring","spring","spring","summer","summer","summer","summer","fall","fall","winter"],
+    multipliers: { spring: 1.0, summer: 0.92, fall: 1.15, winter: 1.4, dormant: 1.6 }
+  },
+  closed_terrarium: {
+    id: "closed_terrarium",
+    label: "Closed terrarium (minimal seasonal swing)",
+    emoji: "🫙",
+    months: ["winter","winter","spring","spring","spring","summer","summer","summer","summer","fall","fall","winter"],
+    multipliers: { spring: 1.0, summer: 1.0, fall: 1.05, winter: 1.1, dormant: 1.15 }
+  }
+};
+
+const CATEGORY_TO_HABIT = {
+  tropical: "tropical",
+  pothos: "pothos",
+  succulent: "succulent",
+  succulent_like: "succulent",
+  cactus: "cactus",
+  bonsai: "semi_dormant",
+  ornamental_grass: "tropical",
+  fern: "humidity",
+  orchid: "orchid",
+  other: "tropical"
+};
+
+/* Plants whose id should force a habit even if category would differ. */
+const PLANT_HABIT_OVERRIDES = {
+  desert_rose: "winter_dormant",
+  firestick: "winter_dormant",
+  prayer_plant: "humidity",
+  fittonia: "humidity",
+  polka_dot_plant: "humidity",
+  mini_orchid: "orchid",
+  terrarium_a: "closed_terrarium",
+  terrarium_b: "closed_terrarium",
+  lady_finger_cactus: "cactus",
+  assorted_cacti: "cactus"
+};
+
 const SEASONAL_CONFIG = {
-  location: "Austin, TX (indoor, 75–80°F)",
+  location: "Austin, TX (indoor 75–80°F · plant-specific seasons)",
+  /* Legacy 3-bucket labels kept for older UI copy; algorithm uses habits. */
   MONTH_SEASONS: [
-    /* Jan */ "cool",
-    /* Feb */ "cool",
-    /* Mar */ "warm",
-    /* Apr */ "warm",
-    /* May */ "warm",
-    /* Jun */ "hot",
-    /* Jul */ "hot",
-    /* Aug */ "hot",
-    /* Sep */ "hot",
-    /* Oct */ "warm",
-    /* Nov */ "warm",
-    /* Dec */ "cool"
+    "cool","cool","warm","warm","warm","hot","hot","hot","hot","warm","warm","cool"
   ],
-  /* For INDOOR controlled-temp plants, hot interval is only ~10–15% faster
-   * than warm (not the 25% that outdoor / window-driven plants would see). */
-  HOT_FALLBACK_MULTIPLIER: 0.88
+  HOT_FALLBACK_MULTIPLIER: 0.88,
+  PERIOD_META: {
+    spring:  { emoji: "🌱", label: "Spring",  legacy: "warm" },
+    summer:  { emoji: "🔥", label: "Summer",  legacy: "hot" },
+    fall:    { emoji: "🍂", label: "Fall",    legacy: "warm" },
+    winter:  { emoji: "❄️", label: "Winter",  legacy: "cool" },
+    dormant: { emoji: "😴", label: "Dormant", legacy: "cool" }
+  }
 };
 
 /* ----------- Date helpers ----------- */
@@ -103,19 +185,129 @@ const Dates = {
   }
 };
 
-/* ----------- Watering interval (season-aware) ----------- */
-function seasonForDate(date) {
+/* ----------- Watering interval (plant-specific seasons) ----------- */
+function habitIdForPlant(plant) {
+  if (!plant) return "tropical";
+  if (plant.seasonalHabit && SEASONAL_HABITS[plant.seasonalHabit]) return plant.seasonalHabit;
+  if (plant.id && PLANT_HABIT_OVERRIDES[plant.id]) return PLANT_HABIT_OVERRIDES[plant.id];
+  const cat = String(plant.category || "").toLowerCase();
+  return CATEGORY_TO_HABIT[cat] || "tropical";
+}
+
+function habitForPlant(plant) {
+  return SEASONAL_HABITS[habitIdForPlant(plant)] || SEASONAL_HABITS.tropical;
+}
+
+function asDate(date) {
+  if (date && typeof date.getMonth === "function" && !isNaN(date.getTime())) return date;
+  if (typeof date === "string" && /^\d{4}-\d{2}-\d{2}/.test(date)) return Dates.fromIso(date);
+  return Dates.today();
+}
+
+function phenologyForDate(plant, date) {
+  const d = asDate(date);
+  const month = d.getMonth();
+  if (Array.isArray(plant?.seasonMonths) && plant.seasonMonths.length === 12) {
+    return plant.seasonMonths[month] || "spring";
+  }
+  const habit = habitForPlant(plant);
+  return habit.months[month] || "spring";
+}
+
+/** Legacy 3-bucket label (hot/warm/cool) for older UI paths. */
+function seasonForDate(date, plant) {
+  if (plant) {
+    const period = phenologyForDate(plant, date);
+    return (SEASONAL_CONFIG.PERIOD_META[period] || {}).legacy || "warm";
+  }
   return SEASONAL_CONFIG.MONTH_SEASONS[date.getMonth()] || "warm";
 }
 
-function intervalForDate(plant, date) {
-  const season = seasonForDate(date);
-  if (season === "cool") return plant.wateringDaysCool;
-  if (season === "hot") {
-    if (plant.wateringDaysHot && plant.wateringDaysHot > 0) return plant.wateringDaysHot;
-    return Math.max(1, Math.round(plant.wateringDays * SEASONAL_CONFIG.HOT_FALLBACK_MULTIPLIER));
+function explicitDaysForPeriod(plant, period) {
+  if (!plant) return null;
+  switch (period) {
+    case "summer":
+      return plant.wateringDaysHot > 0 ? plant.wateringDaysHot : null;
+    case "spring":
+      if (plant.wateringDaysSpring > 0) return plant.wateringDaysSpring;
+      return plant.wateringDays > 0 ? plant.wateringDays : null;
+    case "fall":
+      if (plant.wateringDaysFall > 0) return plant.wateringDaysFall;
+      /* Fall often sits between warm and cool when not authored. */
+      if (plant.wateringDays > 0 && plant.wateringDaysCool > 0) {
+        return Math.round((plant.wateringDays + plant.wateringDaysCool) / 2);
+      }
+      return plant.wateringDays > 0 ? plant.wateringDays : null;
+    case "winter":
+      return plant.wateringDaysCool > 0 ? plant.wateringDaysCool : null;
+    case "dormant":
+      if (plant.wateringDaysDormant > 0) return plant.wateringDaysDormant;
+      if (plant.wateringDaysCool > 0) {
+        return Math.max(plant.wateringDaysCool, Math.round(plant.wateringDaysCool * 1.25));
+      }
+      return null;
+    default:
+      return plant.wateringDays > 0 ? plant.wateringDays : null;
   }
-  return plant.wateringDays;
+}
+
+function intervalForDate(plant, date) {
+  const period = phenologyForDate(plant, date);
+  const explicit = explicitDaysForPeriod(plant, period);
+  if (explicit && explicit > 0) return explicit;
+
+  const habit = habitForPlant(plant);
+  const base = (plant.wateringDays > 0 && plant.wateringDays)
+    || (plant.wateringDaysCool > 0 && plant.wateringDaysCool)
+    || 7;
+  const mult = (habit.multipliers && habit.multipliers[period]) || 1;
+  /* Hot fallback mirrors the old global multiplier when summer days are missing. */
+  if (period === "summer" && !(plant.wateringDaysHot > 0)) {
+    return Math.max(1, Math.round(base * (habit.multipliers.summer || SEASONAL_CONFIG.HOT_FALLBACK_MULTIPLIER)));
+  }
+  return Math.max(1, Math.round(base * mult));
+}
+
+function describeSeasonForPlant(plant, date) {
+  const when = date || Dates.today();
+  const period = phenologyForDate(plant, when);
+  const meta = SEASONAL_CONFIG.PERIOD_META[period] || { emoji: "☀️", label: period };
+  const habit = habitForPlant(plant);
+  const days = intervalForDate(plant, when);
+  return {
+    period,
+    legacy: seasonForDate(when, plant),
+    label: meta.label,
+    emoji: meta.emoji,
+    habitId: habit.id,
+    habitLabel: habit.label,
+    habitEmoji: habit.emoji,
+    days
+  };
+}
+
+/** Resolve the four display intervals for profile / care cards. */
+function seasonalIntervalSummary(plant) {
+  if (!plant) return null;
+  const probe = (monthIdx) => {
+    const d = new Date(YEAR, monthIdx, 15);
+    return intervalForDate(plant, d);
+  };
+  return {
+    spring: probe(3),   /* mid-Apr */
+    summer: probe(6),   /* mid-Jul */
+    fall: probe(9),     /* mid-Oct */
+    winter: probe(0),   /* mid-Jan */
+    dormant: (() => {
+      const habit = habitForPlant(plant);
+      const hasDormant = habit.months.includes("dormant") || plant.wateringDaysDormant > 0;
+      if (!hasDormant) return null;
+      /* Prefer a month the habit marks dormant; else Jan. */
+      const idx = habit.months.indexOf("dormant");
+      return probe(idx >= 0 ? idx : 0);
+    })(),
+    habit: habitForPlant(plant)
+  };
 }
 
 /* ----------- Build full schedule for a plant in 2026 ----------- */
@@ -260,6 +452,9 @@ function nextWatering(plantId, logEntries, explicitPlant) {
   }
 
   const last = actuals[0];
+  /* Interval is taken from the LAST watering date's phenology so the gap
+   * matches the season the plant was actually in when it was watered.
+   * Subsequent projections in buildSchedule re-resolve per date. */
   const interval = intervalForDate(plant, last);
   let next = Dates.addDays(last, interval);
   /* Apply snooze if active.
@@ -288,6 +483,8 @@ function nextWatering(plantId, logEntries, explicitPlant) {
 
   const lastFertilized = lastFertilizedDate(plantId, logEntries);
 
+  const seasonInfo = describeSeasonForPlant(plant, last);
+  const nextSeasonInfo = describeSeasonForPlant(plant, next);
   return {
     lastDate: last,
     lastFertilizedDate: lastFertilized,
@@ -295,7 +492,12 @@ function nextWatering(plantId, logEntries, explicitPlant) {
     daysUntil,
     status,
     interval,
-    season: seasonForDate(last),
+    season: seasonInfo.legacy,
+    seasonPeriod: seasonInfo.period,
+    seasonLabel: `${seasonInfo.emoji} ${seasonInfo.label}`,
+    habitLabel: `${seasonInfo.habitEmoji} ${seasonInfo.habitLabel}`,
+    nextSeasonPeriod: nextSeasonInfo.period,
+    nextInterval: intervalForDate(plant, next),
     snooze: snoozeDays
   };
 }
