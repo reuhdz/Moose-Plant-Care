@@ -250,6 +250,18 @@ const CHOPSTICK_BY_PLANT = {
     "Damp → wait.",
     "Same trailing-aroid rule as pothos: mid-surface dry reading is enough in a small pot."
   ),
+  philodendron_burle_marx: _c(
+    "Insert ~1–1.5\" deep in the 5.5\" DIY Aroid pot (between the 2 shoots).",
+    "Dry at 1–2\" → deep soak; empty the saucer.",
+    "Damp → wait.",
+    "Two shoots share one root zone — mid-pot wetness matters more than the surface crust."
+  ),
+  philodendron_painted_lady: _c(
+    "Insert ~1.5–2\" deep in the 6.5\" DIY Aroid pot.",
+    "Dry at 1–2\" (check mid-zone) → deep soak.",
+    "Damp mid-zone → wait — larger pot stays wet longer.",
+    "Variegated tissue browns from both over- and under-watering; trust the stick over the calendar."
+  ),
   haworthia: _c(
     "Insert ~1\" deep in the 3\" pot; avoid jamming into the rosette center.",
     "Bone-dry stick → water at the soil line only (not into the leaves).",
@@ -585,6 +597,15 @@ const PROPAGATION_LIBRARY = {
     _m("Water cuttings", "90–95%", "1–3 weeks", "Node cuttings root like pothos."),
     _m("Soil cuttings", "90–95%", "2–4 weeks", "Very forgiving trailing aroid.")
   ],
+  philodendron_burle_marx: [
+    _m("Water cuttings", "90–95%", "1–2 weeks", "Node + leaf cuttings root fast in warm bright-indirect."),
+    _m("Soil cuttings", "85–95%", "2–4 weeks", "Keep just-moist under a cup, then resume dry-downs."),
+    _m("Division of shoots", "90%+", "Immediate", "Separate the two shoots at repot if you want solo pots.")
+  ],
+  philodendron_painted_lady: [
+    _m("Water cuttings", "85–95%", "1–3 weeks", "Propagate from the most painted nodes — green cuttings stay green."),
+    _m("Soil cuttings", "85–95%", "2–4 weeks", "Humidity dome 1–2 weeks; brighter light holds variegation.")
+  ],
   fittonia: [
     _m("Stem cuttings in water", "80–90%", "1–3 weeks", "Keep humid — cuttings wilt fast in dry AC."),
     _m("Stem cuttings in soil under humidity", "85–90%", "2–4 weeks", "Bag or dome raises success."),
@@ -786,6 +807,14 @@ const TROUBLESHOOTING_LIBRARY = {
   ],
   philodendron_silver_stripe: [
     _t("Silver stripe fading", "Low light", "Brighter indirect light.", "low")
+  ],
+  philodendron_burle_marx: [
+    _t("Long petioles / small new leaves", "Low light", "Move to 1F Corner / brighter indirect; rotate both shoots.", "low"),
+    _t("Yellow leaves + wet mix", "Overwatering", "Lengthen dry-down; refresh DIY Aroid if compacted.", "high")
+  ],
+  philodendron_painted_lady: [
+    _t("Yellow mottling fading / greener leaves", "Low light", "Brighter indirect; prune reverted green vines to last painted leaf.", "normal"),
+    _t("Scorched yellow patches", "Direct PM sun", "Set the 6.5\" back from harsh glass.", "normal")
   ],
   snake_plant: [
     _t("Base mush / falling leaves", "Overwatering", "Dry hard; cut rot from rhizome.", "high")

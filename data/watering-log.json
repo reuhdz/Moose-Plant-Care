@@ -80,5 +80,17 @@
     "date": "2026-10-30",
     "note": "(initial — 6×5 DIY Mix B; watered 2 days before Nov 1 add)",
     "fertilized": false
+  },
+  {
+    "plantId": "philodendron_burle_marx",
+    "date": "2026-11-01",
+    "note": "(initial — 5.5\" DIY Aroid, 2 shoots; watered day before Nov 2 add)",
+    "fertilized": false
+  },
+  {
+    "plantId": "philodendron_painted_lady",
+    "date": "2026-11-01",
+    "note": "(initial — 6.5\" DIY Aroid, 3 vines; watered day before Nov 2 add)",
+    "fertilized": false
   }
 ]

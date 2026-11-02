@@ -2791,6 +2791,111 @@ const PLANTS = {
       { label: "Costa Farms — Rubber Tree", url: "https://costafarms.com/plants/rubber-tree" }
     ]
   },
+
+  philodendron_burle_marx: {
+    id: "philodendron_burle_marx",
+    repotSigns: [
+      "Roots circling hard / poking the 5.5\" drainage holes",
+      "Water rushes through in seconds — DIY Aroid collapsed or rootbound",
+      "New leaves smaller than the previous flush despite good light",
+      "Two shoots competing and the pot tips easily",
+      "Surface stays wet >4 days after a soak (compaction)",
+      "Aerial roots crawling the rim with nowhere to climb"
+    ],
+    displayName: "Philodendron Burle Marx",
+    repotted: true,
+    potSize: '5.5"',
+    cuttingsCount: 2,
+    category: "pothos",
+    names: {
+      common: ["Philodendron Burle Marx", "Burle Marx Philodendron", "Burle Marx"],
+      scientific: "Philodendron burle-marxii (trade / cultivar 'Burle Marx'; often treated as a compact form allied to P. cordatum)"
+    },
+    wateringDays: 7,
+    wateringDaysHot: 6,
+    wateringDaysCool: 12,
+    currentSoilMix: "diy_aroid",
+    comments: "Nov 2026: two shoots in a 5.5\" pot with DIY Aroid (3 bark · 2 coco · 1 potting · 2 pumice · ½–1 charcoal · pinch fert). Last watered 2026-11-01. Named for Brazilian landscape architect Roberto Burle Marx — glossy wavy lance leaves; climbs or trails. Optional moss pole for larger foliage.",
+    idealSoil: ["diy_aroid", "aroid_mix", "amended_potting"],
+    soilNotes: "DIY Aroid keeps the 5.5\" root zone oxygenated for two shoots. Refresh when bark softens (~12–18 months). Upsize only +1\" when roots fill.",
+    conditions: {
+      light:        { ideal: "Bright indirect; soft morning sun OK", passing: "Medium indirect; low light → long petioles / smaller leaves" },
+      temperature:  { ideal: "65–80°F (18–27°C)", passing: "60–85°F; protect from cold drafts below 55°F" },
+      humidity:     { ideal: "50–60%+", passing: "40%+ household OK; crispy tips in bone-dry AC" },
+      soilMoisture: { ideal: "Top 1–2\" dry between deep soaks", passing: "Never leave the 5.5\" sitting in a saucer" }
+    },
+    tips: {
+      lighting: "Bright, diffused / indirect light matches forest-understory growth (RHS Philodendron guide / The Spruce Burle Marx). Soft morning sun is fine; harsh afternoon beams scorch the thin wavy blades.\n\n• Ideal: 1–3 ft from an east window, or set back from south/west glass.\n• Low light → elongated petioles, smaller leaves, sparse look (NParks notes stretch in shade).\n• Rotate ¼ turn every watering so both shoots stay even.\n• A moss pole or stake encourages climbing and larger adult foliage.\n\n• Best matches per PLANT_LIGHT_REF: 1F Corner, 1F Window (set back), humidified 2F Room 2. Hard avoid: unfiltered 2F SW Living Room.",
+      soil: "Open, ericaceous / peat-free, moisture-retentive but fast-draining aroid mix (RHS: bark, pumice/lava, leafmould or coir).\n\nDIY Aroid (current):\n• 3 scoops medium orchid bark\n• 2 scoops hydrated coco coir\n• 1 scoop standard potting mix\n• 2 scoops pumice\n• ½–1 scoop horticultural charcoal\n• General fertilizer: pinch / label rate only (NOT a scoop)\n\nAvoid: pure bagged potting mix, garden soil, chronically soggy peat bricks.",
+      watering: "METHOD — soak-and-dry: water when the surface / top 1–2\" just dry, then soak thoroughly and dump the saucer (RHS / The Spruce). Reduce in fall–winter when growth slows.\n\nHOW TO CHECK READINESS (your 5.5\" DIY Aroid pot, 2 shoots):\n• Finger test: top 1–2\" dry/crumbly = water; cool-damp = wait.\n• Pot weight: noticeably lighter than 24 hrs post-soak = ready.\n• Moisture meter: ~3–4 upper third = water; 5+ = wait.\n• Plant tells: slight soft droop + dry mix = thirsty. Yellow leaves on wet mix = overwater.\n\nCENTRAL TEXAS CADENCE (Pflugerville, indoor AC ~30–45% RH):\n• Hot AC season (Apr–Oct): every 6–7 days in 1F Corner / Window.\n• Peak summer (Jun–Sep): every 6 days near vents; every 7–8 days in still corners.\n• Mild winter (Nov–Feb): every 10–14 days — when in doubt, wait a day.\n• Prefer filtered / rain / sat-out tap; empty saucer within 15 min.\n\nOVER- vs UNDER-watering tells:\n• Over: yellow lower leaves, mushy stem base, fungus gnats, mix wet >4 days.\n• Under: droop + dry mix, crispy margins, soil pulling from pot walls.",
+      pruning: "Pinch or cut just above a node to branch either shoot (The Spruce).\n\n• Remove yellow / damaged leaves at the petiole.\n• Balance the two shoots so one leader doesn't shade the other.\n• Wipe dusty leaves monthly — glossy blades lose light under AC dust.\n• Sterile shears; gloves optional (sap can irritate sensitive skin).",
+      propagation: "Stem cuttings with at least one node (+ leaf preferred) root readily (The Spruce / NParks).\n\n• Water: nodes submerged, change weekly — roots often in 1–2 weeks; pot up at ~1–2\" roots.\n• Soil: insert into moist DIY Aroid under a clear cup 1–2 weeks; keep just-moist then resume dry-down.\n• Division: separate the two shoots at repot if you want solo pots.\n• Best season: spring–summer; works year-round indoors with warmth.",
+      repotting: "Fast grower — may need yearly upsizes vs slower philodendrons (The Spruce).\n\n• Current: 5.5\" with 2 shoots — next pot only +1–2\" when roots circle.\n• Spring preferred; water after potting to settle, then resume top-1–2\" dry rule.\n• Refresh DIY Aroid if bark softens into mud (~12–18 months).\n• Add a moss pole when vines start reaching — larger leaves follow support.",
+      feeding: "Liquid houseplant fertilizer monthly April–September (RHS); half-strength is safer in Central Texas hard water.\n\n• Hold fertilizer 4–6 weeks after any fresh DIY Aroid mix / repot.\n• Skip or go very light Oct–Feb unless under strong grow lights.\n• Flush salts every 2–3 months.",
+      troubleshooting: "SYMPTOM → CAUSE → FIX (RHS / The Spruce / NParks):\n\n• Yellow leaves + wet DIY Aroid → overwatering / poor drainage (#1). Unpot, trim mushy roots, refresh mix; empty saucers.\n• Droop + dry mix → thirsty — soak now; perk often within hours.\n• Long bare internodes / tiny new leaves → low light. Move to 1F Corner / brighter indirect.\n• Brown crispy tips → dry AC, underwatering, or salt burn. Filtered water; optional pebble tray; flush salts.\n• Scorched patches → direct PM sun. Pull back from glass.\n• Sticky residue / cottony bits → mealybugs or scale. Alcohol swab; insecticidal soap weekly × 3.\n• Fine webs + stippling → spider mites in dry winter AC. Rinse; soap spray; raise humidity slightly.\n• Fungus gnats → surface too wet; lengthen dry-down; sticky traps.\n• ⚠️ Toxic to cats and dogs (ASPCA — Philodendron / calcium oxalates): oral irritation, drooling, vomiting, difficulty swallowing if chewed. Keep away from Moose."
+    },
+    sources: [
+      { label: "RHS — Philodendron burle-marxii", url: "https://www.rhs.org.uk/plants/247855/philodendron-burle-marxii/details" },
+      { label: "RHS — How to grow philodendrons", url: "https://www.rhs.org.uk/plants/philodendron/growing-guide" },
+      { label: "NParks — Philodendron 'Burle Marx'", url: "https://www.nparks.gov.sg/florafaunaweb/flora/5/3/5359" },
+      { label: "The Spruce — Philodendron Burle Marx Care", url: "https://www.thespruce.com/philodendron-burle-marx-care-guide-8404600" },
+      { label: "ASPCA — Heartleaf Philodendron Toxicity", url: "https://www.aspca.org/pet-care/aspca-poison-control/toxic-and-non-toxic-plants/heartleaf-philodendron" },
+      { label: "The Sill — Philodendron Care", url: "https://www.thesill.com/blog/plant-care-philodendron" }
+    ]
+  },
+
+  philodendron_painted_lady: {
+    id: "philodendron_painted_lady",
+    repotSigns: [
+      "Roots circling / poking the 6.5\" drainage holes",
+      "Water channeling through in seconds — DIY Aroid broken down",
+      "New leaves smaller or with less yellow variegation under root stress",
+      "Three vines overcrowding and the pot tips easily",
+      "Mix stays cold/wet for days after a soak",
+      "Aerial roots searching hard for a moss pole"
+    ],
+    displayName: "Philodendron Painted Lady",
+    repotted: true,
+    potSize: '6.5"',
+    cuttingsCount: 3,
+    category: "pothos",
+    names: {
+      common: ["Philodendron Painted Lady", "Painted Lady Philodendron", "Painted Lady"],
+      scientific: "Philodendron erubescens 'Painted Lady' (hybrid cultivar)"
+    },
+    wateringDays: 8,
+    wateringDaysHot: 7,
+    wateringDaysCool: 14,
+    currentSoilMix: "diy_aroid",
+    comments: "Nov 2026: three vines in a 6.5\" pot with DIY Aroid (3 bark · 2 coco · 1 potting · 2 pumice · ½–1 charcoal · pinch fert). Last watered 2026-11-01. Chartreuse/yellow mottling on green with pinkish new growth — bright indirect light keeps the paint job; low light reverts toward green and gets leggy.",
+    idealSoil: ["diy_aroid", "aroid_mix", "amended_potting"],
+    soilNotes: "Chunky DIY Aroid mimics epiphytic root run (The Spruce / Greeny Gardener). 6.5\" holds more moisture than a 4\" starter — finger-test the mid-zone before watering.",
+    conditions: {
+      light:        { ideal: "Bright indirect several hours/day (holds variegation)", passing: "Medium; low light → leggy + faded yellow mottling" },
+      temperature:  { ideal: "65–85°F (18–29°C)", passing: "60–85°F; avoid cold drafts" },
+      humidity:     { ideal: "50–70%", passing: "Average home OK; thrives with a bump toward 60%" },
+      soilMoisture: { ideal: "Top 1–2\" dry, then deep soak", passing: "Err slightly dry vs swampy — overwatering kills faster" }
+    },
+    tips: {
+      lighting: "Several hours of bright indirect light keep the yellow/chartreuse mottling vivid (The Spruce / Costa Farms / Greeny Gardener). East window or a few feet back from south/west is ideal; grow lights help in dim rooms.\n\n• Too little light → leggy vines, longer internodes, fading variegation / green reversion.\n• Harsh afternoon sun → scorched yellow patches on delicate mottled tissue.\n• Rotate ¼ turn every watering so all 3 vines get even light.\n• Prune fully reverted green leaders back to the newest painted leaf (Brittany Goldwyn).\n\n• Best matches per PLANT_LIGHT_REF: 1F Corner, 1F Window (set back), 2F Room 2 humidifier cluster. Hard avoid: unfiltered 2F SW beam.",
+      soil: "Rich, chunky, airy aroid mix — potting soil + orchid bark + perlite/pumice (The Spruce / Greeny Gardener).\n\nDIY Aroid (current):\n• 3 scoops medium orchid bark\n• 2 scoops hydrated coco coir\n• 1 scoop standard potting mix\n• 2 scoops pumice\n• ½–1 scoop horticultural charcoal\n• General fertilizer: pinch / label rate only\n\nOptional charcoal keeps the larger 6.5\" core from going sour. Avoid dense peat-only nursery bricks long-term.",
+      watering: "METHOD — drench-and-dry: let the top 1–2\" (sometimes 2–3\") dry, then water until runoff and dump the saucer (The Spruce / Costa Farms / Brittany Goldwyn). When unsure, wait a day — Painted Lady tolerates slight drought better than wet feet.\n\nHOW TO CHECK READINESS (your 6.5\" DIY Aroid pot, 3 vines):\n• Finger test: dry at 1–2 knuckles = soak; damp mid-zone = wait (bigger pot stays wet deeper).\n• Pot weight: heavy days after watering = wait; hollow-light = check finger test.\n• Moisture meter: ~3 upper third = water; 5+ = wait.\n• Plant tells: soft droop + dry mix = thirsty. Yellow leaves + wet mix = overwater.\n\nCENTRAL TEXAS CADENCE (Pflugerville, indoor AC ~30–45% RH):\n• Hot AC season (Apr–Oct): every 7–9 days in 1F Corner / Window.\n• Peak summer (Jun–Sep): every 7 days near vents; 8–9 days in still rooms.\n• Mild winter (Nov–Feb): every 12–16 days — growth slows; don't chase with water.\n• Filtered / sat-out tap preferred; empty saucer within 15 min.\n\nOVER- vs UNDER-watering tells:\n• Over: yellowing, mushy stem base, gnats, mix wet for days.\n• Under: wilt on dry mix, crispy mottled edges, soil pulling from walls.",
+      pruning: "Pinch tips above a node to branch any of the 3 vines.\n\n• Cut reverted all-green growth back to the last strongly variegated leaf.\n• Remove damaged / scorched leaves at the petiole.\n• Train the strongest vine up a moss pole; let others trail or spiral for a fuller pot.\n• Sterile shears between plants.",
+      propagation: "Node cuttings root like other philodendrons (The Spruce / Costa Farms).\n\n• Water: 1–2 nodes submerged — roots often 1–3 weeks; pot at ~2\" roots.\n• Soil: stick into moist DIY Aroid under humidity 1–2 weeks.\n• Propagate from the MOST painted sections — green-only cuttings stay green.\n• Best in warm months; keep cuttings brighter-indirect to hold variegation.",
+      repotting: "Current 6.5\" with 3 vines is a comfortable starter volume.\n\n• Upsize only +1–2\" when roots circle (spring preferred).\n• Refresh DIY Aroid ~12–18 months when bark softens.\n• After repot: one settle watering, then resume dry-down; no fertilizer 4–6 weeks.\n• Add a moss pole early — climbing Painted Lady makes larger, showier leaves.",
+      feeding: "Balanced liquid at half strength every 4 weeks in spring–summer (The Spruce).\n\n• Hold 4–6 weeks after fresh DIY Aroid / repot.\n• Skip Oct–Feb unless under grow lights with active growth.\n• Flush salts every 2–3 months — variegated tissue shows tip burn from Central Texas hard water + fertilizer.",
+      troubleshooting: "SYMPTOM → CAUSE → FIX (The Spruce / Costa Farms / Greeny Gardener / Brittany Goldwyn):\n\n• Fading yellow mottling / greener new leaves → low light. Move to 1F Corner / brighter indirect; prune reverted vines.\n• Leggy long internodes → low light. Brighten + pinch tips.\n• Scorched yellow patches → too much direct sun. Set back from glass.\n• Yellow leaves + wet mix → overwatering. Unpot if mushy roots; refresh DIY Aroid.\n• Droop + dry mix → water now.\n• Brown crispy edges on mottled tissue → dry AC, underwatering, or salt burn. Filtered water; flush; optional humidity bump (2F Rm2 cluster).\n• Sticky cottony bits → mealybugs. Alcohol Q-tip; soap weekly × 3.\n• Fine webs → spider mites in dry AC. Rinse; soap; raise humidity.\n• Fungus gnats → lengthen dry-down; sticky traps.\n• ⚠️ Toxic to cats and dogs (ASPCA — Philodendron / insoluble calcium oxalates). Oral irritation, drooling, vomiting, difficulty swallowing. Keep away from Moose."
+    },
+    sources: [
+      { label: "The Spruce — Painted Lady Philodendron Care", url: "https://www.thespruce.com/painted-lady-philodendron-care-7547650" },
+      { label: "Costa Farms — Painted Lady Philodendron", url: "https://costafarms.com/blogs/plant-finder/painted-lady-philodendron" },
+      { label: "Greeny Gardener — Painted Lady Care", url: "https://greenygardener.com/painted-lady-philodendron-care/" },
+      { label: "Brittany Goldwyn — Philodendron Painted Lady", url: "https://www.bybrittanygoldwyn.com/philodendron-painted-lady/" },
+      { label: "RHS — How to grow philodendrons", url: "https://www.rhs.org.uk/plants/philodendron/growing-guide" },
+      { label: "ASPCA — Heartleaf Philodendron Toxicity", url: "https://www.aspca.org/pet-care/aspca-poison-control/toxic-and-non-toxic-plants/heartleaf-philodendron" }
+    ]
+  },
+
 };
 
 const OWNED_PLANT_IDS = [
@@ -2847,7 +2952,10 @@ const OWNED_PLANT_IDS = [
   "string_of_buttons",
   /* New arrivals (Nov 2026) — DIY Mix A/B in sized pots */
   "pilea_peperomioides",
-  "rubber_tree"
+  "rubber_tree",
+  /* New arrivals (Nov 2026) — philodendron haul */
+  "philodendron_burle_marx",
+  "philodendron_painted_lady"
 ];
 
 const SUCCULENT_VARIANTS = [
@@ -2877,7 +2985,9 @@ const POTHOS_VARIANTS = [
   "pearls_jade_pothos",
   "neon_pothos",
   "satin_pothos",
-  "philodendron_silver_stripe"
+  "philodendron_silver_stripe",
+  "philodendron_burle_marx",
+  "philodendron_painted_lady"
 ];
 
 /* Currently-owned WATER-rooting cuttings — Aug 2026: 3 Monstera top cuttings. */
@@ -3259,6 +3369,18 @@ const PLANT_PLACEMENT = {
     avoid: ["bathroom"],
     rationale: "Ficus elastica likes brighter light than Pilea — bright indirect plus 1–3 hrs gentle direct keeps it compact and glossy (Mo Bot / RHS). Corner, morning-direct, and NW rooms are strong. 2F SW is OK for solid burgundy if set back; variegated forms prefer filtered. Bathroom humidity is unnecessary and sap + tight quarters is a poor combo with pets. Expect leaf drop if you relocate abruptly."
   },
+  philodendron_burle_marx: {
+    ideal: ["living_room_open", "second_floor_open", "bedroom", "living_room_window_stained"],
+    ok: ["living_room_window_morning", "bathroom", "living_room_fireplace"],
+    avoid: ["second_floor_window"],
+    rationale: "Burle Marx wants bright indirect with soft morning sun OK (RHS / The Spruce). LR-Open, 2F-Open, bedroom, and stained-glass bounce keep the wavy leaves compact. Soft AM at Window A is fine if set back. Hard avoid: unfiltered 2F SW — scorches thin blades. Bathroom humidity helps in Central Texas AC if the SE beam is blocked. Optional moss pole once the two shoots start reaching."
+  },
+  philodendron_painted_lady: {
+    ideal: ["living_room_open", "second_floor_open", "living_room_window_stained", "bedroom"],
+    ok: ["living_room_window_morning", "living_room_fireplace", "bathroom"],
+    avoid: ["second_floor_window"],
+    rationale: "Painted Lady needs brighter indirect than solid-green philodendrons to hold yellow/chartreuse mottling (The Spruce / Costa Farms). Bedroom / LR-Open / 2F-Open are premium. Soft AM is OK set back from glass. 2F SW scorches variegated tissue. Pair with the 2F Rm2 humidifier cluster if tips crisp in winter AC. Keep all 3 vines rotated evenly toward the light."
+  },
   /* ============= NEW NURSERY-POT ARRIVALS (Jul 2026) =============
    * Placement recommendations calibrated to the house's actual light budget
    * (best available direct-sun spots max out at ~1–3 hrs, which is below what
@@ -3386,7 +3508,7 @@ const HOME_WINDOWS = [
     humidifier: { rec: "optional", note: "Low-impact here — this is the big vaulted living room open to the 2F, so its volume scatters a small humidifier. If you use it, huddle the foliage within 2–3 ft of the unit; otherwise rely on pebble trays." },
     light: "Two exposures (gentle NE early morning + SE morning/midday) in a big vaulted, double-height room open to the 2nd floor — tall, bright and airy with lots of ambient bounce. Usable plant-level light still comes from the windows, but it's the longest span of soft-to-moderate direct light in the house.",
     humidity: "Average — but the vaulted volume open to the 2F lets moisture disperse fast, so it's hard to raise humidity here.",
-    thrive: [{ id: "monstera", back: true }, { id: "monstera_adansonii", back: true }, "schefflera", { id: "marble_queen_pothos", back: true }, { id: "pearls_jade_pothos", back: true }, { id: "philodendron_silver_stripe", back: true }, "ginseng_ficus", "pilea_peperomioides", "rubber_tree"],
+    thrive: [{ id: "monstera", back: true }, { id: "monstera_adansonii", back: true }, "schefflera", { id: "marble_queen_pothos", back: true }, { id: "pearls_jade_pothos", back: true }, { id: "philodendron_silver_stripe", back: true }, { id: "philodendron_burle_marx", back: true }, { id: "philodendron_painted_lady", back: true }, "ginseng_ficus", "pilea_peperomioides", "rubber_tree"],
     solid: [{ id: "cordyline_fruticosa", back: true }, { id: "dracaena_fragrans", back: true }, { id: "dracaena_fragrans_b", back: true }, "snake_plant", "kalanchoe", { id: "zz_plant", back: true }, "haworthia", "baby_burros_tail", "string_of_pearls", "string_of_buttons", "burrows_tail", { id: "satin_pothos", back: true }, { id: "neon_pothos", back: true }, { id: "golden_pothos_b", back: true }, { id: "polka_dot_plant", note: "add humidity", back: true }],
     avoid: "Nothing really struggles here — it's your best all-rounder. Deep-shade-only plants would be wasted on it.",
     keepOut: []
@@ -3398,8 +3520,8 @@ const HOME_WINDOWS = [
     humidifier: { rec: "skip", note: "Big vaulted room open to the 2F — a small humidifier's mist just dissipates into the volume and barely moves RH. Skip it here; humidify the enclosed 2F Room 2 instead and give any humidity-lovers you keep here pebble trays." },
     light: "Gentle morning sun only, bright indirect the rest of the day, in the big vaulted living room open to the 2nd floor — tall and airy, so the light stays soft and even. Still the safest window for foliage that scorches.",
     humidity: "Average — and the vaulted, double-height volume lets any added moisture dissipate quickly.",
-    thrive: ["golden_pothos", "marble_queen_pothos", "satin_pothos", "neon_pothos", "golden_pothos_b", "terrarium_a", "terrarium_b", "zz_plant", "monstera_water_cuttings", "pilea_peperomioides"],
-    solid: [{ id: "prayer_plant", note: "add humidity" }, "monstera", "dracaena_fragrans", "dracaena_fragrans_b", "mondo_grass", "mini_orchid", "pearls_jade_pothos", "philodendron_silver_stripe", { id: "rubber_tree", note: "may stretch without AM sun" }],
+    thrive: ["golden_pothos", "marble_queen_pothos", "satin_pothos", "neon_pothos", "golden_pothos_b", "terrarium_a", "terrarium_b", "zz_plant", "monstera_water_cuttings", "pilea_peperomioides", "philodendron_burle_marx"],
+    solid: [{ id: "prayer_plant", note: "add humidity" }, "monstera", "dracaena_fragrans", "dracaena_fragrans_b", "mondo_grass", "mini_orchid", "pearls_jade_pothos", "philodendron_silver_stripe", { id: "philodendron_painted_lady", note: "bright enough for variegation" }, { id: "rubber_tree", note: "may stretch without AM sun" }],
     avoid: "Full-sun desert plants (Desert Rose, Firestick, cacti) — not enough direct light to keep them tight & colored.",
     keepOut: ["desert_rose", "firestick", "lady_finger_cactus", "assorted_cacti", "aloe_vera", "succulent_frankenstein_a", "variegated_elephant_bush", "variegated_elephant_bush_bonsai"]
   },
@@ -3413,7 +3535,7 @@ const HOME_WINDOWS = [
     thrive: ["desert_rose", "firestick", "lady_finger_cactus", "assorted_cacti", "aloe_vera", "succulent_frankenstein_a", "variegated_elephant_bush", "variegated_elephant_bush_bonsai", "kalanchoe_fang"],
     solid: [{ id: "snake_plant", back: true }, "ginseng_ficus", { id: "burrows_tail", note: "acclimate slowly" }, { id: "string_of_buttons", note: "acclimate slowly" }, { id: "rubber_tree", note: "set back / solid cultivars" }],
     avoid: "Cream/variegated tropicals, Fittonia, Polka Dot, Pilea, Rattlesnake Calathea, Thai — they'll scorch. Shield Haworthia from the harshest beam.",
-    keepOut: ["fittonia", "polka_dot_plant", "pilea_peperomioides", "prayer_plant", "thai_constellation", "monstera", "monstera_adansonii", "monstera_water_cuttings", "mini_orchid", "terrarium_a", "terrarium_b", "cordyline_fruticosa", "marble_queen_pothos", "pearls_jade_pothos", "golden_pothos", "satin_pothos", "neon_pothos", "golden_pothos_b", "philodendron_silver_stripe"]
+    keepOut: ["fittonia", "polka_dot_plant", "pilea_peperomioides", "prayer_plant", "thai_constellation", "monstera", "monstera_adansonii", "monstera_water_cuttings", "mini_orchid", "terrarium_a", "terrarium_b", "cordyline_fruticosa", "marble_queen_pothos", "pearls_jade_pothos", "golden_pothos", "satin_pothos", "neon_pothos", "golden_pothos_b", "philodendron_silver_stripe", "philodendron_burle_marx", "philodendron_painted_lady"]
   },
   {
     id: "f2_bath", floor: "Second floor", name: "Bathroom (rarely used)", bearing: "208° SW",
@@ -3446,7 +3568,7 @@ const HOME_WINDOWS = [
     humidifier: { rec: "use", note: "BEST home for your one small humidifier — a smaller, ENCLOSED NW room that actually holds humidity (unlike the vaulted 1F living room). Cluster the humidity-lovers — Rattlesnake Calathea, Cordyline, Monstera, pothos group — within 2–3 ft of the unit and add a small fan on low to spread the plume." },
     light: "Identical light to Room 1 — split the collection: make this the bright-indirect foliage room, Room 1 the succulent/sun room.",
     humidity: "Average / low.",
-    thrive: [{ id: "golden_pothos", back: true }, { id: "golden_pothos_b", back: true }, { id: "marble_queen_pothos", back: true }, { id: "pearls_jade_pothos", back: true }, { id: "neon_pothos", back: true }, { id: "satin_pothos", back: true }, { id: "philodendron_silver_stripe", back: true }, { id: "monstera", back: true }, { id: "zz_plant", back: true }, { id: "dracaena_fragrans", back: true }, { id: "dracaena_fragrans_b", back: true }, "pilea_peperomioides"],
+    thrive: [{ id: "golden_pothos", back: true }, { id: "golden_pothos_b", back: true }, { id: "marble_queen_pothos", back: true }, { id: "pearls_jade_pothos", back: true }, { id: "neon_pothos", back: true }, { id: "satin_pothos", back: true }, { id: "philodendron_silver_stripe", back: true }, { id: "philodendron_burle_marx", back: true }, { id: "philodendron_painted_lady", back: true }, { id: "monstera", back: true }, { id: "zz_plant", back: true }, { id: "dracaena_fragrans", back: true }, { id: "dracaena_fragrans_b", back: true }, "pilea_peperomioides"],
     solid: [{ id: "prayer_plant", note: "add humidity", back: true }, { id: "terrarium_b", back: true }, { id: "cordyline_fruticosa", back: true }, { id: "polka_dot_plant", note: "add humidity", back: true }, "rubber_tree"],
     avoid: "Full-sun cacti/Desert Rose (send to 2F SW). Keep the direct late beam off the pothos variegation midsummer.",
     keepOut: ["desert_rose", "lady_finger_cactus", "assorted_cacti", "firestick", "aloe_vera", "succulent_frankenstein_a", "variegated_elephant_bush", "variegated_elephant_bush_bonsai"]
@@ -3474,6 +3596,7 @@ const HOME_PLACEMENT_NOTES = [
   { tone: "danger", title: "Rot-risk succulents stay out of bathrooms", body: "Lady Finger Cactus (never), String of Pearls, String of Buttons, Haworthia, Kalanchoe Fang and Desert Rose soften and rot above ~60% humidity. Their zone is the 2F SW living room plus the NW rooms — dry, bright, warm." },
   { tone: "info", title: "Fittonia & Polka Dot — humidity divas", body: "Both want elevated humidity and no harsh direct sun. The 1F bathroom, set back from the SE beam, is the dream spot: steady moisture in the air, no scorch. Polka Dot is now in a 3.5×2.5 DIY Mix A pot (Nov 2026) — still check often vs deeper pots, just not as frantic as the old 2\"." },
   { tone: "info", title: "Pilea + Rubber — two DIY mixes on purpose", body: "Nov 2026: Pilea and Polka share DIY Mix A (coir/potting-forward). Rubber Tree uses chunkier DIY Mix B (more bark + citrus grit) in the same 6×5 footprint. Don't swap those soils long-term — rubber wants more air in the root zone; Hypoestes wilts if the mix is too gritty." },
+  { tone: "info", title: "Burle Marx + Painted Lady — two philodendrons", body: "Nov 2026: Burle Marx (2 shoots, 5.5\") and Painted Lady (3 vines, 6.5\") both in DIY Aroid. Painted Lady needs the brighter indirect spot to hold yellow mottling; Burle Marx is a bit more shade-tolerant but still wants bright bounce. Both are ASPCA-toxic (calcium oxalates) — keep off Moose's chew path." },
   { tone: "info", title: "Terrariums — bright indirect only", body: "They make their own 80–95% humidity, so they don't need a bathroom. Park them at the 1F NE window; direct sun cooks the sealed glass and boils the plants inside." },
   { tone: "neutral", title: "Winter sun shifts south & low", body: "Nov–Feb the sun swings low and south: the SE/SW windows carry the load while N/NE windows go dim. Rotate light-hungry plants toward SE/SW for the winter." },
   { tone: "success", title: "Your two premium spots", body: "The 1F living-room corner (dual NE/SE light) is the most versatile home for fussy variegated foliage; the 2F SW living room is a desert powerhouse for every full-sun succulent and cactus you own." }
@@ -3529,7 +3652,9 @@ const PLANT_LIGHT_REF = {
   polka_dot_plant:            { light: "Bright indirect, no harsh sun",          humidity: "High 50–60%+",          best: "1F Bath (set back) — 3.5×2.5 DIY Mix A", flag: "info", hum: true },
   string_of_buttons:          { light: "Bright + 3–4h gentle direct",            humidity: "Low 30–50%",            best: "1F Room 1 / morning sun — not bathroom", flag: "info" },
   pilea_peperomioides:        { light: "Bright indirect (+ soft AM OK)",         humidity: "Avg–High 40–60%",       best: "1F Corner / Window — 6×5 DIY Mix A", hum: true },
-  rubber_tree:                { light: "Bright + 1–3h gentle direct",            humidity: "Avg 40–60%",            best: "1F Corner / Room 1 — 6×5 DIY Mix B", flag: "info" }
+  rubber_tree:                { light: "Bright + 1–3h gentle direct",            humidity: "Avg 40–60%",            best: "1F Corner / Room 1 — 6×5 DIY Mix B", flag: "info" },
+  philodendron_burle_marx:    { light: "Bright indirect (+ soft AM OK)",         humidity: "Avg–High 50–60%",       best: "1F Corner / Window — 5.5\" DIY Aroid (2 shoots)", hum: true },
+  philodendron_painted_lady:  { light: "Bright indirect (holds variegation)",    humidity: "Avg–High 50–70%",       best: "1F Corner / 2F Rm2 — 6.5\" DIY Aroid (3 vines)", flag: "info", hum: true }
 };
 
 /* ============================================================
