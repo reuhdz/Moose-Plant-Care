@@ -250,11 +250,11 @@ const CHOPSTICK_BY_PLANT = {
     "Damp → wait.",
     "Same trailing-aroid rule as pothos: mid-surface dry reading is enough in a small pot."
   ),
-  philodendron_burle_marx: _c(
+  philodendron_birkin: _c(
     "Insert ~1–1.5\" deep in the 5.5\" DIY Aroid pot (between the 2 shoots).",
     "Dry at 1–2\" → deep soak; empty the saucer.",
     "Damp → wait.",
-    "Two shoots share one root zone — mid-pot wetness matters more than the surface crust."
+    "White pinstripe tissue is less forgiving of a wet core — trust mid-pot dryness, not just the surface crust."
   ),
   philodendron_painted_lady: _c(
     "Insert ~1.5–2\" deep in the 6.5\" DIY Aroid pot.",
@@ -597,9 +597,9 @@ const PROPAGATION_LIBRARY = {
     _m("Water cuttings", "90–95%", "1–3 weeks", "Node cuttings root like pothos."),
     _m("Soil cuttings", "90–95%", "2–4 weeks", "Very forgiving trailing aroid.")
   ],
-  philodendron_burle_marx: [
-    _m("Water cuttings", "90–95%", "1–2 weeks", "Node + leaf cuttings root fast in warm bright-indirect."),
-    _m("Soil cuttings", "85–95%", "2–4 weeks", "Keep just-moist under a cup, then resume dry-downs."),
+  philodendron_birkin: [
+    _m("Water cuttings", "85–95%", "2–4 weeks", "Take from clearly pinstriped nodes — solid-green cuttings stay green."),
+    _m("Soil cuttings", "85–95%", "2–4 weeks", "Humidity cup 1–2 weeks; bright filtered light holds stripes."),
     _m("Division of shoots", "90%+", "Immediate", "Separate the two shoots at repot if you want solo pots.")
   ],
   philodendron_painted_lady: [
@@ -808,8 +808,9 @@ const TROUBLESHOOTING_LIBRARY = {
   philodendron_silver_stripe: [
     _t("Silver stripe fading", "Low light", "Brighter indirect light.", "low")
   ],
-  philodendron_burle_marx: [
-    _t("Long petioles / small new leaves", "Low light", "Move to 1F Corner / brighter indirect; rotate both shoots.", "low"),
+  philodendron_birkin: [
+    _t("Pinstripes fading / greener new leaves", "Low light", "Brighter filtered light; watch next 2–3 leaves before pruning.", "normal"),
+    _t("Successive solid-green leaves", "Reversion", "Cut stem back to last clearly striped node; improve light.", "normal"),
     _t("Yellow leaves + wet mix", "Overwatering", "Lengthen dry-down; refresh DIY Aroid if compacted.", "high")
   ],
   philodendron_painted_lady: [

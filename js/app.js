@@ -4258,6 +4258,103 @@ Other plants in collection (for cross-reference): ${ownedIds.filter(id => id !==
    * Matching is by *normalized display name OR common name* — case- and
    * whitespace-insensitive, punctuation stripped.
    */
+  /**
+   * One-time remaps when a built-in plant id is renamed in plants-data.js.
+   * Moves water log / overlays / images / snoozes / todos / notes / room / condition
+   * entries from the old id → new id without duplicating if the new id already has data.
+   */
+  function migrateRenamedPlantIds() {
+    const renames = {
+      philodendron_burle_marx: "philodendron_birkin"
+    };
+    const summary = [];
+    Object.entries(renames).forEach(([fromId, toId]) => {
+      if (!fromId || !toId || fromId === toId) return;
+      if (!PLANTS[toId]) return;
+      let moved = 0;
+
+      const log = WaterLog.all();
+      let logChanges = 0;
+      const repointed = log.map(e => {
+        if (e.plantId === fromId) { logChanges++; return { ...e, plantId: toId }; }
+        return e;
+      });
+      if (logChanges) { WaterLog.replaceAll(repointed); moved += logChanges; }
+
+      const overlays = PlantStore.overlays();
+      if (overlays[fromId]) {
+        if (!overlays[toId]) PlantStore.setOverlay(toId, overlays[fromId]);
+        PlantStore.removeOverlay(fromId);
+        moved += 1;
+      }
+
+      const img = ImageStore.get(fromId);
+      if (img) {
+        if (!ImageStore.get(toId)) ImageStore.set(toId, img);
+        ImageStore.remove(fromId);
+        moved += 1;
+      }
+
+      const snooze = SnoozeStore.get(fromId);
+      if (snooze) {
+        if (!SnoozeStore.get(toId)) SnoozeStore.add(toId, snooze.addDays);
+        SnoozeStore.clear(fromId);
+        moved += 1;
+      }
+
+      const todos = TodoStore.all();
+      let todoChanges = false;
+      Object.keys(todos).forEach(tid => {
+        if (todos[tid]?.plantId === fromId) {
+          todos[tid] = { ...todos[tid], plantId: toId };
+          todoChanges = true;
+          moved += 1;
+        }
+      });
+      if (todoChanges) TodoStore.save(todos);
+
+      const notes = CareNotesStore.all();
+      if (notes[fromId]) {
+        if (!notes[toId]) {
+          notes[toId] = notes[fromId];
+        } else {
+          notes[toId] = [].concat(notes[toId] || [], notes[fromId] || []);
+        }
+        delete notes[fromId];
+        CareNotesStore.replaceAll(notes);
+        moved += 1;
+      }
+
+      const cond = ConditionLogStore.all();
+      if (cond[fromId]) {
+        if (!cond[toId]) cond[toId] = cond[fromId];
+        else cond[toId] = [].concat(cond[toId] || [], cond[fromId] || []);
+        delete cond[fromId];
+        ConditionLogStore.replaceAll(cond);
+        moved += 1;
+      }
+
+      const plan = RoomPlanStore.all();
+      if (plan.assignments && plan.assignments[fromId]) {
+        if (!plan.assignments[toId]) plan.assignments[toId] = plan.assignments[fromId];
+        delete plan.assignments[fromId];
+        RoomPlanStore.replaceAll(plan);
+        moved += 1;
+      }
+
+      if (PlantStore.removedOwnedIds().includes(fromId)) {
+        PlantStore.saveRemovedOwned(
+          PlantStore.removedOwnedIds().map(id => (id === fromId ? toId : id))
+            .filter((id, i, arr) => arr.indexOf(id) === i)
+        );
+        moved += 1;
+      }
+
+      if (moved) summary.push({ fromId, toId, moved });
+    });
+    return summary;
+  }
+
   function migrateCustomToBuiltins() {
     const customs = PlantStore.customPlants();
     if (!customs.length) return { migrated: 0, summary: [] };
@@ -4993,7 +5090,7 @@ Rules:
       { plantId: "kalanchoe_fang",     date: "2026-09-04", note: "(initial — last Friday)" },
       { plantId: "polka_dot_plant",    date: "2026-09-09", note: "(initial — 2 days before add)" },
       { plantId: "string_of_buttons",  date: "2026-09-04", note: "(initial — last Friday)" },
-      { plantId: "philodendron_burle_marx", date: "2026-11-01", note: "(initial — 5.5\" DIY Aroid, 2 shoots; watered day before Nov 2 add)" },
+      { plantId: "philodendron_birkin", date: "2026-11-01", note: "(initial — 5.5\" DIY Aroid, 2 shoots; watered day before Nov 2 add)" },
       { plantId: "philodendron_painted_lady", date: "2026-11-01", note: "(initial — 6.5\" DIY Aroid, 3 vines; watered day before Nov 2 add)" }
     ];
     let added = 0;
@@ -5018,6 +5115,10 @@ Rules:
 
   function init() {
     loadTheme();
+    const renamed = migrateRenamedPlantIds();
+    if (renamed.length) {
+      console.info("[plant-care] Remapped renamed plant ids:", renamed);
+    }
     const mig = migrateCustomToBuiltins();
     if (mig.migrated > 0) {
       console.info("[plant-care] Merged custom plants into built-ins:", mig.summary);

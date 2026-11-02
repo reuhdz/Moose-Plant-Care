@@ -2805,55 +2805,55 @@ const PLANTS = {
     ]
   },
 
-  philodendron_burle_marx: {
-    id: "philodendron_burle_marx",
+  philodendron_birkin: {
+    id: "philodendron_birkin",
     repotSigns: [
       "Roots circling hard / poking the 5.5\" drainage holes",
       "Water rushes through in seconds — DIY Aroid collapsed or rootbound",
-      "New leaves smaller than the previous flush despite good light",
+      "New leaves smaller or with weaker white pinstripes despite good light",
       "Two shoots competing and the pot tips easily",
       "Surface stays wet >4 days after a soak (compaction)",
-      "Aerial roots crawling the rim with nowhere to climb"
+      "Successive new leaves arrive solid green / reddish with no pinstripes (reversion under root stress or low light)"
     ],
-    displayName: "Philodendron Burle Marx",
+    displayName: "Philodendron Birkin",
     repotted: true,
     potSize: '5.5"',
     cuttingsCount: 2,
     category: "pothos",
     names: {
-      common: ["Philodendron Burle Marx", "Burle Marx Philodendron", "Burle Marx"],
-      scientific: "Philodendron burle-marxii (trade / cultivar 'Burle Marx'; often treated as a compact form allied to P. cordatum)"
+      common: ["Philodendron Birkin", "Birkin Philodendron", "Birkin", "White Wave", "Birkin White Wave"],
+      scientific: "Philodendron 'Birkin' (hybrid cultivar; often linked to the Rojo Congo / Imperial Red group)"
     },
     wateringDays: 7,
     wateringDaysHot: 6,
     wateringDaysCool: 12,
     currentSoilMix: "diy_aroid",
-    comments: "Nov 2026: two shoots in a 5.5\" pot with DIY Aroid (3 bark · 2 coco · 1 potting · 2 pumice · ½–1 charcoal · pinch fert). Last watered 2026-11-01. Named for Brazilian landscape architect Roberto Burle Marx — glossy wavy lance leaves; climbs or trails. Optional moss pole for larger foliage.",
+    comments: "Nov 2026: two shoots in a 5.5\" pot with DIY Aroid (3 bark · 2 coco · 1 potting · 2 pumice · ½–1 charcoal · pinch fert). Last watered 2026-11-01. Self-heading philodendron with cream/white pinstripes on dark green leaves — bright filtered light keeps the stripes; low light fades them and can trigger green reversion. (Corrected from an earlier Burle Marx mislabel.)",
     idealSoil: ["diy_aroid", "aroid_mix", "amended_potting"],
-    soilNotes: "DIY Aroid keeps the 5.5\" root zone oxygenated for two shoots. Refresh when bark softens (~12–18 months). Upsize only +1\" when roots fill.",
+    soilNotes: "DIY Aroid (bark/coir/pumice) matches NC State / The Spruce aroid guidance — moisture-retentive but oxygenated for variegated tissue. Refresh when bark softens (~12–18 months). Upsize only +1\" when roots fill.",
     conditions: {
-      light:        { ideal: "Bright indirect; soft morning sun OK", passing: "Medium indirect; low light → long petioles / smaller leaves" },
-      temperature:  { ideal: "65–80°F (18–27°C)", passing: "60–85°F; protect from cold drafts below 55°F" },
-      humidity:     { ideal: "50–60%+", passing: "40%+ household OK; crispy tips in bone-dry AC" },
+      light:        { ideal: "Bright filtered / indirect — holds white pinstripes", passing: "Medium; low light → faded stripes, leggy growth, greener leaves" },
+      temperature:  { ideal: "65–85°F (18–29°C)", passing: "60–85°F; avoid cold drafts below 55°F (NC State)" },
+      humidity:     { ideal: "50–60%", passing: "40%+ household OK; brown tips if bone-dry AC (NC State)" },
       soilMoisture: { ideal: "Top 1–2\" dry between deep soaks", passing: "Never leave the 5.5\" sitting in a saucer" }
     },
     tips: {
-      lighting: "Bright, diffused / indirect light matches forest-understory growth (RHS Philodendron guide / The Spruce Burle Marx). Soft morning sun is fine; harsh afternoon beams scorch the thin wavy blades.\n\n• Ideal: 1–3 ft from an east window, or set back from south/west glass.\n• Low light → elongated petioles, smaller leaves, sparse look (NParks notes stretch in shade).\n• Rotate ¼ turn every watering so both shoots stay even.\n• A moss pole or stake encourages climbing and larger adult foliage.\n\n• Best matches per PLANT_LIGHT_REF: 1F Corner, 1F Window (set back), humidified 2F Room 2. Hard avoid: unfiltered 2F SW Living Room.",
-      soil: "Open, ericaceous / peat-free, moisture-retentive but fast-draining aroid mix (RHS: bark, pumice/lava, leafmould or coir).\n\nDIY Aroid (current):\n• 3 scoops medium orchid bark\n• 2 scoops hydrated coco coir\n• 1 scoop standard potting mix\n• 2 scoops pumice\n• ½–1 scoop horticultural charcoal\n• General fertilizer: pinch / label rate only (NOT a scoop)\n\nAvoid: pure bagged potting mix, garden soil, chronically soggy peat bricks.",
-      watering: "METHOD — soak-and-dry: water when the surface / top 1–2\" just dry, then soak thoroughly and dump the saucer (RHS / The Spruce). Reduce in fall–winter when growth slows.\n\nHOW TO CHECK READINESS (your 5.5\" DIY Aroid pot, 2 shoots):\n• Finger test: top 1–2\" dry/crumbly = water; cool-damp = wait.\n• Pot weight: noticeably lighter than 24 hrs post-soak = ready.\n• Moisture meter: ~3–4 upper third = water; 5+ = wait.\n• Plant tells: slight soft droop + dry mix = thirsty. Yellow leaves on wet mix = overwater.\n\nCENTRAL TEXAS CADENCE (Pflugerville, indoor AC ~30–45% RH):\n• Hot AC season (Apr–Oct): every 6–7 days in 1F Corner / Window.\n• Peak summer (Jun–Sep): every 6 days near vents; every 7–8 days in still corners.\n• Mild winter (Nov–Feb): every 10–14 days — when in doubt, wait a day.\n• Prefer filtered / rain / sat-out tap; empty saucer within 15 min.\n\nOVER- vs UNDER-watering tells:\n• Over: yellow lower leaves, mushy stem base, fungus gnats, mix wet >4 days.\n• Under: droop + dry mix, crispy margins, soil pulling from pot walls.",
-      pruning: "Pinch or cut just above a node to branch either shoot (The Spruce).\n\n• Remove yellow / damaged leaves at the petiole.\n• Balance the two shoots so one leader doesn't shade the other.\n• Wipe dusty leaves monthly — glossy blades lose light under AC dust.\n• Sterile shears; gloves optional (sap can irritate sensitive skin).",
-      propagation: "Stem cuttings with at least one node (+ leaf preferred) root readily (The Spruce / NParks).\n\n• Water: nodes submerged, change weekly — roots often in 1–2 weeks; pot up at ~1–2\" roots.\n• Soil: insert into moist DIY Aroid under a clear cup 1–2 weeks; keep just-moist then resume dry-down.\n• Division: separate the two shoots at repot if you want solo pots.\n• Best season: spring–summer; works year-round indoors with warmth.",
-      repotting: "Fast grower — may need yearly upsizes vs slower philodendrons (The Spruce).\n\n• Current: 5.5\" with 2 shoots — next pot only +1–2\" when roots circle.\n• Spring preferred; water after potting to settle, then resume top-1–2\" dry rule.\n• Refresh DIY Aroid if bark softens into mud (~12–18 months).\n• Add a moss pole when vines start reaching — larger leaves follow support.",
-      feeding: "Liquid houseplant fertilizer monthly April–September (RHS); half-strength is safer in Central Texas hard water.\n\n• Hold fertilizer 4–6 weeks after any fresh DIY Aroid mix / repot.\n• Skip or go very light Oct–Feb unless under strong grow lights.\n• Flush salts every 2–3 months.",
-      troubleshooting: "SYMPTOM → CAUSE → FIX (RHS / The Spruce / NParks):\n\n• Yellow leaves + wet DIY Aroid → overwatering / poor drainage (#1). Unpot, trim mushy roots, refresh mix; empty saucers.\n• Droop + dry mix → thirsty — soak now; perk often within hours.\n• Long bare internodes / tiny new leaves → low light. Move to 1F Corner / brighter indirect.\n• Brown crispy tips → dry AC, underwatering, or salt burn. Filtered water; optional pebble tray; flush salts.\n• Scorched patches → direct PM sun. Pull back from glass.\n• Sticky residue / cottony bits → mealybugs or scale. Alcohol swab; insecticidal soap weekly × 3.\n• Fine webs + stippling → spider mites in dry winter AC. Rinse; soap spray; raise humidity slightly.\n• Fungus gnats → surface too wet; lengthen dry-down; sticky traps.\n• ⚠️ Toxic to cats and dogs (ASPCA — Philodendron / calcium oxalates): oral irritation, drooling, vomiting, difficulty swallowing if chewed. Keep away from Moose."
+      lighting: "Bright, FILTERED / indirect light is the #1 lever for crisp cream pinstripes (NC State Extension / The Spruce / RHS philodendron guidance). Harsh direct sun scorches the white stripes first; dim corners fade variegation and stretch internodes.\n\n• Ideal: east window 2–3 ft back, or south/west behind a sheer 3–5 ft from glass.\n• Target several hours of strong ambient brightness daily — variegated tissue needs more light than solid-green philodendrons.\n• Low light → smaller leaves, longer stems, weaker or missing stripes on new growth.\n• Rotate ¼ turn every 1–2 weeks so both shoots stripe evenly and don't lean.\n• One pale new leaf can be normal (stripes deepen as it hardens) — watch the next 2–3 leaves before calling reversion.\n\n• Best matches per PLANT_LIGHT_REF: 1F Corner, 1F Window (set back), humidified 2F Room 2. Hard avoid: unfiltered 2F SW Living Room.",
+      soil: "Loose, well-draining, slightly acidic aroid mix (NC State: moist well-drained loam/sand style; The Spruce: potting + bark + perlite).\n\nDIY Aroid (current):\n• 3 scoops medium orchid bark\n• 2 scoops hydrated coco coir\n• 1 scoop standard potting mix\n• 2 scoops pumice\n• ½–1 scoop horticultural charcoal\n• General fertilizer: pinch / label rate only (NOT a scoop)\n\nAvoid: pure peat bricks, garden soil, and cachepots that trap runoff.",
+      watering: "METHOD — check-based soak-and-dry: water when the top 1–2\" (about a second knuckle) are dry, then soak until runoff and empty the saucer within ~15–30 min (The Spruce / RHS / NC State). Never leave Birkin standing in water — soggy mix → yellow leaves and root rot.\n\nHOW TO CHECK READINESS (your 5.5\" DIY Aroid pot, 2 shoots):\n• Finger / chopstick test: top 1–2\" dry = water; cool-damp = wait.\n• Pot weight: noticeably lighter than 24 hrs post-soak = ready.\n• Moisture meter: ~3–4 upper third = water; 5+ = wait.\n• Plant tells: slight soft droop + dry mix = thirsty. Yellow leaves on wet mix = overwater.\n\nCENTRAL TEXAS CADENCE (Pflugerville, indoor AC ~30–45% RH):\n• Hot AC season (Apr–Oct): every 6–7 days in 1F Corner / Window.\n• Peak summer (Jun–Sep): every 6 days near vents; every 7–8 days in still corners.\n• Mild winter (Nov–Feb): every 10–14 days — growth slows; when in doubt wait a day (Trees.com-style winter stretch).\n• Prefer filtered / rain / sat-out tap; water the soil, not the leaves (NC State: wet foliage → leaf spot).\n\nOVER- vs UNDER-watering tells:\n• Over: yellow leaves, mushy stem base, fungus gnats, mix wet >4 days.\n• Under: droop + dry mix, crispy brown tips (also humidity), soil pulling from walls.",
+      pruning: "Self-heading Birkin rarely needs hard pruning — tidy yellow / damaged leaves at the petiole.\n\n• REVERSION: if successive new leaves are solid green or reddish with no pinstripes, cut that stem back to the last clearly striped leaf/node (LeafyPixels / common Birkin practice). Fully reverted growth stays green and can dominate.\n• Balance the two shoots so one leader doesn't shade the other.\n• Wipe dusty leaves monthly — white stripes lose contrast under AC dust.\n• Sterile shears; sap can irritate sensitive skin.",
+      propagation: "Stem cuttings with at least one node (+ leaf preferred) (NC State / The Spruce).\n\n• Water: node submerged, change weekly — roots often in 2–4 weeks; pot up at ~1–2\" roots.\n• Soil: insert into moist DIY Aroid under a clear cup 1–2 weeks; keep just-moist then resume dry-downs.\n• Propagate from the MOST clearly pinstriped growth — solid-green cuttings stay green.\n• Division: separate the two shoots at repot if you want solo pots.\n• Best season: spring–summer.",
+      repotting: "Moderate grower — typically every 1–2 years or when the 5.5\" is rootbound.\n\n• Upsize only +1–2\" in spring; water once to settle, then resume the top-1–2\" dry rule.\n• Fresh unused mix stays wet longer for 2–4 weeks after upsizing — check deeper before watering.\n• Refresh DIY Aroid if bark softens into mud (~12–18 months).\n• Optional thin stake if a shoot gets top-heavy; Birkin is more self-heading than a trailing heartleaf.",
+      feeding: "Light feeder — The Spruce suggests about every two months in spring/summer with balanced houseplant fertilizer; half-strength is safer in Central Texas hard water.\n\n• Hold fertilizer 4–6 weeks after any fresh DIY Aroid mix / repot.\n• Skip or go very light Oct–Feb unless under strong grow lights with active growth.\n• Flush salts every 2–3 months — white pinstripe tissue shows tip burn from fertilizer + hard water.",
+      troubleshooting: "SYMPTOM → CAUSE → FIX (NC State / The Spruce / RHS):\n\n• Faded or missing white pinstripes / greener new leaves → insufficient light (NC State). Move to 1F Corner / brighter filtered spot; wait 2–3 new leaves before judging.\n• Successive solid-green or reddish leaves → true reversion. Prune stem back to last striped node; improve light.\n• Scorched / bleached white stripes → too much direct sun. Set the 5.5\" back from glass or add a sheer.\n• Yellow leaves + wet DIY Aroid → overwatering / poor drainage (#1). Unpot, trim mushy roots, refresh mix; empty saucers.\n• Droop + dry mix → thirsty — soak now.\n• Brown leaf tips → low humidity (NC State), underwatering, or salt burn. Filtered water; pebble tray or 2F Rm2 humidifier cluster; flush salts.\n• Leggy sparse growth / tiny leaves → low light. Brighten; pinch soft tips if needed.\n• Leaf spots after wetting foliage → water soil only; improve airflow.\n• Sticky residue / cottony bits → mealybugs, aphids, or scale (NC State). Alcohol swab; insecticidal soap weekly × 3.\n• Fine webs + stippling → spider mites in dry winter AC. Rinse; soap spray; raise humidity slightly.\n• Fungus gnats → lengthen dry-down; sticky traps.\n• ⚠️ Toxic to cats and dogs (ASPCA — Philodendron / insoluble calcium oxalates): oral irritation, drooling, vomiting, difficulty swallowing if chewed. Keep away from Moose."
     },
     sources: [
-      { label: "RHS — Philodendron burle-marxii", url: "https://www.rhs.org.uk/plants/247855/philodendron-burle-marxii/details" },
+      { label: "NC State Extension — Philodendron 'Birkin'", url: "https://plants.ces.ncsu.edu/plants/philodendron-birkin/" },
+      { label: "The Spruce — Philodendron Birkin Growing Guide", url: "https://www.thespruce.com/philodendron-birkin-growing-guide-5272115" },
       { label: "RHS — How to grow philodendrons", url: "https://www.rhs.org.uk/plants/philodendron/growing-guide" },
-      { label: "NParks — Philodendron 'Burle Marx'", url: "https://www.nparks.gov.sg/florafaunaweb/flora/5/3/5359" },
-      { label: "The Spruce — Philodendron Burle Marx Care", url: "https://www.thespruce.com/philodendron-burle-marx-care-guide-8404600" },
-      { label: "ASPCA — Heartleaf Philodendron Toxicity", url: "https://www.aspca.org/pet-care/aspca-poison-control/toxic-and-non-toxic-plants/heartleaf-philodendron" },
-      { label: "The Sill — Philodendron Care", url: "https://www.thesill.com/blog/plant-care-philodendron" }
+      { label: "LeafyPixels — Philodendron Birkin Care (light & reversion)", url: "https://leafypixels.com/guides/philodendron-birkin-care-guide/" },
+      { label: "Trees.com — Birkin Philodendron Care", url: "https://www.trees.com/blogs/plant-care-guides/birkin-philodendron-growing-and-care-guide" },
+      { label: "ASPCA — Heartleaf Philodendron Toxicity", url: "https://www.aspca.org/pet-care/aspca-poison-control/toxic-and-non-toxic-plants/heartleaf-philodendron" }
     ]
   },
 
@@ -2967,7 +2967,7 @@ const OWNED_PLANT_IDS = [
   "pilea_peperomioides",
   "rubber_tree",
   /* New arrivals (Nov 2026) — philodendron haul */
-  "philodendron_burle_marx",
+  "philodendron_birkin",
   "philodendron_painted_lady"
 ];
 
@@ -2999,7 +2999,7 @@ const POTHOS_VARIANTS = [
   "neon_pothos",
   "satin_pothos",
   "philodendron_silver_stripe",
-  "philodendron_burle_marx",
+  "philodendron_birkin",
   "philodendron_painted_lady"
 ];
 
@@ -3382,11 +3382,11 @@ const PLANT_PLACEMENT = {
     avoid: ["bathroom"],
     rationale: "Ficus elastica likes brighter light than Pilea — bright indirect plus 1–3 hrs gentle direct keeps it compact and glossy (Mo Bot / RHS). Corner, morning-direct, and NW rooms are strong. 2F SW is OK for solid burgundy if set back; variegated forms prefer filtered. Bathroom humidity is unnecessary and sap + tight quarters is a poor combo with pets. Expect leaf drop if you relocate abruptly."
   },
-  philodendron_burle_marx: {
+  philodendron_birkin: {
     ideal: ["living_room_open", "second_floor_open", "bedroom", "living_room_window_stained"],
     ok: ["living_room_window_morning", "bathroom", "living_room_fireplace"],
     avoid: ["second_floor_window"],
-    rationale: "Burle Marx wants bright indirect with soft morning sun OK (RHS / The Spruce). LR-Open, 2F-Open, bedroom, and stained-glass bounce keep the wavy leaves compact. Soft AM at Window A is fine if set back. Hard avoid: unfiltered 2F SW — scorches thin blades. Bathroom humidity helps in Central Texas AC if the SE beam is blocked. Optional moss pole once the two shoots start reaching."
+    rationale: "Birkin wants bright filtered / indirect light to hold cream pinstripes (NC State / The Spruce). LR-Open, 2F-Open, bedroom, and stained-glass bounce keep both shoots compact and striped. Soft AM at Window A is fine if set back. Hard avoid: unfiltered 2F SW — scorches white variegation. Bathroom humidity helps brown tips in Central Texas AC if the SE beam is blocked."
   },
   philodendron_painted_lady: {
     ideal: ["living_room_open", "second_floor_open", "living_room_window_stained", "bedroom"],
@@ -3521,7 +3521,7 @@ const HOME_WINDOWS = [
     humidifier: { rec: "optional", note: "Low-impact here — this is the big vaulted living room open to the 2F, so its volume scatters a small humidifier. If you use it, huddle the foliage within 2–3 ft of the unit; otherwise rely on pebble trays." },
     light: "Two exposures (gentle NE early morning + SE morning/midday) in a big vaulted, double-height room open to the 2nd floor — tall, bright and airy with lots of ambient bounce. Usable plant-level light still comes from the windows, but it's the longest span of soft-to-moderate direct light in the house.",
     humidity: "Average — but the vaulted volume open to the 2F lets moisture disperse fast, so it's hard to raise humidity here.",
-    thrive: [{ id: "monstera", back: true }, { id: "monstera_adansonii", back: true }, "schefflera", { id: "marble_queen_pothos", back: true }, { id: "pearls_jade_pothos", back: true }, { id: "philodendron_silver_stripe", back: true }, { id: "philodendron_burle_marx", back: true }, { id: "philodendron_painted_lady", back: true }, "ginseng_ficus", "pilea_peperomioides", "rubber_tree"],
+    thrive: [{ id: "monstera", back: true }, { id: "monstera_adansonii", back: true }, "schefflera", { id: "marble_queen_pothos", back: true }, { id: "pearls_jade_pothos", back: true }, { id: "philodendron_silver_stripe", back: true }, { id: "philodendron_birkin", back: true }, { id: "philodendron_painted_lady", back: true }, "ginseng_ficus", "pilea_peperomioides", "rubber_tree"],
     solid: [{ id: "cordyline_fruticosa", back: true }, { id: "dracaena_fragrans", back: true }, { id: "dracaena_fragrans_b", back: true }, "snake_plant", "kalanchoe", { id: "zz_plant", back: true }, "haworthia", "baby_burros_tail", "string_of_pearls", "string_of_buttons", "burrows_tail", { id: "satin_pothos", back: true }, { id: "neon_pothos", back: true }, { id: "golden_pothos_b", back: true }, { id: "polka_dot_plant", note: "add humidity", back: true }],
     avoid: "Nothing really struggles here — it's your best all-rounder. Deep-shade-only plants would be wasted on it.",
     keepOut: []
@@ -3533,7 +3533,7 @@ const HOME_WINDOWS = [
     humidifier: { rec: "skip", note: "Big vaulted room open to the 2F — a small humidifier's mist just dissipates into the volume and barely moves RH. Skip it here; humidify the enclosed 2F Room 2 instead and give any humidity-lovers you keep here pebble trays." },
     light: "Gentle morning sun only, bright indirect the rest of the day, in the big vaulted living room open to the 2nd floor — tall and airy, so the light stays soft and even. Still the safest window for foliage that scorches.",
     humidity: "Average — and the vaulted, double-height volume lets any added moisture dissipate quickly.",
-    thrive: ["golden_pothos", "marble_queen_pothos", "satin_pothos", "neon_pothos", "golden_pothos_b", "terrarium_a", "terrarium_b", "zz_plant", "monstera_water_cuttings", "pilea_peperomioides", "philodendron_burle_marx"],
+    thrive: ["golden_pothos", "marble_queen_pothos", "satin_pothos", "neon_pothos", "golden_pothos_b", "terrarium_a", "terrarium_b", "zz_plant", "monstera_water_cuttings", "pilea_peperomioides", "philodendron_birkin"],
     solid: [{ id: "prayer_plant", note: "add humidity" }, "monstera", "dracaena_fragrans", "dracaena_fragrans_b", "mondo_grass", "mini_orchid", "pearls_jade_pothos", "philodendron_silver_stripe", { id: "philodendron_painted_lady", note: "bright enough for variegation" }, { id: "rubber_tree", note: "may stretch without AM sun" }],
     avoid: "Full-sun desert plants (Desert Rose, Firestick, cacti) — not enough direct light to keep them tight & colored.",
     keepOut: ["desert_rose", "firestick", "lady_finger_cactus", "assorted_cacti", "aloe_vera", "succulent_frankenstein_a", "variegated_elephant_bush", "variegated_elephant_bush_bonsai"]
@@ -3548,7 +3548,7 @@ const HOME_WINDOWS = [
     thrive: ["desert_rose", "firestick", "lady_finger_cactus", "assorted_cacti", "aloe_vera", "succulent_frankenstein_a", "variegated_elephant_bush", "variegated_elephant_bush_bonsai", "kalanchoe_fang"],
     solid: [{ id: "snake_plant", back: true }, "ginseng_ficus", { id: "burrows_tail", note: "acclimate slowly" }, { id: "string_of_buttons", note: "acclimate slowly" }, { id: "rubber_tree", note: "set back / solid cultivars" }],
     avoid: "Cream/variegated tropicals, Fittonia, Polka Dot, Pilea, Rattlesnake Calathea, Thai — they'll scorch. Shield Haworthia from the harshest beam.",
-    keepOut: ["fittonia", "polka_dot_plant", "pilea_peperomioides", "prayer_plant", "thai_constellation", "monstera", "monstera_adansonii", "monstera_water_cuttings", "mini_orchid", "terrarium_a", "terrarium_b", "cordyline_fruticosa", "marble_queen_pothos", "pearls_jade_pothos", "golden_pothos", "satin_pothos", "neon_pothos", "golden_pothos_b", "philodendron_silver_stripe", "philodendron_burle_marx", "philodendron_painted_lady"]
+    keepOut: ["fittonia", "polka_dot_plant", "pilea_peperomioides", "prayer_plant", "thai_constellation", "monstera", "monstera_adansonii", "monstera_water_cuttings", "mini_orchid", "terrarium_a", "terrarium_b", "cordyline_fruticosa", "marble_queen_pothos", "pearls_jade_pothos", "golden_pothos", "satin_pothos", "neon_pothos", "golden_pothos_b", "philodendron_silver_stripe", "philodendron_birkin", "philodendron_painted_lady"]
   },
   {
     id: "f2_bath", floor: "Second floor", name: "Bathroom (rarely used)", bearing: "208° SW",
@@ -3581,7 +3581,7 @@ const HOME_WINDOWS = [
     humidifier: { rec: "use", note: "BEST home for your one small humidifier — a smaller, ENCLOSED NW room that actually holds humidity (unlike the vaulted 1F living room). Cluster the humidity-lovers — Rattlesnake Calathea, Cordyline, Monstera, pothos group — within 2–3 ft of the unit and add a small fan on low to spread the plume." },
     light: "Identical light to Room 1 — split the collection: make this the bright-indirect foliage room, Room 1 the succulent/sun room.",
     humidity: "Average / low.",
-    thrive: [{ id: "golden_pothos", back: true }, { id: "golden_pothos_b", back: true }, { id: "marble_queen_pothos", back: true }, { id: "pearls_jade_pothos", back: true }, { id: "neon_pothos", back: true }, { id: "satin_pothos", back: true }, { id: "philodendron_silver_stripe", back: true }, { id: "philodendron_burle_marx", back: true }, { id: "philodendron_painted_lady", back: true }, { id: "monstera", back: true }, { id: "zz_plant", back: true }, { id: "dracaena_fragrans", back: true }, { id: "dracaena_fragrans_b", back: true }, "pilea_peperomioides"],
+    thrive: [{ id: "golden_pothos", back: true }, { id: "golden_pothos_b", back: true }, { id: "marble_queen_pothos", back: true }, { id: "pearls_jade_pothos", back: true }, { id: "neon_pothos", back: true }, { id: "satin_pothos", back: true }, { id: "philodendron_silver_stripe", back: true }, { id: "philodendron_birkin", back: true }, { id: "philodendron_painted_lady", back: true }, { id: "monstera", back: true }, { id: "zz_plant", back: true }, { id: "dracaena_fragrans", back: true }, { id: "dracaena_fragrans_b", back: true }, "pilea_peperomioides"],
     solid: [{ id: "prayer_plant", note: "add humidity", back: true }, { id: "terrarium_b", back: true }, { id: "cordyline_fruticosa", back: true }, { id: "polka_dot_plant", note: "add humidity", back: true }, "rubber_tree"],
     avoid: "Full-sun cacti/Desert Rose (send to 2F SW). Keep the direct late beam off the pothos variegation midsummer.",
     keepOut: ["desert_rose", "lady_finger_cactus", "assorted_cacti", "firestick", "aloe_vera", "succulent_frankenstein_a", "variegated_elephant_bush", "variegated_elephant_bush_bonsai"]
@@ -3609,7 +3609,7 @@ const HOME_PLACEMENT_NOTES = [
   { tone: "danger", title: "Rot-risk succulents stay out of bathrooms", body: "Lady Finger Cactus (never), String of Pearls, String of Buttons, Haworthia, Kalanchoe Fang and Desert Rose soften and rot above ~60% humidity. Their zone is the 2F SW living room plus the NW rooms — dry, bright, warm." },
   { tone: "info", title: "Fittonia & Polka Dot — humidity divas", body: "Both want elevated humidity and no harsh direct sun. The 1F bathroom, set back from the SE beam, is the dream spot: steady moisture in the air, no scorch. Polka Dot is now in a 3.5×2.5 DIY Mix A pot (Nov 2026) — still check often vs deeper pots, just not as frantic as the old 2\"." },
   { tone: "info", title: "Pilea + Rubber — two DIY mixes on purpose", body: "Nov 2026: Pilea and Polka share DIY Mix A (coir/potting-forward). Rubber Tree uses chunkier DIY Mix B (more bark + citrus grit) in the same 6×5 footprint. Don't swap those soils long-term — rubber wants more air in the root zone; Hypoestes wilts if the mix is too gritty." },
-  { tone: "info", title: "Burle Marx + Painted Lady — two philodendrons", body: "Nov 2026: Burle Marx (2 shoots, 5.5\") and Painted Lady (3 vines, 6.5\") both in DIY Aroid. Painted Lady needs the brighter indirect spot to hold yellow mottling; Burle Marx is a bit more shade-tolerant but still wants bright bounce. Both are ASPCA-toxic (calcium oxalates) — keep off Moose's chew path." },
+  { tone: "info", title: "Birkin + Painted Lady — two philodendrons", body: "Nov 2026: Birkin (2 shoots, 5.5\") and Painted Lady (3 vines, 6.5\") both in DIY Aroid. Painted Lady needs bright indirect for yellow mottling; Birkin needs the same class of light to keep white pinstripes (prune green reversion). Both are ASPCA-toxic (calcium oxalates) — keep off Moose's chew path." },
   { tone: "info", title: "Terrariums — bright indirect only", body: "They make their own 80–95% humidity, so they don't need a bathroom. Park them at the 1F NE window; direct sun cooks the sealed glass and boils the plants inside." },
   { tone: "neutral", title: "Winter sun shifts south & low", body: "Nov–Feb the sun swings low and south: the SE/SW windows carry the load while N/NE windows go dim. Rotate light-hungry plants toward SE/SW for the winter." },
   { tone: "success", title: "Your two premium spots", body: "The 1F living-room corner (dual NE/SE light) is the most versatile home for fussy variegated foliage; the 2F SW living room is a desert powerhouse for every full-sun succulent and cactus you own." }
@@ -3666,7 +3666,7 @@ const PLANT_LIGHT_REF = {
   string_of_buttons:          { light: "Bright + 3–4h gentle direct",            humidity: "Low 30–50%",            best: "1F Room 1 / morning sun — not bathroom", flag: "info" },
   pilea_peperomioides:        { light: "Bright indirect (+ soft AM OK)",         humidity: "Avg–High 40–60%",       best: "1F Corner / Window — 6×5 DIY Mix A", hum: true },
   rubber_tree:                { light: "Bright + 1–3h gentle direct",            humidity: "Avg 40–60%",            best: "1F Corner / Room 1 — 6×5 DIY Mix B", flag: "info" },
-  philodendron_burle_marx:    { light: "Bright indirect (+ soft AM OK)",         humidity: "Avg–High 50–60%",       best: "1F Corner / Window — 5.5\" DIY Aroid (2 shoots)", hum: true },
+  philodendron_birkin:    { light: "Bright filtered (holds pinstripes)",       humidity: "Avg–High 50–60%",       best: "1F Corner / Window — 5.5\" DIY Aroid (2 shoots)", flag: "info", hum: true },
   philodendron_painted_lady:  { light: "Bright indirect (holds variegation)",    humidity: "Avg–High 50–70%",       best: "1F Corner / 2F Rm2 — 6.5\" DIY Aroid (3 vines)", flag: "info", hum: true }
 };
 
