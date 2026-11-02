@@ -111,9 +111,24 @@ it's a single self-contained file with everything inlined.
 
 ---
 
+## ☁️ Firebase sync (optional)
+
+The Log & Data tab can sync the same JSON export shape to Firestore project
+`moose-plant-shop` at document `plantCare/moose`.
+
+1. In Firebase Console, create a **Firestore** database for `moose-plant-shop`
+   (Native mode) and enable the Cloud Firestore API.
+2. Deploy rules from this repo: `firebase deploy --only firestore:rules`
+   (or paste `firestore.rules` in the console).
+3. Open the site → **Log & Data** → **Seed Cloud from Export** (uses
+   `data/plant-care-export.json`), or **Push to Firebase** after Import.
+
+Web config lives in `js/firebase-cloud.js`. The Firebase web API key is expected
+to be public; protect data with Firestore rules (tighten once Auth is enabled).
+
 ## 🔐 Note on the Claude chat feature
 
 The **🤖 Ask Claude** tab calls Anthropic's API **directly from your browser** using
 a key you paste in yourself (stored only in your browser, never committed to the repo).
-This is fine for a personal, single-user, static site. **Do not** hard-code an API key
-into any file in this repo — anything pushed to a public GitHub Pages site is world-readable.
+This is fine for a personal, single-user, static site. **Do not** hard-code an Anthropic
+API key into any file in this repo — anything pushed to a public GitHub Pages site is world-readable.

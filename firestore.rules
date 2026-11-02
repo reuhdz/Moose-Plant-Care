@@ -1,0 +1,10 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Personal single-household plant-care snapshot.
+    // Tighten these once Auth is enabled (e.g. request.auth != null).
+    match /plantCare/{docId} {
+      allow read, write: if docId == "moose";
+    }
+  }
+}

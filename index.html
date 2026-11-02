@@ -490,8 +490,8 @@
 
       <h2>📦 Import / Export</h2>
       <p class="muted">
-        Your watering log and custom plants are stored on this device. Use Export to back them up or move to another device.
-        You can also load the included <code>data/watering-log.json</code> template.
+        Your watering log and custom plants live in this browser by default. Use Export / Import to back them up,
+        load the bundled <code>data/plant-care-export.json</code> seed, or the older <code>data/watering-log.json</code> template.
       </p>
       <div class="io-buttons">
         <button id="export-json" class="secondary-btn">⬇️ Export JSON</button>
@@ -499,13 +499,27 @@
           ⬆️ Import JSON
           <input type="file" id="import-json" accept="application/json,.json" hidden />
         </label>
+        <button id="load-export-seed" class="secondary-btn">🌿 Load Bundled Export</button>
         <button id="load-template" class="secondary-btn">📄 Load Template File</button>
         <button id="clear-log" class="danger-btn">🗑 Clear All Logs</button>
       </div>
 
+      <h2>☁️ Firebase Sync</h2>
+      <p class="muted">
+        Cloud copy lives in Firestore project <code>moose-plant-shop</code>
+        at <code>plantCare/moose</code>. Push uploads this device’s data; Pull replaces local stores from the cloud.
+        First Push (or Seed Cloud) writes the bundled export if the cloud doc is empty.
+      </p>
+      <div class="io-buttons">
+        <button id="cloud-pull" class="secondary-btn">☁️ Pull from Firebase</button>
+        <button id="cloud-push" class="secondary-btn">☁️ Push to Firebase</button>
+        <button id="cloud-seed" class="secondary-btn">🌱 Seed Cloud from Export</button>
+      </div>
+      <p id="cloud-status" class="muted small" aria-live="polite"></p>
+
       <h2>ℹ️ About</h2>
       <p class="muted">
-        This is a fully offline static website — your data never leaves your device.
+        Static GitHub Pages site with optional Firebase sync. Local edits stay on-device until you Push.
         Bookmark this page on your phone for quick access, or "Add to Home Screen" from your browser.
       </p>
     </section>
@@ -515,6 +529,9 @@
     <small>🐾 Made with love for Moose — good boy 🌿</small>
   </footer>
 
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-cloud.js"></script>
   <script src="js/plants-data.js"></script>
   <script src="js/care-library.js"></script>
   <script src="js/watering.js"></script>

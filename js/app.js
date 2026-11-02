@@ -1889,10 +1889,10 @@
   }
 
   /* ============================================================
-   * Import / Export / Template
+   * Import / Export / Template / Firebase
    * ============================================================ */
-  document.getElementById("export-json").addEventListener("click", () => {
-    const data = {
+  function collectExportPayload() {
+    return {
       waterLog: WaterLog.all(),
       customPlants: PlantStore.customPlants(),
       overlays: PlantStore.overlays(),
@@ -1905,6 +1905,52 @@
       removedOwned: PlantStore.removedOwnedIds(),
       exportedAt: new Date().toISOString()
     };
+  }
+
+  function applyImportedPayload(parsed, { flashMsg } = {}) {
+    if (Array.isArray(parsed)) {
+      WaterLog.replaceAll(parsed);
+    } else if (parsed && typeof parsed === "object") {
+      if (Array.isArray(parsed.waterLog)) WaterLog.replaceAll(parsed.waterLog);
+      if (Array.isArray(parsed.customPlants)) PlantStore.saveCustom(parsed.customPlants);
+      if (parsed.overlays && typeof parsed.overlays === "object") PlantStore.saveOverlays(parsed.overlays);
+      if (parsed.images && typeof parsed.images === "object") ImageStore.saveAll(parsed.images);
+      if (parsed.snoozes && typeof parsed.snoozes === "object") SnoozeStore.save(parsed.snoozes);
+      if (parsed.todos !== undefined) TodoStore.replaceAll(parsed.todos);
+      if (parsed.careNotes !== undefined) CareNotesStore.replaceAll(parsed.careNotes);
+      if (parsed.roomPlan !== undefined) RoomPlanStore.replaceAll(parsed.roomPlan);
+      if (parsed.conditionLog !== undefined) ConditionLogStore.replaceAll(parsed.conditionLog);
+      if (Array.isArray(parsed.removedOwned)) PlantStore.saveRemovedOwned(parsed.removedOwned);
+    } else {
+      throw new Error("Unrecognized JSON shape.");
+    }
+    refreshAllDropdowns();
+    renderRecentLog();
+    renderTodosTab();
+    renderPlacementTab();
+    /* If the Care Guide is currently rendering a plant, refresh its notes
+     * strip so any imported saved notes show up immediately. */
+    const visiblePlant = detailEl?.querySelector(".plant-notes-section");
+    if (visiblePlant) renderPlantNotesSection(visiblePlant.dataset.plantId);
+    const visibleCond = detailEl?.querySelector(".plant-condition-section");
+    if (visibleCond) renderPlantConditionLogSection(visibleCond.dataset.plantId);
+    if (flashMsg) flash(flashMsg);
+  }
+
+  function setCloudStatus(msg) {
+    const el = document.getElementById("cloud-status");
+    if (el) el.textContent = msg || "";
+  }
+
+  function cloudApi() {
+    if (!window.PlantCareCloud) {
+      throw new Error("Firebase helper not loaded (js/firebase-cloud.js).");
+    }
+    return window.PlantCareCloud;
+  }
+
+  document.getElementById("export-json").addEventListener("click", () => {
+    const data = collectExportPayload();
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -1921,40 +1967,29 @@
     reader.onload = ev => {
       try {
         const parsed = JSON.parse(ev.target.result);
-        // Accept two shapes: bare array (watering log only) OR new combined object
-        if (Array.isArray(parsed)) {
-          WaterLog.replaceAll(parsed);
-        } else if (parsed && typeof parsed === "object") {
-          if (Array.isArray(parsed.waterLog)) WaterLog.replaceAll(parsed.waterLog);
-          if (Array.isArray(parsed.customPlants)) PlantStore.saveCustom(parsed.customPlants);
-          if (parsed.overlays && typeof parsed.overlays === "object") PlantStore.saveOverlays(parsed.overlays);
-          if (parsed.images && typeof parsed.images === "object") ImageStore.saveAll(parsed.images);
-          if (parsed.snoozes && typeof parsed.snoozes === "object") SnoozeStore.save(parsed.snoozes);
-          if (parsed.todos !== undefined) TodoStore.replaceAll(parsed.todos);
-          if (parsed.careNotes !== undefined) CareNotesStore.replaceAll(parsed.careNotes);
-          if (parsed.roomPlan !== undefined) RoomPlanStore.replaceAll(parsed.roomPlan);
-          if (parsed.conditionLog !== undefined) ConditionLogStore.replaceAll(parsed.conditionLog);
-          if (Array.isArray(parsed.removedOwned)) PlantStore.saveRemovedOwned(parsed.removedOwned);
-        } else {
-          throw new Error("Unrecognized JSON shape.");
-        }
-        refreshAllDropdowns();
-        renderRecentLog();
-        renderTodosTab();
-        renderPlacementTab();
-        /* If the Care Guide is currently rendering a plant, refresh its notes
-         * strip so any imported saved notes show up immediately. */
-        const visiblePlant = detailEl?.querySelector(".plant-notes-section");
-        if (visiblePlant) renderPlantNotesSection(visiblePlant.dataset.plantId);
-        const visibleCond = detailEl?.querySelector(".plant-condition-section");
-        if (visibleCond) renderPlantConditionLogSection(visibleCond.dataset.plantId);
-        flash("Imported! 📥");
+        applyImportedPayload(parsed, { flashMsg: "Imported! 📥" });
       } catch (err) {
         alert("Could not import file: " + err.message);
       }
     };
     reader.readAsText(file);
     e.target.value = "";
+  });
+
+  document.getElementById("load-export-seed")?.addEventListener("click", async () => {
+    try {
+      const cloud = cloudApi();
+      const parsed = await cloud.loadBundledExport();
+      const n = parsed.waterLog.length;
+      if (!confirm(`Load bundled export (${n} waterings, todos, room plan, etc.)? This replaces local plant data on this device.`)) return;
+      applyImportedPayload(parsed, { flashMsg: "Bundled export loaded 🌿" });
+      setCloudStatus(`Loaded local seed from ${cloud.bundledExportUrl} (${n} waterings).`);
+    } catch (err) {
+      alert(
+        "Could not load bundled export. If you're opening index.html directly (file://), " +
+        "use a local server or Import JSON instead.\n\nDetails: " + err.message
+      );
+    }
   });
 
   document.getElementById("load-template").addEventListener("click", async () => {
@@ -1981,6 +2016,68 @@
       WaterLog.clear();
       renderRecentLog();
       flash("Cleared.");
+    }
+  });
+
+  document.getElementById("cloud-pull")?.addEventListener("click", async () => {
+    const cloud = cloudApi();
+    setCloudStatus("Pulling from Firebase…");
+    try {
+      const data = await cloud.pull();
+      if (!data) {
+        setCloudStatus("No cloud document yet at plantCare/moose. Use Seed Cloud or Push first.");
+        flash("Cloud empty — nothing to pull");
+        return;
+      }
+      if (!confirm(`Replace local data with Firebase snapshot?\n\n${data.waterLog.length} waterings · synced ${data.syncedAt || data.exportedAt || "unknown"}`)) {
+        setCloudStatus("Pull cancelled.");
+        return;
+      }
+      applyImportedPayload(data, { flashMsg: "Pulled from Firebase ☁️" });
+      setCloudStatus(`Pulled plantCare/moose (${data.waterLog.length} waterings).`);
+    } catch (err) {
+      const msg = cloud.statusMessage(err);
+      setCloudStatus(msg);
+      alert("Firebase pull failed:\n\n" + msg);
+    }
+  });
+
+  document.getElementById("cloud-push")?.addEventListener("click", async () => {
+    const cloud = cloudApi();
+    setCloudStatus("Pushing to Firebase…");
+    try {
+      const payload = collectExportPayload();
+      if (!confirm(`Push this device’s data to Firebase plantCare/moose?\n\n${payload.waterLog.length} waterings will overwrite the cloud copy.`)) {
+        setCloudStatus("Push cancelled.");
+        return;
+      }
+      const saved = await cloud.push(payload);
+      setCloudStatus(`Pushed plantCare/moose at ${saved.syncedAt} (${saved.waterLog.length} waterings).`);
+      flash("Pushed to Firebase ☁️");
+    } catch (err) {
+      const msg = cloud.statusMessage(err);
+      setCloudStatus(msg);
+      alert("Firebase push failed:\n\n" + msg);
+    }
+  });
+
+  document.getElementById("cloud-seed")?.addEventListener("click", async () => {
+    const cloud = cloudApi();
+    setCloudStatus("Seeding Firebase from bundled export…");
+    try {
+      const existing = await cloud.pull();
+      if (existing && !confirm(`Cloud already has ${existing.waterLog.length} waterings (synced ${existing.syncedAt || existing.exportedAt || "unknown"}).\n\nOverwrite with data/plant-care-export.json?`)) {
+        setCloudStatus("Seed cancelled — cloud left unchanged.");
+        return;
+      }
+      const bundled = await cloud.loadBundledExport();
+      const saved = await cloud.push(bundled);
+      setCloudStatus(`Seeded plantCare/moose from bundled export (${saved.waterLog.length} waterings).`);
+      flash("Firebase seeded from export 🌱");
+    } catch (err) {
+      const msg = cloud.statusMessage(err);
+      setCloudStatus(msg);
+      alert("Firebase seed failed:\n\n" + msg);
     }
   });
 
