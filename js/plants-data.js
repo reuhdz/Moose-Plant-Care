@@ -77,6 +77,11 @@ const SOIL_TYPES = {
     drainage: "high", retention: "medium",
     description: "Standard mix + extra perlite + orchid bark. Ideal for Monstera, Philodendron, Pothos."
   },
+  diy_aroid: {
+    label: "DIY Aroid — Pothos batch (bark/coir)",
+    drainage: "high", retention: "medium",
+    description: "Scoop recipe (same scoop throughout): 3 medium orchid bark · 2 hydrated coco coir · 1 standard potting mix · 2 pumice (prefer over perlite) · ½–1 horticultural charcoal · pinch general fertilizer (label rate only — not a scoop; no worm castings). Chunky hemiepiphyte blend for pothos, philodendron, scindapsus. Adapted from the Nov 2026 DIY aroid recommendation."
+  },
   leca: {
     label: "LECA / semi-hydroponic",
     drainage: "very_high", retention: "controlled",
@@ -1352,7 +1357,7 @@ const PLANTS = {
     wateringDaysHot: 6,
     wateringDaysCool: 12,
     currentSoilMix: "aroid_mix",
-    comments: "Graduated from water propagation. 7 cuttings (the original 9 minus 2 that went into the Mixed Pothos combo pot) potted together in a single 5\" planter. Golden Pothos is the most foolproof houseplant in existence — listed by NASA in the 1989 Clean Air Study for removing formaldehyde, benzene, and carbon monoxide. Establishment in soil takes 4–6 weeks; expect to upsize to 6–7\" in year 2 once vines start trailing past the rim.",
+    comments: "Main Golden pot: 7 cuttings in a 5\" planter (aroid mix). Nov 2026: the Mixed Pothos Combo was separated — its 2 Golden cuttings now live in Golden Pothos (B) as a 3.5×2.5 DIY Aroid pot (separate watering log). Golden Pothos is the most foolproof houseplant in existence — listed by NASA in the 1989 Clean Air Study for removing formaldehyde, benzene, and carbon monoxide. Establishment in soil takes 4–6 weeks; expect to upsize to 6–7\" in year 2 once vines start trailing past the rim.",
     idealSoil: ["aroid_mix", "amended_potting", "standard_potting"],
     soilNotes: "Currently in aroid mix — best choice for long-term Pothos health (the chunky bark + perlite gives oxygen to roots that, in nature, climb tropical trees as hemiepiphytes). Standard potting + 30% perlite is a fine alternative if you need to repot in a pinch.",
     conditions: {
@@ -1384,30 +1389,31 @@ const PLANTS = {
   pearls_jade_pothos: {
     id: "pearls_jade_pothos",
     repotSigns: [
-      "Roots pushing out of the 3\" drainage holes",
+      "Roots packing the 3.5\" pot / poking drainage holes",
       "New leaves lose the crisp white variegation edges (stress reduces variegation)",
       "New leaves smaller than mature ones",
       "Water drains through immediately",
       "Growth stalls (Pearls & Jade is a slow grower normally — 'stall' means truly no new leaves for 8+ weeks in season)",
-      "Aerial roots reaching along the vines"
+      "DIY Aroid going hydrophobic after a hard dry-down"
     ],
     displayName: "Pearls & Jade Pothos",
-    potSize: '3"',
+    repotted: true,
+    potSize: '3.5"',
     cuttingsCount: 5,
     category: "pothos",
     names: {
       common: ["Pearls and Jade Pothos"],
       scientific: "Epipremnum aureum 'Pearls and Jade'"
     },
-    /* 3" pot is small → dries fast → shorter intervals than larger pothos.
-     * Cuttings still establishing → keep slightly more moist than mature pothos. */
+    /* 3.5" pot + DIY Aroid — still small/shallow enough to dry faster than a deep 5".
+     * Cuttings established; keep soak-and-dry, never bone-dry for days on variegated tissue. */
     wateringDays: 5,
     wateringDaysHot: 4,
     wateringDaysCool: 9,
-    currentSoilMix: "aroid_mix",
-    comments: "Graduated from water propagation — 5 cuttings total (the original 2 + 3 newly added) potted together in a single 3\" pot. 'Pearls and Jade' is a patented slow-growing sport (US Plant Patent #21,217, University of Florida 2009) with distinctive white/cream/green mottled variegation. The small 3\" pot will dry fast — check moisture every 3–4 days during establishment.",
-    idealSoil: ["aroid_mix", "amended_potting"],
-    soilNotes: "Currently in aroid mix — ideal for variegated pothos. The 3\" pot will need closer moisture attention than a 5\"+ pot would; consider upsizing to a 4\" pot once roots fill the current container (likely 4–6 months given Pearls & Jade's slow growth).",
+    currentSoilMix: "diy_aroid",
+    comments: "✅ Nov 2026: moved from 3\" into a 3.5\" pot with DIY Aroid (3 bark · 2 coco · 1 potting · 2 pumice · ½–1 charcoal · pinch fert). Same 5 cuttings, now with room to breathe in fresh chunky mix. 'Pearls and Jade' is a patented slow-growing sport (US Plant Patent #21,217, University of Florida 2009). Check moisture every 4–5 days — 3.5\" still dries faster than a deep 5\".",
+    idealSoil: ["diy_aroid", "aroid_mix", "amended_potting"],
+    soilNotes: "Now in DIY Aroid — the Nov 2026 bark/coir/pumice batch recommended for pothos. 3.5\" still needs closer moisture attention than a 5\"+ pot; next upsize only when roots fill (likely 6–12 months given slow growth).",
     conditions: {
       light:        { ideal: "Bright indirect — MORE than Golden Pothos needs to keep the cream variegation", passing: "Medium indirect; variegation fades in low light" },
       temperature:  { ideal: "65–80°F (18–27°C)",                                passing: "60–85°F" },
@@ -1416,13 +1422,13 @@ const PLANTS = {
     },
     tips: {
       lighting: "Variegated 'Pearls and Jade' needs MORE light than solid-green pothos to maintain its cream-and-white speckling.\n\n• Bright indirect with 1–2 hours gentle morning sun is ideal.\n• In low light the variegation fades to pale green and growth slows even more dramatically (this cultivar is already a notoriously slow grower).\n• An east window 6–12\" from the glass, or 3–4 feet back from a south/west window, are the sweet spots.\n• If new leaves emerge all-green, the plant is telling you to move it brighter.\n• In this home, the 1F Living Room corner (vaulted dual NE/SE light) and 1F Window (36° NE) are your best matches per PLANT_LIGHT_REF — both give the extra brightness variegated pothos need.",
-      soil: "Aroid-style mix is ideal — equal parts potting soil + perlite + orchid bark, plus a tablespoon of horticultural charcoal. The chunky bark keeps oxygen at the roots, which variegated cultivars need more than green forms (they have less chlorophyll, so root stress hurts faster).\n\nAvoid heavy peat-only potting mix in a small 3\" pot — it will stay wet too long between waterings.",
-      watering: "METHOD — soak-and-dry (soil-graduated cuttings): 5 cuttings moved from water to soil in your tight 3\" pot — let the top 1–2\" dry before a deep drench. Per The Spruce and University of Florida IFAS, variegated pothos need more light AND careful watering; the cream/white sections can't photosynthesize their way back from drought damage.\n\nHOW TO CHECK READINESS (your 3\" pot, 5 cuttings):\n• Finger test: top 1\" must feel dry — in a 3\" pot this happens fast, especially under Central Texas AC.\n• Pot weight: the 3\" pot should feel almost hollow-light before watering.\n• Moisture meter: 2–3 in upper third = water; above 5 = wait (rot risk in small pot).\n• Plant tells: slight droop + dry top 1\" = thirsty. Droop + wet soil = STOP — root rot.\n\nCENTRAL TEXAS CADENCE (Pflugerville, indoor AC ~30–45% RH):\n• Hot AC season (Apr–Oct): every 4–5 days — small 3\" pot + AC dries aroid mix fast.\n• Peak summer (Jun–Sep): every 4 days if near a vent; every 5 days in 1F Corner/Window.\n• Mild winter (Nov–Feb): every 7–9 days — slow metabolism; never let bone dry for 48+ hrs (variegated tissue is less forgiving than Golden Pothos).\n• Empty saucer within 15 min — overwatering is the #1 killer of newly-transitioned cuttings (per RHS).\n\nWATER QUALITY: filtered or tap-sat-out — chlorine browns cream edges on variegated leaves (per The Spruce variegated pothos guide).\n\nOVER- vs UNDER-watering tells:\n• Under: wilting with dry soil; crispy brown on cream sections; soil pulls from pot walls.\n• Over: yellowing (especially variegated leaves), mushy stems at soil line, fungus gnats, wet soil 3+ days after watering.",
-      pruning: "Minimal for the first 2 months while cuttings establish their soil roots.\n\nOnce established (when you see new leaves emerging):\n• Pinch tips just above a node to encourage branching.\n• Remove any all-green REVERTED leaves at the node — once a vine reverts, that vine stays green; cut it back to keep variegation dominant.\n• Save tip cuttings for more propagation (Pearls & Jade is patent-protected; legally cuttings are for personal use, not for sale).",
+      soil: "DIY Aroid (current): 3 medium orchid bark · 2 hydrated coco coir · 1 potting mix · 2 pumice · ½–1 charcoal · fertilizer pinch only. Alternate: equal parts potting + perlite + orchid bark. Avoid heavy peat-only mix in a small 3.5\" pot — it stays wet too long.",
+      watering: "METHOD — soak-and-dry: 5 cuttings in your 3.5\" DIY Aroid pot — let the top 1–2\" dry before a deep drench. Per The Spruce and University of Florida IFAS, variegated pothos need careful watering; cream/white sections can't photosynthesize their way back from drought damage.\n\nHOW TO CHECK READINESS (your 3.5\" DIY Aroid pot, 5 cuttings):\n• Finger test: top 1\" must feel dry — 3.5\" + AC still dries fast.\n• Pot weight: almost hollow-light before watering.\n• Moisture meter: 2–3 in upper third = water; above 5 = wait.\n• Plant tells: slight droop + dry top 1\" = thirsty. Droop + wet soil = STOP — root rot.\n\nCENTRAL TEXAS CADENCE (Pflugerville, indoor AC ~30–45% RH):\n• Hot AC season (Apr–Oct): every 4–5 days.\n• Peak summer (Jun–Sep): every 4 days near a vent; every 5 days in 1F Corner/Window.\n• Mild winter (Nov–Feb): every 7–9 days — never bone dry for 48+ hrs on variegated tissue.\n• Empty saucer within 15 min.\n\nWATER QUALITY: filtered or tap-sat-out — chlorine browns cream edges.\n\nOVER- vs UNDER-watering tells:\n• Under: wilting with dry soil; crispy brown on cream sections.\n• Over: yellowing (especially variegated leaves), mushy stems at soil line, fungus gnats.",
+      pruning: "Minimal for the first 2 months after the Nov 2026 move while roots re-settle.\n\nOnce established (when you see new leaves emerging):\n• Pinch tips just above a node to encourage branching.\n• Remove any all-green REVERTED leaves at the node — once a vine reverts, that vine stays green; cut it back to keep variegation dominant.\n• Save tip cuttings for more propagation (Pearls & Jade is patent-protected; legally cuttings are for personal use, not for sale).",
       propagation: "Already done! Now in soil. For future propagation:\n• Take 4\" tip cuttings with 1–2 nodes from the MOST variegated sections (variegation is passed at the node).\n• Root in water (3–4 weeks for visible roots, 6–8 weeks for plantable length) or directly in moist sphagnum.\n• Success rate ~80% (lower than Golden Pothos because less chlorophyll = slower energy regeneration).",
-      repotting: "Newly potted — leave alone for 6 months minimum to let roots fill the 3\" pot.\n\nFuture upsize plan:\n• 3\" → 4\" pot at month 6–9 (when roots circle the inside).\n• 4\" → 5\" at year 2.\n• Always upsize by only 1\" diameter — Pearls & Jade hates being overpotted (excess wet soil → rot).\n• Spring is best for repotting.",
-      feeding: "Hold off feeding for the FIRST 4–6 weeks while cuttings establish soil roots (fertilizer salts can burn fresh roots).\n\nAfter 6 weeks:\n• Balanced liquid fertilizer (10-10-10 or 20-20-20) at QUARTER strength every 4 weeks in spring/summer.\n• A pinch of Epsom salt (magnesium) dissolved in water once a month boosts the variegation richness — magnesium is a central component of chlorophyll.\n• No feeding in fall/winter.",
-      troubleshooting: "SYMPTOM → CAUSE → FIX:\n\n• Loss of variegation / all-green new leaves → low light (per The Spruce). Move to 1F Corner or 1F Window; trim reverted all-green vines at the node.\n• Wilting + dry soil → underwatering — water immediately; 3\" pot dries fast in AC.\n• Wilting + wet soil → root rot from transition stress or overwatering — unpot, trim mushy roots, repot in fresh aroid mix.\n• Yellow leaves → overwatering (#1) OR natural aging of old lower leaves. Wet soil + yellow = rot; dry + yellow = check light.\n• Brown crispy edges on cream sections → low humidity (Central Texas AC), underwatering, or tap-water fluoride/chlorine — filtered water + optional humidity boost.\n• Slow growth (~1–2 nodes/month) → normal for Pearls & Jade (University of Florida cultivar patent notes slow growth vs Golden).\n• Leggy/small leaves → low light — move brighter per PLANT_LIGHT_REF.\n• All-white new leaves with no green → too much variegation on one leaf — cut back to a balanced node.\n• Stunted growth 4–6 weeks post-transition → normal soil-root establishment — don't overwater to \"help.\"\n• Spider mites (fine webs, stippling in dry AC) → shower, insecticidal soap weekly × 3.\n• Mealybugs → alcohol Q-tip on cottony clusters.\n• Scale → alcohol swab on stem bumps.\n• Fungus gnats → reduce watering, sticky traps, let top 1\" dry fully.\n• Aphids on new tips → rinse, insecticidal soap.\n• ⚠️ TOXIC to cats and dogs per ASPCA — insoluble calcium oxalates cause oral irritation, drooling, vomiting, difficulty swallowing if chewed."
+      repotting: "✅ Nov 2026: already moved 3\" → 3.5\" with DIY Aroid.\n\nFuture upsize plan:\n• 3.5\" → 4–5\" when roots circle (likely 6–12 months).\n• Always upsize by only 1\" diameter — Pearls & Jade hates being overpotted.\n• Spring is best. Refresh DIY Aroid if bark softens (~12–18 months).",
+      feeding: "Hold off feeding for 4–6 weeks after the Nov 2026 repot (fertilizer salts can burn fresh roots).\n\nAfter 6 weeks:\n• Balanced liquid fertilizer (10-10-10 or 20-20-20) at QUARTER strength every 4 weeks in spring/summer.\n• A pinch of Epsom salt (magnesium) dissolved in water once a month boosts the variegation richness — magnesium is a central component of chlorophyll.\n• No feeding in fall/winter.",
+      troubleshooting: "SYMPTOM → CAUSE → FIX:\n\n• Loss of variegation / all-green new leaves → low light (per The Spruce). Move to 1F Corner or 1F Window; trim reverted all-green vines at the node.\n• Wilting + dry soil → underwatering — water immediately; 3.5\" pot dries fast in AC.\n• Wilting + wet soil → root rot — unpot, trim mushy roots, repot in fresh DIY Aroid.\n• Yellow leaves → overwatering (#1) OR natural aging of old lower leaves. Wet soil + yellow = rot; dry + yellow = check light.\n• Brown crispy edges on cream sections → low humidity (Central Texas AC), underwatering, or tap-water fluoride/chlorine — filtered water + optional humidity boost.\n• Slow growth (~1–2 nodes/month) → normal for Pearls & Jade (University of Florida cultivar patent notes slow growth vs Golden).\n• Leggy/small leaves → low light — move brighter per PLANT_LIGHT_REF.\n• All-white new leaves with no green → too much variegation on one leaf — cut back to a balanced node.\n• Spider mites (fine webs, stippling in dry AC) → shower, insecticidal soap weekly × 3.\n• Mealybugs → alcohol Q-tip on cottony clusters.\n• Scale → alcohol swab on stem bumps.\n• Fungus gnats → reduce watering, sticky traps, let top 1\" dry fully.\n• Aphids on new tips → rinse, insecticidal soap.\n• ⚠️ TOXIC to cats and dogs per ASPCA — insoluble calcium oxalates cause oral irritation, drooling, vomiting, difficulty swallowing if chewed."
     },
     sources: [
       { label: "University of Florida — Pothos Cultivars", url: "https://edis.ifas.ufl.edu/publication/FP188" },
@@ -1434,62 +1440,164 @@ const PLANTS = {
     ]
   },
 
-  pothos_combo: {
-    id: "pothos_combo",
+  satin_pothos: {
+    id: "satin_pothos",
+    repotted: true,
     repotSigns: [
-      "Roots visibly circling out of the 4\" drainage holes",
-      "One of the 3 cultivars (Satin / Neon / Golden) starts stalling while the others push new leaves — root competition",
-      "The Satin Pothos leaves lose their silver frosting (variegation is the first to go under root stress)",
-      "The Neon Pothos leaves darken to plain green (loses its trademark chartreuse)",
+      "Roots circling out of the 3.5\" × 2.5\" drainage holes",
+      "Silver frosting fades on new leaves (variegation is first to go under root stress)",
+      "New leaves smaller / plainer green than mature ones",
       "Water drains through in <5 seconds",
-      "Aerial roots on any of the vines reaching for the pot surface"
+      "Aerial roots reaching for the pot surface",
+      "DIY Aroid going hydrophobic after a hard dry-down"
     ],
-    displayName: "Mixed Pothos Combo",
-    potSize: '4"',
-    cuttingsCount: 6,
-    composition: "3× Satin + 1× Neon + 2× Golden",
+    displayName: "Satin Pothos",
+    potSize: '3.5" × 2.5"',
+    cuttingsCount: 3,
     category: "pothos",
     names: {
-      common: ["Mixed Pothos Combo Pot", "Pothos Trio Display"],
-      scientific: "Mix of: 3× Scindapsus pictus (Satin) + 1× Epipremnum aureum 'Neon' + 2× E. aureum (Golden)"
+      common: ["Satin Pothos", "Silver Pothos", "Silk Pothos"],
+      scientific: "Scindapsus pictus (not a true Epipremnum pothos)"
     },
-    /* Three genus-mismatched plants sharing one 4" pot. Satin (Scindapsus) is
-     * slower-growing and more drought-tolerant than true Pothos (Epipremnum),
-     * so this combo's intervals are tuned to the more drought-tolerant
-     * species — Golden and Neon will be slightly happier with slightly drier
-     * conditions than they'd choose alone, which is fine for both. */
-    wateringDays: 7,
-    wateringDaysHot: 6,
-    wateringDaysCool: 12,
-    currentSoilMix: "aroid_mix",
-    comments: "Display pot combining 6 cuttings from three different pothos-style cultivars: 3 Satin Pothos (silver-speckled, Scindapsus pictus), 1 Neon Pothos (chartreuse-yellow, Epipremnum aureum 'Neon'), and 2 Golden Pothos (green-and-yellow, Epipremnum aureum). The contrast between the silver, yellow-green, and gold leaves makes this visually striking. ⚠️ Satin is from a DIFFERENT GENUS (Scindapsus) than the true Pothos (Epipremnum), but care needs overlap enough that this combo works — tune watering to Satin's slightly drier preference (it has fleshier roots than Epipremnum).",
-    idealSoil: ["aroid_mix", "amended_potting"],
-    soilNotes: "Aroid mix is the right call for a mixed pothos combo — Scindapsus (Satin) has fleshy roots that demand extra aeration, while Epipremnum (Golden/Neon) are happy in any well-draining mix. The chunky bark + perlite mix satisfies both.",
+    /* Shallow 3.5×2.5 + DIY Aroid dries fast. Scindapsus prefers slightly drier
+     * than Epipremnum — tune intervals to the dry side. */
+    wateringDays: 6,
+    wateringDaysHot: 5,
+    wateringDaysCool: 10,
+    currentSoilMix: "diy_aroid",
+    comments: "✅ Nov 2026: separated from the Mixed Pothos Combo — 3 Satin (Scindapsus pictus) cuttings now solo in a 3.5\" W × 2.5\" D pot with DIY Aroid (3 bark · 2 coco · 1 potting · 2 pumice · ½–1 charcoal · pinch fert). Silver-speckled foliage wants brighter indirect than Golden; keep slightly drier than true pothos.",
+    idealSoil: ["diy_aroid", "aroid_mix", "amended_potting"],
+    soilNotes: "DIY Aroid is ideal for Scindapsus — fleshy roots demand extra aeration from bark + pumice. Shallow 3.5×2.5 dries faster than a deep 4\"; don't compensate by watering on a calendar.",
     conditions: {
-      light:        { ideal: "Bright indirect — Satin needs the most, Golden tolerates least", passing: "Medium indirect; Satin's silver speckling and Marble's variegation will fade first in low light" },
-      temperature:  { ideal: "65–80°F (18–27°C)",                                passing: "55–90°F; Satin appreciates a slightly warmer minimum (60°F)" },
-      humidity:     { ideal: "50–60% (Satin's preference; Golden/Neon happy at lower)", passing: "40%+; Satin will sulk below 40% — add humidity if leaves curl" },
-      soilMoisture: { ideal: "Top inch dry between waterings (Satin's preference; slightly drier than pure Epipremnum)", passing: "Tolerates short drought from either species; overwatering risks all three" }
+      light:        { ideal: "Bright indirect — required to keep silver frosting vivid", passing: "Medium indirect; silver fades within 4–6 weeks in low light" },
+      temperature:  { ideal: "65–80°F (18–27°C)",                                passing: "60–85°F; prefers a slightly warmer minimum than Epipremnum" },
+      humidity:     { ideal: "50–60%+",                                          passing: "40%+; leaves curl when chronically dry" },
+      soilMoisture: { ideal: "Top inch dry between deep waterings (slightly drier than Epipremnum)", passing: "Tolerates short drought; overwatering risks stem rot" }
     },
     tips: {
-      lighting: "Bright INDIRECT light is the sweet spot for all three cultivars in this combo, but the Satin needs the brightest position to keep its silver speckling vivid. Position the pot in the brightest indirect spot you have (e.g. 2–3 feet from an east window, or 4–6 feet back from a south/west window).\n\n• The Satin Pothos will tell you first if the light drops too low — its silver speckling fades within 4–6 weeks.\n• The Neon Pothos will deepen to a darker green-yellow in lower light but stays healthy.\n• The Golden Pothos is the most light-flexible of the trio.\n• Rotate the pot 1/4 turn every 2 weeks so all three cultivars get even exposure.\n• Direct afternoon sun scorches the Satin's silver patches first.\n• In this home, the 1F Living Room corner (vaulted dual NE/SE) and 1F Window (36° NE) are your best matches per PLANT_LIGHT_REF — bright enough for Satin variegation without scorching.",
-      soil: "Currently in aroid mix — perfect compromise for the three species:\n\n• Scindapsus pictus (Satin) has fleshy roots and is the most rot-prone in the combo — chunky bark + perlite is critical.\n• Epipremnum aureum (Golden + Neon) are happy in anything well-draining.\n• Top-dress with a thin layer of fresh aroid mix every spring.",
-      watering: "METHOD — soak-and-dry (soil-graduated cuttings): 6 cuttings (3 Satin + 1 Neon + 2 Golden) moved from water to soil in your 4\" pot. Let the top 1–2\" dry before a deep drench — tune slightly drier for Scindapsus (Satin), which rots faster than Epipremnum (per The Spruce satin pothos guide).\n\nHOW TO CHECK READINESS (your 4\" pot, 6 cuttings):\n• Finger test: top 1–2\" must feel dry — packed cuttings transpire fast in Central Texas AC.\n• Pot weight: lift the side — lighter than post-water = ready.\n• Moisture meter: 3–4 upper third = water; 6+ = wait.\n• Plant tells: Satin leaves curl inward when thirsty; yellow Epipremnum leaves on wet soil = overwatered.\n\nCENTRAL TEXAS CADENCE (Pflugerville, indoor AC ~30–45% RH):\n• Hot AC season (Apr–Oct): every 6–7 days in 1F Corner/Window.\n• Peak summer (Jun–Sep): every 6 days near vents; every 7–8 days in still corners.\n• Mild winter (Nov–Feb): every 10–12 days — when in doubt, wait one extra day (overwatering kills Scindapsus fastest).\n• Empty saucer within 15 min. NEVER let sit in standing water.\n\nWATER QUALITY: room-temp filtered or sat-out tap.\n\nOVER- vs UNDER-watering tells:\n• Under: Satin leaves curl/droop; soil dry 2\"+ deep; Neon/Golden droop then perk after soak.\n• Over: yellow leaves (especially Golden/Neon), wilting on wet soil, Satin stem rot at soil line, fungus gnats.",
-      pruning: "Pinch tips every 4–6 weeks once established.\n\n• Each pinch produces 2 new shoots — keeps the combo bushy instead of leggy.\n• Trim any all-green reverted vines from the Neon back to a healthy node (Neon should stay chartreuse; if a vine darkens to standard green, prune it out).\n• Take all-trio cuttings in spring — propagate each cultivar separately into water, then graduate into a new shared pot if desired.\n• Don't let the faster-growing Golden vines completely shade out the slower Satin — pinch back Golden more aggressively if it dominates.",
-      propagation: "All three species root from any node-containing cutting in water or soil. Roots in 1–3 weeks depending on cultivar:\n\n• Golden Pothos: 1–2 weeks (fastest).\n• Neon Pothos: 1–2 weeks.\n• Satin Pothos / Scindapsus: 3–4 weeks (slower).\n\nUse separate jars when propagating to track each species — if you ever want to rebuild the combo with new cuttings, you'll know exactly what you have.",
-      repotting: "Newly assembled — leave undisturbed for 6+ months.\n\nUpsize plan:\n• 4\" → 5\" or 6\" at year 1 (when roots fill the pot).\n• Best to upsize ALL three cultivars together to preserve the display.\n• If you want to separate them later: gently rinse soil off the rootball, tease apart each species' root system, and pot individually.",
-      feeding: "Hold off fertilizer for 6 weeks while soil roots establish.\n\nAfter 6 weeks:\n• Balanced liquid fertilizer (20-20-20) at HALF strength every 4 weeks in spring/summer.\n• Flush the soil with plain water every 2 months to clear salt buildup.\n• Stop feeding Oct–Feb.\n• If one species starts visibly lagging while the others thrive, consider isolating it — sometimes shared pots favor faster growers and starve slower ones over years.",
-      troubleshooting: "SYMPTOM → CAUSE → FIX:\n\n• Satin silver speckling fading → low light (per The Spruce). Move to 1F Corner/Window; Satin needs brightest spot in the combo.\n• Satin leaves curling inward → underwatering (#1 for Scindapsus per The Spruce) OR overwatering/root rot — check soil: dry = soak; wet = hold off, inspect roots.\n• Satin crispy leaf tips → low humidity (Central Texas AC) — pebble tray or move toward 2F Room 2 humidifier radius.\n• Neon turning dark green → low light — move brighter; prune darkened vines back to chartreuse node.\n• Golden yellow leaves → overwatering — let dry, check drainage.\n• One species dominating/shading others → pinch back faster-growing Golden; ensure rotation.\n• Leggy/small leaves across combo → insufficient light — relocate per PLANT_LIGHT_REF.\n• Reverting variegation (Neon → green, Satin → plain green) → low light — trim reverted sections.\n• Brown tips all three → tap-water minerals — switch filtered, flush soil.\n• Root rot (mushy stems, wet soil smell) → unpot, trim black roots, repot in fresh aroid mix.\n• Spider mites (dry AC, fine webs) → shower, insecticidal soap weekly × 3.\n• Mealybugs → alcohol Q-tip.\n• Scale on stems → alcohol swab.\n• Fungus gnats → reduce watering, sticky traps.\n• Aphids on new tips → rinse, insecticidal soap.\n• ⚠️ TOXIC to cats and dogs per ASPCA — ALL THREE species (Epipremnum + Scindapsus) contain insoluble calcium oxalates. Keep out of reach."
+      lighting: "Bright INDIRECT light keeps the silver frosting vivid. Scindapsus pictus is a tropical climber — native understory dappled light, not deep shade.\n\n• Best: 2–3 feet from an east window, or 4–6 feet back from south/west.\n• Silver fades first when light drops — use that as your meter.\n• Direct afternoon sun scorches silver patches.\n• Rotate ¼ turn every 2 weeks.\n• Best home matches: 1F Corner and 1F Window per PLANT_LIGHT_REF.",
+      soil: "DIY Aroid (current): 3 medium orchid bark · 2 hydrated coco coir · 1 potting mix · 2 pumice · ½–1 charcoal · fertilizer pinch only.\n\nScindapsus has fleshy roots that rot faster than Epipremnum in dense peat — chunky bark/pumice is non-negotiable. Avoid pure potting mix.",
+      watering: "METHOD — soak-and-dry, err slightly dry: Scindapsus rots faster than Golden/Neon (per The Spruce satin pothos guide). Let the top 1–2\" dry, then deep drench; empty saucer within 15 min.\n\nHOW TO CHECK READINESS (your 3.5\" × 2.5\" DIY Aroid pot, 3 cuttings):\n• Finger test: top 1\" dry = water.\n• Pot weight: shallow 3.5×2.5 goes hollow-light fast in AC.\n• Moisture meter: 3–4 upper third = water; 6+ = wait.\n• Plant tells: leaves curl inward when thirsty; yellow + wet mix = overwater.\n\nCENTRAL TEXAS CADENCE (Pflugerville, indoor AC ~30–45% RH):\n• Hot AC season (Apr–Oct): every 5–6 days.\n• Peak summer (Jun–Sep): every 5 days near vents; every 6–7 in still corners.\n• Mild winter (Nov–Feb): every 9–11 days — when in doubt, wait one extra day.\n\nWATER QUALITY: room-temp filtered or sat-out tap.\n\nOVER- vs UNDER-watering tells:\n• Under: leaf curl/droop on dry mix; recovers after soak.\n• Over: yellow leaves, stem rot at soil line, fungus gnats, wet mix 3+ days.",
+      pruning: "Pinch tips every 4–6 weeks once settled to keep bushy.\n\n• Each pinch → 2 new shoots.\n• Trim plain-green reverted vines back to a silver-frosted node.\n• Don't let one cutting dominate — pinch leaders so all 3 stay balanced.",
+      propagation: "Node cuttings in water or soil.\n\n• Water: roots in 3–4 weeks (slower than Golden).\n• Soil: moist DIY Aroid under a clear cup 2 weeks.\n• Success ~85–90%. Take cuttings from the MOST silver sections.",
+      repotting: "✅ Nov 2026: separated from combo into 3.5×2.5 DIY Aroid.\n\n• Next upsize to 4–5\" only when roots circle — spring preferred.\n• +1\" diameter max.\n• Refresh DIY Aroid if bark softens (~12–18 months).\n• Optional: moss pole — leaves enlarge when allowed to climb.",
+      feeding: "Hold fertilizer 4–6 weeks post-repot.\n\nAfter that: half-strength balanced liquid every 4 weeks spring/summer. Flush salts every 2–3 months. Stop Oct–Feb. DIY pinch is not a season-long feed.",
+      troubleshooting: "SYMPTOM → CAUSE → FIX:\n\n• Silver frosting fading → low light (per The Spruce). Move to 1F Corner/Window.\n• Leaves curling inward → underwatering OR root rot — check soil first.\n• Crispy tips → low humidity (Central Texas AC) — pebble tray or 2F Rm2 humidifier.\n• Yellow leaves + wet mix → overwatering; unpot, trim mushy roots, fresh DIY Aroid.\n• Spider mites / mealybugs / scale → rinse, alcohol Q-tip, soap weekly × 3.\n• ⚠️ TOXIC to cats and dogs per ASPCA (Scindapsus) — calcium oxalates. Keep out of Moose's reach."
     },
     sources: [
       { label: "Missouri Botanical Garden — Scindapsus pictus", url: "https://www.missouribotanicalgarden.org/PlantFinder/PlantFinderDetails.aspx?taxonid=275437" },
-      { label: "Missouri Botanical Garden — Epipremnum aureum", url: "https://www.missouribotanicalgarden.org/PlantFinder/PlantFinderDetails.aspx?taxonid=276739" },
+      { label: "The Spruce — Satin Pothos Care", url: "https://www.thespruce.com/growing-satin-pothos-5114102" },
       { label: "University of Florida IFAS — Pothos Cultivars", url: "https://edis.ifas.ufl.edu/publication/FP188" },
-      { label: "RHS — Epipremnum aureum and Scindapsus pictus", url: "https://www.rhs.org.uk/plants/search-results?query=epipremnum+aureum" },
+      { label: "RHS — Scindapsus pictus", url: "https://www.rhs.org.uk/plants/search-results?query=scindapsus+pictus" },
+      { label: "ASPCA — Scindapsus Toxicity", url: "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants" },
+      { label: "Costa Farms — Pothos Care Guide", url: "https://costafarms.com/plants/pothos" }
+    ]
+  },
+
+  neon_pothos: {
+    id: "neon_pothos",
+    repotted: true,
+    repotSigns: [
+      "Roots packing the 3.5\" × 2.5\" pot / poking drainage holes",
+      "Chartreuse fades to plain green on new leaves (low light or root stress)",
+      "New leaves smaller than mature ones",
+      "Water drains through in <5 seconds",
+      "Growth stalls in season despite good light",
+      "DIY Aroid hydrophobic after a hard dry-down"
+    ],
+    displayName: "Neon Pothos",
+    potSize: '3.5" × 2.5"',
+    cuttingsCount: 1,
+    category: "pothos",
+    names: {
+      common: ["Neon Pothos", "Neon Devil's Ivy"],
+      scientific: "Epipremnum aureum 'Neon'"
+    },
+    /* Single cutting in shallow 3.5×2.5 — tiny soil volume, check often. */
+    wateringDays: 5,
+    wateringDaysHot: 4,
+    wateringDaysCool: 9,
+    currentSoilMix: "diy_aroid",
+    comments: "✅ Nov 2026: separated from the Mixed Pothos Combo — the 1 Neon cutting now solo in a 3.5\" W × 2.5\" D pot with DIY Aroid (3 bark · 2 coco · 1 potting · 2 pumice · ½–1 charcoal · pinch fert). Chartreuse-yellow foliage; bright indirect keeps the neon glow. Small pot + one cutting = fast dry-downs.",
+    idealSoil: ["diy_aroid", "aroid_mix", "amended_potting"],
+    soilNotes: "DIY Aroid suits Neon like other Epipremnum. Shallow 3.5×2.5 with a single cutting holds little water — check pot weight often.",
+    conditions: {
+      light:        { ideal: "Bright indirect — keeps chartreuse vivid", passing: "Medium indirect; color deepens to dull green-yellow in low light" },
+      temperature:  { ideal: "65–80°F (18–27°C)",                                passing: "55–90°F; chill damage below 50°F" },
+      humidity:     { ideal: "40–60%",                                           passing: "30%+ — tolerant of household air" },
+      soilMoisture: { ideal: "Top 1–2 inches dry between deep waterings",         passing: "Tolerates short drought; overwatering kills faster than under" }
+    },
+    tips: {
+      lighting: "Bright INDIRECT keeps Neon chartreuse. Low light → darker green-yellow within weeks.\n\n• East window or set back from south/west.\n• Direct afternoon sun bleaches leaves.\n• Best matches: 1F Corner, 1F Window, NW rooms per PLANT_LIGHT_REF.",
+      soil: "DIY Aroid (current): 3 medium orchid bark · 2 hydrated coco coir · 1 potting mix · 2 pumice · ½–1 charcoal · fertilizer pinch only. Same chunky hemiepiphyte blend as the other Nov 2026 pothos pots.",
+      watering: "METHOD — soak-and-dry: single cutting in a shallow 3.5×2.5 DIY Aroid pot. Let top 1\" dry, then deep drench; empty saucer within 15 min.\n\nHOW TO CHECK READINESS (your 3.5\" × 2.5\" DIY Aroid pot, 1 cutting):\n• Finger test: top 1\" dry = water.\n• Pot weight: goes feather-light fast — check every few days in AC.\n• Plant tells: slight droop + dry mix = thirsty; yellow + wet = overwater.\n\nCENTRAL TEXAS CADENCE:\n• Hot AC season (Apr–Oct): every 4–5 days.\n• Peak summer: every 4 days near vents.\n• Mild winter (Nov–Feb): every 8–10 days.\n\nOVER- vs UNDER-watering tells:\n• Under: droop on dry mix; recovers after soak.\n• Over: yellow leaves, mushy stem, fungus gnats.",
+      pruning: "Pinch tip above a node once growing to branch. Save the tip as a cutting. Prune any vine that darkens to plain green back to a chartreuse node.",
+      propagation: "Node cuttings root in water in 1–2 weeks (>90%). Take from the brightest chartreuse sections.",
+      repotting: "✅ Nov 2026: separated from combo into 3.5×2.5 DIY Aroid.\n\n• Upsize to 4\" when roots fill — spring preferred.\n• Or add 2–3 more Neon cuttings to the same pot for fullness before upsizing.\n• Refresh DIY Aroid ~12–18 months.",
+      feeding: "Hold 4–6 weeks post-repot. Then half-strength balanced liquid every 4 weeks spring/summer. Stop Oct–Feb.",
+      troubleshooting: "SYMPTOM → CAUSE → FIX:\n\n• Neon turning dark green → low light — move brighter; prune darkened vines.\n• Yellow leaves → overwatering (#1).\n• Crispy edges → underwatering or dry AC.\n• Leggy sparse growth → more light + pinch.\n• ⚠️ TOXIC to cats and dogs per ASPCA — calcium oxalates. Keep away from Moose."
+    },
+    sources: [
+      { label: "University of Florida IFAS — Pothos", url: "https://edis.ifas.ufl.edu/publication/FP188" },
+      { label: "Missouri Botanical Garden — Epipremnum aureum", url: "https://www.missouribotanicalgarden.org/PlantFinder/PlantFinderDetails.aspx?taxonid=276739" },
+      { label: "The Spruce — Pothos Care Guide", url: "https://www.thespruce.com/pothos-an-easy-to-grow-houseplant-1403154" },
       { label: "ASPCA — Golden Pothos Toxicity", url: "https://www.aspca.org/pet-care/aspca-poison-control/toxic-and-non-toxic-plants/golden-pothos" },
-      { label: "Costa Farms — Pothos Care Guide", url: "https://costafarms.com/plants/pothos" },
-      { label: "The Sill — Pothos Care", url: "https://www.thesill.com/blog/plant-care" },
-      { label: "The Spruce — Satin Pothos Care", url: "https://www.thespruce.com/growing-satin-pothos-5114102" }
+      { label: "RHS — Epipremnum aureum", url: "https://www.rhs.org.uk/plants/search-results?query=epipremnum+aureum" },
+      { label: "Costa Farms — Pothos Care Guide", url: "https://costafarms.com/plants/pothos" }
+    ]
+  },
+
+  golden_pothos_b: {
+    id: "golden_pothos_b",
+    repotted: true,
+    repotSigns: [
+      "Roots packing the 3.5\" × 2.5\" pot / poking drainage holes",
+      "New leaves progressively smaller than previous ones",
+      "Water drains through in <5 seconds",
+      "Vines sparse — internodes lengthen but leaves stay small",
+      "Growth stalls in season despite good light",
+      "DIY Aroid hydrophobic after a hard dry-down"
+    ],
+    displayName: "Golden Pothos (B)",
+    potSize: '3.5" × 2.5"',
+    cuttingsCount: 2,
+    category: "pothos",
+    names: {
+      common: ["Golden Pothos", "Devil's Ivy", "Money Plant"],
+      scientific: "Epipremnum aureum (the green-and-yellow original cultivar)"
+    },
+    /* 2 cuttings split from the old combo into shallow 3.5×2.5. Separate from
+     * the main 5" Golden pot (golden_pothos) — own watering log. */
+    wateringDays: 5,
+    wateringDaysHot: 4,
+    wateringDaysCool: 9,
+    currentSoilMix: "diy_aroid",
+    comments: "✅ Nov 2026: separated from the Mixed Pothos Combo — the 2 Golden cuttings now in their own 3.5\" W × 2.5\" D pot with DIY Aroid (3 bark · 2 coco · 1 potting · 2 pumice · ½–1 charcoal · pinch fert). Distinct from the main 5\" Golden pot (7 cuttings) — check THIS pot's weight separately. Most flexible cultivar; still rots if kept soggy in a shallow pot.",
+    idealSoil: ["diy_aroid", "aroid_mix", "amended_potting", "standard_potting"],
+    soilNotes: "DIY Aroid batch shared with the other Nov 2026 pothos splits. Shallow 3.5×2.5 dries faster than the main 5\" Golden — don't water both pots on the same blind calendar.",
+    conditions: {
+      light:        { ideal: "Bright, indirect — for the crispest gold variegation",  passing: "Tolerates low light — most light-tolerant of all pothos cultivars" },
+      temperature:  { ideal: "65–80°F (18–27°C)",                                passing: "55–90°F; chill damage below 50°F" },
+      humidity:     { ideal: "50%+",                                             passing: "30%+ — exceptionally tolerant of dry household air" },
+      soilMoisture: { ideal: "Top 1–2 inches dry between deep waterings",          passing: "Tolerates short drought; overwatering kills MUCH faster than under" }
+    },
+    tips: {
+      lighting: "Bright INDIRECT keeps gold variegation crisp. Tolerates low light better than Satin/Marble/Neon but will fade greener.\n\n• Flexible placement: 1F Window, NW rooms, LR-Open.\n• Rotate ¼ turn every 2 weeks so both cuttings get even light.\n• Avoid harsh afternoon sun.",
+      soil: "DIY Aroid (current): 3 medium orchid bark · 2 hydrated coco coir · 1 potting mix · 2 pumice · ½–1 charcoal · fertilizer pinch only. Classic alternate: potting + perlite + bark.",
+      watering: "METHOD — soak-and-dry: 2 cuttings in your 3.5\" × 2.5\" DIY Aroid pot. Let top 1–2\" dry, then deep drench; empty saucer within 15 min.\n\nHOW TO CHECK READINESS (your 3.5\" × 2.5\" DIY Aroid pot — NOT the main 5\" Golden):\n• Finger test: top 1\" dry = water.\n• Pot weight: shallow pot goes light fast in AC.\n• Plant tells: slight droop + dry = thirsty; yellow + wet = overwater.\n\nCENTRAL TEXAS CADENCE:\n• Hot AC season (Apr–Oct): every 4–5 days.\n• Peak summer: every 4 days near vents.\n• Mild winter (Nov–Feb): every 8–10 days.\n\nOVER- vs UNDER-watering tells:\n• Under: droop then perk after soak.\n• Over: multiple yellow leaves, mushy stems, fungus gnats.",
+      pruning: "Pinch tips above a node for bushiness. Save every cutting — Golden roots in water in 1–2 weeks at >95% success.",
+      propagation: "4–6\" tip cuttings with a node. Water or soil; plantable at ~2\" roots. Success >95%.",
+      repotting: "✅ Nov 2026: separated from combo into 3.5×2.5 DIY Aroid.\n\n• Upsize to 4–5\" when roots fill — or combine with more Golden cuttings later.\n• Keep separate from the main 5\" Golden unless you intentionally merge.\n• Refresh DIY Aroid ~12–18 months.",
+      feeding: "Hold 4–6 weeks post-repot. Then half-strength balanced liquid every 4 weeks spring/summer. Stop Oct–Feb.",
+      troubleshooting: "SYMPTOM → CAUSE → FIX:\n\n• Yellow leaves → overwatering (#1).\n• Loss of gold variegation → low light — move brighter.\n• Leggy vines → more light + pinch.\n• ⚠️ TOXIC to cats and dogs per ASPCA — calcium oxalates. Keep away from Moose."
+    },
+    sources: [
+      { label: "Missouri Botanical Garden — Epipremnum aureum", url: "https://www.missouribotanicalgarden.org/PlantFinder/PlantFinderDetails.aspx?taxonid=276739" },
+      { label: "University of Florida IFAS — Pothos", url: "https://edis.ifas.ufl.edu/publication/FP188" },
+      { label: "ASPCA — Golden Pothos Toxicity", url: "https://www.aspca.org/pet-care/aspca-poison-control/toxic-and-non-toxic-plants/golden-pothos" },
+      { label: "The Spruce — Pothos Care Guide", url: "https://www.thespruce.com/pothos-an-easy-to-grow-houseplant-1403154" },
+      { label: "RHS — Epipremnum aureum", url: "https://www.rhs.org.uk/plants/search-results?query=epipremnum+aureum" },
+      { label: "Costa Farms — Pothos Care Guide", url: "https://costafarms.com/plants/pothos" }
     ]
   },
 
@@ -1553,32 +1661,31 @@ const PLANTS = {
   philodendron_silver_stripe: {
     id: "philodendron_silver_stripe",
     repotSigns: [
-      "Roots circling out of the 4\" drainage holes",
+      "Roots circling out of the 3.5\" drainage holes",
       "Silver stripes on new leaves start looking greenish/faint (variegation loss under root stress)",
       "New leaves smaller than mature ones",
       "Water drains through the pot in <5 seconds",
       "Aerial roots reaching for the pot surface / a moss pole",
-      "Growth stalls in growing season"
+      "DIY Aroid broken down / hydrophobic after hard dry-downs"
     ],
     displayName: "Philodendron 'Silver Stripe'",
-    potSize: '4"',
+    repotted: true,
+    potSize: '3.5"',
     cuttingsCount: 5,
     category: "pothos",
     names: {
       common: ["Philodendron 'Silver Stripe'", "Silver Stripe Philodendron"],
       scientific: "Philodendron hederaceum 'Silver Stripe' (often confused with Scindapsus pictus 'Silver Stripe')"
     },
-    /* 4" pot is snug for 5 cuttings — dries fast, encourages dense clumping.
-     * Slightly slower-uptake than green Philodendron hederaceum due to the
-     * silver variegation, so intervals are ~10% longer than a solid-green
-     * 'Heartleaf' in the same pot size. */
-    wateringDays: 6,
-    wateringDaysHot: 5,
-    wateringDaysCool: 10,
-    currentSoilMix: "aroid_mix",
-    comments: "Graduated from water propagation — all 5 cuttings potted together in a single 4\" pot. Philodendron hederaceum 'Silver Stripe' is a stable variegated cultivar with longitudinal silver bands flanking the central vein on each leaf. ⚠️ Often confused at retail with Scindapsus pictus 'Silver Stripe' — they're different genera but care needs are nearly identical. The 4\" pot is intentionally snug for instant fullness; expect to upsize to 5\" within 6–9 months once roots fill.",
-    idealSoil: ["aroid_mix", "amended_potting"],
-    soilNotes: "Currently in aroid mix — ideal for variegated philodendrons. The silver-striped sections have reduced chlorophyll, so the plant relies on healthy oxygenated roots from the chunky bark/perlite mix to compensate.",
+    /* 3.5" pot + DIY Aroid — snug for 5 cuttings, dries faster than the old 4".
+     * Slightly slower-uptake than green Philodendron hederaceum due to silver variegation. */
+    wateringDays: 5,
+    wateringDaysHot: 4,
+    wateringDaysCool: 9,
+    currentSoilMix: "diy_aroid",
+    comments: "✅ Nov 2026: moved from 4\" into a 3.5\" pot with DIY Aroid (3 bark · 2 coco · 1 potting · 2 pumice · ½–1 charcoal · pinch fert) — bare-root refresh into the chunky aroid batch (slightly smaller footprint, fresher media). All 5 cuttings still together. Philodendron hederaceum 'Silver Stripe' keeps longitudinal silver bands flanking the midrib. Expect 1–2 weeks of mild sulk; don't overwater while roots re-settle.",
+    idealSoil: ["diy_aroid", "aroid_mix", "amended_potting"],
+    soilNotes: "Now in DIY Aroid — bark/coir/pumice batch keeps oxygen at the roots for silver-variegated tissue. 3.5\" dries faster than the old 4\"; next upsize to 4–5\" only when roots fill.",
     conditions: {
       light:        { ideal: "Bright indirect — enhances silver stripe pattern", passing: "Medium indirect; stripes fade to greener within 6–8 weeks in low light" },
       temperature:  { ideal: "65–80°F (18–27°C)",                                passing: "55–90°F; chill damage below 50°F" },
@@ -1587,13 +1694,13 @@ const PLANTS = {
     },
     tips: {
       lighting: "Bright INDIRECT light is essential for crisp silver striping. Native habitat: Central American forest understory, where Philodendron hederaceum climbs trees toward dappled sun.\n\n• Best spot: 1–3 feet from an east window, or 3–5 feet back from a south/west window.\n• Direct afternoon sun bleaches the silver sections.\n• In low light the silver fades to dull green-silver within 6–8 weeks and growth slows.\n• Rotate the pot 1/4 turn every 2 weeks for balanced growth across all 5 cuttings.\n• Variegated Philodendron hederaceum cultivars need MORE light than the solid-green 'Heartleaf' form to maintain their pattern.\n• In this home, the 1F Living Room corner (vaulted dual NE/SE) and 1F Window (36° NE) are your best matches per PLANT_LIGHT_REF.",
-      soil: "Aroid mix is ideal: 1 part potting soil + 1 part perlite + 1 part orchid bark + a pinch of horticultural charcoal. Slightly acidic pH (5.5–7.0).\n\nWhy chunky matters MORE for variegated philodendrons:\n• The silver-striped sections have ~40% less chlorophyll than green tissue.\n• Less chlorophyll = slower energy regeneration = the plant has less margin for root stress.\n• Chunky soil keeps roots oxygenated, which is the cheapest insurance against rot.\n\nAvoid: pure potting mix (stays too wet for 5 cuttings in a 4\" pot), peat-heavy mixes, garden soil.",
-      watering: "METHOD — soak-and-dry (soil-graduated cuttings): 5 cuttings moved from water to soil in your 4\" pot with aroid mix. Per The Spruce heartleaf philodendron guide, let the top 1–2\" dry before a deep drench until water runs from drainage holes; empty saucer within 15 min.\n\nHOW TO CHECK READINESS (your 4\" pot, 5 cuttings):\n• Finger test: top 1\" dry = water; damp = wait.\n• Pot weight: noticeably lighter than post-soak = ready.\n• Moisture meter: 3–4 upper third = water.\n• Plant tells: leaves curl slightly when thirsty (per The Spruce); yellow leaves on wet soil = overwatering.\n\nCENTRAL TEXAS CADENCE (Pflugerville, indoor AC ~30–45% RH):\n• Hot AC season (Apr–Oct): every 5–6 days — 5 cuttings in 4\" pot transpire fast.\n• Peak summer (Jun–Sep): every 5 days near vents; every 6–7 days in 1F Corner/Window.\n• Mild winter (Nov–Feb): every 9–11 days — philodendron slows; when in doubt, wait (overwatering kills faster than underwatering per The Spruce).\n• Philodendron is forgiving of brief drought but rots in soggy soil — the #1 killer.\n\nWATER QUALITY: room-temp filtered or tap-sat-out — chlorine can brown silver/cream leaf edges.\n\nOVER- vs UNDER-watering tells:\n• Under: leaf curl + droop on dry soil; recovers within hours of soak.\n• Over: multiple yellow leaves, wilting on wet soil, mushy stems, fungus gnats.",
-      pruning: "Wait 4–6 weeks before any pruning while soil roots establish.\n\nOnce growing:\n• Pinch tips just above a node to encourage branching — each pinch produces 2 new vines.\n• Remove any all-green REVERTING vines back to the most recent silver-striped node (once a vine fully reverts, it stays green).\n• Save tip cuttings — Silver Stripe roots in water in 1–2 weeks at >90% success.\n• Don't let a faster-growing cutting dominate; pinch back the leaders so all 5 cuttings stay balanced.",
-      propagation: "Already done! For future propagation:\n\n• Take 4–6\" tip cuttings with 1–2 nodes (aerial root, if present, speeds rooting).\n• Water method: drop in a jar of water with nodes submerged, change water weekly. Roots in 1–2 weeks. Plantable at 2\" roots.\n• Soil method: stick into moist aroid mix under a clear cup or bag for 2 weeks. Roots in 3–4 weeks.\n• Success rate >90% in both methods.\n• Take cuttings from the MOST silver-striped sections to preserve the variegation pattern (variegation is cellular at each node).\n• Best season: spring/summer; works year-round.",
-      repotting: "Newly potted — leave alone 6+ months while roots fill the 4\" pot.\n\nUpsize timeline:\n• 4\" → 5\" at 6–9 months (when roots circle the inside or come out of drainage holes).\n• 5\" → 6\" at year 2.\n• Always upsize by only 1\" diameter — Philodendron hederaceum prefers slightly snug roots.\n• Best season: spring (March–May).\n• Optional power move: add a 18–24\" moss pole or coir totem to the new pot. Philodendron hederaceum leaves DOUBLE in size when allowed to climb, and the silver striping becomes more pronounced.",
-      feeding: "Hold off feeding for 6 weeks while cuttings establish soil roots.\n\nAfter 6 weeks:\n• Balanced liquid fertilizer (20-20-20) at HALF strength every 4 weeks in spring/summer.\n• Slow-release pellets (Osmocote) in spring are an easy alternative.\n• Flush soil with plain water every 2–3 months to prevent fertilizer salt buildup.\n• A pinch of Epsom salt (magnesium) once a month boosts variegation richness.\n• No feeding Oct–Feb.",
-      troubleshooting: "SYMPTOM → CAUSE → FIX:\n\n• Loss of silver striping / mostly-green new leaves → low light (per The Spruce). Move to 1F Corner/Window; trim reverted all-green vines at last variegated node.\n• Yellow leaves → OVERWATERING (#1 per The Spruce and RHS). Wet soil + yellow = rot — unpot, trim mushy roots. Dry soil + yellow = check light/nutrients.\n• Brown crispy edges → low humidity (Central Texas AC), underwatering, or mineral buildup — soak, filtered water, optional humidity boost.\n• Leggy bare vines / small leaves → low light — move brighter, pinch back hard for denser growth.\n• Wilting + wet soil → root rot from packed cuttings or overwatering — inspect roots, repot in fresh chunky aroid mix.\n• Wilting + dry soil → thirsty — water now.\n• Stunted growth 4–6 weeks post-transition → normal for water-to-soil cuttings — don't overwater to compensate.\n• All-white/silver sections turning brown → too much direct sun OR chronic underwatering on variegated tissue.\n• Spider mites (fine webs, stippling in dry AC) → shower, insecticidal soap weekly × 3.\n• Mealybugs → alcohol Q-tip.\n• Scale → alcohol swab on stem bumps.\n• Fungus gnats → reduce watering, sticky traps.\n• Aphids on new tips → rinse, insecticidal soap.\n• ⚠️ TOXIC to cats and dogs per ASPCA (Heartleaf Philodendron / Philodendron hederaceum) — insoluble calcium oxalates cause oral irritation, burning, drooling, vomiting, difficulty swallowing if chewed."
+      soil: "DIY Aroid (current): 3 medium orchid bark · 2 hydrated coco coir · 1 potting mix · 2 pumice · ½–1 charcoal · fertilizer pinch only. Slightly acidic pH (5.5–7.0).\n\nWhy chunky matters MORE for variegated philodendrons:\n• Silver-striped sections have less chlorophyll → less margin for root stress.\n• Bark + pumice keep roots oxygenated.\n\nAvoid: pure potting mix, peat-heavy mixes, garden soil.",
+      watering: "METHOD — soak-and-dry: 5 cuttings in your 3.5\" DIY Aroid pot. Per The Spruce heartleaf philodendron guide, let the top 1–2\" dry before a deep drench until runoff; empty saucer within 15 min.\n\nHOW TO CHECK READINESS (your 3.5\" DIY Aroid pot, 5 cuttings):\n• Finger test: top 1\" dry = water; damp = wait.\n• Pot weight: noticeably lighter than post-soak = ready.\n• Moisture meter: 3–4 upper third = water.\n• Plant tells: leaves curl slightly when thirsty; yellow leaves on wet soil = overwatering.\n\nCENTRAL TEXAS CADENCE (Pflugerville, indoor AC ~30–45% RH):\n• Hot AC season (Apr–Oct): every 4–5 days — 3.5\" dries faster than the old 4\".\n• Peak summer (Jun–Sep): every 4 days near vents; every 5–6 days in 1F Corner/Window.\n• Mild winter (Nov–Feb): every 8–10 days — when in doubt, wait.\n\nWATER QUALITY: room-temp filtered or tap-sat-out.\n\nOVER- vs UNDER-watering tells:\n• Under: leaf curl + droop on dry soil; recovers within hours of soak.\n• Over: multiple yellow leaves, wilting on wet soil, mushy stems, fungus gnats.",
+      pruning: "Wait 2–4 weeks after the Nov 2026 move before hard pruning while soil roots re-settle.\n\nOnce growing:\n• Pinch tips just above a node to encourage branching — each pinch produces 2 new vines.\n• Remove any all-green REVERTING vines back to the most recent silver-striped node (once a vine fully reverts, it stays green).\n• Save tip cuttings — Silver Stripe roots in water in 1–2 weeks at >90% success.\n• Don't let a faster-growing cutting dominate; pinch back the leaders so all 5 cuttings stay balanced.",
+      propagation: "Already done! For future propagation:\n\n• Take 4–6\" tip cuttings with 1–2 nodes (aerial root, if present, speeds rooting).\n• Water method: drop in a jar of water with nodes submerged, change water weekly. Roots in 1–2 weeks. Plantable at 2\" roots.\n• Soil method: stick into moist DIY Aroid under a clear cup or bag for 2 weeks. Roots in 3–4 weeks.\n• Success rate >90% in both methods.\n• Take cuttings from the MOST silver-striped sections to preserve the variegation pattern (variegation is cellular at each node).\n• Best season: spring/summer; works year-round.",
+      repotting: "✅ Nov 2026: already moved 4\" → 3.5\" with DIY Aroid (media refresh).\n\nUpsize timeline:\n• 3.5\" → 4–5\" when roots circle or come out of drainage holes.\n• Always upsize by only 1\" diameter.\n• Best season: spring (March–May).\n• Optional power move: add an 18–24\" moss pole — leaves DOUBLE when allowed to climb.\n• Refresh DIY Aroid if bark softens (~12–18 months).",
+      feeding: "Hold off feeding for 4–6 weeks after the Nov 2026 repot.\n\nAfter 6 weeks:\n• Balanced liquid fertilizer (20-20-20) at HALF strength every 4 weeks in spring/summer.\n• Slow-release pellets (Osmocote) in spring are an easy alternative.\n• Flush soil with plain water every 2–3 months to prevent fertilizer salt buildup.\n• A pinch of Epsom salt (magnesium) once a month boosts variegation richness.\n• No feeding Oct–Feb.",
+      troubleshooting: "SYMPTOM → CAUSE → FIX:\n\n• Loss of silver striping / mostly-green new leaves → low light (per The Spruce). Move to 1F Corner/Window; trim reverted all-green vines at last variegated node.\n• Yellow leaves → OVERWATERING (#1 per The Spruce and RHS). Wet soil + yellow = rot — unpot, trim mushy roots. Dry soil + yellow = check light/nutrients.\n• Brown crispy edges → low humidity (Central Texas AC), underwatering, or mineral buildup — soak, filtered water, optional humidity boost.\n• Leggy bare vines / small leaves → low light — move brighter, pinch back hard for denser growth.\n• Wilting + wet soil → root rot — inspect roots, repot in fresh DIY Aroid.\n• Wilting + dry soil → thirsty — water now.\n• All-white/silver sections turning brown → too much direct sun OR chronic underwatering on variegated tissue.\n• Spider mites (fine webs, stippling in dry AC) → shower, insecticidal soap weekly × 3.\n• Mealybugs → alcohol Q-tip.\n• Scale → alcohol swab on stem bumps.\n• Fungus gnats → reduce watering, sticky traps.\n• Aphids on new tips → rinse, insecticidal soap.\n• ⚠️ TOXIC to cats and dogs per ASPCA (Heartleaf Philodendron / Philodendron hederaceum) — insoluble calcium oxalates cause oral irritation, burning, drooling, vomiting, difficulty swallowing if chewed."
     },
     sources: [
       { label: "Missouri Botanical Garden — Philodendron hederaceum", url: "https://www.missouribotanicalgarden.org/PlantFinder/PlantFinderDetails.aspx?taxonid=287199" },
@@ -1608,30 +1715,31 @@ const PLANTS = {
   marble_queen_pothos: {
     id: "marble_queen_pothos",
     repotSigns: [
-      "Roots circling out of the 4\" drainage holes",
+      "Roots circling out of the 5.5\" drainage holes",
       "New leaves come in with LESS white/cream marbling (variegation is the first casualty of root stress)",
       "New leaves smaller than mature ones",
       "Water drains through in <5 seconds",
       "Aerial roots reaching for the pot surface along the vines",
-      "Growth stalls in growing season despite good bright indirect light"
+      "DIY Aroid collapsed / pot feels rock-hard after dry spells"
     ],
     displayName: "Marble Queen Pothos",
-    potSize: '4"',
+    repotted: true,
+    potSize: '5.5"',
     cuttingsCount: 7,
     category: "pothos",
     names: {
       common: ["Marble Queen Pothos", "Marble Pothos"],
       scientific: "Epipremnum aureum 'Marble Queen'"
     },
-    /* 4" pot is small for 7 cuttings → dries fast despite the dense planting.
+    /* 5.5" pot + DIY Aroid — more soil volume than the old 4", so stretch the cadence.
      * Heavy white variegation = slower growth = slightly less water uptake than Golden. */
-    wateringDays: 6,
-    wateringDaysHot: 5,
-    wateringDaysCool: 10,
-    currentSoilMix: "aroid_mix",
-    comments: "Graduated from water propagation — all 7 cuttings potted together in a single 4\" pot. Marble Queen is a heavily variegated cultivar (cream/white marbled leaves, sometimes 50%+ white tissue) that grows ~30% slower than Golden Pothos because reduced chlorophyll means less photosynthesis. 4\" pot is intentionally snug for clumping density; expect to upsize to 5\" within 6–9 months once roots fill.",
-    idealSoil: ["aroid_mix", "amended_potting"],
-    soilNotes: "Currently in aroid mix — perfect choice. With 7 cuttings packed into a 4\" pot, the aroid mix's chunky structure (perlite + bark) prevents soil compaction and root suffocation. Add extra perlite if you see persistent yellowing.",
+    wateringDays: 7,
+    wateringDaysHot: 6,
+    wateringDaysCool: 12,
+    currentSoilMix: "diy_aroid",
+    comments: "✅ Nov 2026: up-potted from 4\" → 5.5\" with DIY Aroid (3 bark · 2 coco · 1 potting · 2 pumice · ½–1 charcoal · pinch fert). All 7 cuttings still clumped. Marble Queen is heavily variegated (cream/white marbling, sometimes 50%+ white tissue) and grows ~30% slower than Golden — the bigger pot buys moisture buffer; still don't overpot further.",
+    idealSoil: ["diy_aroid", "aroid_mix", "amended_potting"],
+    soilNotes: "Now in DIY Aroid in a 5.5\" pot — bark + pumice keep the larger root zone from going anaerobic. Finger-test the mid-zone; unused outer soil can stay wet longer than the old packed 4\".",
     conditions: {
       light:        { ideal: "Bright indirect — REQUIRED to maintain white variegation", passing: "Medium indirect (new growth will revert to greener leaves over time)" },
       temperature:  { ideal: "65–85°F (18–29°C)",                                passing: "55–95°F; nothing below 50°F" },
@@ -1640,13 +1748,13 @@ const PLANTS = {
     },
     tips: {
       lighting: "Needs MORE light than Golden Pothos because of heavy white variegation — those cream sections have NO chlorophyll, so the green portions have to do all the photosynthesis. Bright indirect light is essential.\n\n• Best spot: 1–3 feet from an east-facing window, or 4–6 feet back from a south/west window.\n• Direct afternoon sun bleaches and scorches white sections.\n• In low light, new leaves emerge with less variegation (mostly green) — the plant is genetically conserving chlorophyll.\n• Rotate the pot 1/4 turn every 2 weeks for even light to all 7 cuttings.\n• In this home, the 1F Living Room corner (vaulted dual NE/SE) and 1F Window (36° NE) are your best matches per PLANT_LIGHT_REF — Marble Queen requires brighter indirect than Golden to hold its white marbling.",
-      soil: "Aroid mix is ideal: 1 part potting soil + 1 part perlite + 1 part orchid bark + a pinch of horticultural charcoal. The chunky structure is critical when 7 cuttings share a 4\" pot — without it, the soil compacts and roots suffocate.\n\nAvoid:\n• Pure potting mix (stays too wet for tightly packed roots)\n• Coco-coir-heavy mixes (too retentive)\n• Garden soil (compacts and brings pests)",
-      watering: "METHOD — soak-and-dry (soil-graduated cuttings): 7 cuttings moved from water to soil in your 4\" pot. Per The Spruce, let the top 1–2\" dry before a deep drench — heavy white variegation means slower metabolism than Golden Pothos, but overwatering still kills faster than drought.\n\nHOW TO CHECK READINESS (your 4\" pot, 7 cuttings):\n• Finger test: top 1–2\" dry = water; never water on calendar alone.\n• Pot weight: lighter than 24 hrs post-soak = ready.\n• Moisture meter: 3–4 upper third = water.\n• Plant tells: slight droop + dry soil = thirsty; yellow + wet soil = overwatered.\n\nCENTRAL TEXAS CADENCE (Pflugerville, indoor AC ~30–45% RH):\n• Hot AC season (Apr–Oct): every 5–6 days — 7 cuttings in 4\" pot + AC dries fast.\n• Peak summer (Jun–Sep): every 5 days near vents/fans; every 6–7 days in 1F Corner/Window.\n• Mild winter (Nov–Feb): every 9–11 days — slow growth; wait if unsure.\n• A 4\" pot in front of an AC vent dries 2× faster than a still corner — adjust accordingly.\n• Empty saucer within 15 min.\n\nWATER QUALITY: filtered or tap-sat-out — white tissue is sensitive to chlorine (per The Spruce variegated pothos guide).\n\nOVER- vs UNDER-watering tells:\n• Under: droop on dry soil; crispy brown on white sections; recovers after soak.\n• Over: multiple yellow leaves, wilting on wet soil, fungus gnats, mushy stems at base.",
-      pruning: "Wait 4–6 weeks before any pruning while soil roots establish.\n\nOnce growing:\n• Pinch tips just above a node to encourage branching — each pinch produces 2 new vines.\n• Remove all-green REVERTING vines back to a heavily variegated node — once a vine reverts to all green, it stays green and will start dominating the pot's variegation balance.\n• Take cuttings from the MOST variegated sections when propagating to preserve the marble pattern in offspring.\n• Use sterile shears; wipe with rubbing alcohol between cuts.",
+      soil: "DIY Aroid (current): 3 medium orchid bark · 2 hydrated coco coir · 1 potting mix · 2 pumice · ½–1 charcoal · fertilizer pinch only. Chunky structure matters with 7 cuttings in 5.5\".\n\nAvoid pure potting mix, coco-only blends, and garden soil.",
+      watering: "METHOD — soak-and-dry: 7 cuttings in your 5.5\" DIY Aroid pot. Per The Spruce, let the top 1–2\" dry before a deep drench — heavy white variegation means slower metabolism than Golden, but overwatering still kills faster than drought.\n\nHOW TO CHECK READINESS (your 5.5\" DIY Aroid pot, 7 cuttings):\n• Finger test: top 1–2\" dry = water; check mid-zone — unused outer soil can stay wet longer than the old packed 4\".\n• Pot weight: lighter than 24 hrs post-soak = ready.\n• Moisture meter: 3–4 upper third = water.\n• Plant tells: slight droop + dry soil = thirsty; yellow + wet soil = overwatered.\n\nCENTRAL TEXAS CADENCE (Pflugerville, indoor AC ~30–45% RH):\n• Hot AC season (Apr–Oct): every 6–7 days.\n• Peak summer (Jun–Sep): every 6 days near vents; every 7–8 days in 1F Corner/Window.\n• Mild winter (Nov–Feb): every 10–12 days.\n• Empty saucer within 15 min.\n\nWATER QUALITY: filtered or tap-sat-out — white tissue is chlorine-sensitive.\n\nOVER- vs UNDER-watering tells:\n• Under: droop on dry soil; crispy brown on white sections.\n• Over: multiple yellow leaves, wilting on wet soil, fungus gnats, mushy stems at base.",
+      pruning: "Wait 2–4 weeks after the Nov 2026 upsize before hard pruning.\n\nOnce growing:\n• Pinch tips just above a node to encourage branching — each pinch produces 2 new vines.\n• Remove all-green REVERTING vines back to a heavily variegated node — once a vine reverts to all green, it stays green and will start dominating the pot's variegation balance.\n• Take cuttings from the MOST variegated sections when propagating to preserve the marble pattern in offspring.\n• Use sterile shears; wipe with rubbing alcohol between cuts.",
       propagation: "Pothos propagates from any node-containing cutting in water or soil. Each cutting needs at least 1 node (the bump where a leaf attaches). Roots in 2–3 weeks in water, 4 weeks in soil. Success rate >90%.\n\nVariegation preservation tip: Marble Queen variegation is CHIMERIC — meaning it's stored at the cellular level at each node. Always propagate from the most-variegated section of the stem; a fully-reverted green cutting will produce only green offspring forever.",
-      repotting: "Newly potted — leave alone 6+ months while roots fill the 4\" pot.\n\nUpsize timeline:\n• 4\" → 5\" at 6–9 months (when you see roots circling the bottom or coming out of drainage holes).\n• 5\" → 6\" at year 2.\n• Pothos in general prefer to be slightly root-bound, so don't oversize.\n• Spring (March–May) is the best repot window — active growth helps roots recover quickly.",
-      feeding: "Hold off fertilizer for the first 6 weeks to avoid burning the freshly-transitioned roots.\n\nAfter 6 weeks:\n• Balanced liquid fertilizer (10-10-10 or 20-20-20) at HALF strength every 4 weeks during spring/summer.\n• Slow-release Osmocote pellets in spring are an easy alternative.\n• Flush the soil with plain water every 2 months to prevent fertilizer salt buildup (which white-variegated leaves are extra sensitive to).\n• Stop feeding entirely Oct–Feb.",
-      troubleshooting: "SYMPTOM → CAUSE → FIX:\n\n• New leaves mostly green / loss of white marbling → low light (per The Spruce). Move to 1F Corner/Window; trim reverted all-green vines at heavily variegated node.\n• All-white new leaves with no green → too much variegation on one leaf — cut back to balanced node (white tissue can't photosynthesize).\n• Yellow leaves (multiple) → OVERWATERING (#1 in dense plantings per The Spruce). Wet soil = unpot and check roots.\n• Wilting + wet soil → root rot from packed cuttings — trim mushy roots, repot in fresh aroid mix.\n• Wilting + dry soil → thirsty — soak now.\n• Brown crispy edges on white/cream sections → low humidity (AC), underwatering, or tap-water minerals — filtered water + flush soil.\n• Leggy vines / small leaves → low light — move brighter, pinch back.\n• Stagnant growth 4–6 weeks post-transition → normal for water-to-soil cuttings.\n• Spider mites (fine webs in dry AC) → shower, insecticidal soap weekly × 3.\n• Mealybugs → alcohol Q-tip.\n• Scale → alcohol swab.\n• Fungus gnats → reduce watering, sticky traps.\n• Aphids → rinse, insecticidal soap.\n• ⚠️ TOXIC to cats and dogs per ASPCA — insoluble calcium oxalates cause oral irritation, drooling, vomiting, difficulty swallowing if chewed."
+      repotting: "✅ Nov 2026: already moved 4\" → 5.5\" with DIY Aroid.\n\n• Next upsize only when roots circle — spring preferred; +1\" max.\n• Refresh DIY Aroid if bark softens (~12–18 months).\n• Pothos prefer slightly root-bound — don't jump to a huge pot.",
+      feeding: "Hold fertilizer for 4–6 weeks after the Nov 2026 upsize.\n\nAfter 6 weeks:\n• Balanced liquid fertilizer (10-10-10 or 20-20-20) at HALF strength every 4 weeks during spring/summer.\n• Slow-release Osmocote pellets in spring are an easy alternative.\n• Flush the soil with plain water every 2 months to prevent fertilizer salt buildup (which white-variegated leaves are extra sensitive to).\n• Stop feeding entirely Oct–Feb.",
+      troubleshooting: "SYMPTOM → CAUSE → FIX:\n\n• New leaves mostly green / loss of white marbling → low light (per The Spruce). Move to 1F Corner/Window; trim reverted all-green vines at heavily variegated node.\n• All-white new leaves with no green → too much variegation on one leaf — cut back to balanced node (white tissue can't photosynthesize).\n• Yellow leaves (multiple) → OVERWATERING (#1). Wet soil = unpot and check roots.\n• Wilting + wet soil → root rot — trim mushy roots, repot in fresh DIY Aroid.\n• Wilting + dry soil → thirsty — soak now.\n• Brown crispy edges on white/cream sections → low humidity (AC), underwatering, or tap-water minerals — filtered water + flush soil.\n• Leggy vines / small leaves → low light — move brighter, pinch back.\n• Spider mites (fine webs in dry AC) → shower, insecticidal soap weekly × 3.\n• Mealybugs → alcohol Q-tip.\n• Scale → alcohol swab.\n• Fungus gnats → reduce watering, sticky traps.\n• Aphids → rinse, insecticidal soap.\n• ⚠️ TOXIC to cats and dogs per ASPCA — insoluble calcium oxalates cause oral irritation, drooling, vomiting, difficulty swallowing if chewed."
     },
     sources: [
       { label: "Missouri Botanical Garden — Epipremnum aureum", url: "https://www.missouribotanicalgarden.org/PlantFinder/PlantFinderDetails.aspx?taxonid=275206" },
@@ -2597,7 +2705,9 @@ const OWNED_PLANT_IDS = [
   "wandering_dude",
   "golden_pothos",
   "pearls_jade_pothos",
-  "pothos_combo",
+  "satin_pothos",
+  "neon_pothos",
+  "golden_pothos_b",
   "fittonia",
   "marble_queen_pothos",
   "philodendron_silver_stripe",
@@ -2647,9 +2757,11 @@ const SUCCULENT_VARIANTS = [
 
 const POTHOS_VARIANTS = [
   "golden_pothos",
+  "golden_pothos_b",
   "marble_queen_pothos",
   "pearls_jade_pothos",
-  "pothos_combo",
+  "neon_pothos",
+  "satin_pothos",
   "philodendron_silver_stripe"
 ];
 
@@ -2952,13 +3064,25 @@ const PLANT_PLACEMENT = {
     ideal: ["living_room_open", "second_floor_open", "living_room_window_stained", "bedroom"],
     ok: ["living_room_window_morning", "living_room_fireplace"],
     avoid: ["bathroom", "second_floor_window"],
-    rationale: "Slow-growing variegated cultivar — needs strong bright indirect to keep its cream/white speckling. Bedroom, LR-Open, 2F-Open all work equally well. The bathroom is too dim; growth and variegation both suffer noticeably. Direct afternoon sun bleaches the small leaves. ⚠️ The 3\" pot is small, so place wherever you'll remember to check moisture twice a week."
+    rationale: "Slow-growing variegated cultivar — needs strong bright indirect to keep its cream/white speckling. Bedroom, LR-Open, 2F-Open all work equally well. The bathroom is too dim; growth and variegation both suffer noticeably. Direct afternoon sun bleaches the small leaves. ⚠️ The 3.5\" pot is still small, so place wherever you'll remember to check moisture a few times a week."
   },
-  pothos_combo: {
+  satin_pothos: {
     ideal: ["living_room_open", "second_floor_open", "living_room_window_stained", "bedroom"],
-    ok: ["living_room_window_morning", "living_room_fireplace", "bathroom"],
-    avoid: ["second_floor_window"],
-    rationale: "Mix of Satin + Neon + Golden. Tuned to the brightest-light-needing one (Satin Pothos / Scindapsus) to keep its silver speckling visible. Bedroom is excellent (bright indirect, no glare). Bathroom is acceptable for the Golden but the Satin's silver fades there over 6–8 weeks. Direct PM sun bleaches all three cultivars."
+    ok: ["living_room_window_morning", "living_room_fireplace"],
+    avoid: ["bathroom", "second_floor_window"],
+    rationale: "Scindapsus pictus needs the brightest indirect of the old combo trio to keep silver frosting. Bedroom / LR-Open / 2F-Open are premium. Bathroom dims the silver in 4–6 weeks. Direct PM sun bleaches speckles. Shallow 3.5×2.5 — place where you'll check moisture."
+  },
+  neon_pothos: {
+    ideal: ["living_room_open", "second_floor_open", "living_room_window_stained", "bedroom"],
+    ok: ["bathroom", "living_room_fireplace", "living_room_window_morning", "second_floor_window"],
+    avoid: [],
+    rationale: "Neon is nearly as flexible as Golden for placement — bright indirect keeps chartreuse vivid; low light just deepens the green-yellow. Tiny 3.5×2.5 solo pot dries fast anywhere; bathroom humidity helps but isn't required."
+  },
+  golden_pothos_b: {
+    ideal: ["living_room_open", "second_floor_open", "living_room_window_stained", "bedroom"],
+    ok: ["bathroom", "living_room_fireplace", "living_room_window_morning", "second_floor_window"],
+    avoid: [],
+    rationale: "Same flexible Golden profile as the main 5\" pot — bathroom to bright-indirect open rooms all work. Shallow 3.5×2.5 from the combo split needs more frequent moisture checks than the main Golden."
   },
   philodendron_silver_stripe: {
     ideal: ["living_room_open", "second_floor_open", "living_room_window_stained", "bedroom"],
@@ -3136,7 +3260,7 @@ const HOME_WINDOWS = [
     light: "Two exposures (gentle NE early morning + SE morning/midday) in a big vaulted, double-height room open to the 2nd floor — tall, bright and airy with lots of ambient bounce. Usable plant-level light still comes from the windows, but it's the longest span of soft-to-moderate direct light in the house.",
     humidity: "Average — but the vaulted volume open to the 2F lets moisture disperse fast, so it's hard to raise humidity here.",
     thrive: [{ id: "monstera", back: true }, { id: "monstera_adansonii", back: true }, "schefflera", { id: "marble_queen_pothos", back: true }, { id: "pearls_jade_pothos", back: true }, { id: "philodendron_silver_stripe", back: true }, "ginseng_ficus"],
-    solid: [{ id: "cordyline_fruticosa", back: true }, { id: "dracaena_fragrans", back: true }, { id: "dracaena_fragrans_b", back: true }, "snake_plant", "kalanchoe", { id: "zz_plant", back: true }, "haworthia", "baby_burros_tail", "string_of_pearls", "string_of_buttons", "burrows_tail", { id: "pothos_combo", back: true }, { id: "polka_dot_plant", note: "add humidity", back: true }],
+    solid: [{ id: "cordyline_fruticosa", back: true }, { id: "dracaena_fragrans", back: true }, { id: "dracaena_fragrans_b", back: true }, "snake_plant", "kalanchoe", { id: "zz_plant", back: true }, "haworthia", "baby_burros_tail", "string_of_pearls", "string_of_buttons", "burrows_tail", { id: "satin_pothos", back: true }, { id: "neon_pothos", back: true }, { id: "golden_pothos_b", back: true }, { id: "polka_dot_plant", note: "add humidity", back: true }],
     avoid: "Nothing really struggles here — it's your best all-rounder. Deep-shade-only plants would be wasted on it.",
     keepOut: []
   },
@@ -3147,7 +3271,7 @@ const HOME_WINDOWS = [
     humidifier: { rec: "skip", note: "Big vaulted room open to the 2F — a small humidifier's mist just dissipates into the volume and barely moves RH. Skip it here; humidify the enclosed 2F Room 2 instead and give any humidity-lovers you keep here pebble trays." },
     light: "Gentle morning sun only, bright indirect the rest of the day, in the big vaulted living room open to the 2nd floor — tall and airy, so the light stays soft and even. Still the safest window for foliage that scorches.",
     humidity: "Average — and the vaulted, double-height volume lets any added moisture dissipate quickly.",
-    thrive: ["royal_ivy", "golden_pothos", "marble_queen_pothos", "pothos_combo", "terrarium_a", "terrarium_b", "zz_plant", "monstera_water_cuttings"],
+    thrive: ["royal_ivy", "golden_pothos", "marble_queen_pothos", "satin_pothos", "neon_pothos", "golden_pothos_b", "terrarium_a", "terrarium_b", "zz_plant", "monstera_water_cuttings"],
     solid: [{ id: "prayer_plant", note: "add humidity" }, "monstera", "dracaena_fragrans", "dracaena_fragrans_b", "mondo_grass", "mini_orchid", "ginseng_ficus_cutting", "pearls_jade_pothos", "philodendron_silver_stripe"],
     avoid: "Full-sun desert plants (Desert Rose, Firestick, cacti) — not enough direct light to keep them tight & colored.",
     keepOut: ["desert_rose", "firestick", "lady_finger_cactus", "assorted_cacti", "sedum_angelina", "aloe_vera", "succulent_frankenstein_a", "variegated_elephant_bush", "variegated_elephant_bush_bonsai"]
@@ -3162,7 +3286,7 @@ const HOME_WINDOWS = [
     thrive: ["desert_rose", "firestick", "lady_finger_cactus", "assorted_cacti", "sedum_angelina", "aloe_vera", "succulent_frankenstein_a", "variegated_elephant_bush", "variegated_elephant_bush_bonsai", "kalanchoe_fang"],
     solid: [{ id: "snake_plant", back: true }, "ginseng_ficus", { id: "burrows_tail", note: "acclimate slowly" }, { id: "string_of_buttons", note: "acclimate slowly" }],
     avoid: "Cream/variegated tropicals, Fittonia, Polka Dot, Rattlesnake Calathea, Thai — they'll scorch. Shield Haworthia from the harshest beam.",
-    keepOut: ["fittonia", "polka_dot_plant", "prayer_plant", "thai_constellation", "monstera", "monstera_adansonii", "monstera_water_cuttings", "mini_orchid", "terrarium_a", "terrarium_b", "cordyline_fruticosa", "marble_queen_pothos", "pearls_jade_pothos", "golden_pothos", "pothos_combo", "philodendron_silver_stripe", "ginseng_ficus_cutting"]
+    keepOut: ["fittonia", "polka_dot_plant", "prayer_plant", "thai_constellation", "monstera", "monstera_adansonii", "monstera_water_cuttings", "mini_orchid", "terrarium_a", "terrarium_b", "cordyline_fruticosa", "marble_queen_pothos", "pearls_jade_pothos", "golden_pothos", "satin_pothos", "neon_pothos", "golden_pothos_b", "philodendron_silver_stripe", "ginseng_ficus_cutting"]
   },
   {
     id: "f2_bath", floor: "Second floor", name: "Bathroom (rarely used)", bearing: "208° SW",
@@ -3195,7 +3319,7 @@ const HOME_WINDOWS = [
     humidifier: { rec: "use", note: "BEST home for your one small humidifier — a smaller, ENCLOSED NW room that actually holds humidity (unlike the vaulted 1F living room). Cluster the humidity-lovers — Rattlesnake Calathea, Cordyline, Monstera, pothos group — within 2–3 ft of the unit and add a small fan on low to spread the plume." },
     light: "Identical light to Room 1 — split the collection: make this the bright-indirect foliage room, Room 1 the succulent/sun room.",
     humidity: "Average / low.",
-    thrive: [{ id: "golden_pothos", back: true }, { id: "marble_queen_pothos", back: true }, { id: "pearls_jade_pothos", back: true }, { id: "philodendron_silver_stripe", back: true }, { id: "monstera", back: true }, { id: "zz_plant", back: true }, { id: "dracaena_fragrans", back: true }, { id: "dracaena_fragrans_b", back: true }],
+    thrive: [{ id: "golden_pothos", back: true }, { id: "golden_pothos_b", back: true }, { id: "marble_queen_pothos", back: true }, { id: "pearls_jade_pothos", back: true }, { id: "neon_pothos", back: true }, { id: "satin_pothos", back: true }, { id: "philodendron_silver_stripe", back: true }, { id: "monstera", back: true }, { id: "zz_plant", back: true }, { id: "dracaena_fragrans", back: true }, { id: "dracaena_fragrans_b", back: true }],
     solid: [{ id: "prayer_plant", note: "add humidity", back: true }, { id: "royal_ivy", back: true }, { id: "terrarium_b", back: true }, { id: "cordyline_fruticosa", back: true }],
     avoid: "Full-sun cacti/Desert Rose (send to 2F SW). Keep the direct late beam off the pothos variegation midsummer.",
     keepOut: ["desert_rose", "lady_finger_cactus", "assorted_cacti", "firestick", "sedum_angelina", "aloe_vera", "succulent_frankenstein_a", "variegated_elephant_bush", "variegated_elephant_bush_bonsai"]
@@ -3254,11 +3378,13 @@ const PLANT_LIGHT_REF = {
   royal_ivy:                  { light: "Bright indirect (E/N)",                  humidity: "Avg 50–60%",            best: "1F Window (NE)" },
   wandering_dude:             { light: "Bright indirect + 1–2h AM",              humidity: "High 50%+",             best: "1F Bathroom, 1F Room 1", hum: true },
   golden_pothos:              { light: "Bright indirect (tolerant)",             humidity: "Avg 30–50%+",           best: "Flexible — 1F Window, NW rooms" },
-  pearls_jade_pothos:         { light: "Bright indirect (more)",                 humidity: "Avg 40–50%",            best: "1F Corner, 1F Window" },
-  pothos_combo:               { light: "Bright indirect",                        humidity: "Avg–High 40–60%",       best: "1F Corner, 1F Window" },
+  pearls_jade_pothos:         { light: "Bright indirect (more)",                 humidity: "Avg 40–50%",            best: "1F Corner, 1F Window — 3.5\" DIY Aroid" },
+  satin_pothos:               { light: "Bright indirect (silver)",                humidity: "Avg–High 50–60%",       best: "1F Corner, 1F Window — 3.5×2.5 DIY Aroid" },
+  neon_pothos:                { light: "Bright indirect (chartreuse)",            humidity: "Avg 30–50%+",           best: "1F Window / Corner — 3.5×2.5 DIY Aroid" },
+  golden_pothos_b:            { light: "Bright indirect (tolerant)",             humidity: "Avg 30–50%+",           best: "Flexible — 3.5×2.5 DIY Aroid (combo split)" },
   fittonia:                   { light: "Med-bright indirect, NO direct",         humidity: "High 70%+",             best: "1F Bath (set back)", flag: "info", hum: true },
-  marble_queen_pothos:        { light: "Bright indirect (required)",             humidity: "Avg 50–60%",            best: "1F Corner, 1F Window" },
-  philodendron_silver_stripe: { light: "Bright indirect",                        humidity: "Avg–High 50–60%+",      best: "1F Corner, 1F Window" },
+  marble_queen_pothos:        { light: "Bright indirect (required)",             humidity: "Avg 50–60%",            best: "1F Corner, 1F Window — 5.5\" DIY Aroid" },
+  philodendron_silver_stripe: { light: "Bright indirect",                        humidity: "Avg–High 50–60%+",      best: "1F Corner, 1F Window — 3.5\" DIY Aroid" },
   haworthia:                  { light: "Bright indirect + 1–2h gentle AM",       humidity: "Low, avoid >60%",       best: "1F Corner, NW rooms — not bathrooms", flag: "info" },
   sedum_angelina:             { light: "Full sun 4–6h+",                         humidity: "Low 30–50%",            best: "2F LR (SW)" },
   baby_burros_tail:           { light: "Bright indirect + 1–2h AM",              humidity: "Low 30–50%",            best: "1F Corner, NW rooms" },
