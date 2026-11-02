@@ -209,16 +209,28 @@ const CHOPSTICK_BY_PLANT = {
     "Very forgiving; stick still beats watering on a fixed day when AC swings."
   ),
   pearls_jade_pothos: _c(
-    "Insert ~1\" deep in the 3\" pot.",
+    "Insert ~1\" deep in the 3.5\" DIY Aroid pot.",
     "Stick just-dry at 1\" (lightly dry, not desert-bone-dry for weeks) → water. Prefers not to sit bone dry long.",
     "Cool damp stick → wait.",
-    "Small pot + brighter light needs: check more often than Golden, but don't keep soggy."
+    "3.5\" + brighter light needs: check more often than Golden, but don't keep soggy."
   ),
-  pothos_combo: _c(
-    "Insert ~1\" deep in the 4\" pot.",
-    "Dry at 1\" → water (slightly drier cadence than a pure Satin-only pot).",
+  satin_pothos: _c(
+    "Insert ~1\" deep in the shallow 3.5\" × 2.5\" pot.",
+    "Dry at 1\" → water (err slightly dry — Scindapsus rots faster than Epipremnum).",
     "Damp → wait.",
-    "Mixed cultivars: water when the stick says dry so Satin/Marble pieces aren't sitting wet for Golden's sake."
+    "Silver frosting fades first under chronic wet feet or low light — trust the stick."
+  ),
+  neon_pothos: _c(
+    "Insert ~1\" deep in the shallow 3.5\" × 2.5\" pot (single cutting — tiny reservoir).",
+    "Dry at 1\" → soak thoroughly.",
+    "Damp → wait.",
+    "Solo Neon in a shallow pot dries fast; check more often than the main Golden."
+  ),
+  golden_pothos_b: _c(
+    "Insert ~1\" deep in the shallow 3.5\" × 2.5\" pot — NOT the main 5\" Golden.",
+    "Dry at 1\" → soak thoroughly.",
+    "Damp → wait.",
+    "Separate watering log from Golden A; shallow DIY Aroid dries faster."
   ),
   fittonia: _c(
     "Insert only ~½–¾\" in the 1\" pot / shallow media — the whole volume is root zone.",
@@ -227,13 +239,13 @@ const CHOPSTICK_BY_PLANT = {
     "Drama-queen wilt is usually thirst — but confirm with the stick so you don't drown a collapsed-overwatered plant."
   ),
   marble_queen_pothos: _c(
-    "Insert ~1\" deep in the 4\" pot.",
-    "Dry at 1\" → deep water.",
+    "Insert ~1–2\" deep in the 5.5\" DIY Aroid pot.",
+    "Dry at 1–2\" → deep water (check mid-zone — larger pot can stay wet deeper).",
     "Damp → wait.",
     "White variegation browns from both underwater stress and sun; stick keeps watering consistent."
   ),
   philodendron_silver_stripe: _c(
-    "Insert ~1\" deep in the 4\" pot.",
+    "Insert ~1\" deep in the 3.5\" DIY Aroid pot.",
     "Dry at 1\" → soak.",
     "Damp → wait.",
     "Same trailing-aroid rule as pothos: mid-surface dry reading is enough in a small pot."
@@ -557,9 +569,17 @@ const PROPAGATION_LIBRARY = {
     _m("Water cuttings", "85–95%", "2–4 weeks", "Keep bright indirect so white variegation doesn't stall."),
     _m("Soil cuttings", "85–95%", "2–4 weeks", "Node + leaf; clump multiple cuttings.")
   ],
-  pothos_combo: [
-    _m("Water cuttings (per cultivar)", "85–95%", "1–4 weeks", "Prop each vine type separately if you want even mixes."),
-    _m("Soil cuttings", "85–95%", "2–4 weeks", "Satin / Marble pieces need more light than Golden while establishing.")
+  satin_pothos: [
+    _m("Water cuttings", "85–90%", "3–4 weeks", "Scindapsus is slower than Epipremnum; node required."),
+    _m("Soil cuttings", "85–90%", "3–5 weeks", "Bright indirect to keep silver frosting while rooting.")
+  ],
+  neon_pothos: [
+    _m("Water cuttings", "90–98%", "1–2 weeks", "Classic Epipremnum speed; keep chartreuse sections."),
+    _m("Soil cuttings", "90–95%", "2–4 weeks", "Easy; clump extras into the 3.5×2.5 for fullness.")
+  ],
+  golden_pothos_b: [
+    _m("Water cuttings", "90–98%", "1–3 weeks", "Same as main Golden — node required."),
+    _m("Soil cuttings", "90–95%", "2–4 weeks", "Clump cuttings for a fuller shallow pot.")
   ],
   philodendron_silver_stripe: [
     _m("Water cuttings", "90–95%", "1–3 weeks", "Node cuttings root like pothos."),
@@ -755,8 +775,14 @@ const TROUBLESHOOTING_LIBRARY = {
   pearls_jade_pothos: [
     _t("Reverting / less white", "Low light", "Needs more light than Golden.", "normal")
   ],
-  pothos_combo: [
-    _t("One cultivar declining in the mix", "Different water/light needs in one pot", "Propagate survivors separately if mismatch persists.", "normal")
+  satin_pothos: [
+    _t("Silver frosting fading", "Low light or chronic overwatering", "Brighter indirect; err dry vs soggy in DIY Aroid.", "normal")
+  ],
+  neon_pothos: [
+    _t("Chartreuse turning dark green", "Low light", "Move brighter; prune darkened vines back to neon nodes.", "low")
+  ],
+  golden_pothos_b: [
+    _t("All-green new leaves", "Low light (variegation fades)", "Brighter spot — plant is fine, just greener.", "low")
   ],
   philodendron_silver_stripe: [
     _t("Silver stripe fading", "Low light", "Brighter indirect light.", "low")
