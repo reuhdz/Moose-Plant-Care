@@ -2033,7 +2033,10 @@
         setCloudStatus("Pull cancelled.");
         return;
       }
-      applyImportedPayload(data, { flashMsg: "Pulled from Firebase ☁️" });
+      cloud.withPausedWatch(() => {
+        applyImportedPayload(data, { flashMsg: "Pulled from Firebase ☁️" });
+      });
+      cloud.markSynced(data.syncedAt);
       setCloudStatus(`Pulled plantCare/moose (${data.waterLog.length} waterings).`);
     } catch (err) {
       const msg = cloud.statusMessage(err);
@@ -2052,7 +2055,7 @@
         return;
       }
       const saved = await cloud.push(payload);
-      setCloudStatus(`Pushed plantCare/moose at ${saved.syncedAt} (${saved.waterLog.length} waterings).`);
+      setCloudStatus(`Live sync on · last push ${saved.syncedAt} · ${saved.waterLog.length} waterings`);
       flash("Pushed to Firebase ☁️");
     } catch (err) {
       const msg = cloud.statusMessage(err);
@@ -2072,14 +2075,33 @@
       }
       const bundled = await cloud.loadBundledExport();
       const saved = await cloud.push(bundled);
-      setCloudStatus(`Seeded Realtime Database plantCare/moose from bundled export (${saved.waterLog.length} waterings).`);
-      flash("Firebase seeded from export 🌱");
+      cloud.withPausedWatch(() => {
+        applyImportedPayload(saved, { flashMsg: "Firebase seeded from export 🌱" });
+      });
+      cloud.markSynced(saved.syncedAt);
+      setCloudStatus(`Live sync on · seeded @ ${saved.syncedAt} · ${saved.waterLog.length} waterings`);
     } catch (err) {
       const msg = cloud.statusMessage(err);
       setCloudStatus(msg);
       alert("Firebase seed failed:\n\n" + msg);
     }
   });
+
+  function startFirebaseLiveSync() {
+    try {
+      const cloud = cloudApi();
+      cloud.startLiveSync({
+        collect: collectExportPayload,
+        apply: (payload) => {
+          applyImportedPayload(payload);
+        },
+        onStatus: setCloudStatus
+      });
+    } catch (err) {
+      setCloudStatus("Live sync could not start: " + (err && err.message ? err.message : err));
+      console.warn("[plant-care] live sync start failed", err);
+    }
+  }
 
   /* ============================================================
    * Helpers
@@ -4979,6 +5001,7 @@ Rules:
     renderChatTab();
     renderAnalyzeTab();
     resetProfileForm("new");
+    startFirebaseLiveSync();
     if (mig.migrated > 0) {
       const moved = mig.summary.reduce((n, s) => n + s.waterLogEntriesMoved, 0);
       const movedSuffix = moved ? `, ${moved} log entr${moved === 1 ? "y" : "ies"} re-pointed` : "";

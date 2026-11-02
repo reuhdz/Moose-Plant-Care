@@ -506,9 +506,9 @@
 
       <h2>☁️ Firebase Sync</h2>
       <p class="muted">
-        Cloud copy lives in Realtime Database project <code>moose-plant-shop</code>
-        at path <code>plantCare/moose</code>. Push uploads this device’s data; Pull replaces local stores from the cloud.
-        Seed Cloud writes the bundled export to that path.
+        <strong>Live sync is on</strong> for watering logs, todos, notes, room plan, overlays, and photos —
+        local edits debounce-push to Realtime Database <code>plantCare/moose</code>, and cloud changes apply here automatically.
+        Manual Pull / Push / Seed are still available for one-shot control.
       </p>
       <div class="io-buttons">
         <button id="cloud-pull" class="secondary-btn">☁️ Pull from Firebase</button>

@@ -125,6 +125,10 @@ on project `moose-plant-shop` at path `plantCare/moose`.
 4. Open the site → **Log & Data** → **Seed Cloud from Export** (uses
    `data/plant-care-export.json`), or **Push to Firebase** after Import.
 
+After that, **live sync is automatic**: watering logs, todos, notes, room plan,
+overlays, and photos debounce-push to RTDB, and remote changes apply in the
+browser. Theme and Claude API settings stay local only.
+
 Web config lives in `js/firebase-cloud.js`. The Firebase web API key is expected
 to be public; protect data with RTDB rules (tighten once Auth is enabled).
 
