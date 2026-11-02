@@ -3,7 +3,12 @@
  *
  * Each plant has:
  *   - displayName / potSize / category / names
- *   - wateringDays + wateringDaysHot + wateringDaysCool (3-tier Austin TX indoor model)
+ *   - wateringDays + wateringDaysHot + wateringDaysCool (absolute seasonal days)
+ *   - optional wateringDaysSpring / wateringDaysFall / wateringDaysDormant
+ *   - optional seasonalHabit (tropical | pothos | humidity | succulent | cactus |
+ *     semi_dormant | winter_dormant | orchid | closed_terrarium) — otherwise
+ *     inferred from category / plant id in watering.js
+ *   - optional seasonMonths[12] to override that habit's Jan→Dec phenology
  *   - conditions: { light, temperature, humidity, soilMoisture } with ideal + passing
  *   - tips: lighting / soil / watering / pruning / propagation / repotting / feeding / troubleshooting
  *   - sources: at least 5 cited references
@@ -14,7 +19,8 @@
  *   - isPropagation (optional): true if this plant is currently a water-rooting cutting
  *   - cuttingsCount (optional): number of cuttings in a water-prop container
  *
- * Cool season is Nov–Feb, hot season is Jun–Sep — handled in watering.js.
+ * Seasonality is plant-specific (spring / summer / fall / winter / dormant) via
+ * watering.js habits — absolute days on the plant always win when set.
  * Tip text supports newlines; the UI preserves them via white-space: pre-wrap.
  */
 
@@ -625,7 +631,10 @@ const PLANTS = {
     },
     wateringDays: 18,
     wateringDaysHot: 12,
+    wateringDaysFall: 28,
     wateringDaysCool: 40,
+    wateringDaysDormant: 45,
+    seasonalHabit: "winter_dormant",
     currentSoilMix: "cactus_mix",
     comments: "✅ Aug 2026: moved OUTDOORS on the same 301° NW exposure as 2F Room 2 (late-afternoon/evening summer sun). Still in the 4\" pot, 50/50 cacti mix / perlite. Missouri Botanical Garden + NC State: full sun for color, but in hot summers this species appreciates some afternoon shade — the NW patio's late beam is a better match than all-day SW blast IF you acclimate 7–14 days. Bring inside before nights ~50°F (typically late Oct in Pflugerville). ⚠️ Caustic latex + Moose: keep the pot where a dog cannot brush or chew it. Dump saucers after thunderstorms — rot from sitting wet is the #1 killer.",
     idealSoil: ["cactus_mix"],
@@ -2308,7 +2317,11 @@ const PLANTS = {
     },
     wateringDays: 8,
     wateringDaysHot: 6,
+    wateringDaysSpring: 7,
+    wateringDaysFall: 20,
     wateringDaysCool: 45,
+    wateringDaysDormant: 50,
+    seasonalHabit: "winter_dormant",
     currentSoilMix: "cactus_mix",
     comments: "✅ Aug 2026: moved OUTDOORS on the same 301° NW exposure as 2F Room 2 (late-afternoon/evening summer sun), still in the Jul 2026 5\" mineral-mix pot. UF/IFAS (EP474): Adenium needs 6+ hours bright light to flower, irrigate regularly WITH drainage in summer, and is a deck/patio plant that MUST come inside for winter — not freeze-tolerant; Pflugerville is zone 8b/9a. NW patio gives fewer direct hours than 2F SW, so blooms may be modest, but outdoor DLI still beats any indoor window. Dump saucers after storms. ⚠️ HIGHLY TOXIC sap (cardiac glycosides) — keep off Moose's path. Winter: leaves drop, look 'dead', water almost never.",
     idealSoil: ["cactus_mix"],

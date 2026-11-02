@@ -527,11 +527,28 @@
     const condRow = plant.condition
       ? `<div><strong>Condition:</strong> <span class="badge">${escapeHtml(plant.condition)}</span></div>` : "";
     const customBadge = plant.isCustom ? `<div><span class="badge">Custom</span></div>` : "";
+    const summary = typeof seasonalIntervalSummary === "function"
+      ? seasonalIntervalSummary(plant)
+      : null;
+    const habit = typeof habitForPlant === "function" ? habitForPlant(plant) : null;
+    const nowSeason = typeof describeSeasonForPlant === "function"
+      ? describeSeasonForPlant(plant, Dates.today())
+      : null;
     const intervalParts = [];
-    if (plant.wateringDaysHot != null) intervalParts.push(`🔥 ${plant.wateringDaysHot}d hot`);
-    if (plant.wateringDays != null) intervalParts.push(`☀️ ${plant.wateringDays}d warm`);
-    if (plant.wateringDaysCool != null) intervalParts.push(`❄️ ${plant.wateringDaysCool}d cool`);
-    const interval = intervalParts.length ? intervalParts.join(" / ") : "—";
+    if (summary) {
+      intervalParts.push(`🌱 ${summary.spring}d spring`);
+      intervalParts.push(`🔥 ${summary.summer}d summer`);
+      intervalParts.push(`🍂 ${summary.fall}d fall`);
+      intervalParts.push(`❄️ ${summary.winter}d winter`);
+      if (summary.dormant != null) intervalParts.push(`😴 ${summary.dormant}d dormant`);
+    } else {
+      if (plant.wateringDaysHot != null) intervalParts.push(`🔥 ${plant.wateringDaysHot}d hot`);
+      if (plant.wateringDays != null) intervalParts.push(`☀️ ${plant.wateringDays}d warm`);
+      if (plant.wateringDaysCool != null) intervalParts.push(`❄️ ${plant.wateringDaysCool}d cool`);
+    }
+    let interval = intervalParts.length ? intervalParts.join(" / ") : "—";
+    if (habit) interval += ` · ${habit.emoji} ${habit.label}`;
+    if (nowSeason) interval += ` · now ${nowSeason.emoji} ${nowSeason.label} (${nowSeason.days}d)`;
 
     const commentBlock = plant.comments
       ? `<p class="muted small">📝 ${escapeHtml(plant.comments)}</p>` : "";
@@ -1133,6 +1150,9 @@
                    : nx.status === "soon" ? "soon" : "scheduled";
 
     const nextTxt = `Next: ${Dates.formatPretty(nx.nextDate)}`;
+    const seasonTxt = nx.seasonLabel
+      ? ` · ${nx.seasonLabel}${nx.interval != null ? ` every ${nx.interval}d` : ""}`
+      : "";
     const snoozeTxt = nx.snooze ? ` · 🕗 snoozed +${nx.snooze}d` : "";
     const dateChips = renderLogDateChips(nx);
 
@@ -1160,8 +1180,8 @@
     const nameHtml = `<button type="button" class="tile-name-link" data-care-plant-id="${escapeAttr(pid)}" title="Open ${escapeAttr(plant.displayName)} care guide">${escapeHtml(plant.displayName)}<span class="tile-name-link-icon" aria-hidden="true">📖</span></button>`;
 
     const mainLeft = includeName
-      ? `<div class="tile-copy"><div class="name">${nameHtml}</div>${dateChips}<div class="when next-line">${nextTxt}${snoozeTxt}</div></div>`
-      : `<div class="tile-copy">${dateChips}<div class="when next-line">${nextTxt}${snoozeTxt}</div></div>`;
+      ? `<div class="tile-copy"><div class="name">${nameHtml}</div>${dateChips}<div class="when next-line">${nextTxt}${seasonTxt}${snoozeTxt}</div></div>`
+      : `<div class="tile-copy">${dateChips}<div class="when next-line">${nextTxt}${seasonTxt}${snoozeTxt}</div></div>`;
 
     return `
       <div class="row ${rowClass}" data-plant-id="${escapeAttr(pid)}">
@@ -1644,12 +1664,32 @@
         profileWateringInfoText.innerHTML =
           `<strong>Researched values</strong> from authoritative sources (see the Sources section on this plant's care page). Intervals are sourced — not user input.`;
       }
-      renderWateringPills(p.wateringDaysHot, p.wateringDays, p.wateringDaysCool);
+      const sum = typeof seasonalIntervalSummary === "function" ? seasonalIntervalSummary(p) : null;
+      if (sum) renderWateringPills(sum.summer, sum.spring, sum.winter, null, sum);
+      else renderWateringPills(p.wateringDaysHot, p.wateringDays, p.wateringDaysCool);
     }
   }
 
-  function renderWateringPills(hot, warm, cool, suffix) {
+  function renderWateringPills(hot, warm, cool, suffix, summary) {
     const tag = suffix ? ` <span class="muted small">(${escapeHtml(suffix)})</span>` : "";
+    if (summary) {
+      const habitTag = summary.habit
+        ? ` <span class="muted small">(${escapeHtml(summary.habit.emoji + " " + summary.habit.label)})</span>`
+        : "";
+      const dormantPill = summary.dormant != null
+        ? `<span class="pill">😴 Dormant ${summary.dormant}d</span>`
+        : "";
+      profileWateringInfoValues.innerHTML = `
+        <span class="pill">🌱 Spring ${summary.spring ?? "—"}d</span>
+        <span class="pill">🔥 Summer ${summary.summer ?? "—"}d</span>
+        <span class="pill">🍂 Fall ${summary.fall ?? "—"}d</span>
+        <span class="pill">❄️ Winter ${summary.winter ?? "—"}d</span>
+        ${dormantPill}
+        ${habitTag}
+      `;
+      profileWateringInfoValues.hidden = false;
+      return;
+    }
     profileWateringInfoValues.innerHTML = `
       <span class="pill">🔥 Hot ${hot ?? "—"}d</span>
       <span class="pill">☀️ Warm ${warm ?? "—"}d</span>
