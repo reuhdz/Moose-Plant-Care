@@ -142,6 +142,25 @@ const CHOPSTICK_BY_PLANT = {
     "Damp at 1\" → wait.",
     "During dark-treatment / dormancy for rebloom, keep even drier — stick should stay dry longer."
   ),
+  kalanchoe_fang: _c(
+    "Insert ~1–1.5\" deep in the 4\" cactus-mix pot (edge, avoid stabbing the crown).",
+    "Bone-dry clean stick throughout → deep soak at the soil line only; empty the saucer.",
+    "Any cool damp on the stick → wait. Err dry — felt + wet peat = rot.",
+    "Never mist the felt. Same dry-sun logic as other Madagascan Kalanchoe."
+  ),
+  kalanchoe_fang_b: _c(
+    "Insert ~1–1.5\" deep in THIS 4\" pot (Fang B — not Fang A).",
+    "Bone-dry stick → soak at soil line; dump saucer.",
+    "Damp stick → wait.",
+    "Weigh Fang A and Fang B separately — matching pot size ≠ matching dry-down."
+  ),
+  kalanchoe_b: _c(
+    "Insert ~1\" deep in the 3.5\" pot (shallower than the main 4\" Kalanchoe).",
+    "Top 1\" dry on the stick → water at the soil line (avoid flowers/leaves).",
+    "Damp at 1\" → wait.",
+    "3.5\" dries faster than the 4\" sibling; during dark-treatment keep even drier."
+  ),
+
   burrows_tail: _c(
     "Insert ~1\" deep along the pot edge (avoid stabbing the fragile cascading stems).",
     "Bone-dry clean stick → soak, drain well.",
@@ -522,6 +541,19 @@ const PROPAGATION_LIBRARY = {
     _m("Stem tip cuttings", "85–95%", "2–4 weeks", "Callus briefly; plant in gritty mix."),
     _m("Leaf cuttings", "70–85%", "3–6 weeks", "Often produce plantlets along leaf edges (species-dependent).")
   ],
+  kalanchoe_fang: [
+    _m("Stem tip cuttings", "85–95%", "2–4 weeks", "Callus 3–7 days; plant on dry grit; first soak after roots."),
+    _m("Leaf cuttings", "70–85%", "3–6 weeks", "Whole leaf with base; keep dry until rooted.")
+  ],
+  kalanchoe_fang_b: [
+    _m("Stem tip cuttings", "85–95%", "2–4 weeks", "Same as Fang A — callus well; err dry."),
+    _m("Leaf cuttings", "70–85%", "3–6 weeks", "Felt leaves root if kept dry.")
+  ],
+  kalanchoe_b: [
+    _m("Stem tip cuttings", "85–95%", "2–4 weeks", "Use vegetative tips; callus briefly; gritty mix."),
+    _m("Leaf cuttings", "70–85%", "3–6 weeks", "Same florist-kalanchoe leaf props as the 4\" plant.")
+  ],
+
   burrows_tail: [
     _m("Stem cuttings (callus → soil)", "70–85%", "3–6 weeks", "Handle gently — leaves shatter. Let callus; bright light; rare water."),
     _m("Individual leaf props", "50–70%", "4–10 weeks", "Fallen leaves often root — lay on dryish mix."),
@@ -823,6 +855,19 @@ const TROUBLESHOOTING_LIBRARY = {
   kalanchoe: [
     _t("No blooms", "Needs bright light + longer dark nights in fall for bud set (florist types)", "Bright light; don't leave grow lights on 24/7.", "low")
   ],
+  kalanchoe_fang: [
+    _t("Soft yellow leaves / mushy base", "Overwatering / wet felt crown", "Cut to healthy tissue; dry grit; water at soil line only.", "high"),
+    _t("Stretching, thin felt", "Low light", "Move to 2F SW or 1F Room 1; old internodes won't shorten.", "normal")
+  ],
+  kalanchoe_fang_b: [
+    _t("Soft yellow leaves / mushy base", "Overwatering", "Same as Fang A — dry culture; separate log from Fang A.", "high"),
+    _t("Stretching, thin felt", "Low light", "Brighter direct sun hours.", "normal")
+  ],
+  kalanchoe_b: [
+    _t("No blooms", "Needs bright days + 14h dark nights ~6 weeks", "Dark-treatment; don't leave grow lights on overnight.", "low"),
+    _t("Yellow mushy leaves in 3.5\"", "Overwatering in small pot", "Lengthen dry-down; empty saucer; check peat vs cactus mix.", "high")
+  ],
+
   mondo_grass: [
     _t("Browning in hot direct sun", "Afternoon scorch", "Morning sun / bright indirect preferred indoors.", "low"),
     _t("Wet core in the 9×9 cube", "Overpot volume / blocked drainage", "Probe the center; wait; never leave a saucer (Clemson: moist not waterlogged).", "normal")

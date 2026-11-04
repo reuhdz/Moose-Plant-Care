@@ -5088,6 +5088,8 @@ Rules:
     const seeds = [
       { plantId: "monstera_adansonii", date: "2026-09-06", note: "(initial — ~5 days before add)" },
       { plantId: "kalanchoe_fang",     date: "2026-09-04", note: "(initial — last Friday)" },
+      { plantId: "kalanchoe_fang_b",   date: "2026-09-04", note: "(initial — 4\" Fang B; same water day as Fang A)" },
+      { plantId: "kalanchoe_b",        date: "2026-09-04", note: "(initial — 3.5\" florist Kalanchoe; same water day as Fang A)" },
       { plantId: "polka_dot_plant",    date: "2026-09-09", note: "(initial — 2 days before add)" },
       { plantId: "string_of_buttons",  date: "2026-09-04", note: "(initial — last Friday)" },
       { plantId: "philodendron_birkin", date: "2026-11-01", note: "(initial — 5.5\" DIY Aroid, 2 shoots; watered day before Nov 2 add)" },

@@ -92,5 +92,17 @@
     "date": "2026-11-01",
     "note": "(initial — 6.5\" DIY Aroid, 3 vines; watered day before Nov 2 add)",
     "fertilized": false
+  },
+  {
+    "plantId": "kalanchoe_fang_b",
+    "date": "2026-09-04",
+    "note": "(initial — 4\" Fang B; same water day as Fang A)",
+    "fertilized": false
+  },
+  {
+    "plantId": "kalanchoe_b",
+    "date": "2026-09-04",
+    "note": "(initial — 3.5\" florist Kalanchoe; same water day as Fang A)",
+    "fertilized": false
   }
 ]

@@ -2580,22 +2580,129 @@ const PLANTS = {
       soilMoisture: { ideal: "Completely dry between deep waterings", passing: "Wrinkled leaves = thirsty; soft yellow = too wet" }
     },
     tips: {
-      lighting: "Craves bright light with real sun hours to stay compact and bronze-toned.\n\n• South/west sill or 2F SW living room is ideal indoors.\n• Morning sun + bright afternoon also works (1F Room 1).\n• Low light → leggy, pale, sparse felt.\n\n• In this home, 2F Living Room (SW) and 1F Room 1 are best matches per PLANT_LIGHT_REF. Keep out of bathrooms.",
-      soil: "Fast-draining mineral mix. Recipe: 1 part cactus mix + 1 part perlite/pumice (+ optional coarse sand). Never standard peat potting soil long-term.",
-      watering: "METHOD — strict soak-and-dry: Kalanchoe beharensis stores water in thick felted leaves. Soil must be fully dry before watering (Succulents & Sunshine / standard felt-bush care).\n\nHOW TO CHECK (your 4\" pot):\n• Skewer/finger to bottom — bone dry throughout.\n• Leaf feel: firm felt = OK; soft/mushy = overwater; wrinkled = thirsty.\n• Pot weight: hollow/light = water.\n\nCENTRAL TEXAS CADENCE:\n• Hot AC season (Apr–Oct): every 12–16 days.\n• Peak summer: every 12 days in bright dry rooms.\n• Winter: every 4–6 weeks — light drink only.\n\nWater at the soil line; keep felt dry. Empty saucers.",
-      pruning: "Remove damaged lower leaves. Tip-prune lanky stems in spring; cuttings callus and root easily. Wear gloves — sap can irritate skin.",
-      propagation: "Stem or leaf cuttings.\n\n• Cut 3–4\" stem or healthy leaf; callus 3–7 days.\n• Set on dry cactus mix; mist lightly after roots start (~2–4 weeks).\n• Spring/summer best; success rate high if kept dry.",
-      repotting: "Every 2–3 years in spring. Upsize 1\" max. Fresh gritty mix; wait ~1 week before watering if roots were disturbed.",
-      feeding: "Cactus fertilizer at 1/4–1/2 strength once in spring and once mid-summer. Skip fall/winter.",
-      troubleshooting: "• Soft yellow leaves / black stem base → OVERWATERING / rot — cut to healthy tissue, repot dry.\n• Stretching → insufficient sun.\n• Scorched patches → sudden full afternoon glass sun; acclimate.\n• Mealybugs in leaf axils → alcohol swab + neem.\n• ⚠️ Toxic to cats/dogs (bufadienolides) per ASPCA — keep away from pets."
+      lighting: "Bright light with REAL sun hours is the #1 lever for compact, densely felted, bronze-toned Fang (Plantlex / About Succulents / Flora Grubb). Target 4–6+ hrs strong light; indoor south/west sill or 2F SW living room is ideal.\n\n• Ideal: 2F Living Room (215° SW) or 1F Room 1 morning SE sun.\n• Bright indirect-only rooms → etiolation: long internodes, smaller greener leaves, thin felt (hard to reverse).\n• Acclimate 7–14 days before parking in unfiltered SW glass — sudden full PM sun can bleach felt.\n• Rotate ¼ turn every watering so both sides bronze evenly.\n• Grow light 12–14h helps if winter sun is weak.\n\n• Best matches per PLANT_LIGHT_REF: 2F LR (SW), 1F Room 1. Hard avoid: bathrooms / humid zones — felt traps moisture and rots.",
+      soil: "Sharp drainage is non-negotiable (RHS feltbush / Plantlex). Gritty cactus/succulent mix only.\n\nRecipe:\n• 1 part cactus/succulent mix\n• 1 part perlite or pumice\n• Optional: handful coarse sand or fine horticultural grit\n\nTerracotta / unglazed ceramic preferred — helps the 4\" dry evenly in Central Texas AC. Never leave nursery peat long-term.",
+      watering: "METHOD — strict soak-and-dry, err dry: Kalanchoe beharensis stores water in thick felted leaves; rot is the #1 killer (About Succulents / Plantlex / Flora Grubb). Soil must be bone-dry throughout before a deep soak. Water at the soil line only — never wet the felt crown.\n\nHOW TO CHECK READINESS (your 4\" pot, cactus mix):\n• Skewer/finger to the bottom — bone dry throughout = water; any cool damp = wait.\n• Pot weight: 4\" feels hollow/light vs 24 hrs post-soak = ready.\n• Leaf feel: firm felt = OK; soft/mushy/translucent = overwater; thin/wrinkled = thirsty.\n• Moisture meter: ~1–2 throughout = water; 4+ = wait.\n\nCENTRAL TEXAS CADENCE (Pflugerville, indoor AC ~30–45% RH):\n• Hot AC season (Apr–Oct): every 12–16 days in 2F LR / 1F Room 1.\n• Peak summer (Jun–Sep): every 12 days near dry AC vents; stretch if still damp.\n• Mild winter (Nov–Feb): every 4–6 weeks — light drink only; growth nearly pauses.\n• Empty saucers within minutes; never mist the felt.\n\nOVER- vs UNDER-watering tells:\n• Over: soft yellow lower leaves, black/mushy stem base, sour smell, felt patchy from wet crown.\n• Under: thin wrinkled leaves that firm up within hours of a soak.",
+      pruning: "Slow sculptural grower — light tidy only.\n\n• Tug fully dry, papery lower leaves — they leave a textured trunk (Flora Grubb).\n• Tip-prune lanky stems in spring to branch; gloves on — sap can irritate skin.\n• Never leave open wounds wet; let cuts callus in dry air.\n• Shape after the main growth flush, not mid-winter.",
+      propagation: "Stem or leaf cuttings root readily if kept dry (Succulents & Sunshine / standard felt-bush practice).\n\n• Stem: 3–4\" tip with a node; remove lower leaves; callus 3–7 days in shade.\n• Leaf: twist off a healthy leaf with the base intact; callus 3–5 days; lay on dry cactus mix.\n• Plant on dry mix; mist lightly only after roots start (~2–4 weeks); first deep soak when rooted.\n• Spring–summer best; success high if you resist early watering.",
+      repotting: "Every 2–3 years in spring when roots fill the 4\" (Plantlex / cactus-succulents guides).\n\n• Upsize only +1\" max — Fang likes a snug pot.\n• Fresh gritty mix; terracotta preferred.\n• If roots were disturbed, wait ~5–7 days before the first soak.\n• Refresh mix sooner if nursery peat stays wet >4 days after a drink.",
+      feeding: "Lean feeder.\n\n• Cactus/succulent fertilizer at ¼–½ strength once in spring and once mid-summer (RHS: 2–3× in the growing season).\n• Skip fall/winter and any month the plant isn't pushing new felt.\n• Flush salts every 2–3 months with a clean soak + full drain.",
+      troubleshooting: "SYMPTOM → CAUSE → FIX (Plantlex / About Succulents / ASPCA):\n\n• Soft yellow leaves / black stem base → OVERWATERING / rot (#1). Cut to healthy tissue, repot in dry grit, withhold water.\n• Stretching, pale sparse felt → insufficient sun. Move to 2F SW or 1F Room 1; don't expect old internodes to shorten.\n• Scorched / bleached felt patches → sudden full PM glass sun. Acclimate; sheer curtain for a week.\n• Patchy felt / wet crown → water pooled on leaves. Water at soil line only; improve airflow.\n• Mealybugs in leaf axils → alcohol swab + neem/insecticidal soap weekly × 3.\n• Spider mites (stippling, fine webs) in dry AC → rinse underside carefully; soap spray; don't chronically mist felt.\n• Fungus gnats → mix staying wet; lengthen dry-down; sticky traps.\n• ⚠️ Toxic to cats and dogs (bufadienolides) per ASPCA — vomiting, heart-rhythm risk. Keep strictly away from Moose."
     },
     sources: [
       { label: "ASPCA — Kalanchoe Toxicity", url: "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/kalanchoe" },
       { label: "Missouri Botanical Garden — Kalanchoe beharensis", url: "https://www.missouribotanicalgarden.org/PlantFinder/PlantFinderDetails.aspx?kempercode=b666" },
       { label: "Succulents and Sunshine — Kalanchoe beharensis 'Fang'", url: "https://www.succulentsandsunshine.com/types-of-succulents/kalanchoe-beharensis-fang/" },
-      { label: "NC State Extension — Kalanchoe (toxicity notes)", url: "https://plants.ces.ncsu.edu/plants/kalanchoe-blossfeldiana/" },
-      { label: "RHS — Kalanchoe (genus)", url: "https://www.rhs.org.uk/plants/search-results?query=kalanchoe+beharensis" },
+      { label: "Plantlex — Felt Bush Care Guide", url: "https://plantlex.com/felt-bush-care-guide/" },
+      { label: "About Succulents — Kalanchoe beharensis 'Fang'", url: "https://www.aboutsucculents.com/kalanchoe-beharensis-fang/" },
+      { label: "Flora Grubb — Kalanchoe beharensis × tomentosa 'Fang'", url: "https://www.floragrubb.com/guides/kalanchoe-beharensis-x-tomentosa-fang" },
+      { label: "RHS — Kalanchoe beharensis (feltbush)", url: "https://www.rhs.org.uk/plants/9668/kalanchoe-beharensis/details" },
       { label: "The Spruce — Felt Bush Care", url: "https://www.thespruce.com/grow-kalanchoe-beharensis-5082750" }
+    ]
+  },
+
+
+  kalanchoe_fang_b: {
+    id: "kalanchoe_fang_b",
+    repotSigns: [
+      "Roots circling out of the 4\" drainage holes",
+      "Lower felted leaves yellow and drop while soil stays wet",
+      "Plant rocks loosely — root mass shrunk from rot or underpotting",
+      "New leaves emerge pale/stretched despite a sunny window",
+      "Water sits on the surface for minutes (compacted nursery peat)",
+      "Felt surface looks patchy from chronic wet crown"
+    ],
+    displayName: "Kalanchoe Fang (B)",
+    potSize: '4"',
+    category: "succulent",
+    names: {
+      common: ["Kalanchoe Fang", "Felt Bush Fang", "Velvet Elephant Ear Fang", "Fang Plant"],
+      scientific: "Kalanchoe beharensis 'Fang' (often listed as K. beharensis × tomentosa 'Fang')"
+    },
+    wateringDays: 14,
+    wateringDaysHot: 12,
+    wateringDaysCool: 28,
+    currentSoilMix: "cactus_mix",
+    comments: "Nov 2026 add: second Fang in its own 4\" pot (same size as the Sep Fang). Last watered 2026-09-04 with the other Fang — keep SEPARATE watering logs; don't assume both dry on the same day. Felted triangular leaves with warty underside 'fangs' — Madagascan sun succulent. Err dry; humidity + peat = rot.",
+    idealSoil: ["cactus_mix"],
+    soilNotes: "Gritty cactus/succulent mix only. Equal parts cactus mix + perlite/pumice is ideal. Terracotta helps the 4\" dry evenly in Central Texas AC. Check THIS pot's weight separately from Fang A.",
+    conditions: {
+      light:        { ideal: "Bright light + several hours direct sun", passing: "Bright indirect (may stretch / lose bronze tone)" },
+      temperature:  { ideal: "65–80°F (18–27°C)", passing: "50–90°F; protect below 50°F" },
+      humidity:     { ideal: "30–50% (dry)", passing: "Avoid chronic >60% — felt leaves trap moisture" },
+      soilMoisture: { ideal: "Completely dry between deep waterings", passing: "Wrinkled leaves = thirsty; soft yellow = too wet" }
+    },
+    tips: {
+      lighting: "Same sun rules as Fang A — 4–6+ hrs strong light keeps felt dense and bronze (Plantlex / About Succulents / Flora Grubb).\n\n• Ideal: 2F Living Room (SW) or 1F Room 1 morning SE.\n• Park near Fang A if you like, but rotate each pot so neither side faces the glass forever.\n• Low light → etiolation (long gaps, thin felt).\n• Acclimate before full SW glass.\n\n• Best matches per PLANT_LIGHT_REF: 2F LR (SW), 1F Room 1. Never bathroom.",
+      soil: "Sharp drainage only.\n\nRecipe:\n• 1 part cactus/succulent mix\n• 1 part perlite or pumice\n• Optional: coarse sand / horticultural grit\n\nTerracotta preferred. Don't share a soggy nursery peat brick with Fang A.",
+      watering: "METHOD — strict soak-and-dry, err dry (About Succulents / Plantlex / Flora Grubb). Bone-dry throughout before a deep soak at the soil line — never wet the felt.\n\nHOW TO CHECK READINESS (THIS 4\" pot — not Fang A):\n• Skewer/finger to bottom — bone dry = water.\n• Pot weight: hollow/light vs post-soak = ready.\n• Leaf feel: firm felt OK; soft/mushy = overwater; wrinkled = thirsty.\n• Moisture meter: ~1–2 = water; 4+ = wait.\n\nCENTRAL TEXAS CADENCE:\n• Hot AC season (Apr–Oct): every 12–16 days.\n• Peak summer: every 12 days in bright dry rooms.\n• Mild winter (Nov–Feb): every 4–6 weeks — light drink only.\n• Empty saucers fast; never mist felt.\n\nOVER- vs UNDER-watering tells:\n• Over: soft yellow leaves, mushy base, patchy wet felt.\n• Under: wrinkled leaves that firm after one soak.",
+      pruning: "Tidy dry lower leaves; tip-prune lanky stems in spring. Gloves — sap irritates. Callus cuts dry before any moisture.",
+      propagation: "Stem or leaf cuttings: callus 3–7 days, set on dry cactus mix, first soak after roots (~2–4 weeks). Spring/summer best.",
+      repotting: "Every 2–3 years in spring; +1\" max. Fresh grit; wait ~1 week to water if roots disturbed. Keep separate from Fang A unless you intentionally merge.",
+      feeding: "Cactus fertilizer ¼–½ strength once in spring and once mid-summer. Skip fall/winter. Flush salts every 2–3 months.",
+      troubleshooting: "SYMPTOM → CAUSE → FIX:\n\n• Soft yellow / black base → overwatering — cut, repot dry.\n• Stretching → more sun (2F SW / 1F Room 1).\n• Scorch → acclimate off hot glass.\n• Mealybugs → alcohol swab + neem × 3.\n• ⚠️ ASPCA toxic (bufadienolides) — keep away from Moose. Same risk profile as Fang A."
+    },
+    sources: [
+      { label: "ASPCA — Kalanchoe Toxicity", url: "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/kalanchoe" },
+      { label: "Missouri Botanical Garden — Kalanchoe beharensis", url: "https://www.missouribotanicalgarden.org/PlantFinder/PlantFinderDetails.aspx?kempercode=b666" },
+      { label: "Succulents and Sunshine — Kalanchoe beharensis 'Fang'", url: "https://www.succulentsandsunshine.com/types-of-succulents/kalanchoe-beharensis-fang/" },
+      { label: "Plantlex — Felt Bush Care Guide", url: "https://plantlex.com/felt-bush-care-guide/" },
+      { label: "About Succulents — Kalanchoe beharensis 'Fang'", url: "https://www.aboutsucculents.com/kalanchoe-beharensis-fang/" },
+      { label: "Flora Grubb — Kalanchoe 'Fang'", url: "https://www.floragrubb.com/guides/kalanchoe-beharensis-x-tomentosa-fang" },
+      { label: "RHS — Kalanchoe beharensis (feltbush)", url: "https://www.rhs.org.uk/plants/9668/kalanchoe-beharensis/details" },
+      { label: "The Spruce — Felt Bush Care", url: "https://www.thespruce.com/grow-kalanchoe-beharensis-5082750" }
+    ]
+  },
+
+  kalanchoe_b: {
+    id: "kalanchoe_b",
+    repotSigns: [
+      "Roots circling out of the 3.5\" drainage holes",
+      "No blooms after a proper short-day photoperiod despite good light",
+      "New stem growth spindly/etiolated even in a bright window",
+      "Flower stalks wither before buds open",
+      "Lower leaves drop en masse (persistent, not one seasonal shed)",
+      "Pot tips easily — top-heavy leaves in a tiny root volume"
+    ],
+    displayName: "Kalanchoe (3.5\")",
+    potSize: '3.5"',
+    category: "succulent",
+    names: {
+      common: ["Kalanchoe", "Florist Kalanchoe", "Flaming Katy", "Christmas Kalanchoe", "Madagascar Widow's-thrill"],
+      scientific: "Kalanchoe blossfeldiana"
+    },
+    wateringDays: 10,
+    wateringDaysHot: 9,
+    wateringDaysCool: 16,
+    currentSoilMix: "cactus_mix",
+    comments: "Nov 2026 add: florist Kalanchoe in a 3.5\" pot (distinct from the main 4\" Kalanchoe). Last watered 2026-09-04 with Kalanchoe Fang — log THIS pot separately; the smaller volume dries faster than the 4\" sibling. 50/50 cactus mix + perlite preferred. Short-day plant for rebloom.",
+    idealSoil: ["cactus_mix"],
+    soilNotes: "50/50 cacti mix + perlite matches the main Kalanchoe. The 3.5\" dries faster than the 4\" — don't water both on the same blind calendar.",
+    conditions: {
+      light:        { ideal: "Bright indirect + 2–4 hrs morning direct", passing: "Bright indirect; full afternoon sun bleaches" },
+      temperature:  { ideal: "60–80°F (15–27°C); cooler nights for blooming", passing: "45–90°F; protect below 50°F" },
+      humidity:     { ideal: "40–60%", passing: "Average household; avoid misting flowers" },
+      soilMoisture: { ideal: "Top 1\" dry between waterings", passing: "Top half dry; never wet feet" }
+    },
+    tips: {
+      lighting: "Bright light with 2–4 hours morning direct keeps growth compact and supports rebloom (NC State / NYBG / Clemson HGIC).\n\n• Needs strong daytime brightness — roughly 6–8 hrs bright light for flower quality.\n• TO FORCE BLOOMING: 14 hours COMPLETE darkness nightly for ~6 weeks (box/closet ~5pm–7am), then resume normal light; blooms ~6–12 weeks after (UVM / Clemson / Illinois Extension). Start treatment in fall for winter color.\n• Night temps ~50–60°F and days ~65–70°F lengthen flower life (NYBG / Missouri Botanical Garden).\n\n• Best matches per PLANT_LIGHT_REF: 1F Room 1, 1F Corner. Bedroom = foliage only, weak bloom.",
+      soil: "GRITTY succulent mix (Clemson: well-drained/aerated).\n\nRecipe:\n• 1 part cactus mix\n• 1 part perlite\n• Optional: handful pumice\n\nTerracotta preferred — the 3.5\" already dries fast; peat-heavy nursery soil is the rot risk.",
+      watering: "METHOD — strict soak-and-dry, err dry: Kalanchoe blossfeldiana stores water in thick leaves; rot is #1 (The Spruce / UVM / Clemson). Let the top 1\" dry fully, then deep drench at the soil line — wet flowers/leaves invite rot.\n\nHOW TO CHECK READINESS (your 3.5\" pot — NOT the 4\" Kalanchoe):\n• Finger test: top 1\" completely dry = water.\n• Pot weight: 3.5\" goes hollow-light faster than the 4\" sibling.\n• Leaf plumpness: firm = OK; slight wrinkle = thirsty; soft/yellow = overwatered.\n• Moisture meter: 2–3 upper third = water; 5+ = wait.\n\nCENTRAL TEXAS CADENCE (Pflugerville, indoor AC ~30–45% RH):\n• Hot AC season (Apr–Oct): every 9–11 days in 1F Room 1 / Corner.\n• Peak summer (Jun–Sep): every 9 days — tiny pot + AC = fast dry-down.\n• Mild winter (Nov–Feb): every 14–18 days — stretch further during dark-treatment / rest.\n• Empty saucer within 15 min.\n• After flowering: ~30-day rest with less water (NYBG).\n\nOVER- vs UNDER-watering tells:\n• Over: yellow soft mushy leaves, black stem base, fungus gnats.\n• Under: wrinkled leaves, soil pulling from pot walls, hollow pot.",
+      pruning: "DEADHEAD spent flower stems back to a leaf pair — encourages rebloom and saves energy (NC State).\n\n• Pinch leggy stems for a compact mound.\n• Major reshape AFTER flowering (NYBG).\n• Saved pinched tips propagate easily.",
+      propagation: "Stem or leaf cuttings (Clemson / NC State).\n\n• Stem: 2–3\" vegetative tip (not a flowering shoot); strip bottom leaves; callus 2–3 days.\n• Leaf: mature leaf, callus 2 days, lay on dry mix.\n• Plant in dry succulent mix; water lightly only after roots (~2–3 weeks).\n• Spring/early summer; success ~85%.",
+      repotting: "Every 1–2 years in spring AFTER blooming (smaller pot may need sooner).\n\n• Upsize +1\" only (3.5\" → 4–4.5\").\n• Terracotta strongly preferred.\n• Refresh soil; trim dead roots.\n• Hold water ~1 week after a root-disturbing pot-up.\n• Keep separate from the main 4\" Kalanchoe unless you merge on purpose.",
+      feeding: "• Balanced liquid at half strength monthly spring–early fall (Clemson).\n• Bloom-booster (higher P) once before dark-treatment.\n• Stop during winter rest / dark-treatment unless actively growing.\n• Hold fertilizer 4–6 weeks after fresh mix.",
+      troubleshooting: "SYMPTOM → CAUSE → FIX (NC State / Clemson / UVM / Illinois Extension / ASPCA):\n\n• No flowers → missing long-night trigger or lights on at night; do 6-week 14h dark treatment.\n• Yellow soft mushy leaves → OVERWATERING (#1). Dry down hard; check roots.\n• Wrinkled leaves → underwatering — one thorough soak.\n• Leggy pale stems → low light; move to 1F Room 1 / add grow light.\n• Sunscald → harsh PM sun; filter or AM-only.\n• Powdery mildew → poor airflow; diluted neem; space plants.\n• Mealybugs / aphids / spider mites → alcohol swab, rinse, insecticidal soap weekly × 3.\n• Fungus gnats → soil too wet; lengthen dry-down.\n• Heat delay during bud set → nights >80°F can stall flowers (Clemson).\n• ⚠️ Toxic (bufadienolides) per ASPCA / Illinois Extension — GI + possible heart effects. Keep away from Moose."
+    },
+    sources: [
+      { label: "Missouri Botanical Garden — Kalanchoe blossfeldiana", url: "https://www.missouribotanicalgarden.org/PlantFinder/PlantFinderDetails.aspx?taxonid=281042" },
+      { label: "NC State Extension — Kalanchoe blossfeldiana", url: "https://plants.ces.ncsu.edu/plants/kalanchoe-blossfeldiana/" },
+      { label: "Clemson HGIC — Kalanchoe", url: "https://hgic.clemson.edu/factsheet/kalanchoe/" },
+      { label: "University of Vermont Extension — Kalanchoe Care", url: "https://pss.uvm.edu/ppp/articles/kalanchoe.html" },
+      { label: "NYBG — Kalanchoe Care", url: "https://libguides.nybg.org/kalanchoe" },
+      { label: "Illinois Extension — Kalanchoe (toxicity & bloom)", url: "https://extension.illinois.edu/blogs/good-growing/2025-12-19-nontraditional-holiday-plant-kalanchoe" },
+      { label: "ASPCA — Kalanchoe Toxicity", url: "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/kalanchoe" },
+      { label: "The Spruce — Kalanchoe Care Guide", url: "https://www.thespruce.com/growing-kalanchoe-plants-1902982" }
     ]
   },
 
@@ -2961,6 +3068,8 @@ const OWNED_PLANT_IDS = [
   /* New arrivals (Sep 2026) */
   "monstera_adansonii",
   "kalanchoe_fang",
+  "kalanchoe_fang_b",
+  "kalanchoe_b",
   "polka_dot_plant",
   "string_of_buttons",
   /* New arrivals (Nov 2026) — DIY Mix A/B in sized pots */
@@ -2988,6 +3097,8 @@ const SUCCULENT_VARIANTS = [
   "variegated_elephant_bush",
   "desert_rose",
   "kalanchoe_fang",
+  "kalanchoe_fang_b",
+  "kalanchoe_b",
   "string_of_buttons"
 ];
 
@@ -3358,6 +3469,18 @@ const PLANT_PLACEMENT = {
     avoid: ["bathroom", "bedroom", "living_room_open", "second_floor_open"],
     rationale: "Felt Bush 'Fang' needs real sun hours to stay compact and bronze — bright-indirect-only rooms stretch it. 2F SW window and morning-direct LR spots are best. Bathrooms and humid zones rot the felted leaves. Same sun logic as other desert Kalanchoe / succulents in this house."
   },
+  kalanchoe_fang_b: {
+    ideal: ["second_floor_window", "living_room_window_morning", "living_room_fireplace"],
+    ok: ["living_room_window_stained"],
+    avoid: ["bathroom", "bedroom", "living_room_open", "second_floor_open"],
+    rationale: "Same sun/dry profile as Fang A — real sun hours, never bathroom. Own watering log in the matching 4\" pot."
+  },
+  kalanchoe_b: {
+    ideal: ["living_room_window_morning", "second_floor_window", "living_room_fireplace"],
+    ok: ["living_room_window_stained", "bedroom"],
+    avoid: ["bathroom", "living_room_open", "second_floor_open"],
+    rationale: "Same blossfeldiana light logic as the main 4\" Kalanchoe — morning-direct + bright days for bloom; bedroom = foliage only. The 3.5\" dries faster, so a morning-sun dry room (1F Room 1) is ideal. Bathroom humidity is still a rot risk."
+  },
   polka_dot_plant: {
     ideal: ["bathroom"],
     ok: ["living_room_open", "second_floor_open", "bedroom"],
@@ -3500,7 +3623,7 @@ const HOME_WINDOWS = [
     thrive: ["mini_orchid", { id: "prayer_plant", back: true }, { id: "cordyline_fruticosa", back: true }, "wandering_dude", { id: "thai_constellation", back: true }, { id: "monstera", back: true }, { id: "polka_dot_plant", note: "no direct", back: true }],
     solid: [{ id: "fittonia", note: "no direct", back: true }, { id: "pilea_peperomioides", note: "no direct", back: true }, { id: "dracaena_fragrans", back: true }, { id: "dracaena_fragrans_b", back: true }, { id: "monstera_water_cuttings", back: true }, { id: "monstera_adansonii", back: true }],
     avoid: "All succulents & cacti — String of Pearls, String of Buttons, Haworthia, Lady Finger, Desert Rose, Kalanchoe Fang rot in this humidity. Keep the cream-variegated tropicals just back from the direct beam. Rubber Tree doesn't need this humidity — put it in a brighter dry room.",
-    keepOut: ["string_of_pearls", "string_of_buttons", "haworthia", "lady_finger_cactus", "desert_rose", "assorted_cacti", "aloe_vera", "firestick", "burrows_tail", "baby_burros_tail", "succulent_frankenstein_a", "succulent_frankenstein_b", "variegated_elephant_bush", "variegated_elephant_bush_bonsai", "kalanchoe", "kalanchoe_fang", "rubber_tree"]
+    keepOut: ["string_of_pearls", "string_of_buttons", "haworthia", "lady_finger_cactus", "desert_rose", "assorted_cacti", "aloe_vera", "firestick", "burrows_tail", "baby_burros_tail", "succulent_frankenstein_a", "succulent_frankenstein_b", "variegated_elephant_bush", "variegated_elephant_bush_bonsai", "kalanchoe", "kalanchoe_b", "kalanchoe_fang", "kalanchoe_fang_b", "rubber_tree"]
   },
   {
     id: "f1_room1", floor: "First floor", name: "Room 1", bearing: "131° SE · nightly fan",
@@ -3509,7 +3632,7 @@ const HOME_WINDOWS = [
     humidifier: { rec: "skip", note: "The nightly overhead fan cancels out any humidifier — don't waste it here." },
     light: "Same SE morning sun as the bathroom.",
     humidity: "Drier — the overhead fan moves air all night (great pest/fungus deterrent, faster dry-down).",
-    thrive: ["ginseng_ficus", "kalanchoe", "kalanchoe_fang", "schefflera_dark", "snake_plant", "string_of_buttons", "rubber_tree"],
+    thrive: ["ginseng_ficus", "kalanchoe", "kalanchoe_b", "kalanchoe_fang", "kalanchoe_fang_b", "schefflera_dark", "snake_plant", "string_of_buttons", "rubber_tree"],
     solid: ["succulent_frankenstein_b", "burrows_tail", "baby_burros_tail", "wandering_dude", { id: "zz_plant", back: true }, "aloe_vera", { id: "pilea_peperomioides", note: "away from fan blast" }],
     avoid: "Humidity-lovers that hate moving air — Fittonia, Polka Dot Plant, Rattlesnake Calathea, Thai Constellation, Monstera go elsewhere.",
     keepOut: ["fittonia", "polka_dot_plant", "prayer_plant", "thai_constellation", "monstera", "monstera_adansonii", "mini_orchid", "terrarium_a", "terrarium_b"]
@@ -3522,7 +3645,7 @@ const HOME_WINDOWS = [
     light: "Two exposures (gentle NE early morning + SE morning/midday) in a big vaulted, double-height room open to the 2nd floor — tall, bright and airy with lots of ambient bounce. Usable plant-level light still comes from the windows, but it's the longest span of soft-to-moderate direct light in the house.",
     humidity: "Average — but the vaulted volume open to the 2F lets moisture disperse fast, so it's hard to raise humidity here.",
     thrive: [{ id: "monstera", back: true }, { id: "monstera_adansonii", back: true }, "schefflera", { id: "marble_queen_pothos", back: true }, { id: "pearls_jade_pothos", back: true }, { id: "philodendron_silver_stripe", back: true }, { id: "philodendron_birkin", back: true }, { id: "philodendron_painted_lady", back: true }, "ginseng_ficus", "pilea_peperomioides", "rubber_tree"],
-    solid: [{ id: "cordyline_fruticosa", back: true }, { id: "dracaena_fragrans", back: true }, { id: "dracaena_fragrans_b", back: true }, "snake_plant", "kalanchoe", { id: "zz_plant", back: true }, "haworthia", "baby_burros_tail", "string_of_pearls", "string_of_buttons", "burrows_tail", { id: "satin_pothos", back: true }, { id: "neon_pothos", back: true }, { id: "golden_pothos_b", back: true }, { id: "polka_dot_plant", note: "add humidity", back: true }],
+    solid: [{ id: "cordyline_fruticosa", back: true }, { id: "dracaena_fragrans", back: true }, { id: "dracaena_fragrans_b", back: true }, "snake_plant", "kalanchoe", "kalanchoe_b", { id: "zz_plant", back: true }, "haworthia", "baby_burros_tail", "string_of_pearls", "string_of_buttons", "burrows_tail", { id: "satin_pothos", back: true }, { id: "neon_pothos", back: true }, { id: "golden_pothos_b", back: true }, { id: "polka_dot_plant", note: "add humidity", back: true }],
     avoid: "Nothing really struggles here — it's your best all-rounder. Deep-shade-only plants would be wasted on it.",
     keepOut: []
   },
@@ -3545,7 +3668,7 @@ const HOME_WINDOWS = [
     humidifier: { rec: "skip", note: "Desert cacti & succulents want it bone dry — never add the humidifier here." },
     light: "Intense SW afternoon/evening direct sun; 2nd-floor warmth on top. Texas summer sun at full strength.",
     humidity: "Low / average — warm and dry.",
-    thrive: ["desert_rose", "firestick", "lady_finger_cactus", "assorted_cacti", "aloe_vera", "succulent_frankenstein_a", "variegated_elephant_bush", "variegated_elephant_bush_bonsai", "kalanchoe_fang"],
+    thrive: ["desert_rose", "firestick", "lady_finger_cactus", "assorted_cacti", "aloe_vera", "succulent_frankenstein_a", "variegated_elephant_bush", "variegated_elephant_bush_bonsai", "kalanchoe_fang", "kalanchoe_fang_b"],
     solid: [{ id: "snake_plant", back: true }, "ginseng_ficus", { id: "burrows_tail", note: "acclimate slowly" }, { id: "string_of_buttons", note: "acclimate slowly" }, { id: "rubber_tree", note: "set back / solid cultivars" }],
     avoid: "Cream/variegated tropicals, Fittonia, Polka Dot, Pilea, Rattlesnake Calathea, Thai — they'll scorch. Shield Haworthia from the harshest beam.",
     keepOut: ["fittonia", "polka_dot_plant", "pilea_peperomioides", "prayer_plant", "thai_constellation", "monstera", "monstera_adansonii", "monstera_water_cuttings", "mini_orchid", "terrarium_a", "terrarium_b", "cordyline_fruticosa", "marble_queen_pothos", "pearls_jade_pothos", "golden_pothos", "satin_pothos", "neon_pothos", "golden_pothos_b", "philodendron_silver_stripe", "philodendron_birkin", "philodendron_painted_lady"]
@@ -3606,7 +3729,8 @@ const HOME_PLACEMENT_NOTES = [
   { tone: "info", title: "🏔️ The 1F living room is vaulted (open to the 2F)", body: "The downstairs living room has a double-height vaulted ceiling open to the second floor — tall, bright and airy with lots of ambient bounce, which keeps it your most versatile foliage space. But that same big open volume makes it the hardest room to humidify: a small humidifier can't keep up. Put the humidifier in the enclosed 2F Room 2 and rely on grouping + pebble trays for any humidity-lovers you keep downstairs." },
   { tone: "success", title: "Desert Rose + Firestick — summer patio (NW)", body: "Aug 2026 they sit outdoors on the same 301° NW heading as 2F Room 2. UF/IFAS (Adenium) and Missouri Botanical Garden / NC State (Euphorbia tirucalli): summer sun is correct; dump saucers after storms; acclimate; bring containers in before nights ~50°F. NW late-day sun is milder than 2F SW — good heat compromise, modest bloom potential. Keep both off Moose's path (toxic sap)." },
   { tone: "info", title: "ZZ Plant — 5\" pot, urgent stretch is done", body: "Aug 2026: up-potted 4\" → 5\" (Clemson HGIC: only 1–2\" larger). Hold water 7–10 days if rhizomes were nicked, then resume long dry-downs. It's now a normal bright-indirect plant — 1F Window, 2F Room 2 set back, etc." },
-  { tone: "danger", title: "Rot-risk succulents stay out of bathrooms", body: "Lady Finger Cactus (never), String of Pearls, String of Buttons, Haworthia, Kalanchoe Fang and Desert Rose soften and rot above ~60% humidity. Their zone is the 2F SW living room plus the NW rooms — dry, bright, warm." },
+  { tone: "danger", title: "Rot-risk succulents stay out of bathrooms", body: "Lady Finger Cactus (never), String of Pearls, String of Buttons, Haworthia, both Kalanchoe Fangs, florist Kalanchoes, and Desert Rose soften and rot above ~60% humidity. Their zone is the 2F SW living room plus the NW rooms — dry, bright, warm." },
+  { tone: "info", title: "Two Fangs + a 3.5\" florist Kalanchoe", body: "Nov 2026: Fang B (4\") and florist Kalanchoe (3.5\") join Fang A and the main 4\" Kalanchoe. Both new pots share the Fang A water date (2026-09-04) as a starting log — then weigh each pot separately. Fang pair wants dry sun; blossfeldiana wants bright AM sun + optional short-day dark treatment to rebloom. All Kalanchoe = ASPCA toxic." },
   { tone: "info", title: "Fittonia & Polka Dot — humidity divas", body: "Both want elevated humidity and no harsh direct sun. The 1F bathroom, set back from the SE beam, is the dream spot: steady moisture in the air, no scorch. Polka Dot is now in a 3.5×2.5 DIY Mix A pot (Nov 2026) — still check often vs deeper pots, just not as frantic as the old 2\"." },
   { tone: "info", title: "Pilea + Rubber — two DIY mixes on purpose", body: "Nov 2026: Pilea and Polka share DIY Mix A (coir/potting-forward). Rubber Tree uses chunkier DIY Mix B (more bark + citrus grit) in the same 6×5 footprint. Don't swap those soils long-term — rubber wants more air in the root zone; Hypoestes wilts if the mix is too gritty." },
   { tone: "info", title: "Birkin + Painted Lady — two philodendrons", body: "Nov 2026: Birkin (2 shoots, 5.5\") and Painted Lady (3 vines, 6.5\") both in DIY Aroid. Painted Lady needs bright indirect for yellow mottling; Birkin needs the same class of light to keep white pinstripes (prune green reversion). Both are ASPCA-toxic (calcium oxalates) — keep off Moose's chew path." },
@@ -3632,6 +3756,7 @@ const PLANT_LIGHT_REF = {
   mondo_grass:                { light: "Bright indirect / part shade",           humidity: "Avg 50–60%",            best: "1F Window (NE) — 9×9 pot" },
   firestick:                  { light: "Full sun 6h+ (summer patio)",            humidity: "Low 30–40%",            best: "Outdoor 2F Rm2 NW (summer); 2F LR SW (winter)", flag: "info" },
   kalanchoe:                  { light: "Bright + 2–4h AM direct",                humidity: "Avg 40–60%",            best: "1F Room 1, 1F Corner" },
+  kalanchoe_b:                { light: "Bright + 2–4h AM direct",                humidity: "Avg 40–60%",            best: "1F Room 1, 1F Corner — 3.5\" pot", flag: "info" },
   burrows_tail:               { light: "Bright + 2–3h gentle direct",            humidity: "Low 30–50%",            best: "1F Corner, NW rooms" },
   succulent_frankenstein_a:   { light: "Bright direct 4–6h",                     humidity: "Low 30–50%",            best: "2F LR (SW)" },
   succulent_frankenstein_b:   { light: "Bright indirect + AM direct",            humidity: "Low 30–50%",            best: "1F Room 1, 1F Corner" },
@@ -3662,6 +3787,7 @@ const PLANT_LIGHT_REF = {
   terrarium_b:                { light: "Bright indirect ONLY",                   humidity: "Self 80–95%",           best: "1F Window / NW room — no direct sun", flag: "info" },
   monstera_adansonii:         { light: "Bright indirect (+ soft AM OK)",         humidity: "High 60%+",             best: "1F Corner / 2F Rm2 humidifier cluster", hum: true },
   kalanchoe_fang:             { light: "Bright + several hrs direct",            humidity: "Low 30–50%",            best: "2F LR (SW), 1F Room 1 — never bathroom", flag: "info" },
+  kalanchoe_fang_b:           { light: "Bright + several hrs direct",            humidity: "Low 30–50%",            best: "2F LR (SW), 1F Room 1 — Fang B 4\"", flag: "info" },
   polka_dot_plant:            { light: "Bright indirect, no harsh sun",          humidity: "High 50–60%+",          best: "1F Bath (set back) — 3.5×2.5 DIY Mix A", flag: "info", hum: true },
   string_of_buttons:          { light: "Bright + 3–4h gentle direct",            humidity: "Low 30–50%",            best: "1F Room 1 / morning sun — not bathroom", flag: "info" },
   pilea_peperomioides:        { light: "Bright indirect (+ soft AM OK)",         humidity: "Avg–High 40–60%",       best: "1F Corner / Window — 6×5 DIY Mix A", hum: true },
