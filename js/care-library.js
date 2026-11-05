@@ -154,11 +154,11 @@ const CHOPSTICK_BY_PLANT = {
     "Damp stick → wait.",
     "Weigh Fang A and Fang B separately — matching pot size ≠ matching dry-down."
   ),
-  kalanchoe_b: _c(
-    "Insert ~1\" deep in the 3.5\" pot (shallower than the main 4\" Kalanchoe).",
-    "Top 1\" dry on the stick → water at the soil line (avoid flowers/leaves).",
-    "Damp at 1\" → wait.",
-    "3.5\" dries faster than the 4\" sibling; during dark-treatment keep even drier."
+  kalanchoe_tomentosa: _c(
+    "Insert ~1–1.5\" deep in the 3.5\" cactus-mix pot (edge — avoid stabbing the fuzzy crown).",
+    "Bone-dry / top 1\" dry stick → deep soak at the soil line only; empty the saucer.",
+    "Any cool damp → wait. Err dry — velvet leaves + wet peat = rot.",
+    "Never mist the fur; brush dust with a soft dry paintbrush. Not the florist Kalanchoe."
   ),
 
   burrows_tail: _c(
@@ -549,9 +549,9 @@ const PROPAGATION_LIBRARY = {
     _m("Stem tip cuttings", "85–95%", "2–4 weeks", "Same as Fang A — callus well; err dry."),
     _m("Leaf cuttings", "70–85%", "3–6 weeks", "Felt leaves root if kept dry.")
   ],
-  kalanchoe_b: [
-    _m("Stem tip cuttings", "85–95%", "2–4 weeks", "Use vegetative tips; callus briefly; gritty mix."),
-    _m("Leaf cuttings", "70–85%", "3–6 weeks", "Same florist-kalanchoe leaf props as the 4\" plant.")
+  kalanchoe_tomentosa: [
+    _m("Leaf cuttings", "65–80%", "3–6 weeks", "Whole fuzzy leaf with base; callus 3–7 days; keep dry until rooted (NC State)."),
+    _m("Stem tip / offsets", "70–85%", "3–6 weeks", "Callus well; plant on dry grit; first soak after roots (RHS offsets).")
   ],
 
   burrows_tail: [
@@ -863,9 +863,10 @@ const TROUBLESHOOTING_LIBRARY = {
     _t("Soft yellow leaves / mushy base", "Overwatering", "Same as Fang A — dry culture; separate log from Fang A.", "high"),
     _t("Stretching, thin felt", "Low light", "Brighter direct sun hours.", "normal")
   ],
-  kalanchoe_b: [
-    _t("No blooms", "Needs bright days + 14h dark nights ~6 weeks", "Dark-treatment; don't leave grow lights on overnight.", "low"),
-    _t("Yellow mushy leaves in 3.5\"", "Overwatering in small pot", "Lengthen dry-down; empty saucer; check peat vs cactus mix.", "high")
+  kalanchoe_tomentosa: [
+    _t("Yellow / mushy fuzzy leaves", "Overwatering or wet felt crown", "Soil-line water only; dry grit; never mist fur.", "high"),
+    _t("Leggy sparse felt", "Low light", "Move to 1F Room 1 / brighter spot; acclimate before hot SW.", "normal"),
+    _t("Shriveled wrinkled leaves", "Underwatering", "One thorough soil-line soak; leaves firm within hours.", "low")
   ],
 
   mondo_grass: [
