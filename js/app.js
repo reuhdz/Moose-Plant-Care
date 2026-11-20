@@ -1043,6 +1043,18 @@
    * (snooze / just-watered / filter changes). Overdue starts open. */
   const waterGroupOpenState = { overdue: true, soon: false, watered: false };
 
+  /* Fertilizer-sync subgroups inside overdue / soon / watered.
+   * Not-synced starts open so the priority queue is visible; synced starts
+   * collapsed for easier scanning (both remain toggleable). */
+  const waterLogSubgroupOpenState = {
+    "overdue:split": true,
+    "overdue:synced": false,
+    "soon:split": true,
+    "soon:synced": false,
+    "watered:split": true,
+    "watered:synced": false
+  };
+
   function logMatchTone(nx) {
     const lastIso = nx.lastDate ? Dates.iso(nx.lastDate) : null;
     const fertIso = nx.lastFertilizedDate ? Dates.iso(nx.lastFertilizedDate) : null;
@@ -1059,6 +1071,14 @@
 
   const waterTileNameCollator = new Intl.Collator(undefined, { sensitivity: "base", numeric: true });
 
+  /* Most overdue / soonest due first, then name. Missing next dates sort last. */
+  function compareDueUrgencyAsc(a, b) {
+    const aDays = Number.isFinite(a.nx.daysUntil) ? a.nx.daysUntil : Number.POSITIVE_INFINITY;
+    const bDays = Number.isFinite(b.nx.daysUntil) ? b.nx.daysUntil : Number.POSITIVE_INFINITY;
+    if (aDays !== bDays) return aDays - bDays;
+    return waterTileNameCollator.compare(a.plant.displayName, b.plant.displayName);
+  }
+
   /* Newest last-watered date first. Plants with no watering log sort last. */
   function compareLastWateredDesc(a, b) {
     const aMs = a.nx.lastDate ? a.nx.lastDate.getTime() : Number.NEGATIVE_INFINITY;
@@ -1067,17 +1087,22 @@
     return waterTileNameCollator.compare(a.plant.displayName, b.plant.displayName);
   }
 
-  /* Two subgroups: last watered without a matching fertilizer date, then
-   * watered & fertilized the same day. Both newest-last-watered first. */
-  function splitLogSubgroups(items) {
+  /* Two subgroups, always in this priority order:
+   * 1) fertilizer not synced (split / empty)
+   * 2) watered & fertilized the same day (synced)
+   * Overdue/soon sort by due urgency; watered keeps newest-last-watered. */
+  function splitLogSubgroups(items, groupKey) {
     const unmatched = [];
     const matched = [];
     items.forEach(item => {
       if (logMatchTone(item.nx) === "synced") matched.push(item);
       else unmatched.push(item);
     });
-    unmatched.sort(compareLastWateredDesc);
-    matched.sort(compareLastWateredDesc);
+    const sorter = (groupKey === "overdue" || groupKey === "soon")
+      ? compareDueUrgencyAsc
+      : compareLastWateredDesc;
+    unmatched.sort(sorter);
+    matched.sort(sorter);
     return { unmatched, matched };
   }
 
@@ -1104,32 +1129,38 @@
     return `<div class="next-list">${items.map(({ pid, plant, nx }) => renderWaterTileHtml(pid, plant, nx)).join("")}</div>`;
   }
 
-  function renderLogSubgroup(tone, title, hint, items) {
+  function renderLogSubgroup(groupKey, tone, title, hint, items) {
     if (!items.length) return "";
     const n = items.length;
+    const stateKey = `${groupKey}:${tone}`;
+    const open = waterLogSubgroupOpenState[stateKey] !== false;
     return `
-      <section class="water-log-cluster log-dates-${escapeAttr(tone)}" aria-label="${escapeAttr(title)} · ${n} plant${n === 1 ? "" : "s"}">
-        <div class="water-log-cluster-head" title="${escapeAttr(hint)}">
+      <details class="water-log-cluster log-dates-${escapeAttr(tone)}" data-subgroup="${escapeAttr(stateKey)}"${open ? " open" : ""}>
+        <summary class="water-log-cluster-head" title="${escapeAttr(hint)}">
           <span class="water-log-cluster-title">${escapeHtml(title)}</span>
           <span class="water-log-cluster-count" aria-label="${n} plant${n === 1 ? "" : "s"}">${n}</span>
+        </summary>
+        <div class="water-log-cluster-body">
+          ${renderTileList(items)}
         </div>
-        ${renderTileList(items)}
-      </section>
+      </details>
     `;
   }
 
-  function renderClusteredTiles(items) {
-    const { unmatched, matched } = splitLogSubgroups(items);
+  function renderClusteredTiles(items, groupKey) {
+    const { unmatched, matched } = splitLogSubgroups(items, groupKey);
     return `<div class="water-log-clusters">
       ${renderLogSubgroup(
+        groupKey,
         "split",
-        "Last watered · fertilizer does not match",
+        "Fertilizer not synced",
         logMatchHint("split"),
         unmatched
       )}
       ${renderLogSubgroup(
+        groupKey,
         "synced",
-        "Matching watered & fertilized",
+        "Fertilizer synced",
         logMatchHint("synced"),
         matched
       )}
@@ -1199,7 +1230,7 @@
     const open = !!waterGroupOpenState[groupKey];
     const count = items.length;
     const listHtml = count
-      ? renderClusteredTiles(items)
+      ? renderClusteredTiles(items, groupKey)
       : `<div class="water-group-empty muted small">${escapeHtml(emptyHint)}</div>`;
     return `
       <details class="water-group water-group-${escapeAttr(groupKey)}" data-group="${escapeAttr(groupKey)}"${open ? " open" : ""}>
@@ -1233,10 +1264,10 @@
       .map(pid => ({ pid, plant: all[pid], nx: all[pid] ? nextWatering(pid, log, all[pid]) : null }))
       .filter(x => x.plant && x.nx);
 
-    /* Subgroups sort newest last-watered first. Status buckets still split
-     * overdue / soon / on-track. A snooze or a fresh water log bumps
-     * `daysUntil` and the tile re-queues on next render. */
-    meta.sort(compareLastWateredDesc);
+    /* Status buckets: overdue/due-today, due-soon, on-track. Inside overdue
+     * and soon, tiles are split fertilizer-not-synced → fertilizer-synced and
+     * sorted by due urgency. A snooze or fresh water log re-queues on render. */
+    meta.sort(compareDueUrgencyAsc);
 
     const overdue = meta.filter(x => x.nx.status === "overdue" || x.nx.status === "due");
     const soon    = meta.filter(x => x.nx.status === "soon");
@@ -1273,7 +1304,7 @@
 
     nextSummary.innerHTML = `
       <h2>Next Watering <span class="muted small" style="font-weight:400;">· 📍 ${escapeHtml(SEASONAL_CONFIG.location)}${filterBadge}</span></h2>
-      <p class="water-summary-hint muted small">Tap a category to expand. Two subgroups: last watered without matching fertilizer, then matching watered &amp; fertilized — both newest last-watered first. Green dates = watered &amp; fertilized the same day; yellow = different days (or fertilizer not logged).</p>
+      <p class="water-summary-hint muted small">Tap a category to expand. Inside Overdue / Due soon: fertilizer not synced first, then fertilizer synced — each subgroup collapses. Most overdue / soonest due first. Green dates = watered &amp; fertilized the same day; yellow = different days (or fertilizer not logged).</p>
       ${bodyHtml}
     `;
 
@@ -5066,14 +5097,23 @@ Rules:
   if (nextSummary) nextSummary.addEventListener("click", handleWaterNowClick);
   if (detailEl)    detailEl.addEventListener("click", handleWaterNowClick);
 
-  /* Remember which watering-status groups stay open across re-renders. */
+  /* Remember which watering-status groups / fertilizer subgroups stay open. */
   if (nextSummary) {
     nextSummary.addEventListener("toggle", e => {
-      const details = e.target.closest?.("details.water-group");
-      if (!details || !nextSummary.contains(details)) return;
-      const key = details.dataset.group;
-      if (key && Object.prototype.hasOwnProperty.call(waterGroupOpenState, key)) {
-        waterGroupOpenState[key] = details.open;
+      const target = e.target;
+      if (!(target instanceof HTMLDetailsElement) || !nextSummary.contains(target)) return;
+
+      if (target.matches("details.water-group")) {
+        const key = target.dataset.group;
+        if (key && Object.prototype.hasOwnProperty.call(waterGroupOpenState, key)) {
+          waterGroupOpenState[key] = target.open;
+        }
+        return;
+      }
+
+      if (target.matches("details.water-log-cluster")) {
+        const key = target.dataset.subgroup;
+        if (key) waterLogSubgroupOpenState[key] = target.open;
       }
     }, true);
   }
