@@ -1837,7 +1837,7 @@ html[data-theme="dark"] .water-group-count {
   font-style: italic;
 }
 
-/* Two watering-log subgroups: unmatched fertilizer vs matching same-day. */
+/* Two watering-log subgroups: fertilizer not synced, then synced (collapsible). */
 .water-log-clusters {
   display: flex;
   flex-direction: column;
@@ -1850,15 +1850,34 @@ html[data-theme="dark"] .water-group-count {
   overflow: hidden;
 }
 .water-log-cluster-head {
+  list-style: none;
+  cursor: pointer;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.45rem 0.65rem;
-  border-bottom: 1px solid var(--border);
+  padding: 0.55rem 0.65rem;
+  border-bottom: 1px solid transparent;
   font-size: 0.78rem;
   font-weight: 700;
   line-height: 1.3;
+  user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 40px;
 }
+.water-log-cluster-head::-webkit-details-marker { display: none; }
+.water-log-cluster-head::after {
+  content: "▾";
+  margin-left: 0.15rem;
+  transition: transform 0.2s;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.water-log-cluster[open] > .water-log-cluster-head {
+  border-bottom-color: var(--border);
+}
+.water-log-cluster[open] > .water-log-cluster-head::after { transform: rotate(180deg); }
+.water-log-cluster-head:hover { filter: brightness(0.98); }
 .water-log-cluster-title { flex: 1; min-width: 0; }
 .water-log-cluster-count {
   display: inline-flex;
@@ -1873,6 +1892,7 @@ html[data-theme="dark"] .water-group-count {
   font-size: 0.75rem;
   font-weight: 800;
 }
+.water-log-cluster-body { display: block; }
 .water-log-cluster.log-dates-synced {
   border-color: color-mix(in srgb, var(--actual) 40%, var(--border));
 }
